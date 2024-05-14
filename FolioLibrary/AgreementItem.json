@@ -8,6 +8,53 @@
       "type": "string",
       "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
     },
+    "type": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        }
+      }
+    },
+    "suppressFromDiscovery": {
+      "type": "boolean"
+    },
+    "note": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "customCoverage": {
+      "type": "boolean"
+    },
+    "startDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "endDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "activeFrom": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "activeTo": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "contentUpdated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "haveAccess": {
+      "type": "boolean"
+    },
     "dateCreated": {
       "type": "string",
       "format": "date-time"
@@ -16,12 +63,15 @@
       "type": "string",
       "format": "date-time"
     },
-    "owner": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    "poLines": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "poLineId": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+          }
         }
       }
     }

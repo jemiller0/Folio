@@ -2592,6 +2592,18 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void DeserializeAgreementItemOrderItemTest()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.AgreementItems(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var aioi = JsonConvert.DeserializeObject<AgreementItemOrderItem>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, aioi.ToString());
+            Assert.IsNotNull(aioi);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeAgreementItemOrderItemTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void DeserializeAgreementOrganizationTest()
         {
             var s = Stopwatch.StartNew();
@@ -2601,6 +2613,18 @@ namespace FolioLibraryTest
             traceSource.TraceEvent(TraceEventType.Information, 0, ao.ToString());
             Assert.IsNotNull(ao);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeAgreementOrganizationTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void DeserializeAgreementPeriodTest()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.Agreements(take: 1).SingleOrDefault();
+            if (jo == null) Assert.Inconclusive();
+            var ap = JsonConvert.DeserializeObject<AgreementPeriod>(jo.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, ap.ToString());
+            Assert.IsNotNull(ap);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeAgreementPeriodTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]

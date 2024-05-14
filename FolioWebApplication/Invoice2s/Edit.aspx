@@ -257,6 +257,14 @@
                                     <asp:HyperLink ID="VendorHyperLink" runat="server" Text='<%#: Eval("Vendor.Name") %>' NavigateUrl='<%# $"~/Organization2s/Edit.aspx?Id={Eval("VendorId")}" %>' Enabled='<%# Session["Organization2sPermission"] != null %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("FiscalYear") != null %>'>
+                                <td>
+                                    <asp:Label ID="FiscalYearLabel" runat="server" Text="Fiscal Year:" AssociatedControlID="FiscalYearHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="FiscalYearHyperLink" runat="server" Text='<%#: Eval("FiscalYear.Name") %>' NavigateUrl='<%# $"~/FiscalYear2s/Edit.aspx?Id={Eval("FiscalYearId")}" %>' Enabled='<%# Session["FiscalYear2sPermission"] != null %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("AccountNumber") != null %>'>
                                 <td>
                                     <asp:Label ID="AccountNumberLabel" runat="server" Text="Account Number:" AssociatedControlID="AccountNumberLiteral" />
@@ -271,6 +279,14 @@
                                 </td>
                                 <td>
                                     <asp:Literal ID="ManualPaymentLiteral" runat="server" Text='<%#: Eval("ManualPayment") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("NextInvoiceLineNumber") != null %>'>
+                                <td>
+                                    <asp:Label ID="NextInvoiceLineNumberLabel" runat="server" Text="Next Invoice Line Number:" AssociatedControlID="NextInvoiceLineNumberLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="NextInvoiceLineNumberLiteral" runat="server" Text='<%#: Eval("NextInvoiceLineNumber") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>

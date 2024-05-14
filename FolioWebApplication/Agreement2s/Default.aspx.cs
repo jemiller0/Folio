@@ -24,7 +24,7 @@ namespace FolioWebApplication.Agreement2s
 
         protected void Agreement2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "StartDate", "startDate" }, { "EndDate", "endDate" }, { "CancellationDeadlineDate", "cancellationDeadline" }, { "Status", "status.label" }, { "IsPerpetual", "isPerpetual.label" }, { "Description", "description" }, { "CreationTime", "dateCreated" }, { "LastWriteTime", "lastUpdated" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "StartDate", "startDate" }, { "EndDate", "endDate" }, { "CancellationDeadlineDate", "cancellationDeadline" }, { "Status", "agreementStatus.label" }, { "IsPerpetual", "isPerpetual.label" }, { "RenewalPriority", "renewalPriority.label" }, { "Description", "description" }, { "CreationTime", "dateCreated" }, { "LastWriteTime", "lastUpdated" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 Global.GetCqlFilter(Agreement2sRadGrid, "Id", "id"),
@@ -32,8 +32,9 @@ namespace FolioWebApplication.Agreement2s
                 Global.GetCqlFilter(Agreement2sRadGrid, "StartDate", "startDate"),
                 Global.GetCqlFilter(Agreement2sRadGrid, "EndDate", "endDate"),
                 Global.GetCqlFilter(Agreement2sRadGrid, "CancellationDeadlineDate", "cancellationDeadline"),
-                Global.GetCqlFilter(Agreement2sRadGrid, "Status", "status.label"),
+                Global.GetCqlFilter(Agreement2sRadGrid, "Status", "agreementStatus.label"),
                 Global.GetCqlFilter(Agreement2sRadGrid, "IsPerpetual", "isPerpetual.label"),
+                Global.GetCqlFilter(Agreement2sRadGrid, "RenewalPriority", "renewalPriority.label"),
                 Global.GetCqlFilter(Agreement2sRadGrid, "Description", "description"),
                 Global.GetCqlFilter(Agreement2sRadGrid, "CreationTime", "dateCreated"),
                 Global.GetCqlFilter(Agreement2sRadGrid, "LastWriteTime", "lastUpdated")
@@ -51,8 +52,8 @@ namespace FolioWebApplication.Agreement2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"Agreement2s.txt\"");
             Response.BufferOutput = false;
-            Response.Write("Id\tName\tStartDate\tEndDate\tCancellationDeadlineDate\tStatus\tIsPerpetual\tDescription\tCreationTime\tLastWriteTime\r\n");
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "StartDate", "startDate" }, { "EndDate", "endDate" }, { "CancellationDeadlineDate", "cancellationDeadline" }, { "Status", "status.label" }, { "IsPerpetual", "isPerpetual.label" }, { "Description", "description" }, { "CreationTime", "dateCreated" }, { "LastWriteTime", "lastUpdated" } };
+            Response.Write("Id\tName\tStartDate\tEndDate\tCancellationDeadlineDate\tStatus\tIsPerpetual\tRenewalPriority\tDescription\tCreationTime\tLastWriteTime\r\n");
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "StartDate", "startDate" }, { "EndDate", "endDate" }, { "CancellationDeadlineDate", "cancellationDeadline" }, { "Status", "agreementStatus.label" }, { "IsPerpetual", "isPerpetual.label" }, { "RenewalPriority", "renewalPriority.label" }, { "Description", "description" }, { "CreationTime", "dateCreated" }, { "LastWriteTime", "lastUpdated" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 Global.GetCqlFilter(Agreement2sRadGrid, "Id", "id"),
@@ -60,14 +61,15 @@ namespace FolioWebApplication.Agreement2s
                 Global.GetCqlFilter(Agreement2sRadGrid, "StartDate", "startDate"),
                 Global.GetCqlFilter(Agreement2sRadGrid, "EndDate", "endDate"),
                 Global.GetCqlFilter(Agreement2sRadGrid, "CancellationDeadlineDate", "cancellationDeadline"),
-                Global.GetCqlFilter(Agreement2sRadGrid, "Status", "status.label"),
+                Global.GetCqlFilter(Agreement2sRadGrid, "Status", "agreementStatus.label"),
                 Global.GetCqlFilter(Agreement2sRadGrid, "IsPerpetual", "isPerpetual.label"),
+                Global.GetCqlFilter(Agreement2sRadGrid, "RenewalPriority", "renewalPriority.label"),
                 Global.GetCqlFilter(Agreement2sRadGrid, "Description", "description"),
                 Global.GetCqlFilter(Agreement2sRadGrid, "CreationTime", "dateCreated"),
                 Global.GetCqlFilter(Agreement2sRadGrid, "LastWriteTime", "lastUpdated")
             }.Where(s => s != null)));
             foreach (var a2 in folioServiceContext.Agreement2s(where, Agreement2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Agreement2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Agreement2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
-                Response.Write($"{a2.Id}\t{Global.TextEncode(a2.Name)}\t{a2.StartDate:M/d/yyyy}\t{a2.EndDate:M/d/yyyy}\t{a2.CancellationDeadlineDate:M/d/yyyy}\t{Global.TextEncode(a2.Status)}\t{Global.TextEncode(a2.IsPerpetual)}\t{Global.TextEncode(a2.Description)}\t{a2.CreationTime:M/d/yyyy HH:mm:ss}\t{a2.LastWriteTime:M/d/yyyy HH:mm:ss}\r\n");
+                Response.Write($"{a2.Id}\t{Global.TextEncode(a2.Name)}\t{a2.StartDate:M/d/yyyy}\t{a2.EndDate:M/d/yyyy}\t{a2.CancellationDeadlineDate:M/d/yyyy}\t{Global.TextEncode(a2.Status)}\t{Global.TextEncode(a2.IsPerpetual)}\t{Global.TextEncode(a2.RenewalPriority)}\t{Global.TextEncode(a2.Description)}\t{a2.CreationTime:M/d/yyyy HH:mm:ss}\t{a2.LastWriteTime:M/d/yyyy HH:mm:ss}\r\n");
             Response.End();
         }
 

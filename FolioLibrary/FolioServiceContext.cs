@@ -268,7 +268,8 @@ namespace FolioLibrary
         public void Insert(Agreement2 agreement2)
         {
             if (agreement2.Id == null) agreement2.Id = Guid.NewGuid();
-            FolioServiceClient.InsertAgreement(agreement2.ToJObject());
+            var jo = FolioServiceClient.InsertAgreement(agreement2.ToJObject());
+            agreement2.Id = (Guid?)jo["id"];
         }
 
         public void Update(Agreement2 agreement2) => FolioServiceClient.UpdateAgreement(agreement2.ToJObject());
@@ -334,6 +335,14 @@ namespace FolioLibrary
             var ai2 = cache ? (AgreementItem2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = AgreementItem2.FromJObject(FolioServiceClient.GetAgreementItem(id?.ToString()))) : AgreementItem2.FromJObject(FolioServiceClient.GetAgreementItem(id?.ToString()));
             if (ai2 == null) return null;
             if (load && ai2.AgreementId != null) ai2.Agreement = FindAgreement2(ai2.AgreementId, cache: cache);
+            var i = 0;
+            if (ai2.AgreementItemOrderItems != null) foreach (var aioi in ai2.AgreementItemOrderItems)
+                {
+                    aioi.Id = (++i).ToString();
+                    aioi.AgreementItemId = ai2.Id;
+                    aioi.AgreementItem = ai2;
+                    if (load && aioi.OrderItemId != null) aioi.OrderItem = FindOrderItem2(aioi.OrderItemId, cache: cache);
+                }
             return ai2;
         }
 
@@ -4246,6 +4255,7 @@ namespace FolioLibrary
                 if (load && i2.BillToId != null) i2.BillTo = FindConfiguration2(i2.BillToId, cache: cache);
                 if (load && i2.PaymentId != null) i2.Payment = FindTransaction2(i2.PaymentId, cache: cache);
                 if (load && i2.VendorId != null) i2.Vendor = FindOrganization2(i2.VendorId, cache: cache);
+                if (load && i2.FiscalYearId != null) i2.FiscalYear = FindFiscalYear2(i2.FiscalYearId, cache: cache);
                 if (load && i2.CreationUserId != null) i2.CreationUser = FindUser2(i2.CreationUserId, cache: cache);
                 if (load && i2.LastWriteUserId != null) i2.LastWriteUser = FindUser2(i2.LastWriteUserId, cache: cache);
                 return i2;
@@ -4263,6 +4273,7 @@ namespace FolioLibrary
                 if (load && i2.BillToId != null) i2.BillTo = FindConfiguration2(i2.BillToId, cache: cache);
                 if (load && i2.PaymentId != null) i2.Payment = FindTransaction2(i2.PaymentId, cache: cache);
                 if (load && i2.VendorId != null) i2.Vendor = FindOrganization2(i2.VendorId, cache: cache);
+                if (load && i2.FiscalYearId != null) i2.FiscalYear = FindFiscalYear2(i2.FiscalYearId, cache: cache);
                 if (load && i2.CreationUserId != null) i2.CreationUser = FindUser2(i2.CreationUserId, cache: cache);
                 if (load && i2.LastWriteUserId != null) i2.LastWriteUser = FindUser2(i2.LastWriteUserId, cache: cache);
                 yield return i2;
@@ -4279,6 +4290,7 @@ namespace FolioLibrary
             if (load && i2.BillToId != null) i2.BillTo = FindConfiguration2(i2.BillToId, cache: cache);
             if (load && i2.PaymentId != null) i2.Payment = FindTransaction2(i2.PaymentId, cache: cache);
             if (load && i2.VendorId != null) i2.Vendor = FindOrganization2(i2.VendorId, cache: cache);
+            if (load && i2.FiscalYearId != null) i2.FiscalYear = FindFiscalYear2(i2.FiscalYearId, cache: cache);
             if (load && i2.CreationUserId != null) i2.CreationUser = FindUser2(i2.CreationUserId, cache: cache);
             if (load && i2.LastWriteUserId != null) i2.LastWriteUser = FindUser2(i2.LastWriteUserId, cache: cache);
             var i = 0;

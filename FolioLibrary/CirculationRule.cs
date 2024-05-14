@@ -33,7 +33,13 @@ namespace FolioLibrary
         [Column("lock"), Display(Order = 3)]
         public virtual bool? Lock { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(Lock)} = {Lock} }}";
+        [Column("creation_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 4), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
+        public virtual DateTime? CreationTime { get; set; }
+
+        [Column("created_by"), Display(Name = "Creation User Id", Order = 5), Editable(false)]
+        public virtual string CreationUserId { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(Lock)} = {Lock}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId} }}";
 
         public static CirculationRule FromJObject(JObject jObject) => jObject != null ? new CirculationRule
         {

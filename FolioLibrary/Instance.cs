@@ -55,6 +55,9 @@ namespace FolioLibrary
         [Column("instancetypeid"), Display(Name = "Instance Type", Order = 10), ForeignKey("InstanceType")]
         public virtual Guid? Instancetypeid { get; set; }
 
+        [Column("complete_updated_date"), DataType(DataType.DateTime), Display(Name = "Completion Time", Order = 11), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true)]
+        public virtual DateTime? CompletionTime { get; set; }
+
         [ScaffoldColumn(false)]
         public virtual ICollection<Holding> Holdings { get; set; }
 
@@ -64,23 +67,8 @@ namespace FolioLibrary
         [ScaffoldColumn(false)]
         public virtual ICollection<InstanceRelationship> InstanceRelationships1 { get; set; }
 
-        [Display(Name = "Instance Source Marc", Order = 14)]
+        [Display(Name = "Instance Source Marc", Order = 15)]
         public virtual InstanceSourceMarc InstanceSourceMarc { get; set; }
-
-        [Display(Name = "Instance Source Marc 1", Order = 15)]
-        public virtual InstanceSourceMarc InstanceSourceMarc1 { get; set; }
-
-        [Display(Name = "Instance Source Marc 2", Order = 16)]
-        public virtual InstanceSourceMarc InstanceSourceMarc2 { get; set; }
-
-        [Display(Name = "Instance Source Marc 3", Order = 17)]
-        public virtual InstanceSourceMarc InstanceSourceMarc3 { get; set; }
-
-        [Display(Name = "Instance Source Marc 4", Order = 18)]
-        public virtual InstanceSourceMarc InstanceSourceMarc4 { get; set; }
-
-        [Display(Name = "Instance Source Marc 5", Order = 19)]
-        public virtual InstanceSourceMarc InstanceSourceMarc5 { get; set; }
 
         [ScaffoldColumn(false)]
         public virtual ICollection<PrecedingSucceedingTitle> PrecedingSucceedingTitles { get; set; }
@@ -88,7 +76,7 @@ namespace FolioLibrary
         [ScaffoldColumn(false)]
         public virtual ICollection<PrecedingSucceedingTitle> PrecedingSucceedingTitles1 { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Instancestatusid)} = {Instancestatusid}, {nameof(Modeofissuanceid)} = {Modeofissuanceid}, {nameof(Instancetypeid)} = {Instancetypeid} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Instancestatusid)} = {Instancestatusid}, {nameof(Modeofissuanceid)} = {Modeofissuanceid}, {nameof(Instancetypeid)} = {Instancetypeid}, {nameof(CompletionTime)} = {CompletionTime} }}";
 
         public static Instance FromJObject(JObject jObject) => jObject != null ? new Instance
         {

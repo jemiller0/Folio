@@ -43,34 +43,43 @@ namespace FolioLibrary
         [Column("cancellation_deadline"), DataType(DataType.Date), Display(Name = "Cancellation Deadline Date", Order = 5), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("cancellationDeadline")]
         public virtual DateTime? CancellationDeadlineDate { get; set; }
 
-        [Column("status_label"), Display(Order = 6), JsonProperty("status.label"), StringLength(1024)]
+        [Column("agreement_status_value"), JsonProperty("agreementStatus.value"), ScaffoldColumn(false), StringLength(1024)]
+        public virtual string StatusCode { get; set; }
+
+        [Column("agreement_status_label"), Display(Order = 7), JsonProperty("agreementStatus.label"), StringLength(1024)]
         public virtual string Status { get; set; }
 
-        [Column("is_perpetual_label"), Display(Name = "Is Perpetual", Order = 7), JsonProperty("isPerpetual.label"), StringLength(1024)]
+        [Column("is_perpetual_label"), Display(Name = "Is Perpetual", Order = 8), JsonProperty("isPerpetual.label"), StringLength(1024)]
         public virtual string IsPerpetual { get; set; }
 
-        [Column("description"), Display(Order = 8), JsonProperty("description"), StringLength(1024)]
+        [Column("renewal_priority_label"), Display(Name = "Renewal Priority", Order = 9), JsonProperty("renewalPriority.label"), StringLength(1024)]
+        public virtual string RenewalPriority { get; set; }
+
+        [Column("description"), Display(Order = 10), JsonProperty("description"), StringLength(1024)]
         public virtual string Description { get; set; }
 
-        [Column("date_created"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 9), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("dateCreated")]
+        [Column("date_created"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 11), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("dateCreated")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Column("last_updated"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 10), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("lastUpdated")]
+        [Column("last_updated"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 12), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("lastUpdated")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Agreement), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 11), Editable(false)]
+        [Column("content"), CustomValidation(typeof(Agreement), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 13), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Agreement Items", Order = 12)]
+        [Display(Name = "Agreement Items", Order = 14)]
         public virtual ICollection<AgreementItem2> AgreementItem2s { get; set; }
 
-        [Display(Name = "Agreement Organizations", Order = 13), JsonProperty("orgs")]
+        [Display(Name = "Agreement Organizations", Order = 15), JsonProperty("orgs")]
         public virtual ICollection<AgreementOrganization> AgreementOrganizations { get; set; }
 
-        [Display(Name = "Order Items", Order = 14)]
+        [Display(Name = "Agreement Periods", Order = 16), JsonProperty("periods")]
+        public virtual ICollection<AgreementPeriod> AgreementPeriods { get; set; }
+
+        [Display(Name = "Order Items", Order = 17)]
         public virtual ICollection<OrderItem2> OrderItem2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(StartDate)} = {StartDate}, {nameof(EndDate)} = {EndDate}, {nameof(CancellationDeadlineDate)} = {CancellationDeadlineDate}, {nameof(Status)} = {Status}, {nameof(IsPerpetual)} = {IsPerpetual}, {nameof(Description)} = {Description}, {nameof(CreationTime)} = {CreationTime}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(Content)} = {Content}, {nameof(AgreementOrganizations)} = {(AgreementOrganizations != null ? $"{{ {string.Join(", ", AgreementOrganizations)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(StartDate)} = {StartDate}, {nameof(EndDate)} = {EndDate}, {nameof(CancellationDeadlineDate)} = {CancellationDeadlineDate}, {nameof(StatusCode)} = {StatusCode}, {nameof(Status)} = {Status}, {nameof(IsPerpetual)} = {IsPerpetual}, {nameof(RenewalPriority)} = {RenewalPriority}, {nameof(Description)} = {Description}, {nameof(CreationTime)} = {CreationTime}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(Content)} = {Content}, {nameof(AgreementOrganizations)} = {(AgreementOrganizations != null ? $"{{ {string.Join(", ", AgreementOrganizations)} }}" : "")}, {nameof(AgreementPeriods)} = {(AgreementPeriods != null ? $"{{ {string.Join(", ", AgreementPeriods)} }}" : "")} }}";
 
         public static Agreement2 FromJObject(JObject jObject) => jObject != null ? new Agreement2
         {
@@ -79,13 +88,16 @@ namespace FolioLibrary
             StartDate = ((DateTime?)jObject.SelectToken("startDate"))?.ToUniversalTime(),
             EndDate = ((DateTime?)jObject.SelectToken("endDate"))?.ToUniversalTime(),
             CancellationDeadlineDate = ((DateTime?)jObject.SelectToken("cancellationDeadline"))?.ToUniversalTime(),
-            Status = (string)jObject.SelectToken("status.label"),
+            StatusCode = (string)jObject.SelectToken("agreementStatus.value"),
+            Status = (string)jObject.SelectToken("agreementStatus.label"),
             IsPerpetual = (string)jObject.SelectToken("isPerpetual.label"),
+            RenewalPriority = (string)jObject.SelectToken("renewalPriority.label"),
             Description = (string)jObject.SelectToken("description"),
             CreationTime = (DateTime?)jObject.SelectToken("dateCreated"),
             LastWriteTime = (DateTime?)jObject.SelectToken("lastUpdated"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            AgreementOrganizations = jObject.SelectToken("orgs")?.Where(jt => jt.HasValues).Select(jt => AgreementOrganization.FromJObject((JObject)jt)).ToArray()
+            AgreementOrganizations = jObject.SelectToken("orgs")?.Where(jt => jt.HasValues).Select(jt => AgreementOrganization.FromJObject((JObject)jt)).ToArray(),
+            AgreementPeriods = jObject.SelectToken("periods")?.Where(jt => jt.HasValues).Select(jt => AgreementPeriod.FromJObject((JObject)jt)).ToArray()
         } : null;
 
         public JObject ToJObject() => new JObject(
@@ -94,13 +106,17 @@ namespace FolioLibrary
             new JProperty("startDate", StartDate?.ToLocalTime()),
             new JProperty("endDate", EndDate?.ToLocalTime()),
             new JProperty("cancellationDeadline", CancellationDeadlineDate?.ToLocalTime()),
-            new JProperty("status", new JObject(
+            new JProperty("agreementStatus", new JObject(
+                new JProperty("value", StatusCode),
                 new JProperty("label", Status))),
             new JProperty("isPerpetual", new JObject(
                 new JProperty("label", IsPerpetual))),
+            new JProperty("renewalPriority", new JObject(
+                new JProperty("label", RenewalPriority))),
             new JProperty("description", Description),
             new JProperty("dateCreated", CreationTime?.ToLocalTime()),
             new JProperty("lastUpdated", LastWriteTime?.ToLocalTime()),
-            new JProperty("orgs", AgreementOrganizations?.Select(ao => ao.ToJObject()))).RemoveNullAndEmptyProperties();
+            new JProperty("orgs", AgreementOrganizations?.Select(ao => ao.ToJObject())),
+            new JProperty("periods", AgreementPeriods?.Select(ap => ap.ToJObject()))).RemoveNullAndEmptyProperties();
     }
 }

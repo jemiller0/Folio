@@ -9,6 +9,10 @@ namespace FolioWebApplication.AgreementItem2s
 
         protected FormView AgreementItem2FormView;
 
+        protected Panel AgreementItemOrderItemsPanel;
+
+        protected RadGrid AgreementItemOrderItemsRadGrid;
+
         protected RadAjaxManager RadAjaxManager1;
     }
 }

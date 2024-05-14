@@ -144,6 +144,7 @@
                                 <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%#: Eval("LastWriteUserId") != null ? Eval("LastWriteUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("LastWriteUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Completion Time" DataField="CompletionTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>

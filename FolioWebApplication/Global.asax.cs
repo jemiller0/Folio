@@ -113,13 +113,18 @@ namespace FolioWebApplication
                     if (ConfigurationManager.AppSettings["labelsOnly"] != "true")
                     {
                         //SetPermissions(hs);
+
+                        if (userName == "jemiller")
+                        {
+                            SetAgreementsPermissions("View");
+                        }
+
                         if (hs.Contains("department:Library Systems - Ils")
                             || userName == "stp0"
                             || userName == "kmarti"
                             || userName == "t-9wsch1"
                             )
                         {
-                            //SetAgreementsPermissions("View");
                             SetCirculationPermissions("View");
                             SetConfigurationPermissions("View");
                             SetFeesPermissions("View");

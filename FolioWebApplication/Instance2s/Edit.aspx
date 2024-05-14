@@ -185,6 +185,14 @@
                                     <pre><asp:Literal ID="ContentLiteral" runat="server" Text='<%#: Eval("Content") %>' /></pre>
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("CompletionTime") != null %>'>
+                                <td>
+                                    <asp:Label ID="CompletionTimeLabel" runat="server" Text="Completion Time:" AssociatedControlID="CompletionTimeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="CompletionTimeLiteral" runat="server" Text='<%# Eval("CompletionTime", "{0:g}") %>' />
+                                </td>
+                            </tr>
                         </table>
                     </asp:Panel>
                 </ItemTemplate>

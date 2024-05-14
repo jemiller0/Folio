@@ -279,6 +279,9 @@
     "vendorId": {
       "$ref": "#/properties/id"
     },
+    "fiscalYearId": {
+      "$ref": "#/properties/id"
+    },
     "accountNo": {
       "description": "The unique number of the organization account",
       "type": "string"
@@ -293,6 +296,11 @@
       "items": {
         "$ref": "#/properties/id"
       }
+    },
+    "nextInvoiceLineNumber": {
+      "description": "Number that will be used next time an invoice line is created",
+      "readonly": true,
+      "type": "integer"
     },
     "metadata": {
       "title": "Metadata Schema",

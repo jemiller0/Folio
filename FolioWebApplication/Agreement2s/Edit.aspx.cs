@@ -39,11 +39,21 @@ namespace FolioWebApplication.Agreement2s
             if (Session["AgreementItem2sPermission"] == null) return;
             var id = (Guid?)Agreement2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "CreationTime", "dateCreated" }, { "LastWriteTime", "lastUpdated" }, { "AgreementId", "owner.id" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "SuppressFromDiscovery", "suppressFromDiscovery" }, { "Note", "note" }, { "Description", "description" }, { "CustomCoverage", "customCoverage" }, { "StartDate", "startDate" }, { "EndDate", "endDate" }, { "ActiveFromDate", "activeFrom" }, { "ActiveToDate", "activeTo" }, { "ContentLastWriteTime", "contentUpdated" }, { "HaveAccess", "haveAccess" }, { "CreationTime", "dateCreated" }, { "LastWriteTime", "lastUpdated" }, { "AgreementId", "owner.id" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"owner.id == \"{id}\"",
                 Global.GetCqlFilter(AgreementItem2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(AgreementItem2sRadGrid, "SuppressFromDiscovery", "suppressFromDiscovery"),
+                Global.GetCqlFilter(AgreementItem2sRadGrid, "Note", "note"),
+                Global.GetCqlFilter(AgreementItem2sRadGrid, "Description", "description"),
+                Global.GetCqlFilter(AgreementItem2sRadGrid, "CustomCoverage", "customCoverage"),
+                Global.GetCqlFilter(AgreementItem2sRadGrid, "StartDate", "startDate"),
+                Global.GetCqlFilter(AgreementItem2sRadGrid, "EndDate", "endDate"),
+                Global.GetCqlFilter(AgreementItem2sRadGrid, "ActiveFromDate", "activeFrom"),
+                Global.GetCqlFilter(AgreementItem2sRadGrid, "ActiveToDate", "activeTo"),
+                Global.GetCqlFilter(AgreementItem2sRadGrid, "ContentLastWriteTime", "contentUpdated"),
+                Global.GetCqlFilter(AgreementItem2sRadGrid, "HaveAccess", "haveAccess"),
                 Global.GetCqlFilter(AgreementItem2sRadGrid, "CreationTime", "dateCreated"),
                 Global.GetCqlFilter(AgreementItem2sRadGrid, "LastWriteTime", "lastUpdated")
             }.Where(s => s != null)));
@@ -66,6 +76,17 @@ namespace FolioWebApplication.Agreement2s
             AgreementOrganizationsRadGrid.DataSource = l;
             AgreementOrganizationsRadGrid.AllowFilteringByColumn = l.Count() > 10;
             AgreementOrganizationsPanel.Visible = Agreement2FormView.DataKey.Value != null && ((string)Session["AgreementOrganizationsPermission"] == "Edit" || Session["AgreementOrganizationsPermission"] != null && l.Any());
+        }
+
+        protected void AgreementPeriodsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["AgreementPeriodsPermission"] == null) return;
+            var id = (Guid?)Agreement2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindAgreement2(id, true).AgreementPeriods ?? new AgreementPeriod[] { };
+            AgreementPeriodsRadGrid.DataSource = l;
+            AgreementPeriodsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            AgreementPeriodsPanel.Visible = Agreement2FormView.DataKey.Value != null && ((string)Session["AgreementPeriodsPermission"] == "Edit" || Session["AgreementPeriodsPermission"] != null && l.Any());
         }
 
         protected void OrderItem2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

@@ -191,8 +191,9 @@ a2.name AS ""Name"",
 a2.start_date AS ""StartDate"",
 a2.end_date AS ""EndDate"",
 a2.cancellation_deadline AS ""CancellationDeadlineDate"",
-a2.status_label AS ""Status"",
+a2.agreement_status_label AS ""Status"",
 a2.is_perpetual_label AS ""IsPerpetual"",
+a2.renewal_priority_label AS ""RenewalPriority"",
 a2.description AS ""Description"",
 a2.date_created AS ""CreationTime"",
 a2.last_updated AS ""LastWriteTime"",
@@ -218,6 +219,16 @@ FROM uc.agreements AS a2
             folioDapperContext.Query(@"
 SELECT
 ai2.id AS ""Id"",
+ai2.suppress_from_discovery AS ""SuppressFromDiscovery"",
+ai2.note AS ""Note"",
+ai2.description AS ""Description"",
+ai2.custom_coverage AS ""CustomCoverage"",
+ai2.start_date AS ""StartDate"",
+ai2.end_date AS ""EndDate"",
+ai2.active_from AS ""ActiveFromDate"",
+ai2.active_to AS ""ActiveToDate"",
+ai2.content_updated AS ""ContentLastWriteTime"",
+ai2.have_access AS ""HaveAccess"",
 ai2.date_created AS ""CreationTime"",
 ai2.last_updated AS ""LastWriteTime"",
 a.name AS ""Agreement"",
@@ -225,9 +236,35 @@ ai2.agreement_id AS ""AgreementId"",
 ai2.content AS ""Content"" 
 FROM uc.agreement_items AS ai2
 LEFT JOIN uc.agreements AS a ON a.id = ai2.agreement_id
- ORDER BY ai2.id
+ ORDER BY ai2.start_date
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"AgreementItem2sQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryAgreementItemOrderItemsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.AgreementItemOrderItems(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AgreementItemOrderItemsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void AgreementItemOrderItemsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+ai.start_date AS ""AgreementItem"",
+aioi.agreement_item_id AS ""AgreementItemId"",
+oi.po_line_number AS ""OrderItem"",
+aioi.order_item_id AS ""OrderItemId"" 
+FROM uc.agreement_item_order_items AS aioi
+LEFT JOIN uc.agreement_items AS ai ON ai.id = aioi.agreement_item_id
+LEFT JOIN uc.order_items AS oi ON oi.id = aioi.order_item_id
+ ORDER BY aioi.id
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AgreementItemOrderItemsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -255,6 +292,31 @@ LEFT JOIN uc.organizations AS o ON o.id = ao.organization_id
  ORDER BY ao.id
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"AgreementOrganizationsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryAgreementPeriodsTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.AgreementPeriods(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AgreementPeriodsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void AgreementPeriodsQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+a.name AS ""Agreement"",
+ap.agreement_id AS ""AgreementId"",
+ap.start_date AS ""StartDate"",
+ap.period_status AS ""Status"" 
+FROM uc.agreement_periods AS ap
+LEFT JOIN uc.agreements AS a ON a.id = ap.agreement_id
+ ORDER BY ap.start_date
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"AgreementPeriodsQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -2973,7 +3035,8 @@ i2.created_by_user_id AS ""CreationUserId"",
 i2.updated_date AS ""LastWriteTime"",
 lwu.username AS ""LastWriteUser"",
 i2.updated_by_user_id AS ""LastWriteUserId"",
-i2.content AS ""Content"" 
+i2.content AS ""Content"",
+i2.completion_time AS ""CompletionTime"" 
 FROM uc.instances AS i2
 LEFT JOIN uc.instance_types AS it ON it.id = i2.instance_type_id
 LEFT JOIN uc.mode_of_issuances AS im ON im.id = i2.mode_of_issuance_id
@@ -3346,8 +3409,11 @@ i2.payment_id AS ""PaymentId"",
 i2.disbursement_date AS ""DisbursementDate"",
 v.name AS ""Vendor"",
 i2.vendor_id AS ""VendorId"",
+fy.name AS ""FiscalYear"",
+i2.fiscal_year_id AS ""FiscalYearId"",
 i2.account_no AS ""AccountNumber"",
 i2.manual_payment AS ""ManualPayment"",
+i2.next_invoice_line_number AS ""NextInvoiceLineNumber"",
 i2.created_date AS ""CreationTime"",
 cu.username AS ""CreationUser"",
 i2.created_by_user_id AS ""CreationUserId"",
@@ -3361,6 +3427,7 @@ LEFT JOIN uc.batch_groups AS bg ON bg.id = i2.batch_group_id
 LEFT JOIN uc.configurations AS bt ON bt.id = i2.bill_to_id
 LEFT JOIN uc.transactions AS p ON p.id = i2.payment_id
 LEFT JOIN uc.organizations AS v ON v.id = i2.vendor_id
+LEFT JOIN uc.fiscal_years AS fy ON fy.id = i2.fiscal_year_id
 LEFT JOIN uc.users AS cu ON cu.id = i2.created_by_user_id
 LEFT JOIN uc.users AS lwu ON lwu.id = i2.updated_by_user_id
 LEFT JOIN uc.invoice_transaction_summaries AS its2 ON its2.id = i2.id
@@ -8636,7 +8703,9 @@ u2.preferred_contact_type_id AS ""PreferredContactTypeId"",
 u2.enrollment_date AS ""StartDate"",
 u2.expiration_date AS ""EndDate"",
 u2.source AS ""Source"",
-u2.category AS ""Category"",
+u2.category_code AS ""CategoryCode"",
+c.name AS ""Category"",
+u2.category_id AS ""CategoryId"",
 u2.status AS ""Status"",
 u2.statuses AS ""Statuses"",
 u2.staff_status AS ""StaffStatus"",
@@ -8660,6 +8729,7 @@ u2.content AS ""Content""
 FROM uc.users AS u2
 LEFT JOIN uc.groups AS g ON g.id = u2.group_id
 LEFT JOIN uc.contact_types AS pct ON pct.id = u2.preferred_contact_type_id
+LEFT JOIN uc.user_categories AS c ON c.id = u2.category_id
 LEFT JOIN uc.users AS cu ON cu.id = u2.created_by_user_id
 LEFT JOIN uc.users AS lwu ON lwu.id = u2.updated_by_user_id
  ORDER BY u2.username
@@ -8734,6 +8804,32 @@ LEFT JOIN uc.address_types AS at ON at.id = ua.address_type_id
  ORDER BY ua.address_line1
 ", take: 1);
             traceSource.TraceEvent(TraceEventType.Information, 0, $"UserAddressesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryUserCategoriesTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.UserCategories(take: 1).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserCategoriesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void UserCategoriesQueryTest()
+        {
+            var s = Stopwatch.StartNew();
+            folioDapperContext.Query(@"
+SELECT
+uc.name AS ""Name"",
+uc.code AS ""Code"",
+uc.creation_time AS ""CreationTime"",
+uc.creation_username AS ""CreationUsername"",
+uc.last_write_time AS ""LastWriteTime"",
+uc.last_write_username AS ""LastWriteUsername"" 
+FROM uc.user_categories AS uc
+ ORDER BY uc.name
+", take: 1);
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserCategoriesQueryTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]

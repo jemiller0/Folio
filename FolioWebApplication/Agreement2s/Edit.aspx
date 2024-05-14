@@ -65,6 +65,14 @@
                                     <asp:Literal ID="IsPerpetualLiteral" runat="server" Text='<%#: Eval("IsPerpetual") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("RenewalPriority") != null %>'>
+                                <td>
+                                    <asp:Label ID="RenewalPriorityLabel" runat="server" Text="Renewal Priority:" AssociatedControlID="RenewalPriorityLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="RenewalPriorityLiteral" runat="server" Text='<%#: Eval("RenewalPriority") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("Description") != null %>'>
                                 <td>
                                     <asp:Label ID="DescriptionLabel" runat="server" Text="Description:" AssociatedControlID="DescriptionLiteral" />
@@ -123,6 +131,20 @@
                                 <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/AgreementItem2s/Edit.aspx?Id={Eval("Id")}" %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Suppress From Discovery" DataField="SuppressFromDiscovery" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Note" DataField="Note" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Description" DataField="Description" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Custom Coverage" DataField="CustomCoverage" AutoPostBackOnFilter="true" />
+                        <telerik:GridTemplateColumn HeaderText="Start Date" DataField="StartDate" SortExpression="StartDate" AutoPostBackOnFilter="true">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="StartDateHyperLink" runat="server" Text='<%# $"{Eval("StartDate"):d}" ?? "&nbsp;" %>' NavigateUrl='<%# $"~/AgreementItem2s/Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="End Date" DataField="EndDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridBoundColumn HeaderText="Active From Date" DataField="ActiveFromDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridBoundColumn HeaderText="Active To Date" DataField="ActiveToDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridBoundColumn HeaderText="Content Last Write Time" DataField="ContentLastWriteTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridBoundColumn HeaderText="Have Access" DataField="HaveAccess" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridBoundColumn HeaderText="Last Write Time" DataField="LastWriteTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                     </Columns>
@@ -143,6 +165,23 @@
                                 <asp:HyperLink ID="OrganizationHyperLink" runat="server" Text='<%#: Eval("Organization.Name") %>' NavigateUrl='<%# $"~/Organization2s/Edit.aspx?Id={Eval("OrganizationId")}" %>' Enabled='<%# Session["Organization2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="AgreementPeriodsPanel" runat="server" Visible='<%# (string)Session["AgreementPeriodsPermission"] != null && Agreement2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="AgreementPeriodsHyperLink" runat="server" Text="Agreement Periods" NavigateUrl="~/AgreementPeriods/Default.aspx" Enabled="false" /></legend>
+            <telerik:RadGrid ID="AgreementPeriodsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="AgreementPeriodsRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No agreement periods found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="StartDate" />
+                    </SortExpressions>
+                    <Columns>
+                        <telerik:GridBoundColumn HeaderText="Start Date" DataField="StartDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridBoundColumn HeaderText="Status" DataField="Status" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>
@@ -299,6 +338,11 @@
             <telerik:AjaxSetting AjaxControlID="AgreementOrganizationsRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="AgreementOrganizationsPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="AgreementPeriodsRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="AgreementPeriodsPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="OrderItem2sRadGrid">

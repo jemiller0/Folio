@@ -22,6 +22,20 @@
                                 <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") ?? "&nbsp;" %>' NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Suppress From Discovery" DataField="SuppressFromDiscovery" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Note" DataField="Note" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Description" DataField="Description" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Custom Coverage" DataField="CustomCoverage" AutoPostBackOnFilter="true" />
+                        <telerik:GridTemplateColumn HeaderText="Start Date" DataField="StartDate" SortExpression="StartDate" AutoPostBackOnFilter="true">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="StartDateHyperLink" runat="server" Text='<%# $"{Eval("StartDate"):d}" ?? "&nbsp;" %>' NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="End Date" DataField="EndDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridBoundColumn HeaderText="Active From Date" DataField="ActiveFromDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridBoundColumn HeaderText="Active To Date" DataField="ActiveToDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridBoundColumn HeaderText="Content Last Write Time" DataField="ContentLastWriteTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridBoundColumn HeaderText="Have Access" DataField="HaveAccess" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridBoundColumn HeaderText="Last Write Time" DataField="LastWriteTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridTemplateColumn HeaderText="Agreement" DataField="Agreement.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">

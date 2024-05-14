@@ -17,6 +17,10 @@ namespace FolioWebApplication.Agreement2s
 
         protected RadGrid AgreementOrganizationsRadGrid;
 
+        protected Panel AgreementPeriodsPanel;
+
+        protected RadGrid AgreementPeriodsRadGrid;
+
         protected Panel OrderItem2sPanel;
 
         protected RadGrid OrderItem2sRadGrid;

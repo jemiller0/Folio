@@ -9,6 +9,10 @@ namespace FolioWebApplication.OrderItem2s
 
         protected FormView OrderItem2FormView;
 
+        protected Panel AgreementItemOrderItemsPanel;
+
+        protected RadGrid AgreementItemOrderItemsRadGrid;
+
         protected Panel InvoiceItem2sPanel;
 
         protected RadGrid InvoiceItem2sRadGrid;

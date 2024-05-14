@@ -41,7 +41,9 @@ namespace FolioWebApplication
         {
             Session["Agreement2sPermission"] = roles.Contains("all") || roles.Contains("uc.agreements.view") ? "View" : null;
             Session["AgreementItem2sPermission"] = roles.Contains("all") || roles.Contains("uc.agreementitems.view") ? "View" : null;
+            Session["AgreementItemOrderItemsPermission"] = roles.Contains("all") || roles.Contains("uc.agreementitemorderitems.view") ? "View" : null;
             Session["AgreementOrganizationsPermission"] = roles.Contains("all") || roles.Contains("uc.agreementorganizations.view") ? "View" : null;
+            Session["AgreementPeriodsPermission"] = roles.Contains("all") || roles.Contains("uc.agreementperiods.view") ? "View" : null;
             Session["ReferenceData2sPermission"] = roles.Contains("all") || roles.Contains("uc.referencedatas.view") ? "View" : null;
         }
 
@@ -367,6 +369,7 @@ namespace FolioWebApplication
             Session["Proxy2sPermission"] = roles.Contains("all") || roles.Contains("uc.proxies.view") || roles.Contains("users.all") ? "View" : null;
             Session["User2sPermission"] = roles.Contains("uc.users.edit") ? "Edit" : roles.Contains("all") || roles.Contains("uc.users.view") || roles.Contains("users.all") ? "View" : null;
             Session["UserAddressesPermission"] = roles.Contains("all") || roles.Contains("uc.useraddresses.view") || roles.Contains("users.all") ? "View" : null;
+            Session["UserCategoriesPermission"] = roles.Contains("all") || roles.Contains("uc.usercategories.view") || roles.Contains("users.all") ? "View" : null;
             Session["UserDepartmentsPermission"] = roles.Contains("all") || roles.Contains("uc.userdepartments.view") || roles.Contains("users.all") ? "View" : null;
             Session["UserNotesPermission"] = roles.Contains("all") || roles.Contains("uc.usernotes.view") || roles.Contains("users.all") ? "View" : null;
             Session["UserSummary2sPermission"] = roles.Contains("all") || roles.Contains("uc.usersummaries.view") || roles.Contains("users.all") ? "View" : null;
@@ -397,7 +400,9 @@ namespace FolioWebApplication
         {
             Session["Agreement2sPermission"] = permission;
             Session["AgreementItem2sPermission"] = permission;
+            Session["AgreementItemOrderItemsPermission"] = permission;
             Session["AgreementOrganizationsPermission"] = permission;
+            Session["AgreementPeriodsPermission"] = permission;
             Session["ReferenceData2sPermission"] = permission;
         }
 
@@ -723,6 +728,7 @@ namespace FolioWebApplication
             Session["Proxy2sPermission"] = permission;
             Session["User2sPermission"] = permission;
             Session["UserAddressesPermission"] = permission;
+            Session["UserCategoriesPermission"] = permission;
             Session["UserDepartmentsPermission"] = permission;
             Session["UserNotesPermission"] = permission;
             Session["UserSummary2sPermission"] = permission;

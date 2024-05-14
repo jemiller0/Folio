@@ -57,6 +57,7 @@ namespace FolioLibraryTest
             var a2 = folioServiceContext.Agreement2s(take: 1).SingleOrDefault();
             if (a2 == null) Assert.Inconclusive();
             a2.AgreementOrganizations = null;
+            a2.AgreementPeriods = null;
             var a3 = folioDapperContext.Agreement2s(take: 1).SingleOrDefault();
             a3.Content = null;
             Assert.AreEqual(a2.ToString(), a3.ToString());
@@ -69,6 +70,7 @@ namespace FolioLibraryTest
             var s = Stopwatch.StartNew();
             var ai2 = folioServiceContext.AgreementItem2s(take: 1).SingleOrDefault();
             if (ai2 == null) Assert.Inconclusive();
+            ai2.AgreementItemOrderItems = null;
             var ai3 = folioDapperContext.AgreementItem2s(take: 1).SingleOrDefault();
             ai3.Content = null;
             Assert.AreEqual(ai2.ToString(), ai3.ToString());

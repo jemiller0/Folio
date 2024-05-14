@@ -75,6 +75,7 @@ namespace FolioWebApplication.User2s
             u2.StartDate = (DateTime?)e.NewValues["StartDate"];
             u2.EndDate = (DateTime?)e.NewValues["EndDate"];
             u2.Source = Global.Trim((string)e.NewValues["Source"]);
+            u2.CategoryCode = Global.Trim((string)e.NewValues["CategoryCode"]);
             u2.Deceased = (bool?)e.NewValues["Deceased"];
             u2.Collections = (bool?)e.NewValues["Collections"];
             u2.LastWriteTime = DateTime.Now;
@@ -482,7 +483,7 @@ namespace FolioWebApplication.User2s
             if (Session["Invoice2sPermission"] == null) return;
             var id = (Guid?)User2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "AccountingCode", "accountingCode" }, { "AdjustmentsTotal", "adjustmentsTotal" }, { "ApprovedById", "approvedBy" }, { "ApprovalDate", "approvalDate" }, { "BatchGroupId", "batchGroupId" }, { "BillToId", "billTo" }, { "CheckSubscriptionOverlap", "chkSubscriptionOverlap" }, { "CancellationNote", "cancellationNote" }, { "Currency", "currency" }, { "Enclosure", "enclosureNeeded" }, { "ExchangeRate", "exchangeRate" }, { "ExportToAccounting", "exportToAccounting" }, { "Number", "folioInvoiceNo" }, { "InvoiceDate", "invoiceDate" }, { "LockTotal", "lockTotal" }, { "Note", "note" }, { "PaymentDueDate", "paymentDue" }, { "PaymentDate", "paymentDate" }, { "PaymentTerms", "paymentTerms" }, { "PaymentMethod", "paymentMethod" }, { "Status", "status" }, { "Source", "source" }, { "SubTotal", "subTotal" }, { "Total", "total" }, { "VendorInvoiceNumber", "vendorInvoiceNo" }, { "DisbursementNumber", "disbursementNumber" }, { "VoucherNumber", "voucherNumber" }, { "PaymentId", "paymentId" }, { "DisbursementDate", "disbursementDate" }, { "VendorId", "vendorId" }, { "AccountNumber", "accountNo" }, { "ManualPayment", "manualPayment" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "AccountingCode", "accountingCode" }, { "AdjustmentsTotal", "adjustmentsTotal" }, { "ApprovedById", "approvedBy" }, { "ApprovalDate", "approvalDate" }, { "BatchGroupId", "batchGroupId" }, { "BillToId", "billTo" }, { "CheckSubscriptionOverlap", "chkSubscriptionOverlap" }, { "CancellationNote", "cancellationNote" }, { "Currency", "currency" }, { "Enclosure", "enclosureNeeded" }, { "ExchangeRate", "exchangeRate" }, { "ExportToAccounting", "exportToAccounting" }, { "Number", "folioInvoiceNo" }, { "InvoiceDate", "invoiceDate" }, { "LockTotal", "lockTotal" }, { "Note", "note" }, { "PaymentDueDate", "paymentDue" }, { "PaymentDate", "paymentDate" }, { "PaymentTerms", "paymentTerms" }, { "PaymentMethod", "paymentMethod" }, { "Status", "status" }, { "Source", "source" }, { "SubTotal", "subTotal" }, { "Total", "total" }, { "VendorInvoiceNumber", "vendorInvoiceNo" }, { "DisbursementNumber", "disbursementNumber" }, { "VoucherNumber", "voucherNumber" }, { "PaymentId", "paymentId" }, { "DisbursementDate", "disbursementDate" }, { "VendorId", "vendorId" }, { "FiscalYearId", "fiscalYearId" }, { "AccountNumber", "accountNo" }, { "ManualPayment", "manualPayment" }, { "NextInvoiceLineNumber", "nextInvoiceLineNumber" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"approvedBy == \"{id}\"",
@@ -516,8 +517,10 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(Invoice2sRadGrid, "Payment.Amount", "paymentId", "amount", folioServiceContext.FolioServiceClient.Transactions),
                 Global.GetCqlFilter(Invoice2sRadGrid, "DisbursementDate", "disbursementDate"),
                 Global.GetCqlFilter(Invoice2sRadGrid, "Vendor.Name", "vendorId", "name", folioServiceContext.FolioServiceClient.Organizations),
+                Global.GetCqlFilter(Invoice2sRadGrid, "FiscalYear.Name", "fiscalYearId", "name", folioServiceContext.FolioServiceClient.FiscalYears),
                 Global.GetCqlFilter(Invoice2sRadGrid, "AccountNumber", "accountNo"),
                 Global.GetCqlFilter(Invoice2sRadGrid, "ManualPayment", "manualPayment"),
+                Global.GetCqlFilter(Invoice2sRadGrid, "NextInvoiceLineNumber", "nextInvoiceLineNumber"),
                 Global.GetCqlFilter(Invoice2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(Invoice2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Invoice2sRadGrid, "LastWriteTime", "metadata.updatedDate"),

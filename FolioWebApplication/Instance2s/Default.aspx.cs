@@ -47,7 +47,8 @@ namespace FolioWebApplication.Instance2s
                 Global.GetCqlFilter(Instance2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(Instance2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Instance2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
-                Global.GetCqlFilter(Instance2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+                Global.GetCqlFilter(Instance2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Instance2sRadGrid, "CompletionTime", "")
             }.Where(s => s != null)));
             Instance2sRadGrid.DataSource = folioServiceContext.Instance2s(out var i, where, Instance2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Instance2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Instance2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Instance2sRadGrid.PageSize * Instance2sRadGrid.CurrentPageIndex, Instance2sRadGrid.PageSize, true);
             Instance2sRadGrid.VirtualItemCount = i;
@@ -62,7 +63,7 @@ namespace FolioWebApplication.Instance2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"Instance2s.txt\"");
             Response.BufferOutput = false;
-            Response.Write("Id\tShortId\tMatchKey\tSource\tTitle\tAuthor\tPublicationStartYear\tPublicationEndYear\tInstanceType\tInstanceTypeId\tIssuanceMode\tIssuanceModeId\tCatalogedDate\tPreviouslyHeld\tStaffSuppress\tDiscoverySuppress\tSourceRecordFormat\tStatus\tStatusId\tStatusLastWriteTime\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
+            Response.Write("Id\tShortId\tMatchKey\tSource\tTitle\tAuthor\tPublicationStartYear\tPublicationEndYear\tInstanceType\tInstanceTypeId\tIssuanceMode\tIssuanceModeId\tCatalogedDate\tPreviouslyHeld\tStaffSuppress\tDiscoverySuppress\tSourceRecordFormat\tStatus\tStatusId\tStatusLastWriteTime\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\tCompletionTime\r\n");
             var d = new Dictionary<string, string>() { { "Id", "id" }, { "ShortId", "hrid" }, { "MatchKey", "matchKey" }, { "Source", "source" }, { "Title", "title" }, { "Author", "contributors[0].name" }, { "PublicationStartYear", "publicationPeriod.start" }, { "PublicationEndYear", "publicationPeriod.end" }, { "InstanceTypeId", "instanceTypeId" }, { "IssuanceModeId", "modeOfIssuanceId" }, { "CatalogedDate", "catalogedDate" }, { "PreviouslyHeld", "previouslyHeld" }, { "StaffSuppress", "staffSuppress" }, { "DiscoverySuppress", "discoverySuppress" }, { "SourceRecordFormat", "sourceRecordFormat" }, { "StatusId", "statusId" }, { "StatusLastWriteTime", "statusUpdatedDate" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
@@ -86,10 +87,11 @@ namespace FolioWebApplication.Instance2s
                 Global.GetCqlFilter(Instance2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(Instance2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Instance2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
-                Global.GetCqlFilter(Instance2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+                Global.GetCqlFilter(Instance2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Instance2sRadGrid, "CompletionTime", "")
             }.Where(s => s != null)));
             foreach (var i2 in folioServiceContext.Instance2s(where, Instance2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Instance2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Instance2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
-                Response.Write($"{i2.Id}\t{i2.ShortId}\t{Global.TextEncode(i2.MatchKey)}\t{Global.TextEncode(i2.Source)}\t{Global.TextEncode(i2.Title)}\t{Global.TextEncode(i2.Author)}\t{i2.PublicationStartYear}\t{i2.PublicationEndYear}\t{Global.TextEncode(i2.InstanceType?.Name)}\t{i2.InstanceTypeId}\t{Global.TextEncode(i2.IssuanceMode?.Name)}\t{i2.IssuanceModeId}\t{i2.CatalogedDate:M/d/yyyy}\t{i2.PreviouslyHeld}\t{i2.StaffSuppress}\t{i2.DiscoverySuppress}\t{Global.TextEncode(i2.SourceRecordFormat)}\t{Global.TextEncode(i2.Status?.Name)}\t{i2.StatusId}\t{i2.StatusLastWriteTime:M/d/yyyy HH:mm:ss}\t{i2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(i2.CreationUser?.Username)}\t{i2.CreationUserId}\t{i2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(i2.LastWriteUser?.Username)}\t{i2.LastWriteUserId}\r\n");
+                Response.Write($"{i2.Id}\t{i2.ShortId}\t{Global.TextEncode(i2.MatchKey)}\t{Global.TextEncode(i2.Source)}\t{Global.TextEncode(i2.Title)}\t{Global.TextEncode(i2.Author)}\t{i2.PublicationStartYear}\t{i2.PublicationEndYear}\t{Global.TextEncode(i2.InstanceType?.Name)}\t{i2.InstanceTypeId}\t{Global.TextEncode(i2.IssuanceMode?.Name)}\t{i2.IssuanceModeId}\t{i2.CatalogedDate:M/d/yyyy}\t{i2.PreviouslyHeld}\t{i2.StaffSuppress}\t{i2.DiscoverySuppress}\t{Global.TextEncode(i2.SourceRecordFormat)}\t{Global.TextEncode(i2.Status?.Name)}\t{i2.StatusId}\t{i2.StatusLastWriteTime:M/d/yyyy HH:mm:ss}\t{i2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(i2.CreationUser?.Username)}\t{i2.CreationUserId}\t{i2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(i2.LastWriteUser?.Username)}\t{i2.LastWriteUserId}\t{i2.CompletionTime:M/d/yyyy HH:mm:ss}\r\n");
             Response.End();
         }
 

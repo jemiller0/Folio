@@ -163,12 +163,20 @@
                                     <asp:Literal ID="SourceLiteral" runat="server" Text='<%#: Eval("Source") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("Category") != null %>'>
+                            <tr runat="server" visible='<%# Eval("CategoryCode") != null %>'>
                                 <td>
-                                    <asp:Label ID="CategoryLabel" runat="server" Text="Category:" AssociatedControlID="CategoryLiteral" />
+                                    <asp:Label ID="CategoryCodeLabel" runat="server" Text="Category Code:" AssociatedControlID="CategoryCodeLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="CategoryLiteral" runat="server" Text='<%#: Eval("Category") %>' />
+                                    <asp:Literal ID="CategoryCodeLiteral" runat="server" Text='<%#: Eval("CategoryCode") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Category") != null %>'>
+                                <td>
+                                    <asp:Label ID="CategoryLabel" runat="server" Text="Category:" AssociatedControlID="CategoryHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="CategoryHyperLink" runat="server" Text='<%#: Eval("Category.Name") %>' NavigateUrl='<%# $"~/UserCategories/Edit.aspx?Id={Eval("CategoryId")}" %>' Enabled='<%# Session["UserCategoriesPermission"] != null %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Status") != null %>'>
@@ -497,12 +505,20 @@
                                     <asp:RegularExpressionValidator ID="SourceRegularExpressionValidator" runat="server" ErrorMessage="The Source field must match the regular expression '^(Library|University)$'." ControlToValidate="SourceRadComboBox" Display="Dynamic" CssClass="Error" ValidationExpression="^(Library|University)$" ValidationGroup="User2" />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("Category") != null %>'>
+                            <tr>
                                 <td>
-                                    <asp:Label ID="CategoryLabel" runat="server" Text="Category:" AssociatedControlID="CategoryLiteral" />
+                                    <asp:Label ID="CategoryCodeLabel" runat="server" Text="Category Code:" AssociatedControlID="CategoryCodeRadTextBox" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="CategoryLiteral" runat="server" Text='<%#: Eval("Category") %>' />
+                                    <telerik:RadTextBox ID="CategoryCodeRadTextBox" runat="server" Text='<%# Bind("CategoryCode") %>' MaxLength="1024" Width="500px" />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Category") != null %>'>
+                                <td>
+                                    <asp:HyperLink runat="server" Text="Category:" NavigateUrl="~/UserCategories/Default.aspx" Enabled='<%# Session["UserCategoriesPermission"] != null %>' />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="CategoryHyperLink" runat="server" Text='<%# Eval("Category.Name") %>' NavigateUrl='<%# "~/UserCategories/Edit.aspx?Id=" + Eval("CategoryId") %>' Enabled='<%# Session["UserCategoriesPermission"] != null %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Status") != null %>'>
@@ -963,8 +979,14 @@
                                 <asp:HyperLink ID="VendorHyperLink" runat="server" Text='<%#: Eval("Vendor.Name") %>' NavigateUrl='<%# $"~/Organization2s/Edit.aspx?Id={Eval("VendorId")}" %>' Enabled='<%# Session["Organization2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Fiscal Year" DataField="FiscalYear.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="FiscalYearHyperLink" runat="server" Text='<%#: Eval("FiscalYear.Name") %>' NavigateUrl='<%# $"~/FiscalYear2s/Edit.aspx?Id={Eval("FiscalYearId")}" %>' Enabled='<%# Session["FiscalYear2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Account Number" DataField="AccountNumber" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Manual Payment" DataField="ManualPayment" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Next Invoice Line Number" DataField="NextInvoiceLineNumber" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridTemplateColumn HeaderText="Creation User" DataField="CreationUser.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>

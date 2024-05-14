@@ -136,70 +136,79 @@ namespace FolioLibrary
         [Column("vendor_id"), Display(Name = "Vendor", Order = 36), JsonProperty("vendorId"), Required]
         public virtual Guid? VendorId { get; set; }
 
-        [Column("account_no"), Display(Name = "Account Number", Order = 37), JsonProperty("accountNo"), StringLength(1024)]
+        [Display(Name = "Fiscal Year", Order = 37)]
+        public virtual FiscalYear2 FiscalYear { get; set; }
+
+        [Column("fiscal_year_id"), Display(Name = "Fiscal Year", Order = 38), JsonProperty("fiscalYearId")]
+        public virtual Guid? FiscalYearId { get; set; }
+
+        [Column("account_no"), Display(Name = "Account Number", Order = 39), JsonProperty("accountNo"), StringLength(1024)]
         public virtual string AccountNumber { get; set; }
 
-        [Column("manual_payment"), Display(Name = "Manual Payment", Order = 38), JsonProperty("manualPayment")]
+        [Column("manual_payment"), Display(Name = "Manual Payment", Order = 40), JsonProperty("manualPayment")]
         public virtual bool? ManualPayment { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 39), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("next_invoice_line_number"), Display(Name = "Next Invoice Line Number", Order = 41), Editable(false), JsonProperty("nextInvoiceLineNumber")]
+        public virtual int? NextInvoiceLineNumber { get; set; }
+
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 42), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 40), InverseProperty("Invoice2s1")]
+        [Display(Name = "Creation User", Order = 43), InverseProperty("Invoice2s1")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 41), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 44), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 43), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 46), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 44), InverseProperty("Invoice2s2")]
+        [Display(Name = "Last Write User", Order = 47), InverseProperty("Invoice2s2")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 45), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 48), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Invoice), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 47), Editable(false)]
+        [Column("content"), CustomValidation(typeof(Invoice), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 50), Editable(false)]
         public virtual string Content { get; set; }
 
         [ScaffoldColumn(false)]
         public virtual ICollection<Document2> Document2s { get; set; }
 
-        [Display(Name = "Invoice Acquisitions Units", Order = 49), JsonConverter(typeof(ArrayJsonConverter<List<InvoiceAcquisitionsUnit>, InvoiceAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
+        [Display(Name = "Invoice Acquisitions Units", Order = 52), JsonConverter(typeof(ArrayJsonConverter<List<InvoiceAcquisitionsUnit>, InvoiceAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
         public virtual ICollection<InvoiceAcquisitionsUnit> InvoiceAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Invoice Adjustments", Order = 50), JsonProperty("adjustments")]
+        [Display(Name = "Invoice Adjustments", Order = 53), JsonProperty("adjustments")]
         public virtual ICollection<InvoiceAdjustment> InvoiceAdjustments { get; set; }
 
-        [Display(Name = "Invoice Items", Order = 51)]
+        [Display(Name = "Invoice Items", Order = 54)]
         public virtual ICollection<InvoiceItem2> InvoiceItem2s { get; set; }
 
-        [Display(Name = "Invoice Order Numbers", Order = 52), JsonConverter(typeof(ArrayJsonConverter<List<InvoiceOrderNumber>, InvoiceOrderNumber>), "Content"), JsonProperty("poNumbers")]
+        [Display(Name = "Invoice Order Numbers", Order = 55), JsonConverter(typeof(ArrayJsonConverter<List<InvoiceOrderNumber>, InvoiceOrderNumber>), "Content"), JsonProperty("poNumbers")]
         public virtual ICollection<InvoiceOrderNumber> InvoiceOrderNumbers { get; set; }
 
-        [Display(Name = "Invoice Tags", Order = 53), JsonConverter(typeof(ArrayJsonConverter<List<InvoiceTag>, InvoiceTag>), "Content"), JsonProperty("tags.tagList")]
+        [Display(Name = "Invoice Tags", Order = 56), JsonConverter(typeof(ArrayJsonConverter<List<InvoiceTag>, InvoiceTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<InvoiceTag> InvoiceTags { get; set; }
 
         [ScaffoldColumn(false)]
         public virtual InvoiceTransactionSummary2 InvoiceTransactionSummary2 { get; set; }
 
-        [Display(Name = "Order Invoices", Order = 55)]
+        [Display(Name = "Order Invoices", Order = 58)]
         public virtual ICollection<OrderInvoice2> OrderInvoice2s { get; set; }
 
-        [Display(Name = "Transactions", Order = 56)]
+        [Display(Name = "Transactions", Order = 59)]
         public virtual ICollection<Transaction2> Transaction2s { get; set; }
 
-        [Display(Name = "Vouchers", Order = 57)]
+        [Display(Name = "Vouchers", Order = 60)]
         public virtual ICollection<Voucher2> Voucher2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AdjustmentsTotal)} = {AdjustmentsTotal}, {nameof(ApprovedById)} = {ApprovedById}, {nameof(ApprovalDate)} = {ApprovalDate}, {nameof(BatchGroupId)} = {BatchGroupId}, {nameof(BillToId)} = {BillToId}, {nameof(CheckSubscriptionOverlap)} = {CheckSubscriptionOverlap}, {nameof(CancellationNote)} = {CancellationNote}, {nameof(Currency)} = {Currency}, {nameof(Enclosure)} = {Enclosure}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(ExportToAccounting)} = {ExportToAccounting}, {nameof(Number)} = {Number}, {nameof(InvoiceDate)} = {InvoiceDate}, {nameof(LockTotal)} = {LockTotal}, {nameof(Note)} = {Note}, {nameof(PaymentDueDate)} = {PaymentDueDate}, {nameof(PaymentDate)} = {PaymentDate}, {nameof(PaymentTerms)} = {PaymentTerms}, {nameof(PaymentMethod)} = {PaymentMethod}, {nameof(Status)} = {Status}, {nameof(Source)} = {Source}, {nameof(SubTotal)} = {SubTotal}, {nameof(Total)} = {Total}, {nameof(VendorInvoiceNumber)} = {VendorInvoiceNumber}, {nameof(DisbursementNumber)} = {DisbursementNumber}, {nameof(VoucherNumber)} = {VoucherNumber}, {nameof(PaymentId)} = {PaymentId}, {nameof(DisbursementDate)} = {DisbursementDate}, {nameof(VendorId)} = {VendorId}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(ManualPayment)} = {ManualPayment}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(InvoiceAcquisitionsUnits)} = {(InvoiceAcquisitionsUnits != null ? $"{{ {string.Join(", ", InvoiceAcquisitionsUnits)} }}" : "")}, {nameof(InvoiceAdjustments)} = {(InvoiceAdjustments != null ? $"{{ {string.Join(", ", InvoiceAdjustments)} }}" : "")}, {nameof(InvoiceOrderNumbers)} = {(InvoiceOrderNumbers != null ? $"{{ {string.Join(", ", InvoiceOrderNumbers)} }}" : "")}, {nameof(InvoiceTags)} = {(InvoiceTags != null ? $"{{ {string.Join(", ", InvoiceTags)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AdjustmentsTotal)} = {AdjustmentsTotal}, {nameof(ApprovedById)} = {ApprovedById}, {nameof(ApprovalDate)} = {ApprovalDate}, {nameof(BatchGroupId)} = {BatchGroupId}, {nameof(BillToId)} = {BillToId}, {nameof(CheckSubscriptionOverlap)} = {CheckSubscriptionOverlap}, {nameof(CancellationNote)} = {CancellationNote}, {nameof(Currency)} = {Currency}, {nameof(Enclosure)} = {Enclosure}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(ExportToAccounting)} = {ExportToAccounting}, {nameof(Number)} = {Number}, {nameof(InvoiceDate)} = {InvoiceDate}, {nameof(LockTotal)} = {LockTotal}, {nameof(Note)} = {Note}, {nameof(PaymentDueDate)} = {PaymentDueDate}, {nameof(PaymentDate)} = {PaymentDate}, {nameof(PaymentTerms)} = {PaymentTerms}, {nameof(PaymentMethod)} = {PaymentMethod}, {nameof(Status)} = {Status}, {nameof(Source)} = {Source}, {nameof(SubTotal)} = {SubTotal}, {nameof(Total)} = {Total}, {nameof(VendorInvoiceNumber)} = {VendorInvoiceNumber}, {nameof(DisbursementNumber)} = {DisbursementNumber}, {nameof(VoucherNumber)} = {VoucherNumber}, {nameof(PaymentId)} = {PaymentId}, {nameof(DisbursementDate)} = {DisbursementDate}, {nameof(VendorId)} = {VendorId}, {nameof(FiscalYearId)} = {FiscalYearId}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(ManualPayment)} = {ManualPayment}, {nameof(NextInvoiceLineNumber)} = {NextInvoiceLineNumber}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(InvoiceAcquisitionsUnits)} = {(InvoiceAcquisitionsUnits != null ? $"{{ {string.Join(", ", InvoiceAcquisitionsUnits)} }}" : "")}, {nameof(InvoiceAdjustments)} = {(InvoiceAdjustments != null ? $"{{ {string.Join(", ", InvoiceAdjustments)} }}" : "")}, {nameof(InvoiceOrderNumbers)} = {(InvoiceOrderNumbers != null ? $"{{ {string.Join(", ", InvoiceOrderNumbers)} }}" : "")}, {nameof(InvoiceTags)} = {(InvoiceTags != null ? $"{{ {string.Join(", ", InvoiceTags)} }}" : "")} }}";
 
         public static Invoice2 FromJObject(JObject jObject) => jObject != null ? new Invoice2
         {
@@ -234,8 +243,10 @@ namespace FolioLibrary
             PaymentId = (Guid?)jObject.SelectToken("paymentId"),
             DisbursementDate = ((DateTime?)jObject.SelectToken("disbursementDate"))?.ToUniversalTime(),
             VendorId = (Guid?)jObject.SelectToken("vendorId"),
+            FiscalYearId = (Guid?)jObject.SelectToken("fiscalYearId"),
             AccountNumber = (string)jObject.SelectToken("accountNo"),
             ManualPayment = (bool?)jObject.SelectToken("manualPayment"),
+            NextInvoiceLineNumber = (int?)jObject.SelectToken("nextInvoiceLineNumber"),
             CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
@@ -281,8 +292,10 @@ namespace FolioLibrary
             new JProperty("paymentId", PaymentId),
             new JProperty("disbursementDate", DisbursementDate?.ToLocalTime()),
             new JProperty("vendorId", VendorId),
+            new JProperty("fiscalYearId", FiscalYearId),
             new JProperty("accountNo", AccountNumber),
             new JProperty("manualPayment", ManualPayment),
+            new JProperty("nextInvoiceLineNumber", NextInvoiceLineNumber),
             new JProperty("metadata", new JObject(
                 new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),
