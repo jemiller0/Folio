@@ -110,6 +110,10 @@
           "description": "Indicates whether or not this loan had its due date modified by a recall on the loaned item",
           "type": "boolean"
         },
+        "isDcb": {
+          "description": "Indicates whether or not this loan is associated for DCB use case",
+          "type": "boolean"
+        },
         "declaredLostDate": {
           "description": "Date and time the item was declared lost during this loan",
           "type": "string",
@@ -186,6 +190,29 @@
               "description": "Date and time the item was aged to lost for this loan",
               "type": "string",
               "format": "date-time"
+            }
+          }
+        },
+        "reminders": {
+          "description": "Information about reminders for overdue loan",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "lastFeeBilled": {
+              "description": "Information about the most recent reminder fee billing",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "number": {
+                  "description": "Last reminder fee billed, sequence number",
+                  "type": "integer"
+                },
+                "date": {
+                  "description": "Last reminder fee billed, date",
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
             }
           }
         }

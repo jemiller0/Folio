@@ -76,19 +76,22 @@ namespace FolioLibrary
         [Column("content"), CustomValidation(typeof(Owner), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 16), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Fees", Order = 17)]
+        [Display(Name = "Actual Cost Records", Order = 17)]
+        public virtual ICollection<ActualCostRecord2> ActualCostRecord2s { get; set; }
+
+        [Display(Name = "Fees", Order = 18)]
         public virtual ICollection<Fee2> Fee2s { get; set; }
 
-        [Display(Name = "Fee Types", Order = 18)]
+        [Display(Name = "Fee Types", Order = 19)]
         public virtual ICollection<FeeType2> FeeType2s { get; set; }
 
-        [Display(Name = "Payment Methods", Order = 19)]
+        [Display(Name = "Payment Methods", Order = 20)]
         public virtual ICollection<PaymentMethod2> PaymentMethod2s { get; set; }
 
-        [Display(Name = "Service Point Owners", Order = 20), JsonProperty("servicePointOwner")]
+        [Display(Name = "Service Point Owners", Order = 21), JsonProperty("servicePointOwner")]
         public virtual ICollection<ServicePointOwner> ServicePointOwners { get; set; }
 
-        [Display(Name = "Transfer Accounts", Order = 21)]
+        [Display(Name = "Transfer Accounts", Order = 22)]
         public virtual ICollection<TransferAccount2> TransferAccount2s { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Description)} = {Description}, {nameof(DefaultChargeNoticeId)} = {DefaultChargeNoticeId}, {nameof(DefaultActionNoticeId)} = {DefaultActionNoticeId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(ServicePointOwners)} = {(ServicePointOwners != null ? $"{{ {string.Join(", ", ServicePointOwners)} }}" : "")} }}";

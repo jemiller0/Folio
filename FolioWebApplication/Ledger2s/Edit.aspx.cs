@@ -39,7 +39,7 @@ namespace FolioWebApplication.Ledger2s
             if (Session["Fund2sPermission"] == null) return;
             var id = (Guid?)Ledger2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Code", "code" }, { "Description", "description" }, { "AccountNumber", "externalAccountNo" }, { "FundStatus", "fundStatus" }, { "FundTypeId", "fundTypeId" }, { "LedgerId", "ledgerId" }, { "Name", "name" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Code", "code" }, { "Description", "description" }, { "AccountNumber", "externalAccountNo" }, { "FundStatus", "fundStatus" }, { "FundTypeId", "fundTypeId" }, { "LedgerId", "ledgerId" }, { "Name", "name" }, { "RestrictByLocations", "restrictByLocations" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"ledgerId == \"{id}\"",
@@ -50,6 +50,7 @@ namespace FolioWebApplication.Ledger2s
                 Global.GetCqlFilter(Fund2sRadGrid, "FundStatus", "fundStatus"),
                 Global.GetCqlFilter(Fund2sRadGrid, "FundType.Name", "fundTypeId", "name", folioServiceContext.FolioServiceClient.FundTypes),
                 Global.GetCqlFilter(Fund2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(Fund2sRadGrid, "RestrictByLocations", "restrictByLocations"),
                 Global.GetCqlFilter(Fund2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(Fund2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Fund2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
@@ -76,33 +77,34 @@ namespace FolioWebApplication.Ledger2s
             LedgerAcquisitionsUnitsPanel.Visible = Ledger2FormView.DataKey.Value != null && ((string)Session["LedgerAcquisitionsUnitsPermission"] == "Edit" || Session["LedgerAcquisitionsUnitsPermission"] != null && l.Any());
         }
 
-        protected void LedgerRollover2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        protected void Rollover2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            if (Session["LedgerRollover2sPermission"] == null) return;
+            if (Session["Rollover2sPermission"] == null) return;
             var id = (Guid?)Ledger2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "LedgerId", "ledgerId" }, { "FromFiscalYearId", "fromFiscalYearId" }, { "ToFiscalYearId", "toFiscalYearId" }, { "RestrictEncumbrance", "restrictEncumbrance" }, { "RestrictExpenditures", "restrictExpenditures" }, { "NeedCloseBudgets", "needCloseBudgets" }, { "CurrencyFactor", "currencyFactor" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "LedgerId", "ledgerId" }, { "RolloverType", "rolloverType" }, { "FromFiscalYearId", "fromFiscalYearId" }, { "ToFiscalYearId", "toFiscalYearId" }, { "RestrictEncumbrance", "restrictEncumbrance" }, { "RestrictExpenditures", "restrictExpenditures" }, { "NeedCloseBudgets", "needCloseBudgets" }, { "CurrencyFactor", "currencyFactor" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"ledgerId == \"{id}\"",
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "Id", "id"),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "FromFiscalYear.Name", "fromFiscalYearId", "name", folioServiceContext.FolioServiceClient.FiscalYears),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "ToFiscalYear.Name", "toFiscalYearId", "name", folioServiceContext.FolioServiceClient.FiscalYears),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "RestrictEncumbrance", "restrictEncumbrance"),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "RestrictExpenditures", "restrictExpenditures"),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "NeedCloseBudgets", "needCloseBudgets"),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "CurrencyFactor", "currencyFactor"),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "CreationTime", "metadata.createdDate"),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+                Global.GetCqlFilter(Rollover2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Rollover2sRadGrid, "RolloverType", "rolloverType"),
+                Global.GetCqlFilter(Rollover2sRadGrid, "FromFiscalYear.Name", "fromFiscalYearId", "name", folioServiceContext.FolioServiceClient.FiscalYears),
+                Global.GetCqlFilter(Rollover2sRadGrid, "ToFiscalYear.Name", "toFiscalYearId", "name", folioServiceContext.FolioServiceClient.FiscalYears),
+                Global.GetCqlFilter(Rollover2sRadGrid, "RestrictEncumbrance", "restrictEncumbrance"),
+                Global.GetCqlFilter(Rollover2sRadGrid, "RestrictExpenditures", "restrictExpenditures"),
+                Global.GetCqlFilter(Rollover2sRadGrid, "NeedCloseBudgets", "needCloseBudgets"),
+                Global.GetCqlFilter(Rollover2sRadGrid, "CurrencyFactor", "currencyFactor"),
+                Global.GetCqlFilter(Rollover2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(Rollover2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Rollover2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(Rollover2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            LedgerRollover2sRadGrid.DataSource = folioServiceContext.LedgerRollover2s(out var i, where, LedgerRollover2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[LedgerRollover2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(LedgerRollover2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, LedgerRollover2sRadGrid.PageSize * LedgerRollover2sRadGrid.CurrentPageIndex, LedgerRollover2sRadGrid.PageSize, true);
-            LedgerRollover2sRadGrid.VirtualItemCount = i;
-            if (LedgerRollover2sRadGrid.MasterTableView.FilterExpression == "")
+            Rollover2sRadGrid.DataSource = folioServiceContext.Rollover2s(out var i, where, Rollover2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Rollover2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Rollover2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Rollover2sRadGrid.PageSize * Rollover2sRadGrid.CurrentPageIndex, Rollover2sRadGrid.PageSize, true);
+            Rollover2sRadGrid.VirtualItemCount = i;
+            if (Rollover2sRadGrid.MasterTableView.FilterExpression == "")
             {
-                LedgerRollover2sRadGrid.AllowFilteringByColumn = LedgerRollover2sRadGrid.VirtualItemCount > 10;
-                LedgerRollover2sPanel.Visible = Ledger2FormView.DataKey.Value != null && Session["LedgerRollover2sPermission"] != null && LedgerRollover2sRadGrid.VirtualItemCount > 0;
+                Rollover2sRadGrid.AllowFilteringByColumn = Rollover2sRadGrid.VirtualItemCount > 10;
+                Rollover2sPanel.Visible = Ledger2FormView.DataKey.Value != null && Session["Rollover2sPermission"] != null && Rollover2sRadGrid.VirtualItemCount > 0;
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }

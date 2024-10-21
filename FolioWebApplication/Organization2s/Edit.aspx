@@ -489,6 +489,14 @@
                                     <asp:Literal ID="IsVendorLiteral" runat="server" Text='<%#: Eval("IsVendor") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("IsDonor") != null %>'>
+                                <td>
+                                    <asp:Label ID="IsDonorLabel" runat="server" Text="Is Donor:" AssociatedControlID="IsDonorLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="IsDonorLiteral" runat="server" Text='<%#: Eval("IsDonor") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("SanCode") != null %>'>
                                 <td>
                                     <asp:Label ID="SanCodeLabel" runat="server" Text="San Code:" AssociatedControlID="SanCodeLiteral" />
@@ -721,6 +729,7 @@
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Status" DataField="Status" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Next Pol Number" DataField="NextPolNumber" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridTemplateColumn HeaderText="Creation User" DataField="CreationUser.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
@@ -778,6 +787,8 @@
                         <telerik:GridBoundColumn HeaderText="Automatic Export" DataField="AutomaticExport" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Cancellation Restriction" DataField="CancellationRestriction" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Cancellation Restriction Note" DataField="CancellationRestrictionNote" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Claiming Active" DataField="ClaimingActive" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Claiming Interval" DataField="ClaimingInterval" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Collection" DataField="Collection" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Physical Unit List Price" DataField="PhysicalUnitListPrice" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Electronic Unit List Price" DataField="ElectronicUnitListPrice" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
@@ -792,6 +803,8 @@
                         <telerik:GridBoundColumn HeaderText="Fiscal Year Rollover Adjustment Amount" DataField="FiscalYearRolloverAdjustmentAmount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Internal Note" DataField="InternalNote" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Receiving Note" DataField="ReceivingNote" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Details Is Acknowledged" DataField="DetailsIsAcknowledged" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Details Is Bindery Active" DataField="DetailsIsBinderyActive" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Subscription From" DataField="SubscriptionFrom" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridBoundColumn HeaderText="Subscription Interval" DataField="SubscriptionInterval" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Subscription To" DataField="SubscriptionTo" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
@@ -919,6 +932,8 @@
                         <telerik:GridBoundColumn HeaderText="Automatic Export" DataField="AutomaticExport" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Cancellation Restriction" DataField="CancellationRestriction" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Cancellation Restriction Note" DataField="CancellationRestrictionNote" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Claiming Active" DataField="ClaimingActive" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Claiming Interval" DataField="ClaimingInterval" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Collection" DataField="Collection" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Physical Unit List Price" DataField="PhysicalUnitListPrice" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Electronic Unit List Price" DataField="ElectronicUnitListPrice" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
@@ -933,6 +948,8 @@
                         <telerik:GridBoundColumn HeaderText="Fiscal Year Rollover Adjustment Amount" DataField="FiscalYearRolloverAdjustmentAmount" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Internal Note" DataField="InternalNote" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Receiving Note" DataField="ReceivingNote" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Details Is Acknowledged" DataField="DetailsIsAcknowledged" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Details Is Bindery Active" DataField="DetailsIsBinderyActive" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Subscription From" DataField="SubscriptionFrom" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridBoundColumn HeaderText="Subscription Interval" DataField="SubscriptionInterval" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Subscription To" DataField="SubscriptionTo" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
@@ -1107,10 +1124,18 @@
                         <telerik:GridSortExpression FieldName="Name" />
                     </SortExpressions>
                     <Columns>
+                        <telerik:GridBoundColumn HeaderText="Id 2" DataField="Id2" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Name" DataField="Name" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridBoundColumn HeaderText="Discount" DataField="Discount" AutoPostBackOnFilter="true" />
-                        <telerik:GridHyperLinkColumn HeaderText="Reference URL" DataTextField="ReferenceUrl" DataNavigateUrlFields="ReferenceUrl" Target="_blank" SortExpression="ReferenceUrl" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridBoundColumn HeaderText="Notes" DataField="Notes" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Start Date" DataField="StartDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridBoundColumn HeaderText="End Date" DataField="EndDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridBoundColumn HeaderText="Cancellation Deadline" DataField="CancellationDeadline" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridBoundColumn HeaderText="Agreement Status Value" DataField="AgreementStatusValue" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Agreement Status Label" DataField="AgreementStatusLabel" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Is Perpetual Label" DataField="IsPerpetualLabel" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Renewal Priority Label" DataField="RenewalPriorityLabel" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Description" DataField="Description" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Date Created" DataField="DateCreated" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridBoundColumn HeaderText="Last Updated" DataField="LastUpdated" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>
@@ -1238,6 +1263,22 @@
                                 <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%#: Eval("LastWriteUserId") != null ? Eval("LastWriteUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("LastWriteUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="OrganizationPrivilegedContactsPanel" runat="server" Visible='<%# (string)Session["OrganizationPrivilegedContactsPermission"] != null && Organization2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="OrganizationPrivilegedContactsHyperLink" runat="server" Text="Organization Privileged Contacts" NavigateUrl="~/OrganizationPrivilegedContacts/Default.aspx" Enabled="false" /></legend>
+            <telerik:RadGrid ID="OrganizationPrivilegedContactsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrganizationPrivilegedContactsRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No organization privileged contacts found">
+                    <SortExpressions>
+                        <telerik:GridSortExpression FieldName="Content" />
+                    </SortExpressions>
+                    <Columns>
+                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>
@@ -1453,6 +1494,11 @@
             <telerik:AjaxSetting AjaxControlID="OrganizationPhoneNumbersRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="OrganizationPhoneNumbersPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="OrganizationPrivilegedContactsRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="OrganizationPrivilegedContactsPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="OrganizationTagsRadGrid">

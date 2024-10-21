@@ -1,9 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "purchase order",
-  "extends": {
-    "$ref": "../../common/schemas/entity.json"
-  },
+  "javaName": "PurchaseOrder",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -164,6 +162,11 @@
         "$ref": "#/properties/id"
       }
     },
+    "nextPolNumber": {
+      "description": "Number that will be used next time a purchase order line is created",
+      "readonly": true,
+      "type": "integer"
+    },
     "tags": {
       "title": "tags",
       "description": "List of simple tags that can be added to an object",
@@ -178,6 +181,10 @@
           }
         }
       }
+    },
+    "customFields": {
+      "description": "Object that contains custom field",
+      "type": "object"
     },
     "metadata": {
       "title": "Metadata Schema",

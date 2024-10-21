@@ -82,73 +82,79 @@ namespace FolioLibrary
         [Column("financial_summary_awaiting_payment"), DataType(DataType.Currency), Display(Name = "Financial Summary Awaiting Payment", Order = 18), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.awaitingPayment")]
         public virtual decimal? FinancialSummaryAwaitingPayment { get; set; }
 
-        [Column("financial_summary_encumbered"), DataType(DataType.Currency), Display(Name = "Financial Summary Encumbered", Order = 19), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.encumbered")]
+        [Column("financial_summary_credits"), Display(Name = "Financial Summary Credits", Order = 19), Editable(false), JsonProperty("financialSummary.credits")]
+        public virtual decimal? FinancialSummaryCredits { get; set; }
+
+        [Column("financial_summary_encumbered"), DataType(DataType.Currency), Display(Name = "Financial Summary Encumbered", Order = 20), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.encumbered")]
         public virtual decimal? FinancialSummaryEncumbered { get; set; }
 
-        [Column("financial_summary_expenditures"), DataType(DataType.Currency), Display(Name = "Financial Summary Expenditures", Order = 20), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.expenditures")]
+        [Column("financial_summary_expenditures"), DataType(DataType.Currency), Display(Name = "Financial Summary Expenditures", Order = 21), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.expenditures")]
         public virtual decimal? FinancialSummaryExpenditures { get; set; }
 
-        [Column("financial_summary_over_encumbrance"), DataType(DataType.Currency), Display(Name = "Financial Summary Over Encumbrance", Order = 21), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.overEncumbrance")]
+        [Column("financial_summary_over_encumbrance"), DataType(DataType.Currency), Display(Name = "Financial Summary Over Encumbrance", Order = 22), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.overEncumbrance")]
         public virtual decimal? FinancialSummaryOverEncumbrance { get; set; }
 
-        [Column("financial_summary_over_expended"), DataType(DataType.Currency), Display(Name = "Financial Summary Over Expended", Order = 22), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.overExpended")]
+        [Column("financial_summary_over_expended"), DataType(DataType.Currency), Display(Name = "Financial Summary Over Expended", Order = 23), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("financialSummary.overExpended")]
         public virtual decimal? FinancialSummaryOverExpended { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 23), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 24), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 24), InverseProperty("FiscalYear2s")]
+        [Display(Name = "Creation User", Order = 25), InverseProperty("FiscalYear2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 25), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 26), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 27), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 28), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 28), InverseProperty("FiscalYear2s1")]
+        [Display(Name = "Last Write User", Order = 29), InverseProperty("FiscalYear2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 29), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 30), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(FiscalYear), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 31), Editable(false)]
+        [Column("content"), CustomValidation(typeof(FiscalYear), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 32), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Budgets", Order = 32)]
+        [Display(Name = "Budgets", Order = 33)]
         public virtual ICollection<Budget2> Budget2s { get; set; }
 
-        [Display(Name = "Budget Groups", Order = 33)]
+        [Display(Name = "Budget Groups", Order = 34)]
         public virtual ICollection<BudgetGroup2> BudgetGroup2s { get; set; }
 
-        [Display(Name = "Fiscal Year Acquisitions Units", Order = 34), JsonConverter(typeof(ArrayJsonConverter<List<FiscalYearAcquisitionsUnit>, FiscalYearAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
+        [Display(Name = "Fiscal Year Acquisitions Units", Order = 35), JsonConverter(typeof(ArrayJsonConverter<List<FiscalYearAcquisitionsUnit>, FiscalYearAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
         public virtual ICollection<FiscalYearAcquisitionsUnit> FiscalYearAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Invoices", Order = 35)]
+        [Display(Name = "Invoices", Order = 36)]
         public virtual ICollection<Invoice2> Invoice2s { get; set; }
 
-        [Display(Name = "Ledgers", Order = 36)]
+        [Display(Name = "Ledgers", Order = 37)]
         public virtual ICollection<Ledger2> Ledger2s { get; set; }
 
-        [Display(Name = "Ledger Rollovers", Order = 37)]
-        public virtual ICollection<LedgerRollover2> LedgerRollover2s { get; set; }
+        [Display(Name = "Rollovers", Order = 38)]
+        public virtual ICollection<Rollover2> Rollover2s { get; set; }
 
-        [Display(Name = "Ledger Rollovers 1", Order = 38)]
-        public virtual ICollection<LedgerRollover2> LedgerRollover2s1 { get; set; }
+        [Display(Name = "Rollovers 1", Order = 39)]
+        public virtual ICollection<Rollover2> Rollover2s1 { get; set; }
 
-        [Display(Name = "Transactions", Order = 39)]
+        [Display(Name = "Rollover Budgets", Order = 40)]
+        public virtual ICollection<RolloverBudget2> RolloverBudget2s { get; set; }
+
+        [Display(Name = "Transactions", Order = 41)]
         public virtual ICollection<Transaction2> Transaction2s { get; set; }
 
-        [Display(Name = "Transactions 1", Order = 40)]
+        [Display(Name = "Transactions 1", Order = 42)]
         public virtual ICollection<Transaction2> Transaction2s1 { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(Name)} = {Name}, {nameof(Code)} = {Code}, {nameof(Currency)} = {Currency}, {nameof(Description)} = {Description}, {nameof(StartDate)} = {StartDate}, {nameof(EndDate)} = {EndDate}, {nameof(Series)} = {Series}, {nameof(FinancialSummaryAllocated)} = {FinancialSummaryAllocated}, {nameof(FinancialSummaryAvailable)} = {FinancialSummaryAvailable}, {nameof(FinancialSummaryUnavailable)} = {FinancialSummaryUnavailable}, {nameof(FinancialSummaryInitialAllocation)} = {FinancialSummaryInitialAllocation}, {nameof(FinancialSummaryAllocationTo)} = {FinancialSummaryAllocationTo}, {nameof(FinancialSummaryAllocationFrom)} = {FinancialSummaryAllocationFrom}, {nameof(FinancialSummaryTotalFunding)} = {FinancialSummaryTotalFunding}, {nameof(FinancialSummaryCashBalance)} = {FinancialSummaryCashBalance}, {nameof(FinancialSummaryAwaitingPayment)} = {FinancialSummaryAwaitingPayment}, {nameof(FinancialSummaryEncumbered)} = {FinancialSummaryEncumbered}, {nameof(FinancialSummaryExpenditures)} = {FinancialSummaryExpenditures}, {nameof(FinancialSummaryOverEncumbrance)} = {FinancialSummaryOverEncumbrance}, {nameof(FinancialSummaryOverExpended)} = {FinancialSummaryOverExpended}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(FiscalYearAcquisitionsUnits)} = {(FiscalYearAcquisitionsUnits != null ? $"{{ {string.Join(", ", FiscalYearAcquisitionsUnits)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(Name)} = {Name}, {nameof(Code)} = {Code}, {nameof(Currency)} = {Currency}, {nameof(Description)} = {Description}, {nameof(StartDate)} = {StartDate}, {nameof(EndDate)} = {EndDate}, {nameof(Series)} = {Series}, {nameof(FinancialSummaryAllocated)} = {FinancialSummaryAllocated}, {nameof(FinancialSummaryAvailable)} = {FinancialSummaryAvailable}, {nameof(FinancialSummaryUnavailable)} = {FinancialSummaryUnavailable}, {nameof(FinancialSummaryInitialAllocation)} = {FinancialSummaryInitialAllocation}, {nameof(FinancialSummaryAllocationTo)} = {FinancialSummaryAllocationTo}, {nameof(FinancialSummaryAllocationFrom)} = {FinancialSummaryAllocationFrom}, {nameof(FinancialSummaryTotalFunding)} = {FinancialSummaryTotalFunding}, {nameof(FinancialSummaryCashBalance)} = {FinancialSummaryCashBalance}, {nameof(FinancialSummaryAwaitingPayment)} = {FinancialSummaryAwaitingPayment}, {nameof(FinancialSummaryCredits)} = {FinancialSummaryCredits}, {nameof(FinancialSummaryEncumbered)} = {FinancialSummaryEncumbered}, {nameof(FinancialSummaryExpenditures)} = {FinancialSummaryExpenditures}, {nameof(FinancialSummaryOverEncumbrance)} = {FinancialSummaryOverEncumbrance}, {nameof(FinancialSummaryOverExpended)} = {FinancialSummaryOverExpended}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(FiscalYearAcquisitionsUnits)} = {(FiscalYearAcquisitionsUnits != null ? $"{{ {string.Join(", ", FiscalYearAcquisitionsUnits)} }}" : "")} }}";
 
         public static FiscalYear2 FromJObject(JObject jObject) => jObject != null ? new FiscalYear2
         {
@@ -170,6 +176,7 @@ namespace FolioLibrary
             FinancialSummaryTotalFunding = (decimal?)jObject.SelectToken("financialSummary.totalFunding"),
             FinancialSummaryCashBalance = (decimal?)jObject.SelectToken("financialSummary.cashBalance"),
             FinancialSummaryAwaitingPayment = (decimal?)jObject.SelectToken("financialSummary.awaitingPayment"),
+            FinancialSummaryCredits = (decimal?)jObject.SelectToken("financialSummary.credits"),
             FinancialSummaryEncumbered = (decimal?)jObject.SelectToken("financialSummary.encumbered"),
             FinancialSummaryExpenditures = (decimal?)jObject.SelectToken("financialSummary.expenditures"),
             FinancialSummaryOverEncumbrance = (decimal?)jObject.SelectToken("financialSummary.overEncumbrance"),
@@ -204,6 +211,7 @@ namespace FolioLibrary
                 new JProperty("totalFunding", FinancialSummaryTotalFunding),
                 new JProperty("cashBalance", FinancialSummaryCashBalance),
                 new JProperty("awaitingPayment", FinancialSummaryAwaitingPayment),
+                new JProperty("credits", FinancialSummaryCredits),
                 new JProperty("encumbered", FinancialSummaryEncumbered),
                 new JProperty("expenditures", FinancialSummaryExpenditures),
                 new JProperty("overEncumbrance", FinancialSummaryOverEncumbrance),

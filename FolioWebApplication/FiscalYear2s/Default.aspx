@@ -47,6 +47,7 @@
                         <telerik:GridBoundColumn HeaderText="Financial Summary Total Funding" DataField="FinancialSummaryTotalFunding" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Financial Summary Cash Balance" DataField="FinancialSummaryCashBalance" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Financial Summary Awaiting Payment" DataField="FinancialSummaryAwaitingPayment" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Financial Summary Credits" DataField="FinancialSummaryCredits" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Financial Summary Encumbered" DataField="FinancialSummaryEncumbered" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Financial Summary Expenditures" DataField="FinancialSummaryExpenditures" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
                         <telerik:GridBoundColumn HeaderText="Financial Summary Over Encumbrance" DataField="FinancialSummaryOverEncumbrance" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />

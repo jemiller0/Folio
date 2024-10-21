@@ -31,7 +31,8 @@
         "SINGLE_SELECT_DROPDOWN",
         "MULTI_SELECT_DROPDOWN",
         "TEXTBOX_SHORT",
-        "TEXTBOX_LONG"
+        "TEXTBOX_LONG",
+        "DATE_PICKER"
       ]
     },
     "entityType": {

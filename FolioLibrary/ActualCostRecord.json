@@ -1,0 +1,345 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Actual cost record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "lossType": {
+      "description": "Type of the item loss",
+      "type": "string",
+      "enum": [
+        "Aged to lost",
+        "Declared lost"
+      ]
+    },
+    "lossDate": {
+      "description": "Date and time when the item was lost",
+      "type": "string",
+      "format": "date-time"
+    },
+    "expirationDate": {
+      "description": "Expiration date and time of actual cost record",
+      "type": "string",
+      "format": "date-time"
+    },
+    "user": {
+      "description": "User info",
+      "javaType": "org.folio.rest.jaxrs.model.ActualCostRecordUser",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/properties/id"
+        },
+        "barcode": {
+          "description": "User barcode",
+          "type": "string"
+        },
+        "firstName": {
+          "description": "User first name",
+          "type": "string"
+        },
+        "lastName": {
+          "description": "User last name",
+          "type": "string"
+        },
+        "middleName": {
+          "description": "User middle name",
+          "type": "string"
+        },
+        "patronGroupId": {
+          "$ref": "#/properties/id"
+        },
+        "patronGroup": {
+          "description": "Patron group name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "lastName"
+      ]
+    },
+    "loan": {
+      "description": "Loan info",
+      "javaType": "org.folio.rest.jaxrs.model.ActualCostRecordLoan",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/properties/id"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "item": {
+      "description": "Item info",
+      "javaType": "org.folio.rest.jaxrs.model.ActualCostRecordItem",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/properties/id"
+        },
+        "barcode": {
+          "description": "Item barcode",
+          "type": "string"
+        },
+        "materialTypeId": {
+          "$ref": "#/properties/id"
+        },
+        "materialType": {
+          "description": "Material type name",
+          "type": "string"
+        },
+        "permanentLocationId": {
+          "$ref": "#/properties/id"
+        },
+        "permanentLocation": {
+          "description": "Permanent location name",
+          "type": "string"
+        },
+        "effectiveLocationId": {
+          "$ref": "#/properties/id"
+        },
+        "effectiveLocation": {
+          "description": "Effective location name",
+          "type": "string"
+        },
+        "loanTypeId": {
+          "$ref": "#/properties/id"
+        },
+        "loanType": {
+          "description": "Loan type name",
+          "type": "string"
+        },
+        "holdingsRecordId": {
+          "$ref": "#/properties/id"
+        },
+        "effectiveCallNumberComponents": {
+          "description": "Elements of a full call number generated from the item or holding",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "callNumber": {
+              "description": "Effective Call Number is an identifier assigned to an item or its holding and associated with the item.",
+              "type": "string"
+            },
+            "prefix": {
+              "description": "Effective Call Number Prefix is the prefix of the identifier assigned to an item or its holding and associated with the item.",
+              "type": "string"
+            },
+            "suffix": {
+              "description": "Effective Call Number Suffix is the suffix of the identifier assigned to an item or its holding and associated with the item.",
+              "type": "string"
+            }
+          }
+        },
+        "volume": {
+          "description": "Volume is intended for monographs when a multipart monograph (e.g. a biography of George Bernard Shaw in three volumes).",
+          "type": "string"
+        },
+        "enumeration": {
+          "description": "Enumeration is the descriptive information for the numbering scheme of a serial.",
+          "type": "string"
+        },
+        "chronology": {
+          "description": "Chronology is the descriptive information for the dating scheme of a serial.",
+          "type": "string"
+        },
+        "displaySummary": {
+          "description": "Display summary about the item",
+          "type": "string"
+        },
+        "copyNumber": {
+          "description": "Copy number is the piece identifier. The copy number reflects if the library has a copy of a single-volume monograph; one copy of a multi-volume, (e.g. Copy 1, or C.7.)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "materialTypeId",
+        "materialType",
+        "loanTypeId",
+        "loanType",
+        "holdingsRecordId"
+      ]
+    },
+    "instance": {
+      "description": "Instance info",
+      "javaType": "org.folio.rest.jaxrs.model.ActualCostRecordInstance",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/properties/id"
+        },
+        "title": {
+          "description": "Instance title",
+          "type": "string"
+        },
+        "identifiers": {
+          "description": "An extensible set of name-value pairs of identifiers associated with the resource",
+          "type": "array",
+          "items": {
+            "javaType": "org.folio.rest.jaxrs.model.ActualCostRecordIdentifier",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "description": "Resource identifier value",
+                "type": "string"
+              },
+              "identifierType": {
+                "description": "Name of resource identifier type (e.g. ISBN, ISSN, LCCN, CODEN, Locally defined identifiers)",
+                "type": "string"
+              },
+              "identifierTypeId": {
+                "$ref": "#/properties/id"
+              }
+            },
+            "required": [
+              "value",
+              "identifierType",
+              "identifierTypeId"
+            ]
+          },
+          "minItems": 0
+        },
+        "contributors": {
+          "description": "List of contributors",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "description": "Contributor name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ]
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "id",
+        "title"
+      ]
+    },
+    "feeFine": {
+      "description": "Fee/fine info",
+      "javaType": "org.folio.rest.jaxrs.model.ActualCostRecordFeeFine",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "accountId": {
+          "$ref": "#/properties/id"
+        },
+        "billedAmount": {
+          "description": "Initial amount of a fee/fine created upon billing",
+          "type": "number",
+          "minimum": 0.0
+        },
+        "ownerId": {
+          "$ref": "#/properties/id"
+        },
+        "owner": {
+          "description": "Fee/fine owner name",
+          "type": "string"
+        },
+        "typeId": {
+          "$ref": "#/properties/id"
+        },
+        "type": {
+          "description": "Fee/fine type name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ownerId",
+        "owner",
+        "typeId",
+        "type"
+      ]
+    },
+    "status": {
+      "description": "Status of the actual cost record",
+      "type": "string",
+      "default": "Open",
+      "enum": [
+        "Open",
+        "Billed",
+        "Cancelled",
+        "Expired"
+      ]
+    },
+    "additionalInfoForStaff": {
+      "description": "Additional information for staff",
+      "type": "string"
+    },
+    "additionalInfoForPatron": {
+      "description": "Additional information for a patron",
+      "type": "string"
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate"
+      ]
+    }
+  },
+  "required": [
+    "lossType",
+    "lossDate",
+    "user",
+    "loan",
+    "item",
+    "instance",
+    "feeFine",
+    "status"
+  ]
+}

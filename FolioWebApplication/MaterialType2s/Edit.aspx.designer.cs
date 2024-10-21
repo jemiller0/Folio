@@ -9,6 +9,10 @@ namespace FolioWebApplication.MaterialType2s
 
         protected FormView MaterialType2FormView;
 
+        protected Panel ActualCostRecord2sPanel;
+
+        protected RadGrid ActualCostRecord2sRadGrid;
+
         protected Panel Fee2sPanel;
 
         protected RadGrid Fee2sRadGrid;

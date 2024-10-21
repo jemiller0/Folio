@@ -9,6 +9,10 @@ namespace FolioWebApplication.LoanType2s
 
         protected FormView LoanType2FormView;
 
+        protected Panel ActualCostRecord2sPanel;
+
+        protected RadGrid ActualCostRecord2sRadGrid;
+
         protected Panel Item2sPanel;
 
         protected RadGrid Item2sRadGrid;

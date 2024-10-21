@@ -9,6 +9,14 @@
       "type": "string",
       "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
     },
+    "requestLevel": {
+      "description": "Level of the request - Item or Title",
+      "type": "string",
+      "enum": [
+        "Item",
+        "Title"
+      ]
+    },
     "requestType": {
       "description": "Whether the item should be held upon return, recalled or paged for",
       "type": "string",
@@ -36,6 +44,14 @@
       "description": "ID of the user representing a proxy for the patron",
       "type": "string",
       "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "instanceId": {
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "holdingsRecordId": {
+      "$ref": "#/properties/instanceId"
     },
     "itemId": {
       "description": "ID of the item being requested",
@@ -74,20 +90,15 @@
       "format": "date-time"
     },
     "position": {
-      "description": "position of the request in a per-item request queue",
+      "description": "Position of the request in the unified request queue",
       "type": "integer"
     },
-    "item": {
-      "description": "Copy of some item metadata (used for searching and sorting)",
+    "instance": {
+      "description": "Copy of some instance metadata (used for searching and sorting)",
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "title": {
           "description": "title of the item",
-          "type": "string"
-        },
-        "barcode": {
-          "description": "barcode of the item",
           "type": "string"
         },
         "identifiers": {
@@ -102,9 +113,7 @@
                 "type": "string"
               },
               "identifierTypeId": {
-                "description": "The UUID format string",
-                "type": "string",
-                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+                "$ref": "#/properties/instanceId"
               }
             },
             "required": [
@@ -113,6 +122,17 @@
             ]
           },
           "minItems": 0
+        }
+      }
+    },
+    "item": {
+      "description": "Copy of some item metadata (used for searching and sorting)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "barcode": {
+          "description": "barcode of the item",
+          "type": "string"
         }
       }
     },
@@ -170,7 +190,7 @@
         }
       }
     },
-    "fulfilmentPreference": {
+    "fulfillmentPreference": {
       "description": "How should the request be fulfilled (whether the item should be kept on the hold shelf for collection or delivered to the requester)",
       "type": "string",
       "enum": [
@@ -252,18 +272,82 @@
         }
       }
     },
+    "printDetails": {
+      "description": "PrintDetails",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "printCount": {
+          "description": "Number of times print slip generated.",
+          "type": "integer"
+        },
+        "requesterId": {
+          "description": "UUID of print slip requester.",
+          "type": "string"
+        },
+        "isPrinted": {
+          "description": "Whether print slip was printed in past.",
+          "type": "boolean"
+        },
+        "printEventDate": {
+          "description": "Date and time when print slip was generated last time.",
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
     "awaitingPickupRequestClosedDate": {
       "description": "A date when the request with awaiting pickup status was closed",
       "readonly": true,
       "type": "string",
       "format": "date-time"
+    },
+    "searchIndex": {
+      "description": "Request fields used for search",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "callNumberComponents": {
+          "description": "Effective call number components",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "callNumber": {
+              "description": "Effective Call Number is an identifier assigned to an item or its holding and associated with the item.",
+              "type": "string"
+            },
+            "prefix": {
+              "description": "Effective Call Number Prefix is the prefix of the identifier assigned to an item or its holding and associated with the item.",
+              "type": "string"
+            },
+            "suffix": {
+              "description": "Effective Call Number Suffix is the suffix of the identifier assigned to an item or its holding and associated with the item.",
+              "type": "string"
+            }
+          }
+        },
+        "shelvingOrder": {
+          "description": "A system generated normalization of the call number that allows for call number sorting in reports and search results",
+          "type": "string"
+        },
+        "pickupServicePointName": {
+          "description": "The name of the request pickup service point",
+          "type": "string"
+        }
+      }
+    },
+    "itemLocationCode": {
+      "description": "Allow specifying item location when creating title-level requests",
+      "type": "string"
     }
   },
   "required": [
-    "itemId",
+    "instanceId",
     "requesterId",
     "requestType",
+    "requestLevel",
     "requestDate",
-    "fulfilmentPreference"
+    "fulfillmentPreference",
+    "status"
   ]
 }

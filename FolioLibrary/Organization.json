@@ -329,35 +329,117 @@
         "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
       }
     },
+    "privilegedContacts": {
+      "description": "An array of privileged contact record IDs",
+      "type": "array",
+      "items": {
+        "$ref": "#/properties/id"
+      }
+    },
     "agreements": {
       "id": "agreement",
       "description": "The the list of agreements for this organization",
       "type": "array",
       "items": {
-        "description": "An organization agreement",
+        "title": "Agreement Schema",
         "type": "object",
         "additionalProperties": false,
         "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
           "name": {
-            "description": "The unique name of this agreement",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "cancellationDeadline": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "agreementStatus": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              }
+            }
+          },
+          "isPerpetual": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              }
+            }
+          },
+          "renewalPriority": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              }
+            }
+          },
+          "orgs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "primaryOrg": {
+                  "type": "boolean"
+                },
+                "org": {
+                  "type": "object",
+                  "properties": {
+                    "orgsUuid": {
+                      "type": "string",
+                      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "periods": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "startDate": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "periodStatus": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "description": {
             "type": "string"
           },
-          "discount": {
-            "description": "The discount amount of this agreement",
-            "type": "number"
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time"
           },
-          "referenceUrl": {
-            "description": "The reference url for this agreement",
-            "type": "string"
-          },
-          "notes": {
-            "description": "The notes of this agreement",
-            "type": "string"
+          "lastUpdated": {
+            "type": "string",
+            "format": "date-time"
           }
-        },
-        "required": [
-          "name"
-        ]
+        }
       }
     },
     "erpCode": {
@@ -719,6 +801,12 @@
     "isVendor": {
       "id": "isVendor",
       "description": "Used to indicate that this organization is also a vendor",
+      "type": "boolean",
+      "default": false
+    },
+    "isDonor": {
+      "id": "isDonor",
+      "description": "Used to designate whether this organization is a donor",
       "type": "boolean",
       "default": false
     },

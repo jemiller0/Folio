@@ -72,6 +72,7 @@ namespace FolioWebApplication.User2s
             u2.MobilePhoneNumber = Global.Trim((string)e.NewValues["MobilePhoneNumber"]);
             u2.BirthDate = (DateTime?)e.NewValues["BirthDate"];
             u2.PreferredContactTypeId = (string)e.NewValues["PreferredContactTypeId"];
+            u2.ProfilePictureLink = Global.Trim((string)e.NewValues["ProfilePictureLink"]);
             u2.StartDate = (DateTime?)e.NewValues["StartDate"];
             u2.EndDate = (DateTime?)e.NewValues["EndDate"];
             u2.Source = Global.Trim((string)e.NewValues["Source"]);
@@ -107,6 +108,8 @@ namespace FolioWebApplication.User2s
                 if (folioServiceContext.AnyAcquisitionMethod2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a acquisition method");
                 if (folioServiceContext.AnyAcquisitionsUnit2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a acquisitions unit");
                 if (folioServiceContext.AnyAcquisitionsUnit2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a acquisitions unit");
+                if (folioServiceContext.AnyActualCostRecord2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a actual cost record");
+                if (folioServiceContext.AnyActualCostRecord2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a actual cost record");
                 if (folioServiceContext.AnyAddressType2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a address type");
                 if (folioServiceContext.AnyAddressType2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a address type");
                 if (folioServiceContext.AnyAlternativeTitleType2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a alternative title type");
@@ -206,12 +209,6 @@ namespace FolioWebApplication.User2s
                 if (folioServiceContext.AnyItemNoteType2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a item note type");
                 if (folioServiceContext.AnyLedger2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a ledger");
                 if (folioServiceContext.AnyLedger2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a ledger");
-                if (folioServiceContext.AnyLedgerRollover2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a ledger rollover");
-                if (folioServiceContext.AnyLedgerRollover2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a ledger rollover");
-                if (folioServiceContext.AnyLedgerRolloverError2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a ledger rollover error");
-                if (folioServiceContext.AnyLedgerRolloverError2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a ledger rollover error");
-                if (folioServiceContext.AnyLedgerRolloverProgress2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a ledger rollover progress");
-                if (folioServiceContext.AnyLedgerRolloverProgress2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a ledger rollover progress");
                 if (folioServiceContext.AnyLibrary2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a library");
                 if (folioServiceContext.AnyLibrary2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a library");
                 if (folioServiceContext.AnyLoan2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a loan");
@@ -271,6 +268,8 @@ namespace FolioWebApplication.User2s
                 if (folioServiceContext.AnyProxy2s($"proxyUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a proxy");
                 if (folioServiceContext.AnyProxy2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a proxy");
                 if (folioServiceContext.AnyProxy2s($"userId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a proxy");
+                if (folioServiceContext.AnyReceiving2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a receiving");
+                if (folioServiceContext.AnyReceiving2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a receiving");
                 if (folioServiceContext.AnyRecord2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a record");
                 if (folioServiceContext.AnyRecord2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a record");
                 if (folioServiceContext.AnyRefundReason2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a refund reason");
@@ -279,6 +278,7 @@ namespace FolioWebApplication.User2s
                 if (folioServiceContext.AnyRelationships($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a relationship");
                 if (folioServiceContext.AnyRelationshipTypes($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a relationship type");
                 if (folioServiceContext.AnyRelationshipTypes($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a relationship type");
+                if (folioServiceContext.AnyRequest2s($"printDetails.requesterId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a request");
                 if (folioServiceContext.AnyRequest2s($"cancelledByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a request");
                 if (folioServiceContext.AnyRequest2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a request");
                 if (folioServiceContext.AnyRequest2s($"proxyUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a request");
@@ -286,6 +286,14 @@ namespace FolioWebApplication.User2s
                 if (folioServiceContext.AnyRequest2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a request");
                 if (folioServiceContext.AnyRequestPolicy2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a request policy");
                 if (folioServiceContext.AnyRequestPolicy2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a request policy");
+                if (folioServiceContext.AnyRollover2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a rollover");
+                if (folioServiceContext.AnyRollover2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a rollover");
+                if (folioServiceContext.AnyRolloverBudget2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a rollover budget");
+                if (folioServiceContext.AnyRolloverBudget2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a rollover budget");
+                if (folioServiceContext.AnyRolloverError2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a rollover error");
+                if (folioServiceContext.AnyRolloverError2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a rollover error");
+                if (folioServiceContext.AnyRolloverProgress2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a rollover progress");
+                if (folioServiceContext.AnyRolloverProgress2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a rollover progress");
                 if (folioServiceContext.AnyScheduledNotice2s($"recipientUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a scheduled notice");
                 if (folioServiceContext.AnyScheduledNotice2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a scheduled notice");
                 if (folioServiceContext.AnyScheduledNotice2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a scheduled notice");
@@ -541,7 +549,7 @@ namespace FolioWebApplication.User2s
             if (Session["Loan2sPermission"] == null) return;
             var id = (Guid?)User2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "UserId", "userId" }, { "ProxyUserId", "proxyUserId" }, { "ItemId", "itemId" }, { "ItemEffectiveLocationAtCheckOutId", "itemEffectiveLocationIdAtCheckOut" }, { "StatusName", "status.name" }, { "LoanTime", "loanDate" }, { "DueTime", "dueDate" }, { "ReturnTime", "returnDate" }, { "SystemReturnTime", "systemReturnDate" }, { "Action", "action" }, { "ActionComment", "actionComment" }, { "ItemStatus", "itemStatus" }, { "RenewalCount", "renewalCount" }, { "LoanPolicyId", "loanPolicyId" }, { "CheckoutServicePointId", "checkoutServicePointId" }, { "CheckinServicePointId", "checkinServicePointId" }, { "GroupId", "patronGroupIdAtCheckout" }, { "DueDateChangedByRecall", "dueDateChangedByRecall" }, { "DeclaredLostDate", "declaredLostDate" }, { "ClaimedReturnedDate", "claimedReturnedDate" }, { "OverdueFinePolicyId", "overdueFinePolicyId" }, { "LostItemPolicyId", "lostItemPolicyId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "AgedToLostDelayedBillingLostItemHasBeenBilled", "agedToLostDelayedBilling.lostItemHasBeenBilled" }, { "AgedToLostDelayedBillingDateLostItemShouldBeBilled", "agedToLostDelayedBilling.dateLostItemShouldBeBilled" }, { "AgedToLostDelayedBillingAgedToLostDate", "agedToLostDelayedBilling.agedToLostDate" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "UserId", "userId" }, { "ProxyUserId", "proxyUserId" }, { "ItemId", "itemId" }, { "ItemEffectiveLocationAtCheckOutId", "itemEffectiveLocationIdAtCheckOut" }, { "StatusName", "status.name" }, { "LoanTime", "loanDate" }, { "DueTime", "dueDate" }, { "ReturnTime", "returnDate" }, { "SystemReturnTime", "systemReturnDate" }, { "Action", "action" }, { "ActionComment", "actionComment" }, { "ItemStatus", "itemStatus" }, { "RenewalCount", "renewalCount" }, { "LoanPolicyId", "loanPolicyId" }, { "CheckoutServicePointId", "checkoutServicePointId" }, { "CheckinServicePointId", "checkinServicePointId" }, { "GroupId", "patronGroupIdAtCheckout" }, { "DueDateChangedByRecall", "dueDateChangedByRecall" }, { "IsDcb", "isDcb" }, { "DeclaredLostDate", "declaredLostDate" }, { "ClaimedReturnedDate", "claimedReturnedDate" }, { "OverdueFinePolicyId", "overdueFinePolicyId" }, { "LostItemPolicyId", "lostItemPolicyId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "AgedToLostDelayedBillingLostItemHasBeenBilled", "agedToLostDelayedBilling.lostItemHasBeenBilled" }, { "AgedToLostDelayedBillingDateLostItemShouldBeBilled", "agedToLostDelayedBilling.dateLostItemShouldBeBilled" }, { "AgedToLostDelayedBillingAgedToLostDate", "agedToLostDelayedBilling.agedToLostDate" }, { "RemindersLastFeeBilledNumber", "reminders.lastFeeBilled.number" }, { "RemindersLastFeeBilledDate", "reminders.lastFeeBilled.date" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"proxyUserId == \"{id}\"",
@@ -563,6 +571,7 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(Loan2s1RadGrid, "CheckinServicePoint.Name", "checkinServicePointId", "name", folioServiceContext.FolioServiceClient.ServicePoints),
                 Global.GetCqlFilter(Loan2s1RadGrid, "Group.Name", "patronGroupIdAtCheckout", "group", folioServiceContext.FolioServiceClient.Groups),
                 Global.GetCqlFilter(Loan2s1RadGrid, "DueDateChangedByRecall", "dueDateChangedByRecall"),
+                Global.GetCqlFilter(Loan2s1RadGrid, "IsDcb", "isDcb"),
                 Global.GetCqlFilter(Loan2s1RadGrid, "DeclaredLostDate", "declaredLostDate"),
                 Global.GetCqlFilter(Loan2s1RadGrid, "ClaimedReturnedDate", "claimedReturnedDate"),
                 Global.GetCqlFilter(Loan2s1RadGrid, "OverdueFinePolicy.Name", "overdueFinePolicyId", "name", folioServiceContext.FolioServiceClient.OverdueFinePolicies),
@@ -573,7 +582,9 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(Loan2s1RadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Loan2s1RadGrid, "AgedToLostDelayedBillingLostItemHasBeenBilled", "agedToLostDelayedBilling.lostItemHasBeenBilled"),
                 Global.GetCqlFilter(Loan2s1RadGrid, "AgedToLostDelayedBillingDateLostItemShouldBeBilled", "agedToLostDelayedBilling.dateLostItemShouldBeBilled"),
-                Global.GetCqlFilter(Loan2s1RadGrid, "AgedToLostDelayedBillingAgedToLostDate", "agedToLostDelayedBilling.agedToLostDate")
+                Global.GetCqlFilter(Loan2s1RadGrid, "AgedToLostDelayedBillingAgedToLostDate", "agedToLostDelayedBilling.agedToLostDate"),
+                Global.GetCqlFilter(Loan2s1RadGrid, "RemindersLastFeeBilledNumber", "reminders.lastFeeBilled.number"),
+                Global.GetCqlFilter(Loan2s1RadGrid, "RemindersLastFeeBilledDate", "reminders.lastFeeBilled.date")
             }.Where(s => s != null)));
             Loan2s1RadGrid.DataSource = folioServiceContext.Loan2s(out var i, where, Loan2s1RadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Loan2s1RadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Loan2s1RadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Loan2s1RadGrid.PageSize * Loan2s1RadGrid.CurrentPageIndex, Loan2s1RadGrid.PageSize, true);
             Loan2s1RadGrid.VirtualItemCount = i;
@@ -590,7 +601,7 @@ namespace FolioWebApplication.User2s
             if (Session["Loan2sPermission"] == null) return;
             var id = (Guid?)User2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "UserId", "userId" }, { "ProxyUserId", "proxyUserId" }, { "ItemId", "itemId" }, { "ItemEffectiveLocationAtCheckOutId", "itemEffectiveLocationIdAtCheckOut" }, { "StatusName", "status.name" }, { "LoanTime", "loanDate" }, { "DueTime", "dueDate" }, { "ReturnTime", "returnDate" }, { "SystemReturnTime", "systemReturnDate" }, { "Action", "action" }, { "ActionComment", "actionComment" }, { "ItemStatus", "itemStatus" }, { "RenewalCount", "renewalCount" }, { "LoanPolicyId", "loanPolicyId" }, { "CheckoutServicePointId", "checkoutServicePointId" }, { "CheckinServicePointId", "checkinServicePointId" }, { "GroupId", "patronGroupIdAtCheckout" }, { "DueDateChangedByRecall", "dueDateChangedByRecall" }, { "DeclaredLostDate", "declaredLostDate" }, { "ClaimedReturnedDate", "claimedReturnedDate" }, { "OverdueFinePolicyId", "overdueFinePolicyId" }, { "LostItemPolicyId", "lostItemPolicyId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "AgedToLostDelayedBillingLostItemHasBeenBilled", "agedToLostDelayedBilling.lostItemHasBeenBilled" }, { "AgedToLostDelayedBillingDateLostItemShouldBeBilled", "agedToLostDelayedBilling.dateLostItemShouldBeBilled" }, { "AgedToLostDelayedBillingAgedToLostDate", "agedToLostDelayedBilling.agedToLostDate" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "UserId", "userId" }, { "ProxyUserId", "proxyUserId" }, { "ItemId", "itemId" }, { "ItemEffectiveLocationAtCheckOutId", "itemEffectiveLocationIdAtCheckOut" }, { "StatusName", "status.name" }, { "LoanTime", "loanDate" }, { "DueTime", "dueDate" }, { "ReturnTime", "returnDate" }, { "SystemReturnTime", "systemReturnDate" }, { "Action", "action" }, { "ActionComment", "actionComment" }, { "ItemStatus", "itemStatus" }, { "RenewalCount", "renewalCount" }, { "LoanPolicyId", "loanPolicyId" }, { "CheckoutServicePointId", "checkoutServicePointId" }, { "CheckinServicePointId", "checkinServicePointId" }, { "GroupId", "patronGroupIdAtCheckout" }, { "DueDateChangedByRecall", "dueDateChangedByRecall" }, { "IsDcb", "isDcb" }, { "DeclaredLostDate", "declaredLostDate" }, { "ClaimedReturnedDate", "claimedReturnedDate" }, { "OverdueFinePolicyId", "overdueFinePolicyId" }, { "LostItemPolicyId", "lostItemPolicyId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "AgedToLostDelayedBillingLostItemHasBeenBilled", "agedToLostDelayedBilling.lostItemHasBeenBilled" }, { "AgedToLostDelayedBillingDateLostItemShouldBeBilled", "agedToLostDelayedBilling.dateLostItemShouldBeBilled" }, { "AgedToLostDelayedBillingAgedToLostDate", "agedToLostDelayedBilling.agedToLostDate" }, { "RemindersLastFeeBilledNumber", "reminders.lastFeeBilled.number" }, { "RemindersLastFeeBilledDate", "reminders.lastFeeBilled.date" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"userId == \"{id}\"",
@@ -612,6 +623,7 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(Loan2s3RadGrid, "CheckinServicePoint.Name", "checkinServicePointId", "name", folioServiceContext.FolioServiceClient.ServicePoints),
                 Global.GetCqlFilter(Loan2s3RadGrid, "Group.Name", "patronGroupIdAtCheckout", "group", folioServiceContext.FolioServiceClient.Groups),
                 Global.GetCqlFilter(Loan2s3RadGrid, "DueDateChangedByRecall", "dueDateChangedByRecall"),
+                Global.GetCqlFilter(Loan2s3RadGrid, "IsDcb", "isDcb"),
                 Global.GetCqlFilter(Loan2s3RadGrid, "DeclaredLostDate", "declaredLostDate"),
                 Global.GetCqlFilter(Loan2s3RadGrid, "ClaimedReturnedDate", "claimedReturnedDate"),
                 Global.GetCqlFilter(Loan2s3RadGrid, "OverdueFinePolicy.Name", "overdueFinePolicyId", "name", folioServiceContext.FolioServiceClient.OverdueFinePolicies),
@@ -622,7 +634,9 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(Loan2s3RadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Loan2s3RadGrid, "AgedToLostDelayedBillingLostItemHasBeenBilled", "agedToLostDelayedBilling.lostItemHasBeenBilled"),
                 Global.GetCqlFilter(Loan2s3RadGrid, "AgedToLostDelayedBillingDateLostItemShouldBeBilled", "agedToLostDelayedBilling.dateLostItemShouldBeBilled"),
-                Global.GetCqlFilter(Loan2s3RadGrid, "AgedToLostDelayedBillingAgedToLostDate", "agedToLostDelayedBilling.agedToLostDate")
+                Global.GetCqlFilter(Loan2s3RadGrid, "AgedToLostDelayedBillingAgedToLostDate", "agedToLostDelayedBilling.agedToLostDate"),
+                Global.GetCqlFilter(Loan2s3RadGrid, "RemindersLastFeeBilledNumber", "reminders.lastFeeBilled.number"),
+                Global.GetCqlFilter(Loan2s3RadGrid, "RemindersLastFeeBilledDate", "reminders.lastFeeBilled.date")
             }.Where(s => s != null)));
             Loan2s3RadGrid.DataSource = folioServiceContext.Loan2s(out var i, where, Loan2s3RadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Loan2s3RadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Loan2s3RadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Loan2s3RadGrid.PageSize * Loan2s3RadGrid.CurrentPageIndex, Loan2s3RadGrid.PageSize, true);
             Loan2s3RadGrid.VirtualItemCount = i;
@@ -639,7 +653,7 @@ namespace FolioWebApplication.User2s
             if (Session["Order2sPermission"] == null) return;
             var id = (Guid?)User2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Approved", "approved" }, { "ApprovedById", "approvedById" }, { "ApprovalDate", "approvalDate" }, { "AssignedToId", "assignedTo" }, { "BillToId", "billTo" }, { "CloseReasonReason", "closeReason.reason" }, { "CloseReasonNote", "closeReason.note" }, { "OrderDate", "dateOrdered" }, { "Manual", "manualPo" }, { "Number", "poNumber" }, { "OrderType", "orderType" }, { "Reencumber", "reEncumber" }, { "OngoingInterval", "ongoing.interval" }, { "OngoingIsSubscription", "ongoing.isSubscription" }, { "OngoingManualRenewal", "ongoing.manualRenewal" }, { "OngoingNotes", "ongoing.notes" }, { "OngoingReviewPeriod", "ongoing.reviewPeriod" }, { "OngoingRenewalDate", "ongoing.renewalDate" }, { "OngoingReviewDate", "ongoing.reviewDate" }, { "ShipToId", "shipTo" }, { "TemplateId", "template" }, { "VendorId", "vendor" }, { "Status", "workflowStatus" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Approved", "approved" }, { "ApprovedById", "approvedById" }, { "ApprovalDate", "approvalDate" }, { "AssignedToId", "assignedTo" }, { "BillToId", "billTo" }, { "CloseReasonReason", "closeReason.reason" }, { "CloseReasonNote", "closeReason.note" }, { "OrderDate", "dateOrdered" }, { "Manual", "manualPo" }, { "Number", "poNumber" }, { "OrderType", "orderType" }, { "Reencumber", "reEncumber" }, { "OngoingInterval", "ongoing.interval" }, { "OngoingIsSubscription", "ongoing.isSubscription" }, { "OngoingManualRenewal", "ongoing.manualRenewal" }, { "OngoingNotes", "ongoing.notes" }, { "OngoingReviewPeriod", "ongoing.reviewPeriod" }, { "OngoingRenewalDate", "ongoing.renewalDate" }, { "OngoingReviewDate", "ongoing.reviewDate" }, { "ShipToId", "shipTo" }, { "TemplateId", "template" }, { "VendorId", "vendor" }, { "Status", "workflowStatus" }, { "NextPolNumber", "nextPolNumber" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"approvedById == \"{id}\"",
@@ -664,6 +678,7 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(Order2sRadGrid, "Template.Name", "template", "templateName", folioServiceContext.FolioServiceClient.OrderTemplates),
                 Global.GetCqlFilter(Order2sRadGrid, "Vendor.Name", "vendor", "name", folioServiceContext.FolioServiceClient.Organizations),
                 Global.GetCqlFilter(Order2sRadGrid, "Status", "workflowStatus"),
+                Global.GetCqlFilter(Order2sRadGrid, "NextPolNumber", "nextPolNumber"),
                 Global.GetCqlFilter(Order2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(Order2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Order2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
@@ -684,7 +699,7 @@ namespace FolioWebApplication.User2s
             if (Session["Order2sPermission"] == null) return;
             var id = (Guid?)User2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Approved", "approved" }, { "ApprovedById", "approvedById" }, { "ApprovalDate", "approvalDate" }, { "AssignedToId", "assignedTo" }, { "BillToId", "billTo" }, { "CloseReasonReason", "closeReason.reason" }, { "CloseReasonNote", "closeReason.note" }, { "OrderDate", "dateOrdered" }, { "Manual", "manualPo" }, { "Number", "poNumber" }, { "OrderType", "orderType" }, { "Reencumber", "reEncumber" }, { "OngoingInterval", "ongoing.interval" }, { "OngoingIsSubscription", "ongoing.isSubscription" }, { "OngoingManualRenewal", "ongoing.manualRenewal" }, { "OngoingNotes", "ongoing.notes" }, { "OngoingReviewPeriod", "ongoing.reviewPeriod" }, { "OngoingRenewalDate", "ongoing.renewalDate" }, { "OngoingReviewDate", "ongoing.reviewDate" }, { "ShipToId", "shipTo" }, { "TemplateId", "template" }, { "VendorId", "vendor" }, { "Status", "workflowStatus" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Approved", "approved" }, { "ApprovedById", "approvedById" }, { "ApprovalDate", "approvalDate" }, { "AssignedToId", "assignedTo" }, { "BillToId", "billTo" }, { "CloseReasonReason", "closeReason.reason" }, { "CloseReasonNote", "closeReason.note" }, { "OrderDate", "dateOrdered" }, { "Manual", "manualPo" }, { "Number", "poNumber" }, { "OrderType", "orderType" }, { "Reencumber", "reEncumber" }, { "OngoingInterval", "ongoing.interval" }, { "OngoingIsSubscription", "ongoing.isSubscription" }, { "OngoingManualRenewal", "ongoing.manualRenewal" }, { "OngoingNotes", "ongoing.notes" }, { "OngoingReviewPeriod", "ongoing.reviewPeriod" }, { "OngoingRenewalDate", "ongoing.renewalDate" }, { "OngoingReviewDate", "ongoing.reviewDate" }, { "ShipToId", "shipTo" }, { "TemplateId", "template" }, { "VendorId", "vendor" }, { "Status", "workflowStatus" }, { "NextPolNumber", "nextPolNumber" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"assignedTo == \"{id}\"",
@@ -709,6 +724,7 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(Order2s1RadGrid, "Template.Name", "template", "templateName", folioServiceContext.FolioServiceClient.OrderTemplates),
                 Global.GetCqlFilter(Order2s1RadGrid, "Vendor.Name", "vendor", "name", folioServiceContext.FolioServiceClient.Organizations),
                 Global.GetCqlFilter(Order2s1RadGrid, "Status", "workflowStatus"),
+                Global.GetCqlFilter(Order2s1RadGrid, "NextPolNumber", "nextPolNumber"),
                 Global.GetCqlFilter(Order2s1RadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(Order2s1RadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Order2s1RadGrid, "LastWriteTime", "metadata.updatedDate"),
@@ -729,11 +745,12 @@ namespace FolioWebApplication.User2s
             if (Session["PatronActionSession2sPermission"] == null) return;
             var id = (Guid?)User2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "PatronId", "patronId" }, { "LoanId", "loanId" }, { "ActionType", "actionType" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "SessionId", "sessionId" }, { "PatronId", "patronId" }, { "LoanId", "loanId" }, { "ActionType", "actionType" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"patronId == \"{id}\"",
                 Global.GetCqlFilter(PatronActionSession2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(PatronActionSession2sRadGrid, "SessionId", "sessionId"),
                 Global.GetCqlFilter(PatronActionSession2sRadGrid, "Loan.Id", "loanId", "id", folioServiceContext.FolioServiceClient.Loans),
                 Global.GetCqlFilter(PatronActionSession2sRadGrid, "ActionType", "actionType"),
                 Global.GetCqlFilter(PatronActionSession2sRadGrid, "CreationTime", "metadata.createdDate"),
@@ -808,6 +825,17 @@ namespace FolioWebApplication.User2s
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
+        protected void PreferredEmailCommunicationsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["PreferredEmailCommunicationsPermission"] == null) return;
+            var id = (Guid?)User2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindUser2(id, true).PreferredEmailCommunications ?? new PreferredEmailCommunication[] { };
+            PreferredEmailCommunicationsRadGrid.DataSource = l;
+            PreferredEmailCommunicationsRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            PreferredEmailCommunicationsPanel.Visible = User2FormView.DataKey.Value != null && ((string)Session["PreferredEmailCommunicationsPermission"] == "Edit" || Session["PreferredEmailCommunicationsPermission"] != null && l.Any());
+        }
+
         protected void Proxy2s1RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             if (Session["Proxy2sPermission"] == null) return;
@@ -875,23 +903,27 @@ namespace FolioWebApplication.User2s
             if (Session["Request2sPermission"] == null) return;
             var id = (Guid?)User2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "RequestType", "requestType" }, { "RequestDate", "requestDate" }, { "PatronComments", "patronComments" }, { "RequesterId", "requesterId" }, { "ProxyUserId", "proxyUserId" }, { "ItemId", "itemId" }, { "Status", "status" }, { "CancellationReasonId", "cancellationReasonId" }, { "CancelledByUserId", "cancelledByUserId" }, { "CancellationAdditionalInformation", "cancellationAdditionalInformation" }, { "CancelledDate", "cancelledDate" }, { "Position", "position" }, { "ItemTitle", "item.title" }, { "ItemBarcode", "item.barcode" }, { "RequesterFirstName", "requester.firstName" }, { "RequesterLastName", "requester.lastName" }, { "RequesterMiddleName", "requester.middleName" }, { "RequesterBarcode", "requester.barcode" }, { "RequesterPatronGroup", "requester.patronGroup" }, { "ProxyFirstName", "proxy.firstName" }, { "ProxyLastName", "proxy.lastName" }, { "ProxyMiddleName", "proxy.middleName" }, { "ProxyBarcode", "proxy.barcode" }, { "ProxyPatronGroup", "proxy.patronGroup" }, { "FulfilmentPreference", "fulfilmentPreference" }, { "DeliveryAddressTypeId", "deliveryAddressTypeId" }, { "RequestExpirationDate", "requestExpirationDate" }, { "HoldShelfExpirationDate", "holdShelfExpirationDate" }, { "PickupServicePointId", "pickupServicePointId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "AwaitingPickupRequestClosedDate", "awaitingPickupRequestClosedDate" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "RequestLevel", "requestLevel" }, { "RequestType", "requestType" }, { "RequestDate", "requestDate" }, { "PatronComments", "patronComments" }, { "RequesterId", "requesterId" }, { "ProxyUserId", "proxyUserId" }, { "InstanceId", "instanceId" }, { "HoldingId", "holdingsRecordId" }, { "ItemId", "itemId" }, { "Status", "status" }, { "CancellationReasonId", "cancellationReasonId" }, { "CancelledByUserId", "cancelledByUserId" }, { "CancellationAdditionalInformation", "cancellationAdditionalInformation" }, { "CancelledDate", "cancelledDate" }, { "Position", "position" }, { "InstanceTitle", "instance.title" }, { "ItemBarcode", "item.barcode" }, { "RequesterFirstName", "requester.firstName" }, { "RequesterLastName", "requester.lastName" }, { "RequesterMiddleName", "requester.middleName" }, { "RequesterBarcode", "requester.barcode" }, { "RequesterPatronGroup", "requester.patronGroup" }, { "ProxyFirstName", "proxy.firstName" }, { "ProxyLastName", "proxy.lastName" }, { "ProxyMiddleName", "proxy.middleName" }, { "ProxyBarcode", "proxy.barcode" }, { "ProxyPatronGroup", "proxy.patronGroup" }, { "FulfillmentPreference", "fulfillmentPreference" }, { "DeliveryAddressTypeId", "deliveryAddressTypeId" }, { "RequestExpirationDate", "requestExpirationDate" }, { "HoldShelfExpirationDate", "holdShelfExpirationDate" }, { "PickupServicePointId", "pickupServicePointId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "PrintDetailsPrintCount", "printDetails.printCount" }, { "PrintDetailsRequesterId", "printDetails.requesterId" }, { "PrintDetailsIsPrinted", "printDetails.isPrinted" }, { "PrintDetailsPrintEventDate", "printDetails.printEventDate" }, { "AwaitingPickupRequestClosedDate", "awaitingPickupRequestClosedDate" }, { "SearchIndexCallNumberComponentsCallNumber", "searchIndex.callNumberComponents.callNumber" }, { "SearchIndexCallNumberComponentsPrefix", "searchIndex.callNumberComponents.prefix" }, { "SearchIndexCallNumberComponentsSuffix", "searchIndex.callNumberComponents.suffix" }, { "SearchIndexShelvingOrder", "searchIndex.shelvingOrder" }, { "SearchIndexPickupServicePointName", "searchIndex.pickupServicePointName" }, { "ItemLocationCode", "itemLocationCode" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
-                $"cancelledByUserId == \"{id}\"",
+                $"printDetails.requesterId == \"{id}\"",
                 Global.GetCqlFilter(Request2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Request2sRadGrid, "RequestLevel", "requestLevel"),
                 Global.GetCqlFilter(Request2sRadGrid, "RequestType", "requestType"),
                 Global.GetCqlFilter(Request2sRadGrid, "RequestDate", "requestDate"),
                 Global.GetCqlFilter(Request2sRadGrid, "PatronComments", "patronComments"),
                 Global.GetCqlFilter(Request2sRadGrid, "Requester.Username", "requesterId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Request2sRadGrid, "ProxyUser.Username", "proxyUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Request2sRadGrid, "Instance.Title", "instanceId", "title", folioServiceContext.FolioServiceClient.Instances),
+                Global.GetCqlFilter(Request2sRadGrid, "Holding.ShortId", "holdingsRecordId", "hrid", folioServiceContext.FolioServiceClient.Holdings),
                 Global.GetCqlFilter(Request2sRadGrid, "Item.ShortId", "itemId", "hrid", folioServiceContext.FolioServiceClient.Items),
                 Global.GetCqlFilter(Request2sRadGrid, "Status", "status"),
                 Global.GetCqlFilter(Request2sRadGrid, "CancellationReason.Name", "cancellationReasonId", "name", folioServiceContext.FolioServiceClient.CancellationReasons),
+                Global.GetCqlFilter(Request2sRadGrid, "CancelledByUser.Username", "cancelledByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Request2sRadGrid, "CancellationAdditionalInformation", "cancellationAdditionalInformation"),
                 Global.GetCqlFilter(Request2sRadGrid, "CancelledDate", "cancelledDate"),
                 Global.GetCqlFilter(Request2sRadGrid, "Position", "position"),
-                Global.GetCqlFilter(Request2sRadGrid, "ItemTitle", "item.title"),
+                Global.GetCqlFilter(Request2sRadGrid, "InstanceTitle", "instance.title"),
                 Global.GetCqlFilter(Request2sRadGrid, "ItemBarcode", "item.barcode"),
                 Global.GetCqlFilter(Request2sRadGrid, "RequesterFirstName", "requester.firstName"),
                 Global.GetCqlFilter(Request2sRadGrid, "RequesterLastName", "requester.lastName"),
@@ -903,7 +935,7 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(Request2sRadGrid, "ProxyMiddleName", "proxy.middleName"),
                 Global.GetCqlFilter(Request2sRadGrid, "ProxyBarcode", "proxy.barcode"),
                 Global.GetCqlFilter(Request2sRadGrid, "ProxyPatronGroup", "proxy.patronGroup"),
-                Global.GetCqlFilter(Request2sRadGrid, "FulfilmentPreference", "fulfilmentPreference"),
+                Global.GetCqlFilter(Request2sRadGrid, "FulfillmentPreference", "fulfillmentPreference"),
                 Global.GetCqlFilter(Request2sRadGrid, "DeliveryAddressType.Name", "deliveryAddressTypeId", "addressType", folioServiceContext.FolioServiceClient.AddressTypes),
                 Global.GetCqlFilter(Request2sRadGrid, "RequestExpirationDate", "requestExpirationDate"),
                 Global.GetCqlFilter(Request2sRadGrid, "HoldShelfExpirationDate", "holdShelfExpirationDate"),
@@ -912,7 +944,16 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(Request2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Request2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(Request2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
-                Global.GetCqlFilter(Request2sRadGrid, "AwaitingPickupRequestClosedDate", "awaitingPickupRequestClosedDate")
+                Global.GetCqlFilter(Request2sRadGrid, "PrintDetailsPrintCount", "printDetails.printCount"),
+                Global.GetCqlFilter(Request2sRadGrid, "PrintDetailsIsPrinted", "printDetails.isPrinted"),
+                Global.GetCqlFilter(Request2sRadGrid, "PrintDetailsPrintEventDate", "printDetails.printEventDate"),
+                Global.GetCqlFilter(Request2sRadGrid, "AwaitingPickupRequestClosedDate", "awaitingPickupRequestClosedDate"),
+                Global.GetCqlFilter(Request2sRadGrid, "SearchIndexCallNumberComponentsCallNumber", "searchIndex.callNumberComponents.callNumber"),
+                Global.GetCqlFilter(Request2sRadGrid, "SearchIndexCallNumberComponentsPrefix", "searchIndex.callNumberComponents.prefix"),
+                Global.GetCqlFilter(Request2sRadGrid, "SearchIndexCallNumberComponentsSuffix", "searchIndex.callNumberComponents.suffix"),
+                Global.GetCqlFilter(Request2sRadGrid, "SearchIndexShelvingOrder", "searchIndex.shelvingOrder"),
+                Global.GetCqlFilter(Request2sRadGrid, "SearchIndexPickupServicePointName", "searchIndex.pickupServicePointName"),
+                Global.GetCqlFilter(Request2sRadGrid, "ItemLocationCode", "itemLocationCode")
             }.Where(s => s != null)));
             Request2sRadGrid.DataSource = folioServiceContext.Request2s(out var i, where, Request2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Request2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Request2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Request2sRadGrid.PageSize * Request2sRadGrid.CurrentPageIndex, Request2sRadGrid.PageSize, true);
             Request2sRadGrid.VirtualItemCount = i;
@@ -924,56 +965,69 @@ namespace FolioWebApplication.User2s
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
-        protected void Request2s2RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        protected void Request2s1RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             if (Session["Request2sPermission"] == null) return;
             var id = (Guid?)User2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "RequestType", "requestType" }, { "RequestDate", "requestDate" }, { "PatronComments", "patronComments" }, { "RequesterId", "requesterId" }, { "ProxyUserId", "proxyUserId" }, { "ItemId", "itemId" }, { "Status", "status" }, { "CancellationReasonId", "cancellationReasonId" }, { "CancelledByUserId", "cancelledByUserId" }, { "CancellationAdditionalInformation", "cancellationAdditionalInformation" }, { "CancelledDate", "cancelledDate" }, { "Position", "position" }, { "ItemTitle", "item.title" }, { "ItemBarcode", "item.barcode" }, { "RequesterFirstName", "requester.firstName" }, { "RequesterLastName", "requester.lastName" }, { "RequesterMiddleName", "requester.middleName" }, { "RequesterBarcode", "requester.barcode" }, { "RequesterPatronGroup", "requester.patronGroup" }, { "ProxyFirstName", "proxy.firstName" }, { "ProxyLastName", "proxy.lastName" }, { "ProxyMiddleName", "proxy.middleName" }, { "ProxyBarcode", "proxy.barcode" }, { "ProxyPatronGroup", "proxy.patronGroup" }, { "FulfilmentPreference", "fulfilmentPreference" }, { "DeliveryAddressTypeId", "deliveryAddressTypeId" }, { "RequestExpirationDate", "requestExpirationDate" }, { "HoldShelfExpirationDate", "holdShelfExpirationDate" }, { "PickupServicePointId", "pickupServicePointId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "AwaitingPickupRequestClosedDate", "awaitingPickupRequestClosedDate" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "RequestLevel", "requestLevel" }, { "RequestType", "requestType" }, { "RequestDate", "requestDate" }, { "PatronComments", "patronComments" }, { "RequesterId", "requesterId" }, { "ProxyUserId", "proxyUserId" }, { "InstanceId", "instanceId" }, { "HoldingId", "holdingsRecordId" }, { "ItemId", "itemId" }, { "Status", "status" }, { "CancellationReasonId", "cancellationReasonId" }, { "CancelledByUserId", "cancelledByUserId" }, { "CancellationAdditionalInformation", "cancellationAdditionalInformation" }, { "CancelledDate", "cancelledDate" }, { "Position", "position" }, { "InstanceTitle", "instance.title" }, { "ItemBarcode", "item.barcode" }, { "RequesterFirstName", "requester.firstName" }, { "RequesterLastName", "requester.lastName" }, { "RequesterMiddleName", "requester.middleName" }, { "RequesterBarcode", "requester.barcode" }, { "RequesterPatronGroup", "requester.patronGroup" }, { "ProxyFirstName", "proxy.firstName" }, { "ProxyLastName", "proxy.lastName" }, { "ProxyMiddleName", "proxy.middleName" }, { "ProxyBarcode", "proxy.barcode" }, { "ProxyPatronGroup", "proxy.patronGroup" }, { "FulfillmentPreference", "fulfillmentPreference" }, { "DeliveryAddressTypeId", "deliveryAddressTypeId" }, { "RequestExpirationDate", "requestExpirationDate" }, { "HoldShelfExpirationDate", "holdShelfExpirationDate" }, { "PickupServicePointId", "pickupServicePointId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "PrintDetailsPrintCount", "printDetails.printCount" }, { "PrintDetailsRequesterId", "printDetails.requesterId" }, { "PrintDetailsIsPrinted", "printDetails.isPrinted" }, { "PrintDetailsPrintEventDate", "printDetails.printEventDate" }, { "AwaitingPickupRequestClosedDate", "awaitingPickupRequestClosedDate" }, { "SearchIndexCallNumberComponentsCallNumber", "searchIndex.callNumberComponents.callNumber" }, { "SearchIndexCallNumberComponentsPrefix", "searchIndex.callNumberComponents.prefix" }, { "SearchIndexCallNumberComponentsSuffix", "searchIndex.callNumberComponents.suffix" }, { "SearchIndexShelvingOrder", "searchIndex.shelvingOrder" }, { "SearchIndexPickupServicePointName", "searchIndex.pickupServicePointName" }, { "ItemLocationCode", "itemLocationCode" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
-                $"proxyUserId == \"{id}\"",
-                Global.GetCqlFilter(Request2s2RadGrid, "Id", "id"),
-                Global.GetCqlFilter(Request2s2RadGrid, "RequestType", "requestType"),
-                Global.GetCqlFilter(Request2s2RadGrid, "RequestDate", "requestDate"),
-                Global.GetCqlFilter(Request2s2RadGrid, "PatronComments", "patronComments"),
-                Global.GetCqlFilter(Request2s2RadGrid, "Requester.Username", "requesterId", "username", folioServiceContext.FolioServiceClient.Users),
-                Global.GetCqlFilter(Request2s2RadGrid, "Item.ShortId", "itemId", "hrid", folioServiceContext.FolioServiceClient.Items),
-                Global.GetCqlFilter(Request2s2RadGrid, "Status", "status"),
-                Global.GetCqlFilter(Request2s2RadGrid, "CancellationReason.Name", "cancellationReasonId", "name", folioServiceContext.FolioServiceClient.CancellationReasons),
-                Global.GetCqlFilter(Request2s2RadGrid, "CancelledByUser.Username", "cancelledByUserId", "username", folioServiceContext.FolioServiceClient.Users),
-                Global.GetCqlFilter(Request2s2RadGrid, "CancellationAdditionalInformation", "cancellationAdditionalInformation"),
-                Global.GetCqlFilter(Request2s2RadGrid, "CancelledDate", "cancelledDate"),
-                Global.GetCqlFilter(Request2s2RadGrid, "Position", "position"),
-                Global.GetCqlFilter(Request2s2RadGrid, "ItemTitle", "item.title"),
-                Global.GetCqlFilter(Request2s2RadGrid, "ItemBarcode", "item.barcode"),
-                Global.GetCqlFilter(Request2s2RadGrid, "RequesterFirstName", "requester.firstName"),
-                Global.GetCqlFilter(Request2s2RadGrid, "RequesterLastName", "requester.lastName"),
-                Global.GetCqlFilter(Request2s2RadGrid, "RequesterMiddleName", "requester.middleName"),
-                Global.GetCqlFilter(Request2s2RadGrid, "RequesterBarcode", "requester.barcode"),
-                Global.GetCqlFilter(Request2s2RadGrid, "RequesterPatronGroup", "requester.patronGroup"),
-                Global.GetCqlFilter(Request2s2RadGrid, "ProxyFirstName", "proxy.firstName"),
-                Global.GetCqlFilter(Request2s2RadGrid, "ProxyLastName", "proxy.lastName"),
-                Global.GetCqlFilter(Request2s2RadGrid, "ProxyMiddleName", "proxy.middleName"),
-                Global.GetCqlFilter(Request2s2RadGrid, "ProxyBarcode", "proxy.barcode"),
-                Global.GetCqlFilter(Request2s2RadGrid, "ProxyPatronGroup", "proxy.patronGroup"),
-                Global.GetCqlFilter(Request2s2RadGrid, "FulfilmentPreference", "fulfilmentPreference"),
-                Global.GetCqlFilter(Request2s2RadGrid, "DeliveryAddressType.Name", "deliveryAddressTypeId", "addressType", folioServiceContext.FolioServiceClient.AddressTypes),
-                Global.GetCqlFilter(Request2s2RadGrid, "RequestExpirationDate", "requestExpirationDate"),
-                Global.GetCqlFilter(Request2s2RadGrid, "HoldShelfExpirationDate", "holdShelfExpirationDate"),
-                Global.GetCqlFilter(Request2s2RadGrid, "PickupServicePoint.Name", "pickupServicePointId", "name", folioServiceContext.FolioServiceClient.ServicePoints),
-                Global.GetCqlFilter(Request2s2RadGrid, "CreationTime", "metadata.createdDate"),
-                Global.GetCqlFilter(Request2s2RadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
-                Global.GetCqlFilter(Request2s2RadGrid, "LastWriteTime", "metadata.updatedDate"),
-                Global.GetCqlFilter(Request2s2RadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
-                Global.GetCqlFilter(Request2s2RadGrid, "AwaitingPickupRequestClosedDate", "awaitingPickupRequestClosedDate")
+                $"cancelledByUserId == \"{id}\"",
+                Global.GetCqlFilter(Request2s1RadGrid, "Id", "id"),
+                Global.GetCqlFilter(Request2s1RadGrid, "RequestLevel", "requestLevel"),
+                Global.GetCqlFilter(Request2s1RadGrid, "RequestType", "requestType"),
+                Global.GetCqlFilter(Request2s1RadGrid, "RequestDate", "requestDate"),
+                Global.GetCqlFilter(Request2s1RadGrid, "PatronComments", "patronComments"),
+                Global.GetCqlFilter(Request2s1RadGrid, "Requester.Username", "requesterId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Request2s1RadGrid, "ProxyUser.Username", "proxyUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Request2s1RadGrid, "Instance.Title", "instanceId", "title", folioServiceContext.FolioServiceClient.Instances),
+                Global.GetCqlFilter(Request2s1RadGrid, "Holding.ShortId", "holdingsRecordId", "hrid", folioServiceContext.FolioServiceClient.Holdings),
+                Global.GetCqlFilter(Request2s1RadGrid, "Item.ShortId", "itemId", "hrid", folioServiceContext.FolioServiceClient.Items),
+                Global.GetCqlFilter(Request2s1RadGrid, "Status", "status"),
+                Global.GetCqlFilter(Request2s1RadGrid, "CancellationReason.Name", "cancellationReasonId", "name", folioServiceContext.FolioServiceClient.CancellationReasons),
+                Global.GetCqlFilter(Request2s1RadGrid, "CancellationAdditionalInformation", "cancellationAdditionalInformation"),
+                Global.GetCqlFilter(Request2s1RadGrid, "CancelledDate", "cancelledDate"),
+                Global.GetCqlFilter(Request2s1RadGrid, "Position", "position"),
+                Global.GetCqlFilter(Request2s1RadGrid, "InstanceTitle", "instance.title"),
+                Global.GetCqlFilter(Request2s1RadGrid, "ItemBarcode", "item.barcode"),
+                Global.GetCqlFilter(Request2s1RadGrid, "RequesterFirstName", "requester.firstName"),
+                Global.GetCqlFilter(Request2s1RadGrid, "RequesterLastName", "requester.lastName"),
+                Global.GetCqlFilter(Request2s1RadGrid, "RequesterMiddleName", "requester.middleName"),
+                Global.GetCqlFilter(Request2s1RadGrid, "RequesterBarcode", "requester.barcode"),
+                Global.GetCqlFilter(Request2s1RadGrid, "RequesterPatronGroup", "requester.patronGroup"),
+                Global.GetCqlFilter(Request2s1RadGrid, "ProxyFirstName", "proxy.firstName"),
+                Global.GetCqlFilter(Request2s1RadGrid, "ProxyLastName", "proxy.lastName"),
+                Global.GetCqlFilter(Request2s1RadGrid, "ProxyMiddleName", "proxy.middleName"),
+                Global.GetCqlFilter(Request2s1RadGrid, "ProxyBarcode", "proxy.barcode"),
+                Global.GetCqlFilter(Request2s1RadGrid, "ProxyPatronGroup", "proxy.patronGroup"),
+                Global.GetCqlFilter(Request2s1RadGrid, "FulfillmentPreference", "fulfillmentPreference"),
+                Global.GetCqlFilter(Request2s1RadGrid, "DeliveryAddressType.Name", "deliveryAddressTypeId", "addressType", folioServiceContext.FolioServiceClient.AddressTypes),
+                Global.GetCqlFilter(Request2s1RadGrid, "RequestExpirationDate", "requestExpirationDate"),
+                Global.GetCqlFilter(Request2s1RadGrid, "HoldShelfExpirationDate", "holdShelfExpirationDate"),
+                Global.GetCqlFilter(Request2s1RadGrid, "PickupServicePoint.Name", "pickupServicePointId", "name", folioServiceContext.FolioServiceClient.ServicePoints),
+                Global.GetCqlFilter(Request2s1RadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(Request2s1RadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Request2s1RadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(Request2s1RadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Request2s1RadGrid, "PrintDetailsPrintCount", "printDetails.printCount"),
+                Global.GetCqlFilter(Request2s1RadGrid, "PrintDetailsRequester.Username", "printDetails.requesterId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Request2s1RadGrid, "PrintDetailsIsPrinted", "printDetails.isPrinted"),
+                Global.GetCqlFilter(Request2s1RadGrid, "PrintDetailsPrintEventDate", "printDetails.printEventDate"),
+                Global.GetCqlFilter(Request2s1RadGrid, "AwaitingPickupRequestClosedDate", "awaitingPickupRequestClosedDate"),
+                Global.GetCqlFilter(Request2s1RadGrid, "SearchIndexCallNumberComponentsCallNumber", "searchIndex.callNumberComponents.callNumber"),
+                Global.GetCqlFilter(Request2s1RadGrid, "SearchIndexCallNumberComponentsPrefix", "searchIndex.callNumberComponents.prefix"),
+                Global.GetCqlFilter(Request2s1RadGrid, "SearchIndexCallNumberComponentsSuffix", "searchIndex.callNumberComponents.suffix"),
+                Global.GetCqlFilter(Request2s1RadGrid, "SearchIndexShelvingOrder", "searchIndex.shelvingOrder"),
+                Global.GetCqlFilter(Request2s1RadGrid, "SearchIndexPickupServicePointName", "searchIndex.pickupServicePointName"),
+                Global.GetCqlFilter(Request2s1RadGrid, "ItemLocationCode", "itemLocationCode")
             }.Where(s => s != null)));
-            Request2s2RadGrid.DataSource = folioServiceContext.Request2s(out var i, where, Request2s2RadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Request2s2RadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Request2s2RadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Request2s2RadGrid.PageSize * Request2s2RadGrid.CurrentPageIndex, Request2s2RadGrid.PageSize, true);
-            Request2s2RadGrid.VirtualItemCount = i;
-            if (Request2s2RadGrid.MasterTableView.FilterExpression == "")
+            Request2s1RadGrid.DataSource = folioServiceContext.Request2s(out var i, where, Request2s1RadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Request2s1RadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Request2s1RadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Request2s1RadGrid.PageSize * Request2s1RadGrid.CurrentPageIndex, Request2s1RadGrid.PageSize, true);
+            Request2s1RadGrid.VirtualItemCount = i;
+            if (Request2s1RadGrid.MasterTableView.FilterExpression == "")
             {
-                Request2s2RadGrid.AllowFilteringByColumn = Request2s2RadGrid.VirtualItemCount > 10;
-                Request2s2Panel.Visible = User2FormView.DataKey.Value != null && Session["Request2sPermission"] != null && Request2s2RadGrid.VirtualItemCount > 0;
+                Request2s1RadGrid.AllowFilteringByColumn = Request2s1RadGrid.VirtualItemCount > 10;
+                Request2s1Panel.Visible = User2FormView.DataKey.Value != null && Session["Request2sPermission"] != null && Request2s1RadGrid.VirtualItemCount > 0;
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
@@ -983,15 +1037,18 @@ namespace FolioWebApplication.User2s
             if (Session["Request2sPermission"] == null) return;
             var id = (Guid?)User2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "RequestType", "requestType" }, { "RequestDate", "requestDate" }, { "PatronComments", "patronComments" }, { "RequesterId", "requesterId" }, { "ProxyUserId", "proxyUserId" }, { "ItemId", "itemId" }, { "Status", "status" }, { "CancellationReasonId", "cancellationReasonId" }, { "CancelledByUserId", "cancelledByUserId" }, { "CancellationAdditionalInformation", "cancellationAdditionalInformation" }, { "CancelledDate", "cancelledDate" }, { "Position", "position" }, { "ItemTitle", "item.title" }, { "ItemBarcode", "item.barcode" }, { "RequesterFirstName", "requester.firstName" }, { "RequesterLastName", "requester.lastName" }, { "RequesterMiddleName", "requester.middleName" }, { "RequesterBarcode", "requester.barcode" }, { "RequesterPatronGroup", "requester.patronGroup" }, { "ProxyFirstName", "proxy.firstName" }, { "ProxyLastName", "proxy.lastName" }, { "ProxyMiddleName", "proxy.middleName" }, { "ProxyBarcode", "proxy.barcode" }, { "ProxyPatronGroup", "proxy.patronGroup" }, { "FulfilmentPreference", "fulfilmentPreference" }, { "DeliveryAddressTypeId", "deliveryAddressTypeId" }, { "RequestExpirationDate", "requestExpirationDate" }, { "HoldShelfExpirationDate", "holdShelfExpirationDate" }, { "PickupServicePointId", "pickupServicePointId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "AwaitingPickupRequestClosedDate", "awaitingPickupRequestClosedDate" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "RequestLevel", "requestLevel" }, { "RequestType", "requestType" }, { "RequestDate", "requestDate" }, { "PatronComments", "patronComments" }, { "RequesterId", "requesterId" }, { "ProxyUserId", "proxyUserId" }, { "InstanceId", "instanceId" }, { "HoldingId", "holdingsRecordId" }, { "ItemId", "itemId" }, { "Status", "status" }, { "CancellationReasonId", "cancellationReasonId" }, { "CancelledByUserId", "cancelledByUserId" }, { "CancellationAdditionalInformation", "cancellationAdditionalInformation" }, { "CancelledDate", "cancelledDate" }, { "Position", "position" }, { "InstanceTitle", "instance.title" }, { "ItemBarcode", "item.barcode" }, { "RequesterFirstName", "requester.firstName" }, { "RequesterLastName", "requester.lastName" }, { "RequesterMiddleName", "requester.middleName" }, { "RequesterBarcode", "requester.barcode" }, { "RequesterPatronGroup", "requester.patronGroup" }, { "ProxyFirstName", "proxy.firstName" }, { "ProxyLastName", "proxy.lastName" }, { "ProxyMiddleName", "proxy.middleName" }, { "ProxyBarcode", "proxy.barcode" }, { "ProxyPatronGroup", "proxy.patronGroup" }, { "FulfillmentPreference", "fulfillmentPreference" }, { "DeliveryAddressTypeId", "deliveryAddressTypeId" }, { "RequestExpirationDate", "requestExpirationDate" }, { "HoldShelfExpirationDate", "holdShelfExpirationDate" }, { "PickupServicePointId", "pickupServicePointId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "PrintDetailsPrintCount", "printDetails.printCount" }, { "PrintDetailsRequesterId", "printDetails.requesterId" }, { "PrintDetailsIsPrinted", "printDetails.isPrinted" }, { "PrintDetailsPrintEventDate", "printDetails.printEventDate" }, { "AwaitingPickupRequestClosedDate", "awaitingPickupRequestClosedDate" }, { "SearchIndexCallNumberComponentsCallNumber", "searchIndex.callNumberComponents.callNumber" }, { "SearchIndexCallNumberComponentsPrefix", "searchIndex.callNumberComponents.prefix" }, { "SearchIndexCallNumberComponentsSuffix", "searchIndex.callNumberComponents.suffix" }, { "SearchIndexShelvingOrder", "searchIndex.shelvingOrder" }, { "SearchIndexPickupServicePointName", "searchIndex.pickupServicePointName" }, { "ItemLocationCode", "itemLocationCode" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
-                $"requesterId == \"{id}\"",
+                $"proxyUserId == \"{id}\"",
                 Global.GetCqlFilter(Request2s3RadGrid, "Id", "id"),
+                Global.GetCqlFilter(Request2s3RadGrid, "RequestLevel", "requestLevel"),
                 Global.GetCqlFilter(Request2s3RadGrid, "RequestType", "requestType"),
                 Global.GetCqlFilter(Request2s3RadGrid, "RequestDate", "requestDate"),
                 Global.GetCqlFilter(Request2s3RadGrid, "PatronComments", "patronComments"),
-                Global.GetCqlFilter(Request2s3RadGrid, "ProxyUser.Username", "proxyUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Request2s3RadGrid, "Requester.Username", "requesterId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Request2s3RadGrid, "Instance.Title", "instanceId", "title", folioServiceContext.FolioServiceClient.Instances),
+                Global.GetCqlFilter(Request2s3RadGrid, "Holding.ShortId", "holdingsRecordId", "hrid", folioServiceContext.FolioServiceClient.Holdings),
                 Global.GetCqlFilter(Request2s3RadGrid, "Item.ShortId", "itemId", "hrid", folioServiceContext.FolioServiceClient.Items),
                 Global.GetCqlFilter(Request2s3RadGrid, "Status", "status"),
                 Global.GetCqlFilter(Request2s3RadGrid, "CancellationReason.Name", "cancellationReasonId", "name", folioServiceContext.FolioServiceClient.CancellationReasons),
@@ -999,7 +1056,7 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(Request2s3RadGrid, "CancellationAdditionalInformation", "cancellationAdditionalInformation"),
                 Global.GetCqlFilter(Request2s3RadGrid, "CancelledDate", "cancelledDate"),
                 Global.GetCqlFilter(Request2s3RadGrid, "Position", "position"),
-                Global.GetCqlFilter(Request2s3RadGrid, "ItemTitle", "item.title"),
+                Global.GetCqlFilter(Request2s3RadGrid, "InstanceTitle", "instance.title"),
                 Global.GetCqlFilter(Request2s3RadGrid, "ItemBarcode", "item.barcode"),
                 Global.GetCqlFilter(Request2s3RadGrid, "RequesterFirstName", "requester.firstName"),
                 Global.GetCqlFilter(Request2s3RadGrid, "RequesterLastName", "requester.lastName"),
@@ -1011,7 +1068,7 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(Request2s3RadGrid, "ProxyMiddleName", "proxy.middleName"),
                 Global.GetCqlFilter(Request2s3RadGrid, "ProxyBarcode", "proxy.barcode"),
                 Global.GetCqlFilter(Request2s3RadGrid, "ProxyPatronGroup", "proxy.patronGroup"),
-                Global.GetCqlFilter(Request2s3RadGrid, "FulfilmentPreference", "fulfilmentPreference"),
+                Global.GetCqlFilter(Request2s3RadGrid, "FulfillmentPreference", "fulfillmentPreference"),
                 Global.GetCqlFilter(Request2s3RadGrid, "DeliveryAddressType.Name", "deliveryAddressTypeId", "addressType", folioServiceContext.FolioServiceClient.AddressTypes),
                 Global.GetCqlFilter(Request2s3RadGrid, "RequestExpirationDate", "requestExpirationDate"),
                 Global.GetCqlFilter(Request2s3RadGrid, "HoldShelfExpirationDate", "holdShelfExpirationDate"),
@@ -1020,7 +1077,17 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(Request2s3RadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Request2s3RadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(Request2s3RadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
-                Global.GetCqlFilter(Request2s3RadGrid, "AwaitingPickupRequestClosedDate", "awaitingPickupRequestClosedDate")
+                Global.GetCqlFilter(Request2s3RadGrid, "PrintDetailsPrintCount", "printDetails.printCount"),
+                Global.GetCqlFilter(Request2s3RadGrid, "PrintDetailsRequester.Username", "printDetails.requesterId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Request2s3RadGrid, "PrintDetailsIsPrinted", "printDetails.isPrinted"),
+                Global.GetCqlFilter(Request2s3RadGrid, "PrintDetailsPrintEventDate", "printDetails.printEventDate"),
+                Global.GetCqlFilter(Request2s3RadGrid, "AwaitingPickupRequestClosedDate", "awaitingPickupRequestClosedDate"),
+                Global.GetCqlFilter(Request2s3RadGrid, "SearchIndexCallNumberComponentsCallNumber", "searchIndex.callNumberComponents.callNumber"),
+                Global.GetCqlFilter(Request2s3RadGrid, "SearchIndexCallNumberComponentsPrefix", "searchIndex.callNumberComponents.prefix"),
+                Global.GetCqlFilter(Request2s3RadGrid, "SearchIndexCallNumberComponentsSuffix", "searchIndex.callNumberComponents.suffix"),
+                Global.GetCqlFilter(Request2s3RadGrid, "SearchIndexShelvingOrder", "searchIndex.shelvingOrder"),
+                Global.GetCqlFilter(Request2s3RadGrid, "SearchIndexPickupServicePointName", "searchIndex.pickupServicePointName"),
+                Global.GetCqlFilter(Request2s3RadGrid, "ItemLocationCode", "itemLocationCode")
             }.Where(s => s != null)));
             Request2s3RadGrid.DataSource = folioServiceContext.Request2s(out var i, where, Request2s3RadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Request2s3RadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Request2s3RadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Request2s3RadGrid.PageSize * Request2s3RadGrid.CurrentPageIndex, Request2s3RadGrid.PageSize, true);
             Request2s3RadGrid.VirtualItemCount = i;
@@ -1032,12 +1099,79 @@ namespace FolioWebApplication.User2s
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
+        protected void Request2s4RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["Request2sPermission"] == null) return;
+            var id = (Guid?)User2FormView.DataKey.Value;
+            if (id == null) return;
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "RequestLevel", "requestLevel" }, { "RequestType", "requestType" }, { "RequestDate", "requestDate" }, { "PatronComments", "patronComments" }, { "RequesterId", "requesterId" }, { "ProxyUserId", "proxyUserId" }, { "InstanceId", "instanceId" }, { "HoldingId", "holdingsRecordId" }, { "ItemId", "itemId" }, { "Status", "status" }, { "CancellationReasonId", "cancellationReasonId" }, { "CancelledByUserId", "cancelledByUserId" }, { "CancellationAdditionalInformation", "cancellationAdditionalInformation" }, { "CancelledDate", "cancelledDate" }, { "Position", "position" }, { "InstanceTitle", "instance.title" }, { "ItemBarcode", "item.barcode" }, { "RequesterFirstName", "requester.firstName" }, { "RequesterLastName", "requester.lastName" }, { "RequesterMiddleName", "requester.middleName" }, { "RequesterBarcode", "requester.barcode" }, { "RequesterPatronGroup", "requester.patronGroup" }, { "ProxyFirstName", "proxy.firstName" }, { "ProxyLastName", "proxy.lastName" }, { "ProxyMiddleName", "proxy.middleName" }, { "ProxyBarcode", "proxy.barcode" }, { "ProxyPatronGroup", "proxy.patronGroup" }, { "FulfillmentPreference", "fulfillmentPreference" }, { "DeliveryAddressTypeId", "deliveryAddressTypeId" }, { "RequestExpirationDate", "requestExpirationDate" }, { "HoldShelfExpirationDate", "holdShelfExpirationDate" }, { "PickupServicePointId", "pickupServicePointId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "PrintDetailsPrintCount", "printDetails.printCount" }, { "PrintDetailsRequesterId", "printDetails.requesterId" }, { "PrintDetailsIsPrinted", "printDetails.isPrinted" }, { "PrintDetailsPrintEventDate", "printDetails.printEventDate" }, { "AwaitingPickupRequestClosedDate", "awaitingPickupRequestClosedDate" }, { "SearchIndexCallNumberComponentsCallNumber", "searchIndex.callNumberComponents.callNumber" }, { "SearchIndexCallNumberComponentsPrefix", "searchIndex.callNumberComponents.prefix" }, { "SearchIndexCallNumberComponentsSuffix", "searchIndex.callNumberComponents.suffix" }, { "SearchIndexShelvingOrder", "searchIndex.shelvingOrder" }, { "SearchIndexPickupServicePointName", "searchIndex.pickupServicePointName" }, { "ItemLocationCode", "itemLocationCode" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                $"requesterId == \"{id}\"",
+                Global.GetCqlFilter(Request2s4RadGrid, "Id", "id"),
+                Global.GetCqlFilter(Request2s4RadGrid, "RequestLevel", "requestLevel"),
+                Global.GetCqlFilter(Request2s4RadGrid, "RequestType", "requestType"),
+                Global.GetCqlFilter(Request2s4RadGrid, "RequestDate", "requestDate"),
+                Global.GetCqlFilter(Request2s4RadGrid, "PatronComments", "patronComments"),
+                Global.GetCqlFilter(Request2s4RadGrid, "ProxyUser.Username", "proxyUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Request2s4RadGrid, "Instance.Title", "instanceId", "title", folioServiceContext.FolioServiceClient.Instances),
+                Global.GetCqlFilter(Request2s4RadGrid, "Holding.ShortId", "holdingsRecordId", "hrid", folioServiceContext.FolioServiceClient.Holdings),
+                Global.GetCqlFilter(Request2s4RadGrid, "Item.ShortId", "itemId", "hrid", folioServiceContext.FolioServiceClient.Items),
+                Global.GetCqlFilter(Request2s4RadGrid, "Status", "status"),
+                Global.GetCqlFilter(Request2s4RadGrid, "CancellationReason.Name", "cancellationReasonId", "name", folioServiceContext.FolioServiceClient.CancellationReasons),
+                Global.GetCqlFilter(Request2s4RadGrid, "CancelledByUser.Username", "cancelledByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Request2s4RadGrid, "CancellationAdditionalInformation", "cancellationAdditionalInformation"),
+                Global.GetCqlFilter(Request2s4RadGrid, "CancelledDate", "cancelledDate"),
+                Global.GetCqlFilter(Request2s4RadGrid, "Position", "position"),
+                Global.GetCqlFilter(Request2s4RadGrid, "InstanceTitle", "instance.title"),
+                Global.GetCqlFilter(Request2s4RadGrid, "ItemBarcode", "item.barcode"),
+                Global.GetCqlFilter(Request2s4RadGrid, "RequesterFirstName", "requester.firstName"),
+                Global.GetCqlFilter(Request2s4RadGrid, "RequesterLastName", "requester.lastName"),
+                Global.GetCqlFilter(Request2s4RadGrid, "RequesterMiddleName", "requester.middleName"),
+                Global.GetCqlFilter(Request2s4RadGrid, "RequesterBarcode", "requester.barcode"),
+                Global.GetCqlFilter(Request2s4RadGrid, "RequesterPatronGroup", "requester.patronGroup"),
+                Global.GetCqlFilter(Request2s4RadGrid, "ProxyFirstName", "proxy.firstName"),
+                Global.GetCqlFilter(Request2s4RadGrid, "ProxyLastName", "proxy.lastName"),
+                Global.GetCqlFilter(Request2s4RadGrid, "ProxyMiddleName", "proxy.middleName"),
+                Global.GetCqlFilter(Request2s4RadGrid, "ProxyBarcode", "proxy.barcode"),
+                Global.GetCqlFilter(Request2s4RadGrid, "ProxyPatronGroup", "proxy.patronGroup"),
+                Global.GetCqlFilter(Request2s4RadGrid, "FulfillmentPreference", "fulfillmentPreference"),
+                Global.GetCqlFilter(Request2s4RadGrid, "DeliveryAddressType.Name", "deliveryAddressTypeId", "addressType", folioServiceContext.FolioServiceClient.AddressTypes),
+                Global.GetCqlFilter(Request2s4RadGrid, "RequestExpirationDate", "requestExpirationDate"),
+                Global.GetCqlFilter(Request2s4RadGrid, "HoldShelfExpirationDate", "holdShelfExpirationDate"),
+                Global.GetCqlFilter(Request2s4RadGrid, "PickupServicePoint.Name", "pickupServicePointId", "name", folioServiceContext.FolioServiceClient.ServicePoints),
+                Global.GetCqlFilter(Request2s4RadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(Request2s4RadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Request2s4RadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(Request2s4RadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Request2s4RadGrid, "PrintDetailsPrintCount", "printDetails.printCount"),
+                Global.GetCqlFilter(Request2s4RadGrid, "PrintDetailsRequester.Username", "printDetails.requesterId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Request2s4RadGrid, "PrintDetailsIsPrinted", "printDetails.isPrinted"),
+                Global.GetCqlFilter(Request2s4RadGrid, "PrintDetailsPrintEventDate", "printDetails.printEventDate"),
+                Global.GetCqlFilter(Request2s4RadGrid, "AwaitingPickupRequestClosedDate", "awaitingPickupRequestClosedDate"),
+                Global.GetCqlFilter(Request2s4RadGrid, "SearchIndexCallNumberComponentsCallNumber", "searchIndex.callNumberComponents.callNumber"),
+                Global.GetCqlFilter(Request2s4RadGrid, "SearchIndexCallNumberComponentsPrefix", "searchIndex.callNumberComponents.prefix"),
+                Global.GetCqlFilter(Request2s4RadGrid, "SearchIndexCallNumberComponentsSuffix", "searchIndex.callNumberComponents.suffix"),
+                Global.GetCqlFilter(Request2s4RadGrid, "SearchIndexShelvingOrder", "searchIndex.shelvingOrder"),
+                Global.GetCqlFilter(Request2s4RadGrid, "SearchIndexPickupServicePointName", "searchIndex.pickupServicePointName"),
+                Global.GetCqlFilter(Request2s4RadGrid, "ItemLocationCode", "itemLocationCode")
+            }.Where(s => s != null)));
+            Request2s4RadGrid.DataSource = folioServiceContext.Request2s(out var i, where, Request2s4RadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Request2s4RadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Request2s4RadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Request2s4RadGrid.PageSize * Request2s4RadGrid.CurrentPageIndex, Request2s4RadGrid.PageSize, true);
+            Request2s4RadGrid.VirtualItemCount = i;
+            if (Request2s4RadGrid.MasterTableView.FilterExpression == "")
+            {
+                Request2s4RadGrid.AllowFilteringByColumn = Request2s4RadGrid.VirtualItemCount > 10;
+                Request2s4Panel.Visible = User2FormView.DataKey.Value != null && Session["Request2sPermission"] != null && Request2s4RadGrid.VirtualItemCount > 0;
+            }
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
+        }
+
         protected void ScheduledNotice2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             if (Session["ScheduledNotice2sPermission"] == null) return;
             var id = (Guid?)User2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "LoanId", "loanId" }, { "RequestId", "requestId" }, { "PaymentId", "feeFineActionId" }, { "RecipientUserId", "recipientUserId" }, { "NextRunTime", "nextRunTime" }, { "TriggeringEvent", "triggeringEvent" }, { "NoticeConfigTiming", "noticeConfig.timing" }, { "NoticeConfigRecurringPeriodDuration", "noticeConfig.recurringPeriod.duration" }, { "NoticeConfigRecurringPeriodInterval", "noticeConfig.recurringPeriod.intervalId" }, { "NoticeConfigTemplateId", "noticeConfig.templateId" }, { "NoticeConfigFormat", "noticeConfig.format" }, { "NoticeConfigSendInRealTime", "noticeConfig.sendInRealTime" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "LoanId", "loanId" }, { "RequestId", "requestId" }, { "PaymentId", "feeFineActionId" }, { "RecipientUserId", "recipientUserId" }, { "SessionId", "sessionId" }, { "NextRunTime", "nextRunTime" }, { "TriggeringEvent", "triggeringEvent" }, { "NoticeConfigTiming", "noticeConfig.timing" }, { "NoticeConfigRecurringPeriodDuration", "noticeConfig.recurringPeriod.duration" }, { "NoticeConfigRecurringPeriodInterval", "noticeConfig.recurringPeriod.intervalId" }, { "NoticeConfigTemplateId", "noticeConfig.templateId" }, { "NoticeConfigFormat", "noticeConfig.format" }, { "NoticeConfigSendInRealTime", "noticeConfig.sendInRealTime" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"recipientUserId == \"{id}\"",
@@ -1045,6 +1179,7 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(ScheduledNotice2sRadGrid, "Loan.Id", "loanId", "id", folioServiceContext.FolioServiceClient.Loans),
                 Global.GetCqlFilter(ScheduledNotice2sRadGrid, "Request.Id", "requestId", "id", folioServiceContext.FolioServiceClient.Requests),
                 Global.GetCqlFilter(ScheduledNotice2sRadGrid, "Payment.Id", "feeFineActionId", "id", folioServiceContext.FolioServiceClient.Payments),
+                Global.GetCqlFilter(ScheduledNotice2sRadGrid, "SessionId", "sessionId"),
                 Global.GetCqlFilter(ScheduledNotice2sRadGrid, "NextRunTime", "nextRunTime"),
                 Global.GetCqlFilter(ScheduledNotice2sRadGrid, "TriggeringEvent", "triggeringEvent"),
                 Global.GetCqlFilter(ScheduledNotice2sRadGrid, "NoticeConfigTiming", "noticeConfig.timing"),

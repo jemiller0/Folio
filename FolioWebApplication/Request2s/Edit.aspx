@@ -17,6 +17,14 @@
                                     <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("RequestLevel") != null %>'>
+                                <td>
+                                    <asp:Label ID="RequestLevelLabel" runat="server" Text="Request Level:" AssociatedControlID="RequestLevelLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="RequestLevelLiteral" runat="server" Text='<%#: Eval("RequestLevel") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("RequestType") != null %>'>
                                 <td>
                                     <asp:Label ID="RequestTypeLabel" runat="server" Text="Request Type:" AssociatedControlID="RequestTypeLiteral" />
@@ -55,6 +63,22 @@
                                 </td>
                                 <td>
                                     <asp:HyperLink ID="ProxyUserHyperLink" runat="server" Text='<%#: Eval("ProxyUser.Username") %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("ProxyUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Instance") != null %>'>
+                                <td>
+                                    <asp:Label ID="InstanceLabel" runat="server" Text="Instance:" AssociatedControlID="InstanceHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="InstanceHyperLink" runat="server" Text='<%#: Eval("Instance.Title") %>' NavigateUrl='<%# $"~/Instance2s/Edit.aspx?Id={Eval("InstanceId")}" %>' Enabled='<%# Session["Instance2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Holding") != null %>'>
+                                <td>
+                                    <asp:Label ID="HoldingLabel" runat="server" Text="Holding:" AssociatedControlID="HoldingHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="HoldingHyperLink" runat="server" Text='<%# Eval("Holding.ShortId") %>' NavigateUrl='<%# $"~/Holding2s/Edit.aspx?Id={Eval("HoldingId")}" %>' Enabled='<%# Session["Holding2sPermission"] != null %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Item") != null %>'>
@@ -113,12 +137,12 @@
                                     <asp:Literal ID="PositionLiteral" runat="server" Text='<%#: Eval("Position") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("ItemTitle") != null %>'>
+                            <tr runat="server" visible='<%# Eval("InstanceTitle") != null %>'>
                                 <td>
-                                    <asp:Label ID="ItemTitleLabel" runat="server" Text="Item Title:" AssociatedControlID="ItemTitleLiteral" />
+                                    <asp:Label ID="InstanceTitleLabel" runat="server" Text="Instance Title:" AssociatedControlID="InstanceTitleLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="ItemTitleLiteral" runat="server" Text='<%#: Eval("ItemTitle") %>' />
+                                    <asp:Literal ID="InstanceTitleLiteral" runat="server" Text='<%#: Eval("InstanceTitle") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("ItemBarcode") != null %>'>
@@ -209,12 +233,12 @@
                                     <asp:Literal ID="ProxyPatronGroupLiteral" runat="server" Text='<%#: Eval("ProxyPatronGroup") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("FulfilmentPreference") != null %>'>
+                            <tr runat="server" visible='<%# Eval("FulfillmentPreference") != null %>'>
                                 <td>
-                                    <asp:Label ID="FulfilmentPreferenceLabel" runat="server" Text="Fulfilment Preference:" AssociatedControlID="FulfilmentPreferenceLiteral" />
+                                    <asp:Label ID="FulfillmentPreferenceLabel" runat="server" Text="Fulfillment Preference:" AssociatedControlID="FulfillmentPreferenceLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="FulfilmentPreferenceLiteral" runat="server" Text='<%#: Eval("FulfilmentPreference") %>' />
+                                    <asp:Literal ID="FulfillmentPreferenceLiteral" runat="server" Text='<%#: Eval("FulfillmentPreference") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("DeliveryAddressType") != null %>'>
@@ -281,12 +305,92 @@
                                     <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%#: Eval("LastWriteUser.Username") %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("LastWriteUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("PrintDetailsPrintCount") != null %>'>
+                                <td>
+                                    <asp:Label ID="PrintDetailsPrintCountLabel" runat="server" Text="Print Details Print Count:" AssociatedControlID="PrintDetailsPrintCountLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="PrintDetailsPrintCountLiteral" runat="server" Text='<%#: Eval("PrintDetailsPrintCount") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("PrintDetailsRequester") != null %>'>
+                                <td>
+                                    <asp:Label ID="PrintDetailsRequesterLabel" runat="server" Text="Print Details Requester:" AssociatedControlID="PrintDetailsRequesterHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="PrintDetailsRequesterHyperLink" runat="server" Text='<%#: Eval("PrintDetailsRequester.Username") %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("PrintDetailsRequesterId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("PrintDetailsIsPrinted") != null %>'>
+                                <td>
+                                    <asp:Label ID="PrintDetailsIsPrintedLabel" runat="server" Text="Print Details Is Printed:" AssociatedControlID="PrintDetailsIsPrintedLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="PrintDetailsIsPrintedLiteral" runat="server" Text='<%#: Eval("PrintDetailsIsPrinted") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("PrintDetailsPrintEventDate") != null %>'>
+                                <td>
+                                    <asp:Label ID="PrintDetailsPrintEventDateLabel" runat="server" Text="Print Details Print Event Date:" AssociatedControlID="PrintDetailsPrintEventDateLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="PrintDetailsPrintEventDateLiteral" runat="server" Text='<%# Eval("PrintDetailsPrintEventDate", "{0:d}") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("AwaitingPickupRequestClosedDate") != null %>'>
                                 <td>
                                     <asp:Label ID="AwaitingPickupRequestClosedDateLabel" runat="server" Text="Awaiting Pickup Request Closed Date:" AssociatedControlID="AwaitingPickupRequestClosedDateLiteral" />
                                 </td>
                                 <td>
                                     <asp:Literal ID="AwaitingPickupRequestClosedDateLiteral" runat="server" Text='<%# Eval("AwaitingPickupRequestClosedDate", "{0:d}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("SearchIndexCallNumberComponentsCallNumber") != null %>'>
+                                <td>
+                                    <asp:Label ID="SearchIndexCallNumberComponentsCallNumberLabel" runat="server" Text="Search Index Call Number Components Call Number:" AssociatedControlID="SearchIndexCallNumberComponentsCallNumberLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="SearchIndexCallNumberComponentsCallNumberLiteral" runat="server" Text='<%#: Eval("SearchIndexCallNumberComponentsCallNumber") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("SearchIndexCallNumberComponentsPrefix") != null %>'>
+                                <td>
+                                    <asp:Label ID="SearchIndexCallNumberComponentsPrefixLabel" runat="server" Text="Search Index Call Number Components Prefix:" AssociatedControlID="SearchIndexCallNumberComponentsPrefixLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="SearchIndexCallNumberComponentsPrefixLiteral" runat="server" Text='<%#: Eval("SearchIndexCallNumberComponentsPrefix") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("SearchIndexCallNumberComponentsSuffix") != null %>'>
+                                <td>
+                                    <asp:Label ID="SearchIndexCallNumberComponentsSuffixLabel" runat="server" Text="Search Index Call Number Components Suffix:" AssociatedControlID="SearchIndexCallNumberComponentsSuffixLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="SearchIndexCallNumberComponentsSuffixLiteral" runat="server" Text='<%#: Eval("SearchIndexCallNumberComponentsSuffix") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("SearchIndexShelvingOrder") != null %>'>
+                                <td>
+                                    <asp:Label ID="SearchIndexShelvingOrderLabel" runat="server" Text="Search Index Shelving Order:" AssociatedControlID="SearchIndexShelvingOrderLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="SearchIndexShelvingOrderLiteral" runat="server" Text='<%#: Eval("SearchIndexShelvingOrder") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("SearchIndexPickupServicePointName") != null %>'>
+                                <td>
+                                    <asp:Label ID="SearchIndexPickupServicePointNameLabel" runat="server" Text="Search Index Pickup Service Point Name:" AssociatedControlID="SearchIndexPickupServicePointNameLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="SearchIndexPickupServicePointNameLiteral" runat="server" Text='<%#: Eval("SearchIndexPickupServicePointName") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("ItemLocationCode") != null %>'>
+                                <td>
+                                    <asp:Label ID="ItemLocationCodeLabel" runat="server" Text="Item Location Code:" AssociatedControlID="ItemLocationCodeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="ItemLocationCodeLiteral" runat="server" Text='<%#: Eval("ItemLocationCode") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Content") != null %>'>
@@ -372,6 +476,7 @@
                                 <asp:HyperLink ID="RecipientUserHyperLink" runat="server" Text='<%#: Eval("RecipientUserId") != null ? Eval("RecipientUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("RecipientUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Session Id" DataField="SessionId" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo" />
                         <telerik:GridBoundColumn HeaderText="Next Run Time" DataField="NextRunTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridBoundColumn HeaderText="Triggering Event" DataField="TriggeringEvent" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Notice Config Timing" DataField="NoticeConfigTiming" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />

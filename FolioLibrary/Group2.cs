@@ -47,43 +47,49 @@ namespace FolioLibrary
         [Column("expiration_offset_in_days"), Display(Name = "Expiration Offset In Days", Order = 4), JsonProperty("expirationOffsetInDays")]
         public virtual int? ExpirationOffsetInDays { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 5), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("source"), Display(Order = 5), JsonProperty("source"), StringLength(1024)]
+        public virtual string Source { get; set; }
+
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 6), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 6), InverseProperty("Group2s")]
+        [Display(Name = "Creation User", Order = 7), InverseProperty("Group2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 7), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 8), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 9), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 10), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 10), InverseProperty("Group2s1")]
+        [Display(Name = "Last Write User", Order = 11), InverseProperty("Group2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 11), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 12), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Group), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 13), Editable(false)]
+        [Column("content"), CustomValidation(typeof(Group), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 14), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Block Limits", Order = 14)]
+        [Display(Name = "Actual Cost Records", Order = 15)]
+        public virtual ICollection<ActualCostRecord2> ActualCostRecord2s { get; set; }
+
+        [Display(Name = "Block Limits", Order = 16)]
         public virtual ICollection<BlockLimit2> BlockLimit2s { get; set; }
 
-        [Display(Name = "Loans", Order = 15)]
+        [Display(Name = "Loans", Order = 17)]
         public virtual ICollection<Loan2> Loan2s { get; set; }
 
-        [Display(Name = "Users", Order = 16)]
+        [Display(Name = "Users", Order = 18)]
         public virtual ICollection<User2> User2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Description)} = {Description}, {nameof(ExpirationOffsetInDays)} = {ExpirationOffsetInDays}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Description)} = {Description}, {nameof(ExpirationOffsetInDays)} = {ExpirationOffsetInDays}, {nameof(Source)} = {Source}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
 
         public static Group2 FromJObject(JObject jObject) => jObject != null ? new Group2
         {
@@ -91,6 +97,7 @@ namespace FolioLibrary
             Name = (string)jObject.SelectToken("group"),
             Description = (string)jObject.SelectToken("desc"),
             ExpirationOffsetInDays = (int?)jObject.SelectToken("expirationOffsetInDays"),
+            Source = (string)jObject.SelectToken("source"),
             CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
@@ -105,6 +112,7 @@ namespace FolioLibrary
             new JProperty("group", Name),
             new JProperty("desc", Description),
             new JProperty("expirationOffsetInDays", ExpirationOffsetInDays),
+            new JProperty("source", Source),
             new JProperty("metadata", new JObject(
                 new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),

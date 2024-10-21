@@ -30,53 +30,57 @@ namespace FolioLibrary
         [Column("id"), Display(Order = 1), Editable(false), JsonProperty("id")]
         public virtual Guid? Id { get; set; }
 
-        [Display(Order = 2), InverseProperty("PatronActionSession2s")]
+        [Column("session_id"), Display(Name = "Session Id", Order = 2), JsonProperty("sessionId")]
+        public virtual Guid? SessionId { get; set; }
+
+        [Display(Order = 3), InverseProperty("PatronActionSession2s")]
         public virtual User2 Patron { get; set; }
 
-        [Column("patron_id"), Display(Name = "Patron", Order = 3), JsonProperty("patronId"), Required]
+        [Column("patron_id"), Display(Name = "Patron", Order = 4), JsonProperty("patronId"), Required]
         public virtual Guid? PatronId { get; set; }
 
-        [Display(Order = 4)]
+        [Display(Order = 5)]
         public virtual Loan2 Loan { get; set; }
 
-        [Column("loan_id"), Display(Name = "Loan", Order = 5), JsonProperty("loanId"), Required]
+        [Column("loan_id"), Display(Name = "Loan", Order = 6), JsonProperty("loanId"), Required]
         public virtual Guid? LoanId { get; set; }
 
-        [Column("action_type"), Display(Name = "Action Type", Order = 6), JsonProperty("actionType"), RegularExpression(@"^(Check-out|Check-in)$"), Required, StringLength(1024)]
+        [Column("action_type"), Display(Name = "Action Type", Order = 7), JsonProperty("actionType"), RegularExpression(@"^(Check-out|Check-in)$"), Required, StringLength(1024)]
         public virtual string ActionType { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 7), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 8), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 8), InverseProperty("PatronActionSession2s1")]
+        [Display(Name = "Creation User", Order = 9), InverseProperty("PatronActionSession2s1")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 9), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 10), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 11), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 12), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 12), InverseProperty("PatronActionSession2s2")]
+        [Display(Name = "Last Write User", Order = 13), InverseProperty("PatronActionSession2s2")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 13), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 14), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(PatronActionSession), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 15), Editable(false)]
+        [Column("content"), CustomValidation(typeof(PatronActionSession), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 16), Editable(false)]
         public virtual string Content { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(PatronId)} = {PatronId}, {nameof(LoanId)} = {LoanId}, {nameof(ActionType)} = {ActionType}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(SessionId)} = {SessionId}, {nameof(PatronId)} = {PatronId}, {nameof(LoanId)} = {LoanId}, {nameof(ActionType)} = {ActionType}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
 
         public static PatronActionSession2 FromJObject(JObject jObject) => jObject != null ? new PatronActionSession2
         {
             Id = (Guid?)jObject.SelectToken("id"),
+            SessionId = (Guid?)jObject.SelectToken("sessionId"),
             PatronId = (Guid?)jObject.SelectToken("patronId"),
             LoanId = (Guid?)jObject.SelectToken("loanId"),
             ActionType = (string)jObject.SelectToken("actionType"),
@@ -91,6 +95,7 @@ namespace FolioLibrary
 
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
+            new JProperty("sessionId", SessionId),
             new JProperty("patronId", PatronId),
             new JProperty("loanId", LoanId),
             new JProperty("actionType", ActionType),

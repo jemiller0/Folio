@@ -115,31 +115,34 @@ namespace FolioLibrary
         [Column("awaiting_payment"), DataType(DataType.Currency), Display(Name = "Awaiting Payment", Order = 29), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("awaitingPayment")]
         public virtual decimal? AwaitingPayment { get; set; }
 
-        [Column("encumbered"), DataType(DataType.Currency), Display(Order = 30), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("encumbered")]
+        [Column("credits"), Display(Order = 30), Editable(false), JsonProperty("credits")]
+        public virtual decimal? Credits { get; set; }
+
+        [Column("encumbered"), DataType(DataType.Currency), Display(Order = 31), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("encumbered")]
         public virtual decimal? Encumbered { get; set; }
 
-        [Column("expenditures"), DataType(DataType.Currency), Display(Order = 31), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("expenditures")]
+        [Column("expenditures"), DataType(DataType.Currency), Display(Order = 32), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("expenditures")]
         public virtual decimal? Expenditures { get; set; }
 
-        [Column("over_encumbrance"), DataType(DataType.Currency), Display(Name = "Over Encumbrance", Order = 32), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("overEncumbrance")]
+        [Column("over_encumbrance"), DataType(DataType.Currency), Display(Name = "Over Encumbrance", Order = 33), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("overEncumbrance")]
         public virtual decimal? OverEncumbrance { get; set; }
 
-        [Column("over_expended"), DataType(DataType.Currency), Display(Name = "Over Expended", Order = 33), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("overExpended")]
+        [Column("over_expended"), DataType(DataType.Currency), Display(Name = "Over Expended", Order = 34), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("overExpended")]
         public virtual decimal? OverExpended { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Ledger), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 34), Editable(false)]
+        [Column("content"), CustomValidation(typeof(Ledger), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 35), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Funds", Order = 35)]
+        [Display(Name = "Funds", Order = 36)]
         public virtual ICollection<Fund2> Fund2s { get; set; }
 
-        [Display(Name = "Ledger Acquisitions Units", Order = 36), JsonConverter(typeof(ArrayJsonConverter<List<LedgerAcquisitionsUnit>, LedgerAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
+        [Display(Name = "Ledger Acquisitions Units", Order = 37), JsonConverter(typeof(ArrayJsonConverter<List<LedgerAcquisitionsUnit>, LedgerAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
         public virtual ICollection<LedgerAcquisitionsUnit> LedgerAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Ledger Rollovers", Order = 37)]
-        public virtual ICollection<LedgerRollover2> LedgerRollover2s { get; set; }
+        [Display(Name = "Rollovers", Order = 38)]
+        public virtual ICollection<Rollover2> Rollover2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(Name)} = {Name}, {nameof(Code)} = {Code}, {nameof(Description)} = {Description}, {nameof(FiscalYearOneId)} = {FiscalYearOneId}, {nameof(LedgerStatus)} = {LedgerStatus}, {nameof(Allocated)} = {Allocated}, {nameof(Available)} = {Available}, {nameof(NetTransfers)} = {NetTransfers}, {nameof(Unavailable)} = {Unavailable}, {nameof(Currency)} = {Currency}, {nameof(RestrictEncumbrance)} = {RestrictEncumbrance}, {nameof(RestrictExpenditures)} = {RestrictExpenditures}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(InitialAllocation)} = {InitialAllocation}, {nameof(AllocationTo)} = {AllocationTo}, {nameof(AllocationFrom)} = {AllocationFrom}, {nameof(TotalFunding)} = {TotalFunding}, {nameof(CashBalance)} = {CashBalance}, {nameof(AwaitingPayment)} = {AwaitingPayment}, {nameof(Encumbered)} = {Encumbered}, {nameof(Expenditures)} = {Expenditures}, {nameof(OverEncumbrance)} = {OverEncumbrance}, {nameof(OverExpended)} = {OverExpended}, {nameof(Content)} = {Content}, {nameof(LedgerAcquisitionsUnits)} = {(LedgerAcquisitionsUnits != null ? $"{{ {string.Join(", ", LedgerAcquisitionsUnits)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(Name)} = {Name}, {nameof(Code)} = {Code}, {nameof(Description)} = {Description}, {nameof(FiscalYearOneId)} = {FiscalYearOneId}, {nameof(LedgerStatus)} = {LedgerStatus}, {nameof(Allocated)} = {Allocated}, {nameof(Available)} = {Available}, {nameof(NetTransfers)} = {NetTransfers}, {nameof(Unavailable)} = {Unavailable}, {nameof(Currency)} = {Currency}, {nameof(RestrictEncumbrance)} = {RestrictEncumbrance}, {nameof(RestrictExpenditures)} = {RestrictExpenditures}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(InitialAllocation)} = {InitialAllocation}, {nameof(AllocationTo)} = {AllocationTo}, {nameof(AllocationFrom)} = {AllocationFrom}, {nameof(TotalFunding)} = {TotalFunding}, {nameof(CashBalance)} = {CashBalance}, {nameof(AwaitingPayment)} = {AwaitingPayment}, {nameof(Credits)} = {Credits}, {nameof(Encumbered)} = {Encumbered}, {nameof(Expenditures)} = {Expenditures}, {nameof(OverEncumbrance)} = {OverEncumbrance}, {nameof(OverExpended)} = {OverExpended}, {nameof(Content)} = {Content}, {nameof(LedgerAcquisitionsUnits)} = {(LedgerAcquisitionsUnits != null ? $"{{ {string.Join(", ", LedgerAcquisitionsUnits)} }}" : "")} }}";
 
         public static Ledger2 FromJObject(JObject jObject) => jObject != null ? new Ledger2
         {
@@ -169,6 +172,7 @@ namespace FolioLibrary
             TotalFunding = (decimal?)jObject.SelectToken("totalFunding"),
             CashBalance = (decimal?)jObject.SelectToken("cashBalance"),
             AwaitingPayment = (decimal?)jObject.SelectToken("awaitingPayment"),
+            Credits = (decimal?)jObject.SelectToken("credits"),
             Encumbered = (decimal?)jObject.SelectToken("encumbered"),
             Expenditures = (decimal?)jObject.SelectToken("expenditures"),
             OverEncumbrance = (decimal?)jObject.SelectToken("overEncumbrance"),
@@ -205,6 +209,7 @@ namespace FolioLibrary
             new JProperty("totalFunding", TotalFunding),
             new JProperty("cashBalance", CashBalance),
             new JProperty("awaitingPayment", AwaitingPayment),
+            new JProperty("credits", Credits),
             new JProperty("encumbered", Encumbered),
             new JProperty("expenditures", Expenditures),
             new JProperty("overEncumbrance", OverEncumbrance),

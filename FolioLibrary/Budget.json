@@ -2,9 +2,6 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "A budget",
   "javaName": "budget",
-  "extends": {
-    "$ref": "../../common/schemas/entity.json"
-  },
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -54,6 +51,11 @@
       "description": "The amount currently available for this budge",
       "readonly": true,
       "type": "number"
+    },
+    "credits": {
+      "description": "The amount currently credited for this budget",
+      "type": "number",
+      "default": 0
     },
     "encumbered": {
       "description": "The amount currently encumbered for this budget",

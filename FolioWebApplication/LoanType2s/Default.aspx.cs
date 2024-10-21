@@ -24,11 +24,12 @@ namespace FolioWebApplication.LoanType2s
 
         protected void LoanType2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Source", "source" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 Global.GetCqlFilter(LoanType2sRadGrid, "Id", "id"),
                 Global.GetCqlFilter(LoanType2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(LoanType2sRadGrid, "Source", "source"),
                 Global.GetCqlFilter(LoanType2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(LoanType2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(LoanType2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
@@ -47,19 +48,20 @@ namespace FolioWebApplication.LoanType2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"LoanType2s.txt\"");
             Response.BufferOutput = false;
-            Response.Write("Id\tName\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            Response.Write("Id\tName\tSource\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Source", "source" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 Global.GetCqlFilter(LoanType2sRadGrid, "Id", "id"),
                 Global.GetCqlFilter(LoanType2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(LoanType2sRadGrid, "Source", "source"),
                 Global.GetCqlFilter(LoanType2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(LoanType2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(LoanType2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(LoanType2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
             foreach (var lt2 in folioServiceContext.LoanType2s(where, LoanType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[LoanType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(LoanType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
-                Response.Write($"{lt2.Id}\t{Global.TextEncode(lt2.Name)}\t{lt2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(lt2.CreationUser?.Username)}\t{lt2.CreationUserId}\t{lt2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(lt2.LastWriteUser?.Username)}\t{lt2.LastWriteUserId}\r\n");
+                Response.Write($"{lt2.Id}\t{Global.TextEncode(lt2.Name)}\t{Global.TextEncode(lt2.Source)}\t{lt2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(lt2.CreationUser?.Username)}\t{lt2.CreationUserId}\t{lt2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(lt2.LastWriteUser?.Username)}\t{lt2.LastWriteUserId}\r\n");
             Response.End();
         }
 

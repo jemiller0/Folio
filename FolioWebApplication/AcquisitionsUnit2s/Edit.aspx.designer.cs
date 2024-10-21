@@ -45,6 +45,18 @@ namespace FolioWebApplication.AcquisitionsUnit2s
 
         protected RadGrid OrganizationAcquisitionsUnitsRadGrid;
 
+        protected Panel RolloverBudgetAcquisitionsUnit2sPanel;
+
+        protected RadGrid RolloverBudgetAcquisitionsUnit2sRadGrid;
+
+        protected Panel RolloverBudgetAcquisitionsUnitsPanel;
+
+        protected RadGrid RolloverBudgetAcquisitionsUnitsRadGrid;
+
+        protected Panel TitleAcquisitionsUnitsPanel;
+
+        protected RadGrid TitleAcquisitionsUnitsRadGrid;
+
         protected Panel UserAcquisitionsUnit2sPanel;
 
         protected RadGrid UserAcquisitionsUnit2sRadGrid;

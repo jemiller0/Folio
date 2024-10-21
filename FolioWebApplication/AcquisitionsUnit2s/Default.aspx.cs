@@ -24,11 +24,12 @@ namespace FolioWebApplication.AcquisitionsUnit2s
 
         protected void AcquisitionsUnit2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "IsDeleted", "isDeleted" }, { "ProtectCreate", "protectCreate" }, { "ProtectRead", "protectRead" }, { "ProtectUpdate", "protectUpdate" }, { "ProtectDelete", "protectDelete" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Description", "description" }, { "IsDeleted", "isDeleted" }, { "ProtectCreate", "protectCreate" }, { "ProtectRead", "protectRead" }, { "ProtectUpdate", "protectUpdate" }, { "ProtectDelete", "protectDelete" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 Global.GetCqlFilter(AcquisitionsUnit2sRadGrid, "Id", "id"),
                 Global.GetCqlFilter(AcquisitionsUnit2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(AcquisitionsUnit2sRadGrid, "Description", "description"),
                 Global.GetCqlFilter(AcquisitionsUnit2sRadGrid, "IsDeleted", "isDeleted"),
                 Global.GetCqlFilter(AcquisitionsUnit2sRadGrid, "ProtectCreate", "protectCreate"),
                 Global.GetCqlFilter(AcquisitionsUnit2sRadGrid, "ProtectRead", "protectRead"),
@@ -52,12 +53,13 @@ namespace FolioWebApplication.AcquisitionsUnit2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"AcquisitionsUnit2s.txt\"");
             Response.BufferOutput = false;
-            Response.Write("Id\tName\tIsDeleted\tProtectCreate\tProtectRead\tProtectUpdate\tProtectDelete\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "IsDeleted", "isDeleted" }, { "ProtectCreate", "protectCreate" }, { "ProtectRead", "protectRead" }, { "ProtectUpdate", "protectUpdate" }, { "ProtectDelete", "protectDelete" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            Response.Write("Id\tName\tDescription\tIsDeleted\tProtectCreate\tProtectRead\tProtectUpdate\tProtectDelete\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Description", "description" }, { "IsDeleted", "isDeleted" }, { "ProtectCreate", "protectCreate" }, { "ProtectRead", "protectRead" }, { "ProtectUpdate", "protectUpdate" }, { "ProtectDelete", "protectDelete" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 Global.GetCqlFilter(AcquisitionsUnit2sRadGrid, "Id", "id"),
                 Global.GetCqlFilter(AcquisitionsUnit2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(AcquisitionsUnit2sRadGrid, "Description", "description"),
                 Global.GetCqlFilter(AcquisitionsUnit2sRadGrid, "IsDeleted", "isDeleted"),
                 Global.GetCqlFilter(AcquisitionsUnit2sRadGrid, "ProtectCreate", "protectCreate"),
                 Global.GetCqlFilter(AcquisitionsUnit2sRadGrid, "ProtectRead", "protectRead"),
@@ -69,7 +71,7 @@ namespace FolioWebApplication.AcquisitionsUnit2s
                 Global.GetCqlFilter(AcquisitionsUnit2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
             foreach (var au2 in folioServiceContext.AcquisitionsUnit2s(where, AcquisitionsUnit2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[AcquisitionsUnit2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(AcquisitionsUnit2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
-                Response.Write($"{au2.Id}\t{Global.TextEncode(au2.Name)}\t{au2.IsDeleted}\t{au2.ProtectCreate}\t{au2.ProtectRead}\t{au2.ProtectUpdate}\t{au2.ProtectDelete}\t{au2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(au2.CreationUser?.Username)}\t{au2.CreationUserId}\t{au2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(au2.LastWriteUser?.Username)}\t{au2.LastWriteUserId}\r\n");
+                Response.Write($"{au2.Id}\t{Global.TextEncode(au2.Name)}\t{Global.TextEncode(au2.Description)}\t{au2.IsDeleted}\t{au2.ProtectCreate}\t{au2.ProtectRead}\t{au2.ProtectUpdate}\t{au2.ProtectDelete}\t{au2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(au2.CreationUser?.Username)}\t{au2.CreationUserId}\t{au2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(au2.LastWriteUser?.Username)}\t{au2.LastWriteUserId}\r\n");
             Response.End();
         }
 

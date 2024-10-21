@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ namespace FolioLibrary
 {
     // uc.series -> uchicago_mod_inventory_storage.instance
     // Series -> Instance
-    [DisplayColumn(nameof(Content)), Table("series", Schema = "uc")]
+    [DisplayColumn(nameof(Name)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("series", Schema = "uc")]
     public partial class Series
     {
         [NotMapped, ScaffoldColumn(false)]
@@ -31,16 +32,22 @@ namespace FolioLibrary
         [Column("instance_id", Order = 3), ScaffoldColumn(false)]
         public virtual Guid? InstanceId { get; set; }
 
-        [Column("content"), Display(Order = 4), Required, StringLength(1024)]
-        public virtual string Content { get; set; }
+        [Column("name"), Display(Order = 4), JsonProperty("value"), StringLength(1024)]
+        public virtual string Name { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(InstanceId)} = {InstanceId}, {nameof(Content)} = {Content} }}";
+        [Column("authority_id"), Display(Name = "Authority Id", Order = 5), JsonProperty("authorityId")]
+        public virtual Guid? AuthorityId { get; set; }
 
-        public static Series FromJObject(JValue jObject) => jObject != null ? new Series
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(InstanceId)} = {InstanceId}, {nameof(Name)} = {Name}, {nameof(AuthorityId)} = {AuthorityId} }}";
+
+        public static Series FromJObject(JObject jObject) => jObject != null ? new Series
         {
-            Content = (string)jObject
+            Name = (string)jObject.SelectToken("value"),
+            AuthorityId = (Guid?)jObject.SelectToken("authorityId")
         } : null;
 
-        public JValue ToJObject() => new JValue(Content);
+        public JObject ToJObject() => new JObject(
+            new JProperty("value", Name),
+            new JProperty("authorityId", AuthorityId)).RemoveNullAndEmptyProperties();
     }
 }

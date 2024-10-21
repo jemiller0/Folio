@@ -9,9 +9,21 @@ namespace FolioWebApplication.Location2s
 
         protected FormView Location2FormView;
 
+        protected Panel ActualCostRecord2sPanel;
+
+        protected RadGrid ActualCostRecord2sRadGrid;
+
+        protected Panel ActualCostRecord2s1Panel;
+
+        protected RadGrid ActualCostRecord2s1RadGrid;
+
         protected Panel CheckIn2sPanel;
 
         protected RadGrid CheckIn2sRadGrid;
+
+        protected Panel FundLocation2sPanel;
+
+        protected RadGrid FundLocation2sRadGrid;
 
         protected Panel Holding2sPanel;
 
@@ -53,9 +65,17 @@ namespace FolioWebApplication.Location2s
 
         protected RadGrid OrderItemLocation2sRadGrid;
 
+        protected Panel OrderItemSearchLocationsPanel;
+
+        protected RadGrid OrderItemSearchLocationsRadGrid;
+
         protected Panel Receiving2sPanel;
 
         protected RadGrid Receiving2sRadGrid;
+
+        protected Panel RolloverBudgetLocationsPanel;
+
+        protected RadGrid RolloverBudgetLocationsRadGrid;
 
         protected RadAjaxManager RadAjaxManager1;
     }

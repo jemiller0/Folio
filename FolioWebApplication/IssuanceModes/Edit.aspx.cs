@@ -39,7 +39,7 @@ namespace FolioWebApplication.IssuanceModes
             if (Session["Instance2sPermission"] == null) return;
             var id = (Guid?)IssuanceModeFormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "ShortId", "hrid" }, { "MatchKey", "matchKey" }, { "Source", "source" }, { "Title", "title" }, { "Author", "contributors[0].name" }, { "PublicationStartYear", "publicationPeriod.start" }, { "PublicationEndYear", "publicationPeriod.end" }, { "InstanceTypeId", "instanceTypeId" }, { "IssuanceModeId", "modeOfIssuanceId" }, { "CatalogedDate", "catalogedDate" }, { "PreviouslyHeld", "previouslyHeld" }, { "StaffSuppress", "staffSuppress" }, { "DiscoverySuppress", "discoverySuppress" }, { "SourceRecordFormat", "sourceRecordFormat" }, { "StatusId", "statusId" }, { "StatusLastWriteTime", "statusUpdatedDate" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "ShortId", "hrid" }, { "MatchKey", "matchKey" }, { "Source", "source" }, { "Title", "title" }, { "Author", "contributors[0].name" }, { "PublicationStartYear", "publicationPeriod.start" }, { "PublicationEndYear", "publicationPeriod.end" }, { "DatesDateTypeId", "dates.dateTypeId" }, { "DatesDate1", "dates.date1" }, { "DatesDate2", "dates.date2" }, { "InstanceTypeId", "instanceTypeId" }, { "IssuanceModeId", "modeOfIssuanceId" }, { "CatalogedDate", "catalogedDate" }, { "PreviouslyHeld", "previouslyHeld" }, { "StaffSuppress", "staffSuppress" }, { "DiscoverySuppress", "discoverySuppress" }, { "SourceRecordFormat", "sourceRecordFormat" }, { "StatusId", "statusId" }, { "StatusLastWriteTime", "statusUpdatedDate" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"modeOfIssuanceId == \"{id}\"",
@@ -51,6 +51,9 @@ namespace FolioWebApplication.IssuanceModes
                 Global.GetCqlFilter(Instance2sRadGrid, "Author", "contributors[0].name"),
                 Global.GetCqlFilter(Instance2sRadGrid, "PublicationStartYear", "publicationPeriod.start"),
                 Global.GetCqlFilter(Instance2sRadGrid, "PublicationEndYear", "publicationPeriod.end"),
+                Global.GetCqlFilter(Instance2sRadGrid, "DatesDateTypeId", "dates.dateTypeId"),
+                Global.GetCqlFilter(Instance2sRadGrid, "DatesDate1", "dates.date1"),
+                Global.GetCqlFilter(Instance2sRadGrid, "DatesDate2", "dates.date2"),
                 Global.GetCqlFilter(Instance2sRadGrid, "InstanceType.Name", "instanceTypeId", "name", folioServiceContext.FolioServiceClient.InstanceTypes),
                 Global.GetCqlFilter(Instance2sRadGrid, "CatalogedDate", "catalogedDate"),
                 Global.GetCqlFilter(Instance2sRadGrid, "PreviouslyHeld", "previouslyHeld"),

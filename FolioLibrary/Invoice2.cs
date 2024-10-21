@@ -196,16 +196,13 @@ namespace FolioLibrary
         [Display(Name = "Invoice Tags", Order = 56), JsonConverter(typeof(ArrayJsonConverter<List<InvoiceTag>, InvoiceTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<InvoiceTag> InvoiceTags { get; set; }
 
-        [ScaffoldColumn(false)]
-        public virtual InvoiceTransactionSummary2 InvoiceTransactionSummary2 { get; set; }
-
-        [Display(Name = "Order Invoices", Order = 58)]
+        [Display(Name = "Order Invoices", Order = 57)]
         public virtual ICollection<OrderInvoice2> OrderInvoice2s { get; set; }
 
-        [Display(Name = "Transactions", Order = 59)]
+        [Display(Name = "Transactions", Order = 58)]
         public virtual ICollection<Transaction2> Transaction2s { get; set; }
 
-        [Display(Name = "Vouchers", Order = 60)]
+        [Display(Name = "Vouchers", Order = 59)]
         public virtual ICollection<Voucher2> Voucher2s { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AdjustmentsTotal)} = {AdjustmentsTotal}, {nameof(ApprovedById)} = {ApprovedById}, {nameof(ApprovalDate)} = {ApprovalDate}, {nameof(BatchGroupId)} = {BatchGroupId}, {nameof(BillToId)} = {BillToId}, {nameof(CheckSubscriptionOverlap)} = {CheckSubscriptionOverlap}, {nameof(CancellationNote)} = {CancellationNote}, {nameof(Currency)} = {Currency}, {nameof(Enclosure)} = {Enclosure}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(ExportToAccounting)} = {ExportToAccounting}, {nameof(Number)} = {Number}, {nameof(InvoiceDate)} = {InvoiceDate}, {nameof(LockTotal)} = {LockTotal}, {nameof(Note)} = {Note}, {nameof(PaymentDueDate)} = {PaymentDueDate}, {nameof(PaymentDate)} = {PaymentDate}, {nameof(PaymentTerms)} = {PaymentTerms}, {nameof(PaymentMethod)} = {PaymentMethod}, {nameof(Status)} = {Status}, {nameof(Source)} = {Source}, {nameof(SubTotal)} = {SubTotal}, {nameof(Total)} = {Total}, {nameof(VendorInvoiceNumber)} = {VendorInvoiceNumber}, {nameof(DisbursementNumber)} = {DisbursementNumber}, {nameof(VoucherNumber)} = {VoucherNumber}, {nameof(PaymentId)} = {PaymentId}, {nameof(DisbursementDate)} = {DisbursementDate}, {nameof(VendorId)} = {VendorId}, {nameof(FiscalYearId)} = {FiscalYearId}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(ManualPayment)} = {ManualPayment}, {nameof(NextInvoiceLineNumber)} = {NextInvoiceLineNumber}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(InvoiceAcquisitionsUnits)} = {(InvoiceAcquisitionsUnits != null ? $"{{ {string.Join(", ", InvoiceAcquisitionsUnits)} }}" : "")}, {nameof(InvoiceAdjustments)} = {(InvoiceAdjustments != null ? $"{{ {string.Join(", ", InvoiceAdjustments)} }}" : "")}, {nameof(InvoiceOrderNumbers)} = {(InvoiceOrderNumbers != null ? $"{{ {string.Join(", ", InvoiceOrderNumbers)} }}" : "")}, {nameof(InvoiceTags)} = {(InvoiceTags != null ? $"{{ {string.Join(", ", InvoiceTags)} }}" : "")} }}";

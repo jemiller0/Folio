@@ -47,7 +47,7 @@ namespace FolioLibrary
         public virtual ICollection<Fund> Funds { get; set; }
 
         [ScaffoldColumn(false)]
-        public virtual ICollection<LedgerRollover> LedgerRollovers { get; set; }
+        public virtual ICollection<Rollover> Rollovers { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Fiscalyearoneid)} = {Fiscalyearoneid} }}";
 

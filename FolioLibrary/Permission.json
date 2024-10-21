@@ -55,7 +55,7 @@
     "deprecated": {
       "description": "Indicates whether this permissions has been marked for deletion (soft deleted)",
       "type": "boolean",
-      "default": "false"
+      "default": false
     },
     "moduleName": {
       "description": "The name of the module (not including version) that defined this permission",

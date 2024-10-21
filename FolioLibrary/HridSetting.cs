@@ -44,7 +44,9 @@ namespace FolioLibrary
         public static HridSetting FromJObject(JObject jObject) => jObject != null ? new HridSetting
         {
             Id = (Guid?)jObject.SelectToken("id"),
-            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
+            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToUniversalTime(),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId")
         } : null;
 
         public JObject ToJObject() => JsonConvert.DeserializeObject<JObject>(Content, FolioDapperContext.LocalTimeJsonSerializationSettings);

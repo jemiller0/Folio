@@ -44,16 +44,16 @@ namespace FolioLibrary
         public virtual ICollection<Budget> Budgets { get; set; }
 
         [ScaffoldColumn(false)]
-        public virtual ICollection<LedgerFiscalYearRolloverBudget> LedgerFiscalYearRolloverBudgets { get; set; }
-
-        [ScaffoldColumn(false)]
-        public virtual ICollection<LedgerRollover> LedgerRollovers { get; set; }
-
-        [ScaffoldColumn(false)]
-        public virtual ICollection<LedgerRollover> LedgerRollovers1 { get; set; }
-
-        [ScaffoldColumn(false)]
         public virtual ICollection<Ledger> Ledgers { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual ICollection<RolloverBudget> RolloverBudgets { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual ICollection<Rollover> Rollovers { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual ICollection<Rollover> Rollovers1 { get; set; }
 
         [ScaffoldColumn(false)]
         public virtual ICollection<Transaction> Transactions { get; set; }

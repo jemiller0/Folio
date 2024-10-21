@@ -164,6 +164,123 @@ namespace FolioLibrary
 
         public void DeleteAcquisitionsUnit2(Guid? id) => FolioServiceClient.DeleteAcquisitionsUnit(id?.ToString());
 
+        public bool AnyActualCostRecord2s(string where = null) => FolioServiceClient.AnyActualCostRecords(where);
+
+        public int CountActualCostRecord2s(string where = null) => FolioServiceClient.CountActualCostRecords(where);
+
+        public ActualCostRecord2[] ActualCostRecord2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
+        {
+            return FolioServiceClient.ActualCostRecords(out count, where, orderBy, skip, take).Select(jo =>
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var acr2 = cache ? (ActualCostRecord2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ActualCostRecord2.FromJObject(jo)) : ActualCostRecord2.FromJObject(jo);
+                if (load && acr2.UserGroupId != null) acr2.UserGroup = FindGroup2(acr2.UserGroupId, cache: cache);
+                if (load && acr2.ItemMaterialTypeId != null) acr2.ItemMaterialType = FindMaterialType2(acr2.ItemMaterialTypeId, cache: cache);
+                if (load && acr2.ItemPermanentLocationId != null) acr2.ItemPermanentLocation = FindLocation2(acr2.ItemPermanentLocationId, cache: cache);
+                if (load && acr2.ItemEffectiveLocationId != null) acr2.ItemEffectiveLocation = FindLocation2(acr2.ItemEffectiveLocationId, cache: cache);
+                if (load && acr2.ItemLoanTypeId != null) acr2.ItemLoanType = FindLoanType2(acr2.ItemLoanTypeId, cache: cache);
+                if (load && acr2.ItemHoldingId != null) acr2.ItemHolding = FindHolding2(acr2.ItemHoldingId, cache: cache);
+                if (load && acr2.FeeId != null) acr2.Fee = FindFee2(acr2.FeeId, cache: cache);
+                if (load && acr2.OwnerId != null) acr2.Owner = FindOwner2(acr2.OwnerId, cache: cache);
+                if (load && acr2.FeeTypeId != null) acr2.FeeType = FindFeeType2(acr2.FeeTypeId, cache: cache);
+                if (load && acr2.CreationUserId != null) acr2.CreationUser = FindUser2(acr2.CreationUserId, cache: cache);
+                if (load && acr2.LastWriteUserId != null) acr2.LastWriteUser = FindUser2(acr2.LastWriteUserId, cache: cache);
+                return acr2;
+            }).ToArray();
+        }
+
+        public IEnumerable<ActualCostRecord2> ActualCostRecord2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        {
+            foreach (var jo in FolioServiceClient.ActualCostRecords(where, orderBy, skip, take))
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var acr2 = cache ? (ActualCostRecord2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ActualCostRecord2.FromJObject(jo)) : ActualCostRecord2.FromJObject(jo);
+                if (load && acr2.UserGroupId != null) acr2.UserGroup = FindGroup2(acr2.UserGroupId, cache: cache);
+                if (load && acr2.ItemMaterialTypeId != null) acr2.ItemMaterialType = FindMaterialType2(acr2.ItemMaterialTypeId, cache: cache);
+                if (load && acr2.ItemPermanentLocationId != null) acr2.ItemPermanentLocation = FindLocation2(acr2.ItemPermanentLocationId, cache: cache);
+                if (load && acr2.ItemEffectiveLocationId != null) acr2.ItemEffectiveLocation = FindLocation2(acr2.ItemEffectiveLocationId, cache: cache);
+                if (load && acr2.ItemLoanTypeId != null) acr2.ItemLoanType = FindLoanType2(acr2.ItemLoanTypeId, cache: cache);
+                if (load && acr2.ItemHoldingId != null) acr2.ItemHolding = FindHolding2(acr2.ItemHoldingId, cache: cache);
+                if (load && acr2.FeeId != null) acr2.Fee = FindFee2(acr2.FeeId, cache: cache);
+                if (load && acr2.OwnerId != null) acr2.Owner = FindOwner2(acr2.OwnerId, cache: cache);
+                if (load && acr2.FeeTypeId != null) acr2.FeeType = FindFeeType2(acr2.FeeTypeId, cache: cache);
+                if (load && acr2.CreationUserId != null) acr2.CreationUser = FindUser2(acr2.CreationUserId, cache: cache);
+                if (load && acr2.LastWriteUserId != null) acr2.LastWriteUser = FindUser2(acr2.LastWriteUserId, cache: cache);
+                yield return acr2;
+            }
+        }
+
+        public ActualCostRecord2 FindActualCostRecord2(Guid? id, bool load = false, bool cache = true)
+        {
+            if (id == null) return null;
+            var acr2 = cache ? (ActualCostRecord2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = ActualCostRecord2.FromJObject(FolioServiceClient.GetActualCostRecord(id?.ToString()))) : ActualCostRecord2.FromJObject(FolioServiceClient.GetActualCostRecord(id?.ToString()));
+            if (acr2 == null) return null;
+            if (load && acr2.UserGroupId != null) acr2.UserGroup = FindGroup2(acr2.UserGroupId, cache: cache);
+            if (load && acr2.ItemMaterialTypeId != null) acr2.ItemMaterialType = FindMaterialType2(acr2.ItemMaterialTypeId, cache: cache);
+            if (load && acr2.ItemPermanentLocationId != null) acr2.ItemPermanentLocation = FindLocation2(acr2.ItemPermanentLocationId, cache: cache);
+            if (load && acr2.ItemEffectiveLocationId != null) acr2.ItemEffectiveLocation = FindLocation2(acr2.ItemEffectiveLocationId, cache: cache);
+            if (load && acr2.ItemLoanTypeId != null) acr2.ItemLoanType = FindLoanType2(acr2.ItemLoanTypeId, cache: cache);
+            if (load && acr2.ItemHoldingId != null) acr2.ItemHolding = FindHolding2(acr2.ItemHoldingId, cache: cache);
+            if (load && acr2.FeeId != null) acr2.Fee = FindFee2(acr2.FeeId, cache: cache);
+            if (load && acr2.OwnerId != null) acr2.Owner = FindOwner2(acr2.OwnerId, cache: cache);
+            if (load && acr2.FeeTypeId != null) acr2.FeeType = FindFeeType2(acr2.FeeTypeId, cache: cache);
+            if (load && acr2.CreationUserId != null) acr2.CreationUser = FindUser2(acr2.CreationUserId, cache: cache);
+            if (load && acr2.LastWriteUserId != null) acr2.LastWriteUser = FindUser2(acr2.LastWriteUserId, cache: cache);
+            var i = 0;
+            if (acr2.ActualCostRecordContributors != null) foreach (var acrc in acr2.ActualCostRecordContributors)
+                {
+                    acrc.Id = (++i).ToString();
+                    acrc.ActualCostRecordId = acr2.Id;
+                    acrc.ActualCostRecord = acr2;
+                }
+            i = 0;
+            if (acr2.ActualCostRecordIdentifiers != null) foreach (var acri in acr2.ActualCostRecordIdentifiers)
+                {
+                    acri.Id = (++i).ToString();
+                    acri.ActualCostRecordId = acr2.Id;
+                    acri.ActualCostRecord = acr2;
+                    if (load && acri.IdentifierTypeId != null) acri.IdentifierType1 = FindIdType2(acri.IdentifierTypeId, cache: cache);
+                }
+            return acr2;
+        }
+
+        public void Insert(ActualCostRecord2 actualCostRecord2)
+        {
+            if (actualCostRecord2.Id == null) actualCostRecord2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertActualCostRecord(actualCostRecord2.ToJObject());
+        }
+
+        public void Update(ActualCostRecord2 actualCostRecord2) => FolioServiceClient.UpdateActualCostRecord(actualCostRecord2.ToJObject());
+
+        public void UpdateOrInsert(ActualCostRecord2 actualCostRecord2)
+        {
+            if (actualCostRecord2.Id == null)
+                Insert(actualCostRecord2);
+            else
+                try
+                {
+                    Update(actualCostRecord2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(actualCostRecord2); else throw;
+                }
+        }
+
+        public void InsertOrUpdate(ActualCostRecord2 actualCostRecord2)
+        {
+            try
+            {
+                Insert(actualCostRecord2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(actualCostRecord2); else throw;
+            }
+        }
+
+        public void DeleteActualCostRecord2(Guid? id) => FolioServiceClient.DeleteActualCostRecord(id?.ToString());
+
         public bool AnyAddressType2s(string where = null) => FolioServiceClient.AnyAddressTypes(where);
 
         public int CountAddressType2s(string where = null) => FolioServiceClient.CountAddressTypes(where);
@@ -1548,7 +1665,14 @@ namespace FolioLibrary
 
         public void DeleteCheckIn2(Guid? id) => FolioServiceClient.DeleteCheckIn(id?.ToString());
 
-        public CirculationRule2 FindCirculationRule2(bool load = false, bool cache = true) => CirculationRule2.FromJObject(FolioServiceClient.GetCirculationRule());
+        public CirculationRule2 FindCirculationRule2(bool load = false, bool cache = true)
+        {
+            var cr2 = CirculationRule2.FromJObject(FolioServiceClient.GetCirculationRule());
+            if (cr2 == null) return null;
+            if (load && cr2.CreationUserId != null) cr2.CreationUser = FindUser2(cr2.CreationUserId, cache: cache);
+            if (load && cr2.LastWriteUserId != null) cr2.LastWriteUser = FindUser2(cr2.LastWriteUserId, cache: cache);
+            return cr2;
+        }
 
         public void Update(CirculationRule2 circulationRule2) => FolioServiceClient.UpdateCirculationRule(circulationRule2.ToJObject());
 
@@ -3043,6 +3167,22 @@ namespace FolioLibrary
                     if (load && fau.AcquisitionsUnitId != null) fau.AcquisitionsUnit = FindAcquisitionsUnit2(fau.AcquisitionsUnitId, cache: cache);
                 }
             i = 0;
+            if (f2.FundLocation2s != null) foreach (var fl2 in f2.FundLocation2s)
+                {
+                    fl2.Id = (++i).ToString();
+                    fl2.FundId = f2.Id;
+                    fl2.Fund = f2;
+                    if (load && fl2.LocationId != null) fl2.Location = FindLocation2(fl2.LocationId, cache: cache);
+                }
+            i = 0;
+            if (f2.FundOrganization2s != null) foreach (var fo2 in f2.FundOrganization2s)
+                {
+                    fo2.Id = (++i).ToString();
+                    fo2.FundId = f2.Id;
+                    fo2.Fund = f2;
+                    if (load && fo2.OrganizationId != null) fo2.Organization = FindOrganization2(fo2.OrganizationId, cache: cache);
+                }
+            i = 0;
             if (f2.FundTags != null) foreach (var ft in f2.FundTags)
                 {
                     ft.Id = (++i).ToString();
@@ -3238,6 +3378,7 @@ namespace FolioLibrary
             {
                 var id = Guid.Parse((string)jo["id"]);
                 var h2 = cache ? (Holding2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Holding2.FromJObject(jo)) : Holding2.FromJObject(jo);
+                if (load && h2.SourceId != null) h2.Source = FindSource2(h2.SourceId, cache: cache);
                 if (load && h2.HoldingTypeId != null) h2.HoldingType = FindHoldingType2(h2.HoldingTypeId, cache: cache);
                 if (load && h2.InstanceId != null) h2.Instance = FindInstance2(h2.InstanceId, cache: cache);
                 if (load && h2.LocationId != null) h2.Location = FindLocation2(h2.LocationId, cache: cache);
@@ -3247,7 +3388,6 @@ namespace FolioLibrary
                 if (load && h2.IllPolicyId != null) h2.IllPolicy = FindIllPolicy2(h2.IllPolicyId, cache: cache);
                 if (load && h2.CreationUserId != null) h2.CreationUser = FindUser2(h2.CreationUserId, cache: cache);
                 if (load && h2.LastWriteUserId != null) h2.LastWriteUser = FindUser2(h2.LastWriteUserId, cache: cache);
-                if (load && h2.SourceId != null) h2.Source = FindSource2(h2.SourceId, cache: cache);
                 return h2;
             }).ToArray();
         }
@@ -3258,6 +3398,7 @@ namespace FolioLibrary
             {
                 var id = Guid.Parse((string)jo["id"]);
                 var h2 = cache ? (Holding2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Holding2.FromJObject(jo)) : Holding2.FromJObject(jo);
+                if (load && h2.SourceId != null) h2.Source = FindSource2(h2.SourceId, cache: cache);
                 if (load && h2.HoldingTypeId != null) h2.HoldingType = FindHoldingType2(h2.HoldingTypeId, cache: cache);
                 if (load && h2.InstanceId != null) h2.Instance = FindInstance2(h2.InstanceId, cache: cache);
                 if (load && h2.LocationId != null) h2.Location = FindLocation2(h2.LocationId, cache: cache);
@@ -3267,7 +3408,6 @@ namespace FolioLibrary
                 if (load && h2.IllPolicyId != null) h2.IllPolicy = FindIllPolicy2(h2.IllPolicyId, cache: cache);
                 if (load && h2.CreationUserId != null) h2.CreationUser = FindUser2(h2.CreationUserId, cache: cache);
                 if (load && h2.LastWriteUserId != null) h2.LastWriteUser = FindUser2(h2.LastWriteUserId, cache: cache);
-                if (load && h2.SourceId != null) h2.Source = FindSource2(h2.SourceId, cache: cache);
                 yield return h2;
             }
         }
@@ -3277,6 +3417,7 @@ namespace FolioLibrary
             if (id == null) return null;
             var h2 = cache ? (Holding2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Holding2.FromJObject(FolioServiceClient.GetHolding(id?.ToString()))) : Holding2.FromJObject(FolioServiceClient.GetHolding(id?.ToString()));
             if (h2 == null) return null;
+            if (load && h2.SourceId != null) h2.Source = FindSource2(h2.SourceId, cache: cache);
             if (load && h2.HoldingTypeId != null) h2.HoldingType = FindHoldingType2(h2.HoldingTypeId, cache: cache);
             if (load && h2.InstanceId != null) h2.Instance = FindInstance2(h2.InstanceId, cache: cache);
             if (load && h2.LocationId != null) h2.Location = FindLocation2(h2.LocationId, cache: cache);
@@ -3286,7 +3427,6 @@ namespace FolioLibrary
             if (load && h2.IllPolicyId != null) h2.IllPolicy = FindIllPolicy2(h2.IllPolicyId, cache: cache);
             if (load && h2.CreationUserId != null) h2.CreationUser = FindUser2(h2.CreationUserId, cache: cache);
             if (load && h2.LastWriteUserId != null) h2.LastWriteUser = FindUser2(h2.LastWriteUserId, cache: cache);
-            if (load && h2.SourceId != null) h2.Source = FindSource2(h2.SourceId, cache: cache);
             var i = 0;
             if (h2.Extents != null) foreach (var e2 in h2.Extents)
                 {
@@ -3552,7 +3692,14 @@ namespace FolioLibrary
 
         public void DeleteHoldingType2(Guid? id) => FolioServiceClient.DeleteHoldingType(id?.ToString());
 
-        public HridSetting2 FindHridSetting2(bool load = false, bool cache = true) => HridSetting2.FromJObject(FolioServiceClient.GetHridSetting());
+        public HridSetting2 FindHridSetting2(bool load = false, bool cache = true)
+        {
+            var hs2 = HridSetting2.FromJObject(FolioServiceClient.GetHridSetting());
+            if (hs2 == null) return null;
+            if (load && hs2.CreationUserId != null) hs2.CreationUser = FindUser2(hs2.CreationUserId, cache: cache);
+            if (load && hs2.LastWriteUserId != null) hs2.LastWriteUser = FindUser2(hs2.LastWriteUserId, cache: cache);
+            return hs2;
+        }
 
         public void Update(HridSetting2 hridSetting2) => FolioServiceClient.UpdateHridSetting(hridSetting2.ToJObject());
 
@@ -3892,6 +4039,7 @@ namespace FolioLibrary
                     s2.Id = (++i).ToString();
                     s2.InstanceId = i2.Id;
                     s2.Instance = i2;
+                    if (load && s2.SourceId != null) s2.Source = FindSource2(s2.SourceId, cache: cache);
                 }
             return i2;
         }
@@ -4477,52 +4625,6 @@ namespace FolioLibrary
 
         public void DeleteInvoiceItem2(Guid? id) => FolioServiceClient.DeleteInvoiceItem(id?.ToString());
 
-        public InvoiceTransactionSummary2 FindInvoiceTransactionSummary2(Guid? id, bool load = false, bool cache = true)
-        {
-            if (id == null) return null;
-            var its2 = cache ? (InvoiceTransactionSummary2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = InvoiceTransactionSummary2.FromJObject(FolioServiceClient.GetInvoiceTransactionSummary(id?.ToString()))) : InvoiceTransactionSummary2.FromJObject(FolioServiceClient.GetInvoiceTransactionSummary(id?.ToString()));
-            if (its2 == null) return null;
-            if (load && its2.Id != null) its2.Invoice2 = FindInvoice2(its2.Id, cache: cache);
-            return its2;
-        }
-
-        public void Insert(InvoiceTransactionSummary2 invoiceTransactionSummary2)
-        {
-            if (invoiceTransactionSummary2.Id == null) invoiceTransactionSummary2.Id = Guid.NewGuid();
-            FolioServiceClient.InsertInvoiceTransactionSummary(invoiceTransactionSummary2.ToJObject());
-        }
-
-        public void Update(InvoiceTransactionSummary2 invoiceTransactionSummary2) => FolioServiceClient.UpdateInvoiceTransactionSummary(invoiceTransactionSummary2.ToJObject());
-
-        public void UpdateOrInsert(InvoiceTransactionSummary2 invoiceTransactionSummary2)
-        {
-            if (invoiceTransactionSummary2.Id == null)
-                Insert(invoiceTransactionSummary2);
-            else
-                try
-                {
-                    Update(invoiceTransactionSummary2);
-                }
-                catch (HttpRequestException e)
-                {
-                    if (e.Message.Contains("NotFound")) Insert(invoiceTransactionSummary2); else throw;
-                }
-        }
-
-        public void InsertOrUpdate(InvoiceTransactionSummary2 invoiceTransactionSummary2)
-        {
-            try
-            {
-                Insert(invoiceTransactionSummary2);
-            }
-            catch (HttpRequestException e)
-            {
-                if (e.Message.Contains("duplicate key")) Update(invoiceTransactionSummary2); else throw;
-            }
-        }
-
-        public void DeleteInvoiceTransactionSummary2(Guid? id) => FolioServiceClient.DeleteInvoiceTransactionSummary(id?.ToString());
-
         public bool AnyIssuanceModes(string where = null) => FolioServiceClient.AnyModeOfIssuances(where);
 
         public int CountIssuanceModes(string where = null) => FolioServiceClient.CountModeOfIssuances(where);
@@ -5011,261 +5113,6 @@ namespace FolioLibrary
         }
 
         public void DeleteLedger2(Guid? id) => FolioServiceClient.DeleteLedger(id?.ToString());
-
-        public bool AnyLedgerRollover2s(string where = null) => FolioServiceClient.AnyLedgerRollovers(where);
-
-        public int CountLedgerRollover2s(string where = null) => FolioServiceClient.CountLedgerRollovers(where);
-
-        public LedgerRollover2[] LedgerRollover2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
-        {
-            return FolioServiceClient.LedgerRollovers(out count, where, orderBy, skip, take).Select(jo =>
-            {
-                var id = Guid.Parse((string)jo["id"]);
-                var lr2 = cache ? (LedgerRollover2)(objects.ContainsKey(id) ? objects[id] : objects[id] = LedgerRollover2.FromJObject(jo)) : LedgerRollover2.FromJObject(jo);
-                if (load && lr2.LedgerId != null) lr2.Ledger = FindLedger2(lr2.LedgerId, cache: cache);
-                if (load && lr2.FromFiscalYearId != null) lr2.FromFiscalYear = FindFiscalYear2(lr2.FromFiscalYearId, cache: cache);
-                if (load && lr2.ToFiscalYearId != null) lr2.ToFiscalYear = FindFiscalYear2(lr2.ToFiscalYearId, cache: cache);
-                if (load && lr2.CreationUserId != null) lr2.CreationUser = FindUser2(lr2.CreationUserId, cache: cache);
-                if (load && lr2.LastWriteUserId != null) lr2.LastWriteUser = FindUser2(lr2.LastWriteUserId, cache: cache);
-                return lr2;
-            }).ToArray();
-        }
-
-        public IEnumerable<LedgerRollover2> LedgerRollover2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
-        {
-            foreach (var jo in FolioServiceClient.LedgerRollovers(where, orderBy, skip, take))
-            {
-                var id = Guid.Parse((string)jo["id"]);
-                var lr2 = cache ? (LedgerRollover2)(objects.ContainsKey(id) ? objects[id] : objects[id] = LedgerRollover2.FromJObject(jo)) : LedgerRollover2.FromJObject(jo);
-                if (load && lr2.LedgerId != null) lr2.Ledger = FindLedger2(lr2.LedgerId, cache: cache);
-                if (load && lr2.FromFiscalYearId != null) lr2.FromFiscalYear = FindFiscalYear2(lr2.FromFiscalYearId, cache: cache);
-                if (load && lr2.ToFiscalYearId != null) lr2.ToFiscalYear = FindFiscalYear2(lr2.ToFiscalYearId, cache: cache);
-                if (load && lr2.CreationUserId != null) lr2.CreationUser = FindUser2(lr2.CreationUserId, cache: cache);
-                if (load && lr2.LastWriteUserId != null) lr2.LastWriteUser = FindUser2(lr2.LastWriteUserId, cache: cache);
-                yield return lr2;
-            }
-        }
-
-        public LedgerRollover2 FindLedgerRollover2(Guid? id, bool load = false, bool cache = true)
-        {
-            if (id == null) return null;
-            var lr2 = cache ? (LedgerRollover2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = LedgerRollover2.FromJObject(FolioServiceClient.GetLedgerRollover(id?.ToString()))) : LedgerRollover2.FromJObject(FolioServiceClient.GetLedgerRollover(id?.ToString()));
-            if (lr2 == null) return null;
-            if (load && lr2.LedgerId != null) lr2.Ledger = FindLedger2(lr2.LedgerId, cache: cache);
-            if (load && lr2.FromFiscalYearId != null) lr2.FromFiscalYear = FindFiscalYear2(lr2.FromFiscalYearId, cache: cache);
-            if (load && lr2.ToFiscalYearId != null) lr2.ToFiscalYear = FindFiscalYear2(lr2.ToFiscalYearId, cache: cache);
-            if (load && lr2.CreationUserId != null) lr2.CreationUser = FindUser2(lr2.CreationUserId, cache: cache);
-            if (load && lr2.LastWriteUserId != null) lr2.LastWriteUser = FindUser2(lr2.LastWriteUserId, cache: cache);
-            var i = 0;
-            if (lr2.LedgerRolloverBudgetsRollovers != null) foreach (var lrbr in lr2.LedgerRolloverBudgetsRollovers)
-                {
-                    lrbr.Id = (++i).ToString();
-                    lrbr.LedgerRolloverId = lr2.Id;
-                    lrbr.LedgerRollover = lr2;
-                    if (load && lrbr.FundTypeId != null) lrbr.FundType = FindFundType2(lrbr.FundTypeId, cache: cache);
-                }
-            i = 0;
-            if (lr2.LedgerRolloverEncumbrancesRollovers != null) foreach (var lrer in lr2.LedgerRolloverEncumbrancesRollovers)
-                {
-                    lrer.Id = (++i).ToString();
-                    lrer.LedgerRolloverId = lr2.Id;
-                    lrer.LedgerRollover = lr2;
-                }
-            return lr2;
-        }
-
-        public void Insert(LedgerRollover2 ledgerRollover2)
-        {
-            if (ledgerRollover2.Id == null) ledgerRollover2.Id = Guid.NewGuid();
-            FolioServiceClient.InsertLedgerRollover(ledgerRollover2.ToJObject());
-        }
-
-        public void Update(LedgerRollover2 ledgerRollover2) => FolioServiceClient.UpdateLedgerRollover(ledgerRollover2.ToJObject());
-
-        public void UpdateOrInsert(LedgerRollover2 ledgerRollover2)
-        {
-            if (ledgerRollover2.Id == null)
-                Insert(ledgerRollover2);
-            else
-                try
-                {
-                    Update(ledgerRollover2);
-                }
-                catch (HttpRequestException e)
-                {
-                    if (e.Message.Contains("NotFound")) Insert(ledgerRollover2); else throw;
-                }
-        }
-
-        public void InsertOrUpdate(LedgerRollover2 ledgerRollover2)
-        {
-            try
-            {
-                Insert(ledgerRollover2);
-            }
-            catch (HttpRequestException e)
-            {
-                if (e.Message.Contains("duplicate key")) Update(ledgerRollover2); else throw;
-            }
-        }
-
-        public void DeleteLedgerRollover2(Guid? id) => FolioServiceClient.DeleteLedgerRollover(id?.ToString());
-
-        public bool AnyLedgerRolloverError2s(string where = null) => FolioServiceClient.AnyLedgerRolloverErrors(where);
-
-        public int CountLedgerRolloverError2s(string where = null) => FolioServiceClient.CountLedgerRolloverErrors(where);
-
-        public LedgerRolloverError2[] LedgerRolloverError2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
-        {
-            return FolioServiceClient.LedgerRolloverErrors(out count, where, orderBy, skip, take).Select(jo =>
-            {
-                var id = Guid.Parse((string)jo["id"]);
-                var lre2 = cache ? (LedgerRolloverError2)(objects.ContainsKey(id) ? objects[id] : objects[id] = LedgerRolloverError2.FromJObject(jo)) : LedgerRolloverError2.FromJObject(jo);
-                if (load && lre2.LedgerRolloverId != null) lre2.LedgerRollover = FindLedgerRollover2(lre2.LedgerRolloverId, cache: cache);
-                if (load && lre2.CreationUserId != null) lre2.CreationUser = FindUser2(lre2.CreationUserId, cache: cache);
-                if (load && lre2.LastWriteUserId != null) lre2.LastWriteUser = FindUser2(lre2.LastWriteUserId, cache: cache);
-                return lre2;
-            }).ToArray();
-        }
-
-        public IEnumerable<LedgerRolloverError2> LedgerRolloverError2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
-        {
-            foreach (var jo in FolioServiceClient.LedgerRolloverErrors(where, orderBy, skip, take))
-            {
-                var id = Guid.Parse((string)jo["id"]);
-                var lre2 = cache ? (LedgerRolloverError2)(objects.ContainsKey(id) ? objects[id] : objects[id] = LedgerRolloverError2.FromJObject(jo)) : LedgerRolloverError2.FromJObject(jo);
-                if (load && lre2.LedgerRolloverId != null) lre2.LedgerRollover = FindLedgerRollover2(lre2.LedgerRolloverId, cache: cache);
-                if (load && lre2.CreationUserId != null) lre2.CreationUser = FindUser2(lre2.CreationUserId, cache: cache);
-                if (load && lre2.LastWriteUserId != null) lre2.LastWriteUser = FindUser2(lre2.LastWriteUserId, cache: cache);
-                yield return lre2;
-            }
-        }
-
-        public LedgerRolloverError2 FindLedgerRolloverError2(Guid? id, bool load = false, bool cache = true)
-        {
-            if (id == null) return null;
-            var lre2 = cache ? (LedgerRolloverError2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = LedgerRolloverError2.FromJObject(FolioServiceClient.GetLedgerRolloverError(id?.ToString()))) : LedgerRolloverError2.FromJObject(FolioServiceClient.GetLedgerRolloverError(id?.ToString()));
-            if (lre2 == null) return null;
-            if (load && lre2.LedgerRolloverId != null) lre2.LedgerRollover = FindLedgerRollover2(lre2.LedgerRolloverId, cache: cache);
-            if (load && lre2.CreationUserId != null) lre2.CreationUser = FindUser2(lre2.CreationUserId, cache: cache);
-            if (load && lre2.LastWriteUserId != null) lre2.LastWriteUser = FindUser2(lre2.LastWriteUserId, cache: cache);
-            return lre2;
-        }
-
-        public void Insert(LedgerRolloverError2 ledgerRolloverError2)
-        {
-            if (ledgerRolloverError2.Id == null) ledgerRolloverError2.Id = Guid.NewGuid();
-            FolioServiceClient.InsertLedgerRolloverError(ledgerRolloverError2.ToJObject());
-        }
-
-        public void Update(LedgerRolloverError2 ledgerRolloverError2) => FolioServiceClient.UpdateLedgerRolloverError(ledgerRolloverError2.ToJObject());
-
-        public void UpdateOrInsert(LedgerRolloverError2 ledgerRolloverError2)
-        {
-            if (ledgerRolloverError2.Id == null)
-                Insert(ledgerRolloverError2);
-            else
-                try
-                {
-                    Update(ledgerRolloverError2);
-                }
-                catch (HttpRequestException e)
-                {
-                    if (e.Message.Contains("NotFound")) Insert(ledgerRolloverError2); else throw;
-                }
-        }
-
-        public void InsertOrUpdate(LedgerRolloverError2 ledgerRolloverError2)
-        {
-            try
-            {
-                Insert(ledgerRolloverError2);
-            }
-            catch (HttpRequestException e)
-            {
-                if (e.Message.Contains("duplicate key")) Update(ledgerRolloverError2); else throw;
-            }
-        }
-
-        public void DeleteLedgerRolloverError2(Guid? id) => FolioServiceClient.DeleteLedgerRolloverError(id?.ToString());
-
-        public bool AnyLedgerRolloverProgress2s(string where = null) => FolioServiceClient.AnyLedgerRolloverProgresses(where);
-
-        public int CountLedgerRolloverProgress2s(string where = null) => FolioServiceClient.CountLedgerRolloverProgresses(where);
-
-        public LedgerRolloverProgress2[] LedgerRolloverProgress2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
-        {
-            return FolioServiceClient.LedgerRolloverProgresses(out count, where, orderBy, skip, take).Select(jo =>
-            {
-                var id = Guid.Parse((string)jo["id"]);
-                var lrp2 = cache ? (LedgerRolloverProgress2)(objects.ContainsKey(id) ? objects[id] : objects[id] = LedgerRolloverProgress2.FromJObject(jo)) : LedgerRolloverProgress2.FromJObject(jo);
-                if (load && lrp2.LedgerRolloverId != null) lrp2.LedgerRollover = FindLedgerRollover2(lrp2.LedgerRolloverId, cache: cache);
-                if (load && lrp2.CreationUserId != null) lrp2.CreationUser = FindUser2(lrp2.CreationUserId, cache: cache);
-                if (load && lrp2.LastWriteUserId != null) lrp2.LastWriteUser = FindUser2(lrp2.LastWriteUserId, cache: cache);
-                return lrp2;
-            }).ToArray();
-        }
-
-        public IEnumerable<LedgerRolloverProgress2> LedgerRolloverProgress2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
-        {
-            foreach (var jo in FolioServiceClient.LedgerRolloverProgresses(where, orderBy, skip, take))
-            {
-                var id = Guid.Parse((string)jo["id"]);
-                var lrp2 = cache ? (LedgerRolloverProgress2)(objects.ContainsKey(id) ? objects[id] : objects[id] = LedgerRolloverProgress2.FromJObject(jo)) : LedgerRolloverProgress2.FromJObject(jo);
-                if (load && lrp2.LedgerRolloverId != null) lrp2.LedgerRollover = FindLedgerRollover2(lrp2.LedgerRolloverId, cache: cache);
-                if (load && lrp2.CreationUserId != null) lrp2.CreationUser = FindUser2(lrp2.CreationUserId, cache: cache);
-                if (load && lrp2.LastWriteUserId != null) lrp2.LastWriteUser = FindUser2(lrp2.LastWriteUserId, cache: cache);
-                yield return lrp2;
-            }
-        }
-
-        public LedgerRolloverProgress2 FindLedgerRolloverProgress2(Guid? id, bool load = false, bool cache = true)
-        {
-            if (id == null) return null;
-            var lrp2 = cache ? (LedgerRolloverProgress2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = LedgerRolloverProgress2.FromJObject(FolioServiceClient.GetLedgerRolloverProgress(id?.ToString()))) : LedgerRolloverProgress2.FromJObject(FolioServiceClient.GetLedgerRolloverProgress(id?.ToString()));
-            if (lrp2 == null) return null;
-            if (load && lrp2.LedgerRolloverId != null) lrp2.LedgerRollover = FindLedgerRollover2(lrp2.LedgerRolloverId, cache: cache);
-            if (load && lrp2.CreationUserId != null) lrp2.CreationUser = FindUser2(lrp2.CreationUserId, cache: cache);
-            if (load && lrp2.LastWriteUserId != null) lrp2.LastWriteUser = FindUser2(lrp2.LastWriteUserId, cache: cache);
-            return lrp2;
-        }
-
-        public void Insert(LedgerRolloverProgress2 ledgerRolloverProgress2)
-        {
-            if (ledgerRolloverProgress2.Id == null) ledgerRolloverProgress2.Id = Guid.NewGuid();
-            FolioServiceClient.InsertLedgerRolloverProgress(ledgerRolloverProgress2.ToJObject());
-        }
-
-        public void Update(LedgerRolloverProgress2 ledgerRolloverProgress2) => FolioServiceClient.UpdateLedgerRolloverProgress(ledgerRolloverProgress2.ToJObject());
-
-        public void UpdateOrInsert(LedgerRolloverProgress2 ledgerRolloverProgress2)
-        {
-            if (ledgerRolloverProgress2.Id == null)
-                Insert(ledgerRolloverProgress2);
-            else
-                try
-                {
-                    Update(ledgerRolloverProgress2);
-                }
-                catch (HttpRequestException e)
-                {
-                    if (e.Message.Contains("NotFound")) Insert(ledgerRolloverProgress2); else throw;
-                }
-        }
-
-        public void InsertOrUpdate(LedgerRolloverProgress2 ledgerRolloverProgress2)
-        {
-            try
-            {
-                Insert(ledgerRolloverProgress2);
-            }
-            catch (HttpRequestException e)
-            {
-                if (e.Message.Contains("duplicate key")) Update(ledgerRolloverProgress2); else throw;
-            }
-        }
-
-        public void DeleteLedgerRolloverProgress2(Guid? id) => FolioServiceClient.DeleteLedgerRolloverProgress(id?.ToString());
 
         public bool AnyLibrary2s(string where = null) => FolioServiceClient.AnyLibraries(where);
 
@@ -6530,6 +6377,14 @@ namespace FolioLibrary
                     if (load && oil2.HoldingId != null) oil2.Holding = FindHolding2(oil2.HoldingId, cache: cache);
                 }
             i = 0;
+            if (oi2.OrderItemOrganizations != null) foreach (var oio in oi2.OrderItemOrganizations)
+                {
+                    oio.Id = (++i).ToString();
+                    oio.OrderItemId = oi2.Id;
+                    oio.OrderItem = oi2;
+                    if (load && oio.OrganizationId != null) oio.Organization = FindOrganization2(oio.OrganizationId, cache: cache);
+                }
+            i = 0;
             if (oi2.OrderItemProductIds != null) foreach (var oipi in oi2.OrderItemProductIds)
                 {
                     oipi.Id = (++i).ToString();
@@ -6551,6 +6406,14 @@ namespace FolioLibrary
                     oirc.OrderItemId = oi2.Id;
                     oirc.OrderItem = oi2;
                     if (load && oirc.ReportingCodeId != null) oirc.ReportingCode = FindReportingCode2(oirc.ReportingCodeId, cache: cache);
+                }
+            i = 0;
+            if (oi2.OrderItemSearchLocations != null) foreach (var oisl in oi2.OrderItemSearchLocations)
+                {
+                    oisl.Id = (++i).ToString();
+                    oisl.OrderItemId = oi2.Id;
+                    oisl.OrderItem = oi2;
+                    if (load && oisl.LocationId != null) oisl.Location = FindLocation2(oisl.LocationId, cache: cache);
                 }
             i = 0;
             if (oi2.OrderItemTags != null) foreach (var oit in oi2.OrderItemTags)
@@ -6668,52 +6531,6 @@ namespace FolioLibrary
         }
 
         public void DeleteOrderTemplate2(Guid? id) => FolioServiceClient.DeleteOrderTemplate(id?.ToString());
-
-        public OrderTransactionSummary2 FindOrderTransactionSummary2(Guid? id, bool load = false, bool cache = true)
-        {
-            if (id == null) return null;
-            var ots2 = cache ? (OrderTransactionSummary2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = OrderTransactionSummary2.FromJObject(FolioServiceClient.GetOrderTransactionSummary(id?.ToString()))) : OrderTransactionSummary2.FromJObject(FolioServiceClient.GetOrderTransactionSummary(id?.ToString()));
-            if (ots2 == null) return null;
-            if (load && ots2.Id != null) ots2.Order2 = FindOrder2(ots2.Id, cache: cache);
-            return ots2;
-        }
-
-        public void Insert(OrderTransactionSummary2 orderTransactionSummary2)
-        {
-            if (orderTransactionSummary2.Id == null) orderTransactionSummary2.Id = Guid.NewGuid();
-            FolioServiceClient.InsertOrderTransactionSummary(orderTransactionSummary2.ToJObject());
-        }
-
-        public void Update(OrderTransactionSummary2 orderTransactionSummary2) => FolioServiceClient.UpdateOrderTransactionSummary(orderTransactionSummary2.ToJObject());
-
-        public void UpdateOrInsert(OrderTransactionSummary2 orderTransactionSummary2)
-        {
-            if (orderTransactionSummary2.Id == null)
-                Insert(orderTransactionSummary2);
-            else
-                try
-                {
-                    Update(orderTransactionSummary2);
-                }
-                catch (HttpRequestException e)
-                {
-                    if (e.Message.Contains("NotFound")) Insert(orderTransactionSummary2); else throw;
-                }
-        }
-
-        public void InsertOrUpdate(OrderTransactionSummary2 orderTransactionSummary2)
-        {
-            try
-            {
-                Insert(orderTransactionSummary2);
-            }
-            catch (HttpRequestException e)
-            {
-                if (e.Message.Contains("duplicate key")) Update(orderTransactionSummary2); else throw;
-            }
-        }
-
-        public void DeleteOrderTransactionSummary2(Guid? id) => FolioServiceClient.DeleteOrderTransactionSummary(id?.ToString());
 
         public bool AnyOrganization2s(string where = null) => FolioServiceClient.AnyOrganizations(where);
 
@@ -6835,6 +6652,13 @@ namespace FolioLibrary
                     opn.Organization = o2;
                     if (load && opn.CreationUserId != null) opn.CreationUser = FindUser2(opn.CreationUserId, cache: cache);
                     if (load && opn.LastWriteUserId != null) opn.LastWriteUser = FindUser2(opn.LastWriteUserId, cache: cache);
+                }
+            i = 0;
+            if (o2.OrganizationPrivilegedContacts != null) foreach (var opc in o2.OrganizationPrivilegedContacts)
+                {
+                    opc.Id = (++i).ToString();
+                    opc.OrganizationId = o2.Id;
+                    opc.Organization = o2;
                 }
             i = 0;
             if (o2.OrganizationTags != null) foreach (var ot in o2.OrganizationTags)
@@ -7908,6 +7732,8 @@ namespace FolioLibrary
                 if (load && r2.OrderItemId != null) r2.OrderItem = FindOrderItem2(r2.OrderItemId, cache: cache);
                 if (load && r2.TitleId != null) r2.Title = FindTitle2(r2.TitleId, cache: cache);
                 if (load && r2.HoldingId != null) r2.Holding = FindHolding2(r2.HoldingId, cache: cache);
+                if (load && r2.CreationUserId != null) r2.CreationUser = FindUser2(r2.CreationUserId, cache: cache);
+                if (load && r2.LastWriteUserId != null) r2.LastWriteUser = FindUser2(r2.LastWriteUserId, cache: cache);
                 return r2;
             }).ToArray();
         }
@@ -7923,6 +7749,8 @@ namespace FolioLibrary
                 if (load && r2.OrderItemId != null) r2.OrderItem = FindOrderItem2(r2.OrderItemId, cache: cache);
                 if (load && r2.TitleId != null) r2.Title = FindTitle2(r2.TitleId, cache: cache);
                 if (load && r2.HoldingId != null) r2.Holding = FindHolding2(r2.HoldingId, cache: cache);
+                if (load && r2.CreationUserId != null) r2.CreationUser = FindUser2(r2.CreationUserId, cache: cache);
+                if (load && r2.LastWriteUserId != null) r2.LastWriteUser = FindUser2(r2.LastWriteUserId, cache: cache);
                 yield return r2;
             }
         }
@@ -7937,6 +7765,8 @@ namespace FolioLibrary
             if (load && r2.OrderItemId != null) r2.OrderItem = FindOrderItem2(r2.OrderItemId, cache: cache);
             if (load && r2.TitleId != null) r2.Title = FindTitle2(r2.TitleId, cache: cache);
             if (load && r2.HoldingId != null) r2.Holding = FindHolding2(r2.HoldingId, cache: cache);
+            if (load && r2.CreationUserId != null) r2.CreationUser = FindUser2(r2.CreationUserId, cache: cache);
+            if (load && r2.LastWriteUserId != null) r2.LastWriteUser = FindUser2(r2.LastWriteUserId, cache: cache);
             return r2;
         }
 
@@ -8433,6 +8263,8 @@ namespace FolioLibrary
                 var r2 = cache ? (Request2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Request2.FromJObject(jo)) : Request2.FromJObject(jo);
                 if (load && r2.RequesterId != null) r2.Requester = FindUser2(r2.RequesterId, cache: cache);
                 if (load && r2.ProxyUserId != null) r2.ProxyUser = FindUser2(r2.ProxyUserId, cache: cache);
+                if (load && r2.InstanceId != null) r2.Instance = FindInstance2(r2.InstanceId, cache: cache);
+                if (load && r2.HoldingId != null) r2.Holding = FindHolding2(r2.HoldingId, cache: cache);
                 if (load && r2.ItemId != null) r2.Item = FindItem2(r2.ItemId, cache: cache);
                 if (load && r2.CancellationReasonId != null) r2.CancellationReason = FindCancellationReason2(r2.CancellationReasonId, cache: cache);
                 if (load && r2.CancelledByUserId != null) r2.CancelledByUser = FindUser2(r2.CancelledByUserId, cache: cache);
@@ -8440,6 +8272,7 @@ namespace FolioLibrary
                 if (load && r2.PickupServicePointId != null) r2.PickupServicePoint = FindServicePoint2(r2.PickupServicePointId, cache: cache);
                 if (load && r2.CreationUserId != null) r2.CreationUser = FindUser2(r2.CreationUserId, cache: cache);
                 if (load && r2.LastWriteUserId != null) r2.LastWriteUser = FindUser2(r2.LastWriteUserId, cache: cache);
+                if (load && r2.PrintDetailsRequesterId != null) r2.PrintDetailsRequester = FindUser2(r2.PrintDetailsRequesterId, cache: cache);
                 return r2;
             }).ToArray();
         }
@@ -8452,6 +8285,8 @@ namespace FolioLibrary
                 var r2 = cache ? (Request2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Request2.FromJObject(jo)) : Request2.FromJObject(jo);
                 if (load && r2.RequesterId != null) r2.Requester = FindUser2(r2.RequesterId, cache: cache);
                 if (load && r2.ProxyUserId != null) r2.ProxyUser = FindUser2(r2.ProxyUserId, cache: cache);
+                if (load && r2.InstanceId != null) r2.Instance = FindInstance2(r2.InstanceId, cache: cache);
+                if (load && r2.HoldingId != null) r2.Holding = FindHolding2(r2.HoldingId, cache: cache);
                 if (load && r2.ItemId != null) r2.Item = FindItem2(r2.ItemId, cache: cache);
                 if (load && r2.CancellationReasonId != null) r2.CancellationReason = FindCancellationReason2(r2.CancellationReasonId, cache: cache);
                 if (load && r2.CancelledByUserId != null) r2.CancelledByUser = FindUser2(r2.CancelledByUserId, cache: cache);
@@ -8459,6 +8294,7 @@ namespace FolioLibrary
                 if (load && r2.PickupServicePointId != null) r2.PickupServicePoint = FindServicePoint2(r2.PickupServicePointId, cache: cache);
                 if (load && r2.CreationUserId != null) r2.CreationUser = FindUser2(r2.CreationUserId, cache: cache);
                 if (load && r2.LastWriteUserId != null) r2.LastWriteUser = FindUser2(r2.LastWriteUserId, cache: cache);
+                if (load && r2.PrintDetailsRequesterId != null) r2.PrintDetailsRequester = FindUser2(r2.PrintDetailsRequesterId, cache: cache);
                 yield return r2;
             }
         }
@@ -8470,6 +8306,8 @@ namespace FolioLibrary
             if (r2 == null) return null;
             if (load && r2.RequesterId != null) r2.Requester = FindUser2(r2.RequesterId, cache: cache);
             if (load && r2.ProxyUserId != null) r2.ProxyUser = FindUser2(r2.ProxyUserId, cache: cache);
+            if (load && r2.InstanceId != null) r2.Instance = FindInstance2(r2.InstanceId, cache: cache);
+            if (load && r2.HoldingId != null) r2.Holding = FindHolding2(r2.HoldingId, cache: cache);
             if (load && r2.ItemId != null) r2.Item = FindItem2(r2.ItemId, cache: cache);
             if (load && r2.CancellationReasonId != null) r2.CancellationReason = FindCancellationReason2(r2.CancellationReasonId, cache: cache);
             if (load && r2.CancelledByUserId != null) r2.CancelledByUser = FindUser2(r2.CancelledByUserId, cache: cache);
@@ -8477,6 +8315,7 @@ namespace FolioLibrary
             if (load && r2.PickupServicePointId != null) r2.PickupServicePoint = FindServicePoint2(r2.PickupServicePointId, cache: cache);
             if (load && r2.CreationUserId != null) r2.CreationUser = FindUser2(r2.CreationUserId, cache: cache);
             if (load && r2.LastWriteUserId != null) r2.LastWriteUser = FindUser2(r2.LastWriteUserId, cache: cache);
+            if (load && r2.PrintDetailsRequesterId != null) r2.PrintDetailsRequester = FindUser2(r2.PrintDetailsRequesterId, cache: cache);
             var i = 0;
             if (r2.RequestIdentifiers != null) foreach (var ri in r2.RequestIdentifiers)
                 {
@@ -8613,6 +8452,427 @@ namespace FolioLibrary
         }
 
         public void DeleteRequestPolicy2(Guid? id) => FolioServiceClient.DeleteRequestPolicy(id?.ToString());
+
+        public bool AnyRollover2s(string where = null) => FolioServiceClient.AnyRollovers(where);
+
+        public int CountRollover2s(string where = null) => FolioServiceClient.CountRollovers(where);
+
+        public Rollover2[] Rollover2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
+        {
+            return FolioServiceClient.Rollovers(out count, where, orderBy, skip, take).Select(jo =>
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var r2 = cache ? (Rollover2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Rollover2.FromJObject(jo)) : Rollover2.FromJObject(jo);
+                if (load && r2.LedgerId != null) r2.Ledger = FindLedger2(r2.LedgerId, cache: cache);
+                if (load && r2.FromFiscalYearId != null) r2.FromFiscalYear = FindFiscalYear2(r2.FromFiscalYearId, cache: cache);
+                if (load && r2.ToFiscalYearId != null) r2.ToFiscalYear = FindFiscalYear2(r2.ToFiscalYearId, cache: cache);
+                if (load && r2.CreationUserId != null) r2.CreationUser = FindUser2(r2.CreationUserId, cache: cache);
+                if (load && r2.LastWriteUserId != null) r2.LastWriteUser = FindUser2(r2.LastWriteUserId, cache: cache);
+                return r2;
+            }).ToArray();
+        }
+
+        public IEnumerable<Rollover2> Rollover2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        {
+            foreach (var jo in FolioServiceClient.Rollovers(where, orderBy, skip, take))
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var r2 = cache ? (Rollover2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Rollover2.FromJObject(jo)) : Rollover2.FromJObject(jo);
+                if (load && r2.LedgerId != null) r2.Ledger = FindLedger2(r2.LedgerId, cache: cache);
+                if (load && r2.FromFiscalYearId != null) r2.FromFiscalYear = FindFiscalYear2(r2.FromFiscalYearId, cache: cache);
+                if (load && r2.ToFiscalYearId != null) r2.ToFiscalYear = FindFiscalYear2(r2.ToFiscalYearId, cache: cache);
+                if (load && r2.CreationUserId != null) r2.CreationUser = FindUser2(r2.CreationUserId, cache: cache);
+                if (load && r2.LastWriteUserId != null) r2.LastWriteUser = FindUser2(r2.LastWriteUserId, cache: cache);
+                yield return r2;
+            }
+        }
+
+        public Rollover2 FindRollover2(Guid? id, bool load = false, bool cache = true)
+        {
+            if (id == null) return null;
+            var r2 = cache ? (Rollover2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Rollover2.FromJObject(FolioServiceClient.GetRollover(id?.ToString()))) : Rollover2.FromJObject(FolioServiceClient.GetRollover(id?.ToString()));
+            if (r2 == null) return null;
+            if (load && r2.LedgerId != null) r2.Ledger = FindLedger2(r2.LedgerId, cache: cache);
+            if (load && r2.FromFiscalYearId != null) r2.FromFiscalYear = FindFiscalYear2(r2.FromFiscalYearId, cache: cache);
+            if (load && r2.ToFiscalYearId != null) r2.ToFiscalYear = FindFiscalYear2(r2.ToFiscalYearId, cache: cache);
+            if (load && r2.CreationUserId != null) r2.CreationUser = FindUser2(r2.CreationUserId, cache: cache);
+            if (load && r2.LastWriteUserId != null) r2.LastWriteUser = FindUser2(r2.LastWriteUserId, cache: cache);
+            var i = 0;
+            if (r2.RolloverBudgetsRollovers != null) foreach (var rbr in r2.RolloverBudgetsRollovers)
+                {
+                    rbr.Id = (++i).ToString();
+                    rbr.RolloverId = r2.Id;
+                    rbr.Rollover = r2;
+                    if (load && rbr.FundTypeId != null) rbr.FundType = FindFundType2(rbr.FundTypeId, cache: cache);
+                }
+            i = 0;
+            if (r2.RolloverEncumbrancesRollovers != null) foreach (var rer in r2.RolloverEncumbrancesRollovers)
+                {
+                    rer.Id = (++i).ToString();
+                    rer.RolloverId = r2.Id;
+                    rer.Rollover = r2;
+                }
+            return r2;
+        }
+
+        public void Insert(Rollover2 rollover2)
+        {
+            if (rollover2.Id == null) rollover2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertRollover(rollover2.ToJObject());
+        }
+
+        public void Update(Rollover2 rollover2) => FolioServiceClient.UpdateRollover(rollover2.ToJObject());
+
+        public void UpdateOrInsert(Rollover2 rollover2)
+        {
+            if (rollover2.Id == null)
+                Insert(rollover2);
+            else
+                try
+                {
+                    Update(rollover2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(rollover2); else throw;
+                }
+        }
+
+        public void InsertOrUpdate(Rollover2 rollover2)
+        {
+            try
+            {
+                Insert(rollover2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(rollover2); else throw;
+            }
+        }
+
+        public void DeleteRollover2(Guid? id) => FolioServiceClient.DeleteRollover(id?.ToString());
+
+        public bool AnyRolloverBudget2s(string where = null) => FolioServiceClient.AnyRolloverBudgets(where);
+
+        public int CountRolloverBudget2s(string where = null) => FolioServiceClient.CountRolloverBudgets(where);
+
+        public RolloverBudget2[] RolloverBudget2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
+        {
+            return FolioServiceClient.RolloverBudgets(out count, where, orderBy, skip, take).Select(jo =>
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var rb2 = cache ? (RolloverBudget2)(objects.ContainsKey(id) ? objects[id] : objects[id] = RolloverBudget2.FromJObject(jo)) : RolloverBudget2.FromJObject(jo);
+                if (load && rb2.BudgetId != null) rb2.Budget = FindBudget2(rb2.BudgetId, cache: cache);
+                if (load && rb2.RolloverId != null) rb2.Rollover = FindRollover2(rb2.RolloverId, cache: cache);
+                if (load && rb2.FundDetailsFundTypeId != null) rb2.FundDetailsFundType = FindFundType2(rb2.FundDetailsFundTypeId, cache: cache);
+                if (load && rb2.FundId != null) rb2.Fund = FindFund2(rb2.FundId, cache: cache);
+                if (load && rb2.FiscalYearId != null) rb2.FiscalYear = FindFiscalYear2(rb2.FiscalYearId, cache: cache);
+                if (load && rb2.CreationUserId != null) rb2.CreationUser = FindUser2(rb2.CreationUserId, cache: cache);
+                if (load && rb2.LastWriteUserId != null) rb2.LastWriteUser = FindUser2(rb2.LastWriteUserId, cache: cache);
+                return rb2;
+            }).ToArray();
+        }
+
+        public IEnumerable<RolloverBudget2> RolloverBudget2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        {
+            foreach (var jo in FolioServiceClient.RolloverBudgets(where, orderBy, skip, take))
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var rb2 = cache ? (RolloverBudget2)(objects.ContainsKey(id) ? objects[id] : objects[id] = RolloverBudget2.FromJObject(jo)) : RolloverBudget2.FromJObject(jo);
+                if (load && rb2.BudgetId != null) rb2.Budget = FindBudget2(rb2.BudgetId, cache: cache);
+                if (load && rb2.RolloverId != null) rb2.Rollover = FindRollover2(rb2.RolloverId, cache: cache);
+                if (load && rb2.FundDetailsFundTypeId != null) rb2.FundDetailsFundType = FindFundType2(rb2.FundDetailsFundTypeId, cache: cache);
+                if (load && rb2.FundId != null) rb2.Fund = FindFund2(rb2.FundId, cache: cache);
+                if (load && rb2.FiscalYearId != null) rb2.FiscalYear = FindFiscalYear2(rb2.FiscalYearId, cache: cache);
+                if (load && rb2.CreationUserId != null) rb2.CreationUser = FindUser2(rb2.CreationUserId, cache: cache);
+                if (load && rb2.LastWriteUserId != null) rb2.LastWriteUser = FindUser2(rb2.LastWriteUserId, cache: cache);
+                yield return rb2;
+            }
+        }
+
+        public RolloverBudget2 FindRolloverBudget2(Guid? id, bool load = false, bool cache = true)
+        {
+            if (id == null) return null;
+            var rb2 = cache ? (RolloverBudget2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = RolloverBudget2.FromJObject(FolioServiceClient.GetRolloverBudget(id?.ToString()))) : RolloverBudget2.FromJObject(FolioServiceClient.GetRolloverBudget(id?.ToString()));
+            if (rb2 == null) return null;
+            if (load && rb2.BudgetId != null) rb2.Budget = FindBudget2(rb2.BudgetId, cache: cache);
+            if (load && rb2.RolloverId != null) rb2.Rollover = FindRollover2(rb2.RolloverId, cache: cache);
+            if (load && rb2.FundDetailsFundTypeId != null) rb2.FundDetailsFundType = FindFundType2(rb2.FundDetailsFundTypeId, cache: cache);
+            if (load && rb2.FundId != null) rb2.Fund = FindFund2(rb2.FundId, cache: cache);
+            if (load && rb2.FiscalYearId != null) rb2.FiscalYear = FindFiscalYear2(rb2.FiscalYearId, cache: cache);
+            if (load && rb2.CreationUserId != null) rb2.CreationUser = FindUser2(rb2.CreationUserId, cache: cache);
+            if (load && rb2.LastWriteUserId != null) rb2.LastWriteUser = FindUser2(rb2.LastWriteUserId, cache: cache);
+            var i = 0;
+            if (rb2.RolloverBudgetAcquisitionsUnit2s != null) foreach (var rbau2 in rb2.RolloverBudgetAcquisitionsUnit2s)
+                {
+                    rbau2.Id = (++i).ToString();
+                    rbau2.RolloverBudgetId = rb2.Id;
+                    rbau2.RolloverBudget = rb2;
+                    if (load && rbau2.AcquisitionsUnitId != null) rbau2.AcquisitionsUnit = FindAcquisitionsUnit2(rbau2.AcquisitionsUnitId, cache: cache);
+                }
+            i = 0;
+            if (rb2.RolloverBudgetAcquisitionsUnits != null) foreach (var rbau in rb2.RolloverBudgetAcquisitionsUnits)
+                {
+                    rbau.Id = (++i).ToString();
+                    rbau.RolloverBudgetId = rb2.Id;
+                    rbau.RolloverBudget = rb2;
+                    if (load && rbau.AcquisitionsUnitId != null) rbau.AcquisitionsUnit = FindAcquisitionsUnit2(rbau.AcquisitionsUnitId, cache: cache);
+                }
+            i = 0;
+            if (rb2.RolloverBudgetAllocatedFromNames != null) foreach (var rbafn in rb2.RolloverBudgetAllocatedFromNames)
+                {
+                    rbafn.Id = (++i).ToString();
+                    rbafn.RolloverBudgetId = rb2.Id;
+                    rbafn.RolloverBudget = rb2;
+                }
+            i = 0;
+            if (rb2.RolloverBudgetAllocatedToNames != null) foreach (var rbatn in rb2.RolloverBudgetAllocatedToNames)
+                {
+                    rbatn.Id = (++i).ToString();
+                    rbatn.RolloverBudgetId = rb2.Id;
+                    rbatn.RolloverBudget = rb2;
+                }
+            i = 0;
+            if (rb2.RolloverBudgetExpenseClassDetails != null) foreach (var rbecd in rb2.RolloverBudgetExpenseClassDetails)
+                {
+                    rbecd.Id = (++i).ToString();
+                    rbecd.RolloverBudgetId = rb2.Id;
+                    rbecd.RolloverBudget = rb2;
+                }
+            i = 0;
+            if (rb2.RolloverBudgetFromFunds != null) foreach (var rbff in rb2.RolloverBudgetFromFunds)
+                {
+                    rbff.Id = (++i).ToString();
+                    rbff.RolloverBudgetId = rb2.Id;
+                    rbff.RolloverBudget = rb2;
+                    if (load && rbff.FundId != null) rbff.Fund = FindFund2(rbff.FundId, cache: cache);
+                }
+            i = 0;
+            if (rb2.RolloverBudgetLocations != null) foreach (var rbl in rb2.RolloverBudgetLocations)
+                {
+                    rbl.Id = (++i).ToString();
+                    rbl.RolloverBudgetId = rb2.Id;
+                    rbl.RolloverBudget = rb2;
+                    if (load && rbl.LocationId != null) rbl.Location = FindLocation2(rbl.LocationId, cache: cache);
+                }
+            i = 0;
+            if (rb2.RolloverBudgetOrganizations != null) foreach (var rbo in rb2.RolloverBudgetOrganizations)
+                {
+                    rbo.Id = (++i).ToString();
+                    rbo.RolloverBudgetId = rb2.Id;
+                    rbo.RolloverBudget = rb2;
+                    if (load && rbo.OrganizationId != null) rbo.Organization = FindOrganization2(rbo.OrganizationId, cache: cache);
+                }
+            i = 0;
+            if (rb2.RolloverBudgetTags != null) foreach (var rbt in rb2.RolloverBudgetTags)
+                {
+                    rbt.Id = (++i).ToString();
+                    rbt.RolloverBudgetId = rb2.Id;
+                    rbt.RolloverBudget = rb2;
+                }
+            i = 0;
+            if (rb2.RolloverBudgetToFunds != null) foreach (var rbtf in rb2.RolloverBudgetToFunds)
+                {
+                    rbtf.Id = (++i).ToString();
+                    rbtf.RolloverBudgetId = rb2.Id;
+                    rbtf.RolloverBudget = rb2;
+                    if (load && rbtf.FundId != null) rbtf.Fund = FindFund2(rbtf.FundId, cache: cache);
+                }
+            return rb2;
+        }
+
+        public void Insert(RolloverBudget2 rolloverBudget2)
+        {
+            if (rolloverBudget2.Id == null) rolloverBudget2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertRolloverBudget(rolloverBudget2.ToJObject());
+        }
+
+        public void Update(RolloverBudget2 rolloverBudget2) => FolioServiceClient.UpdateRolloverBudget(rolloverBudget2.ToJObject());
+
+        public void UpdateOrInsert(RolloverBudget2 rolloverBudget2)
+        {
+            if (rolloverBudget2.Id == null)
+                Insert(rolloverBudget2);
+            else
+                try
+                {
+                    Update(rolloverBudget2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(rolloverBudget2); else throw;
+                }
+        }
+
+        public void InsertOrUpdate(RolloverBudget2 rolloverBudget2)
+        {
+            try
+            {
+                Insert(rolloverBudget2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(rolloverBudget2); else throw;
+            }
+        }
+
+        public void DeleteRolloverBudget2(Guid? id) => FolioServiceClient.DeleteRolloverBudget(id?.ToString());
+
+        public bool AnyRolloverError2s(string where = null) => FolioServiceClient.AnyRolloverErrors(where);
+
+        public int CountRolloverError2s(string where = null) => FolioServiceClient.CountRolloverErrors(where);
+
+        public RolloverError2[] RolloverError2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
+        {
+            return FolioServiceClient.RolloverErrors(out count, where, orderBy, skip, take).Select(jo =>
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var re2 = cache ? (RolloverError2)(objects.ContainsKey(id) ? objects[id] : objects[id] = RolloverError2.FromJObject(jo)) : RolloverError2.FromJObject(jo);
+                if (load && re2.RolloverId != null) re2.Rollover = FindRollover2(re2.RolloverId, cache: cache);
+                if (load && re2.CreationUserId != null) re2.CreationUser = FindUser2(re2.CreationUserId, cache: cache);
+                if (load && re2.LastWriteUserId != null) re2.LastWriteUser = FindUser2(re2.LastWriteUserId, cache: cache);
+                return re2;
+            }).ToArray();
+        }
+
+        public IEnumerable<RolloverError2> RolloverError2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        {
+            foreach (var jo in FolioServiceClient.RolloverErrors(where, orderBy, skip, take))
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var re2 = cache ? (RolloverError2)(objects.ContainsKey(id) ? objects[id] : objects[id] = RolloverError2.FromJObject(jo)) : RolloverError2.FromJObject(jo);
+                if (load && re2.RolloverId != null) re2.Rollover = FindRollover2(re2.RolloverId, cache: cache);
+                if (load && re2.CreationUserId != null) re2.CreationUser = FindUser2(re2.CreationUserId, cache: cache);
+                if (load && re2.LastWriteUserId != null) re2.LastWriteUser = FindUser2(re2.LastWriteUserId, cache: cache);
+                yield return re2;
+            }
+        }
+
+        public RolloverError2 FindRolloverError2(Guid? id, bool load = false, bool cache = true)
+        {
+            if (id == null) return null;
+            var re2 = cache ? (RolloverError2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = RolloverError2.FromJObject(FolioServiceClient.GetRolloverError(id?.ToString()))) : RolloverError2.FromJObject(FolioServiceClient.GetRolloverError(id?.ToString()));
+            if (re2 == null) return null;
+            if (load && re2.RolloverId != null) re2.Rollover = FindRollover2(re2.RolloverId, cache: cache);
+            if (load && re2.CreationUserId != null) re2.CreationUser = FindUser2(re2.CreationUserId, cache: cache);
+            if (load && re2.LastWriteUserId != null) re2.LastWriteUser = FindUser2(re2.LastWriteUserId, cache: cache);
+            return re2;
+        }
+
+        public void Insert(RolloverError2 rolloverError2)
+        {
+            if (rolloverError2.Id == null) rolloverError2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertRolloverError(rolloverError2.ToJObject());
+        }
+
+        public void Update(RolloverError2 rolloverError2) => FolioServiceClient.UpdateRolloverError(rolloverError2.ToJObject());
+
+        public void UpdateOrInsert(RolloverError2 rolloverError2)
+        {
+            if (rolloverError2.Id == null)
+                Insert(rolloverError2);
+            else
+                try
+                {
+                    Update(rolloverError2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(rolloverError2); else throw;
+                }
+        }
+
+        public void InsertOrUpdate(RolloverError2 rolloverError2)
+        {
+            try
+            {
+                Insert(rolloverError2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(rolloverError2); else throw;
+            }
+        }
+
+        public void DeleteRolloverError2(Guid? id) => FolioServiceClient.DeleteRolloverError(id?.ToString());
+
+        public bool AnyRolloverProgress2s(string where = null) => FolioServiceClient.AnyRolloverProgresses(where);
+
+        public int CountRolloverProgress2s(string where = null) => FolioServiceClient.CountRolloverProgresses(where);
+
+        public RolloverProgress2[] RolloverProgress2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
+        {
+            return FolioServiceClient.RolloverProgresses(out count, where, orderBy, skip, take).Select(jo =>
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var rp2 = cache ? (RolloverProgress2)(objects.ContainsKey(id) ? objects[id] : objects[id] = RolloverProgress2.FromJObject(jo)) : RolloverProgress2.FromJObject(jo);
+                if (load && rp2.RolloverId != null) rp2.Rollover = FindRollover2(rp2.RolloverId, cache: cache);
+                if (load && rp2.CreationUserId != null) rp2.CreationUser = FindUser2(rp2.CreationUserId, cache: cache);
+                if (load && rp2.LastWriteUserId != null) rp2.LastWriteUser = FindUser2(rp2.LastWriteUserId, cache: cache);
+                return rp2;
+            }).ToArray();
+        }
+
+        public IEnumerable<RolloverProgress2> RolloverProgress2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        {
+            foreach (var jo in FolioServiceClient.RolloverProgresses(where, orderBy, skip, take))
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var rp2 = cache ? (RolloverProgress2)(objects.ContainsKey(id) ? objects[id] : objects[id] = RolloverProgress2.FromJObject(jo)) : RolloverProgress2.FromJObject(jo);
+                if (load && rp2.RolloverId != null) rp2.Rollover = FindRollover2(rp2.RolloverId, cache: cache);
+                if (load && rp2.CreationUserId != null) rp2.CreationUser = FindUser2(rp2.CreationUserId, cache: cache);
+                if (load && rp2.LastWriteUserId != null) rp2.LastWriteUser = FindUser2(rp2.LastWriteUserId, cache: cache);
+                yield return rp2;
+            }
+        }
+
+        public RolloverProgress2 FindRolloverProgress2(Guid? id, bool load = false, bool cache = true)
+        {
+            if (id == null) return null;
+            var rp2 = cache ? (RolloverProgress2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = RolloverProgress2.FromJObject(FolioServiceClient.GetRolloverProgress(id?.ToString()))) : RolloverProgress2.FromJObject(FolioServiceClient.GetRolloverProgress(id?.ToString()));
+            if (rp2 == null) return null;
+            if (load && rp2.RolloverId != null) rp2.Rollover = FindRollover2(rp2.RolloverId, cache: cache);
+            if (load && rp2.CreationUserId != null) rp2.CreationUser = FindUser2(rp2.CreationUserId, cache: cache);
+            if (load && rp2.LastWriteUserId != null) rp2.LastWriteUser = FindUser2(rp2.LastWriteUserId, cache: cache);
+            return rp2;
+        }
+
+        public void Insert(RolloverProgress2 rolloverProgress2)
+        {
+            if (rolloverProgress2.Id == null) rolloverProgress2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertRolloverProgress(rolloverProgress2.ToJObject());
+        }
+
+        public void Update(RolloverProgress2 rolloverProgress2) => FolioServiceClient.UpdateRolloverProgress(rolloverProgress2.ToJObject());
+
+        public void UpdateOrInsert(RolloverProgress2 rolloverProgress2)
+        {
+            if (rolloverProgress2.Id == null)
+                Insert(rolloverProgress2);
+            else
+                try
+                {
+                    Update(rolloverProgress2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(rolloverProgress2); else throw;
+                }
+        }
+
+        public void InsertOrUpdate(RolloverProgress2 rolloverProgress2)
+        {
+            try
+            {
+                Insert(rolloverProgress2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(rolloverProgress2); else throw;
+            }
+        }
+
+        public void DeleteRolloverProgress2(Guid? id) => FolioServiceClient.DeleteRolloverProgress(id?.ToString());
 
         public bool AnyScheduledNotice2s(string where = null) => FolioServiceClient.AnyScheduledNotices(where);
 
@@ -9666,6 +9926,21 @@ namespace FolioLibrary
             if (load && t2.CreationUserId != null) t2.CreationUser = FindUser2(t2.CreationUserId, cache: cache);
             if (load && t2.LastWriteUserId != null) t2.LastWriteUser = FindUser2(t2.LastWriteUserId, cache: cache);
             var i = 0;
+            if (t2.TitleAcquisitionsUnits != null) foreach (var tau in t2.TitleAcquisitionsUnits)
+                {
+                    tau.Id = (++i).ToString();
+                    tau.TitleId = t2.Id;
+                    tau.Title = t2;
+                    if (load && tau.AcquisitionsUnitId != null) tau.AcquisitionsUnit = FindAcquisitionsUnit2(tau.AcquisitionsUnitId, cache: cache);
+                }
+            i = 0;
+            if (t2.TitleBindItemIds != null) foreach (var tbii in t2.TitleBindItemIds)
+                {
+                    tbii.Id = (++i).ToString();
+                    tbii.TitleId = t2.Id;
+                    tbii.Title = t2;
+                }
+            i = 0;
             if (t2.TitleContributors != null) foreach (var tc in t2.TitleContributors)
                 {
                     tc.Id = (++i).ToString();
@@ -10016,6 +10291,13 @@ namespace FolioLibrary
             if (load && u2.CreationUserId != null) u2.CreationUser = FindUser2(u2.CreationUserId, cache: cache);
             if (load && u2.LastWriteUserId != null) u2.LastWriteUser = FindUser2(u2.LastWriteUserId, cache: cache);
             var i = 0;
+            if (u2.PreferredEmailCommunications != null) foreach (var pec in u2.PreferredEmailCommunications)
+                {
+                    pec.Id = (++i).ToString();
+                    pec.UserId = u2.Id;
+                    pec.User = u2;
+                }
+            i = 0;
             if (u2.UserAddresses != null) foreach (var ua in u2.UserAddresses)
                 {
                     ua.Id = (++i).ToString();

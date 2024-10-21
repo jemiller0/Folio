@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "A (shelf) location, the forth-level location unit below institution, campus, and library.",
+  "javaType": "org.folio.rest.jaxrs.model.Location",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -80,7 +81,7 @@
     "primaryServicePoint": {
       "description": "The UUID of the primary service point of this (shelf) location.",
       "type": "string",
-      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      "format": "uuid"
     },
     "primaryServicePointObject": {
       "folio:isVirtual": true,
@@ -141,6 +142,19 @@
           "required": [
             "duration",
             "intervalId"
+          ]
+        },
+        "holdShelfClosedLibraryDateManagement": {
+          "description": "enum for closedLibraryDateManagement associated with hold shelf",
+          "type": "string",
+          "default": "Keep_the_current_due_date",
+          "enum": [
+            "Keep_the_current_due_date",
+            "Move_to_the_end_of_the_previous_open_day",
+            "Move_to_the_end_of_the_next_open_day",
+            "Keep_the_current_due_date_time",
+            "Move_to_end_of_current_service_point_hours",
+            "Move_to_beginning_of_next_open_service_point_hours"
           ]
         },
         "staffSlips": {
@@ -218,11 +232,15 @@
       "items": {
         "description": "The UUID of a service point that belongs to this (shelf) location.",
         "type": "string",
-        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
+        "format": "uuid",
         "not": {
           "type": "null"
         }
       }
+    },
+    "isFloatingCollection": {
+      "description": "Items checked in/out from this location can be checked in/out to other locations with the same flag.",
+      "type": "boolean"
     },
     "servicePoints": {
       "description": "List of dereferenced service points",
@@ -238,7 +256,43 @@
       }
     },
     "metadata": {
-      "$ref": "#/properties/primaryServicePointObject/properties/metadata"
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate"
+      ]
     }
   },
   "required": [

@@ -47,7 +47,7 @@
           "body": {
             "description": "Template for body",
             "type": "string",
-            "pattern": "\\S+.*"
+            "pattern": "(?s)\\S+.*"
           },
           "attachments": {
             "id": "attachments",

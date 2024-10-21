@@ -25,6 +25,14 @@ namespace FolioWebApplication.User2s
 
         protected RadGrid AcquisitionsUnit2s1RadGrid;
 
+        protected Panel ActualCostRecord2sPanel;
+
+        protected RadGrid ActualCostRecord2sRadGrid;
+
+        protected Panel ActualCostRecord2s1Panel;
+
+        protected RadGrid ActualCostRecord2s1RadGrid;
+
         protected Panel AddressesPanel;
 
         protected RadGrid AddressesRadGrid;
@@ -152,6 +160,14 @@ namespace FolioWebApplication.User2s
         protected Panel CheckIn2sPanel;
 
         protected RadGrid CheckIn2sRadGrid;
+
+        protected Panel CirculationRule2sPanel;
+
+        protected RadGrid CirculationRule2sRadGrid;
+
+        protected Panel CirculationRule2s1Panel;
+
+        protected RadGrid CirculationRule2s1RadGrid;
 
         protected Panel ClassificationType2sPanel;
 
@@ -385,6 +401,14 @@ namespace FolioWebApplication.User2s
 
         protected RadGrid HoldingType2s1RadGrid;
 
+        protected Panel HridSetting2sPanel;
+
+        protected RadGrid HridSetting2sRadGrid;
+
+        protected Panel HridSetting2s1Panel;
+
+        protected RadGrid HridSetting2s1RadGrid;
+
         protected Panel IdType2sPanel;
 
         protected RadGrid IdType2sRadGrid;
@@ -508,30 +532,6 @@ namespace FolioWebApplication.User2s
         protected Panel Ledger2s1Panel;
 
         protected RadGrid Ledger2s1RadGrid;
-
-        protected Panel LedgerRollover2sPanel;
-
-        protected RadGrid LedgerRollover2sRadGrid;
-
-        protected Panel LedgerRollover2s1Panel;
-
-        protected RadGrid LedgerRollover2s1RadGrid;
-
-        protected Panel LedgerRolloverError2sPanel;
-
-        protected RadGrid LedgerRolloverError2sRadGrid;
-
-        protected Panel LedgerRolloverError2s1Panel;
-
-        protected RadGrid LedgerRolloverError2s1RadGrid;
-
-        protected Panel LedgerRolloverProgress2sPanel;
-
-        protected RadGrid LedgerRolloverProgress2sRadGrid;
-
-        protected Panel LedgerRolloverProgress2s1Panel;
-
-        protected RadGrid LedgerRolloverProgress2s1RadGrid;
 
         protected Panel Library2sPanel;
 
@@ -789,6 +789,10 @@ namespace FolioWebApplication.User2s
 
         protected RadGrid PrecedingSucceedingTitle2s1RadGrid;
 
+        protected Panel PreferredEmailCommunicationsPanel;
+
+        protected RadGrid PreferredEmailCommunicationsRadGrid;
+
         protected Panel PrintersPanel;
 
         protected RadGrid PrintersRadGrid;
@@ -812,6 +816,14 @@ namespace FolioWebApplication.User2s
         protected Panel Proxy2s3Panel;
 
         protected RadGrid Proxy2s3RadGrid;
+
+        protected Panel Receiving2sPanel;
+
+        protected RadGrid Receiving2sRadGrid;
+
+        protected Panel Receiving2s1Panel;
+
+        protected RadGrid Receiving2s1RadGrid;
 
         protected Panel Record2sPanel;
 
@@ -865,6 +877,10 @@ namespace FolioWebApplication.User2s
 
         protected RadGrid Request2s4RadGrid;
 
+        protected Panel Request2s5Panel;
+
+        protected RadGrid Request2s5RadGrid;
+
         protected Panel RequestPolicy2sPanel;
 
         protected RadGrid RequestPolicy2sRadGrid;
@@ -872,6 +888,38 @@ namespace FolioWebApplication.User2s
         protected Panel RequestPolicy2s1Panel;
 
         protected RadGrid RequestPolicy2s1RadGrid;
+
+        protected Panel Rollover2sPanel;
+
+        protected RadGrid Rollover2sRadGrid;
+
+        protected Panel Rollover2s1Panel;
+
+        protected RadGrid Rollover2s1RadGrid;
+
+        protected Panel RolloverBudget2sPanel;
+
+        protected RadGrid RolloverBudget2sRadGrid;
+
+        protected Panel RolloverBudget2s1Panel;
+
+        protected RadGrid RolloverBudget2s1RadGrid;
+
+        protected Panel RolloverError2sPanel;
+
+        protected RadGrid RolloverError2sRadGrid;
+
+        protected Panel RolloverError2s1Panel;
+
+        protected RadGrid RolloverError2s1RadGrid;
+
+        protected Panel RolloverProgress2sPanel;
+
+        protected RadGrid RolloverProgress2sRadGrid;
+
+        protected Panel RolloverProgress2s1Panel;
+
+        protected RadGrid RolloverProgress2s1RadGrid;
 
         protected Panel ScheduledNotice2sPanel;
 

@@ -24,7 +24,7 @@ namespace FolioWebApplication.ServicePoint2s
 
         protected void ServicePoint2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Code", "code" }, { "DiscoveryDisplayName", "discoveryDisplayName" }, { "Description", "description" }, { "ShelvingLagTime", "shelvingLagTime" }, { "PickupLocation", "pickupLocation" }, { "HoldShelfExpiryPeriodDuration", "holdShelfExpiryPeriod.duration" }, { "HoldShelfExpiryPeriodInterval", "holdShelfExpiryPeriod.intervalId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Code", "code" }, { "DiscoveryDisplayName", "discoveryDisplayName" }, { "Description", "description" }, { "ShelvingLagTime", "shelvingLagTime" }, { "PickupLocation", "pickupLocation" }, { "HoldShelfExpiryPeriodDuration", "holdShelfExpiryPeriod.duration" }, { "HoldShelfExpiryPeriodInterval", "holdShelfExpiryPeriod.intervalId" }, { "HoldShelfClosedLibraryDateManagement", "holdShelfClosedLibraryDateManagement" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 Global.GetCqlFilter(ServicePoint2sRadGrid, "Id", "id"),
@@ -36,6 +36,7 @@ namespace FolioWebApplication.ServicePoint2s
                 Global.GetCqlFilter(ServicePoint2sRadGrid, "PickupLocation", "pickupLocation"),
                 Global.GetCqlFilter(ServicePoint2sRadGrid, "HoldShelfExpiryPeriodDuration", "holdShelfExpiryPeriod.duration"),
                 Global.GetCqlFilter(ServicePoint2sRadGrid, "HoldShelfExpiryPeriodInterval", "holdShelfExpiryPeriod.intervalId"),
+                Global.GetCqlFilter(ServicePoint2sRadGrid, "HoldShelfClosedLibraryDateManagement", "holdShelfClosedLibraryDateManagement"),
                 Global.GetCqlFilter(ServicePoint2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(ServicePoint2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(ServicePoint2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
@@ -54,8 +55,8 @@ namespace FolioWebApplication.ServicePoint2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"ServicePoint2s.txt\"");
             Response.BufferOutput = false;
-            Response.Write("Id\tName\tCode\tDiscoveryDisplayName\tDescription\tShelvingLagTime\tPickupLocation\tHoldShelfExpiryPeriodDuration\tHoldShelfExpiryPeriodInterval\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Code", "code" }, { "DiscoveryDisplayName", "discoveryDisplayName" }, { "Description", "description" }, { "ShelvingLagTime", "shelvingLagTime" }, { "PickupLocation", "pickupLocation" }, { "HoldShelfExpiryPeriodDuration", "holdShelfExpiryPeriod.duration" }, { "HoldShelfExpiryPeriodInterval", "holdShelfExpiryPeriod.intervalId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            Response.Write("Id\tName\tCode\tDiscoveryDisplayName\tDescription\tShelvingLagTime\tPickupLocation\tHoldShelfExpiryPeriodDuration\tHoldShelfExpiryPeriodInterval\tHoldShelfClosedLibraryDateManagement\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Code", "code" }, { "DiscoveryDisplayName", "discoveryDisplayName" }, { "Description", "description" }, { "ShelvingLagTime", "shelvingLagTime" }, { "PickupLocation", "pickupLocation" }, { "HoldShelfExpiryPeriodDuration", "holdShelfExpiryPeriod.duration" }, { "HoldShelfExpiryPeriodInterval", "holdShelfExpiryPeriod.intervalId" }, { "HoldShelfClosedLibraryDateManagement", "holdShelfClosedLibraryDateManagement" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 Global.GetCqlFilter(ServicePoint2sRadGrid, "Id", "id"),
@@ -67,13 +68,14 @@ namespace FolioWebApplication.ServicePoint2s
                 Global.GetCqlFilter(ServicePoint2sRadGrid, "PickupLocation", "pickupLocation"),
                 Global.GetCqlFilter(ServicePoint2sRadGrid, "HoldShelfExpiryPeriodDuration", "holdShelfExpiryPeriod.duration"),
                 Global.GetCqlFilter(ServicePoint2sRadGrid, "HoldShelfExpiryPeriodInterval", "holdShelfExpiryPeriod.intervalId"),
+                Global.GetCqlFilter(ServicePoint2sRadGrid, "HoldShelfClosedLibraryDateManagement", "holdShelfClosedLibraryDateManagement"),
                 Global.GetCqlFilter(ServicePoint2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(ServicePoint2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(ServicePoint2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(ServicePoint2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
             foreach (var sp2 in folioServiceContext.ServicePoint2s(where, ServicePoint2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ServicePoint2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ServicePoint2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
-                Response.Write($"{sp2.Id}\t{Global.TextEncode(sp2.Name)}\t{Global.TextEncode(sp2.Code)}\t{Global.TextEncode(sp2.DiscoveryDisplayName)}\t{Global.TextEncode(sp2.Description)}\t{sp2.ShelvingLagTime}\t{sp2.PickupLocation}\t{sp2.HoldShelfExpiryPeriodDuration}\t{Global.TextEncode(sp2.HoldShelfExpiryPeriodInterval)}\t{sp2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(sp2.CreationUser?.Username)}\t{sp2.CreationUserId}\t{sp2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(sp2.LastWriteUser?.Username)}\t{sp2.LastWriteUserId}\r\n");
+                Response.Write($"{sp2.Id}\t{Global.TextEncode(sp2.Name)}\t{Global.TextEncode(sp2.Code)}\t{Global.TextEncode(sp2.DiscoveryDisplayName)}\t{Global.TextEncode(sp2.Description)}\t{sp2.ShelvingLagTime}\t{sp2.PickupLocation}\t{sp2.HoldShelfExpiryPeriodDuration}\t{Global.TextEncode(sp2.HoldShelfExpiryPeriodInterval)}\t{Global.TextEncode(sp2.HoldShelfClosedLibraryDateManagement)}\t{sp2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(sp2.CreationUser?.Username)}\t{sp2.CreationUserId}\t{sp2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(sp2.LastWriteUser?.Username)}\t{sp2.LastWriteUserId}\r\n");
             Response.End();
         }
 

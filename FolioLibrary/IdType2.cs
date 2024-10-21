@@ -64,22 +64,25 @@ namespace FolioLibrary
         [Column("content"), CustomValidation(typeof(IdType), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 12), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Order = 13)]
+        [Display(Name = "Actual Cost Record Identifiers", Order = 13)]
+        public virtual ICollection<ActualCostRecordIdentifier> ActualCostRecordIdentifiers { get; set; }
+
+        [Display(Order = 14)]
         public virtual ICollection<Identifier> Identifiers { get; set; }
 
-        [Display(Name = "Invoice Items", Order = 14)]
+        [Display(Name = "Invoice Items", Order = 15)]
         public virtual ICollection<InvoiceItem2> InvoiceItem2s { get; set; }
 
-        [Display(Name = "Order Item Product Ids", Order = 15)]
+        [Display(Name = "Order Item Product Ids", Order = 16)]
         public virtual ICollection<OrderItemProductId> OrderItemProductIds { get; set; }
 
-        [Display(Name = "Preceding Succeeding Title Identifiers", Order = 16)]
+        [Display(Name = "Preceding Succeeding Title Identifiers", Order = 17)]
         public virtual ICollection<PrecedingSucceedingTitleIdentifier> PrecedingSucceedingTitleIdentifiers { get; set; }
 
-        [Display(Name = "Request Identifiers", Order = 17)]
+        [Display(Name = "Request Identifiers", Order = 18)]
         public virtual ICollection<RequestIdentifier> RequestIdentifiers { get; set; }
 
-        [Display(Name = "Title Product Ids", Order = 18)]
+        [Display(Name = "Title Product Ids", Order = 19)]
         public virtual ICollection<TitleProductId> TitleProductIds { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Source)} = {Source}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";

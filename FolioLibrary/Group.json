@@ -20,6 +20,10 @@
       "description": "The default period in days after which a newly created user that belongs to this group will expire",
       "type": "integer"
     },
+    "source": {
+      "description": "Origin of the group record, i.e. 'System' or 'User'",
+      "type": "string"
+    },
     "metadata": {
       "title": "Metadata Schema",
       "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",

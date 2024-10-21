@@ -76,46 +76,58 @@ namespace FolioLibrary
         [Column("subscription_interval"), Display(Name = "Subscription Interval", Order = 16), JsonProperty("subscriptionInterval")]
         public virtual int? SubscriptionInterval { get; set; }
 
-        [Column("is_acknowledged"), Display(Name = "Is Acknowledged", Order = 17), JsonProperty("isAcknowledged")]
+        [Column("claiming_active"), Display(Name = "Claiming Active", Order = 17), JsonProperty("claimingActive")]
+        public virtual bool? ClaimingActive { get; set; }
+
+        [Column("claiming_interval"), Display(Name = "Claiming Interval", Order = 18), JsonProperty("claimingInterval")]
+        public virtual int? ClaimingInterval { get; set; }
+
+        [Column("is_acknowledged"), Display(Name = "Is Acknowledged", Order = 19), JsonProperty("isAcknowledged")]
         public virtual bool? IsAcknowledged { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 18), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 20), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 19), InverseProperty("Title2s")]
+        [Display(Name = "Creation User", Order = 21), InverseProperty("Title2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 20), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 22), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 22), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 24), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 23), InverseProperty("Title2s1")]
+        [Display(Name = "Last Write User", Order = 25), InverseProperty("Title2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 24), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 26), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Title), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 26), Editable(false)]
+        [Column("content"), CustomValidation(typeof(Title), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 28), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Receivings", Order = 27)]
+        [Display(Name = "Receivings", Order = 29)]
         public virtual ICollection<Receiving2> Receiving2s { get; set; }
 
-        [Display(Name = "Title Contributors", Order = 28), JsonProperty("contributors")]
+        [Display(Name = "Title Acquisitions Units", Order = 30), JsonConverter(typeof(ArrayJsonConverter<List<TitleAcquisitionsUnit>, TitleAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
+        public virtual ICollection<TitleAcquisitionsUnit> TitleAcquisitionsUnits { get; set; }
+
+        [Display(Name = "Title Bind Item Ids", Order = 31), JsonConverter(typeof(ArrayJsonConverter<List<TitleBindItemId>, TitleBindItemId>), "Content"), JsonProperty("bindItemIds")]
+        public virtual ICollection<TitleBindItemId> TitleBindItemIds { get; set; }
+
+        [Display(Name = "Title Contributors", Order = 32), JsonProperty("contributors")]
         public virtual ICollection<TitleContributor> TitleContributors { get; set; }
 
-        [Display(Name = "Title Product Ids", Order = 29), JsonProperty("productIds")]
+        [Display(Name = "Title Product Ids", Order = 33), JsonProperty("productIds")]
         public virtual ICollection<TitleProductId> TitleProductIds { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(ExpectedReceiptDate)} = {ExpectedReceiptDate}, {nameof(Title)} = {Title}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(InstanceId)} = {InstanceId}, {nameof(Publisher)} = {Publisher}, {nameof(Edition)} = {Edition}, {nameof(PackageName)} = {PackageName}, {nameof(OrderItemNumber)} = {OrderItemNumber}, {nameof(PublishedDate)} = {PublishedDate}, {nameof(ReceivingNote)} = {ReceivingNote}, {nameof(SubscriptionFrom)} = {SubscriptionFrom}, {nameof(SubscriptionTo)} = {SubscriptionTo}, {nameof(SubscriptionInterval)} = {SubscriptionInterval}, {nameof(IsAcknowledged)} = {IsAcknowledged}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(TitleContributors)} = {(TitleContributors != null ? $"{{ {string.Join(", ", TitleContributors)} }}" : "")}, {nameof(TitleProductIds)} = {(TitleProductIds != null ? $"{{ {string.Join(", ", TitleProductIds)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(ExpectedReceiptDate)} = {ExpectedReceiptDate}, {nameof(Title)} = {Title}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(InstanceId)} = {InstanceId}, {nameof(Publisher)} = {Publisher}, {nameof(Edition)} = {Edition}, {nameof(PackageName)} = {PackageName}, {nameof(OrderItemNumber)} = {OrderItemNumber}, {nameof(PublishedDate)} = {PublishedDate}, {nameof(ReceivingNote)} = {ReceivingNote}, {nameof(SubscriptionFrom)} = {SubscriptionFrom}, {nameof(SubscriptionTo)} = {SubscriptionTo}, {nameof(SubscriptionInterval)} = {SubscriptionInterval}, {nameof(ClaimingActive)} = {ClaimingActive}, {nameof(ClaimingInterval)} = {ClaimingInterval}, {nameof(IsAcknowledged)} = {IsAcknowledged}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(TitleAcquisitionsUnits)} = {(TitleAcquisitionsUnits != null ? $"{{ {string.Join(", ", TitleAcquisitionsUnits)} }}" : "")}, {nameof(TitleBindItemIds)} = {(TitleBindItemIds != null ? $"{{ {string.Join(", ", TitleBindItemIds)} }}" : "")}, {nameof(TitleContributors)} = {(TitleContributors != null ? $"{{ {string.Join(", ", TitleContributors)} }}" : "")}, {nameof(TitleProductIds)} = {(TitleProductIds != null ? $"{{ {string.Join(", ", TitleProductIds)} }}" : "")} }}";
 
         public static Title2 FromJObject(JObject jObject) => jObject != null ? new Title2
         {
@@ -133,6 +145,8 @@ namespace FolioLibrary
             SubscriptionFrom = (DateTime?)jObject.SelectToken("subscriptionFrom"),
             SubscriptionTo = (DateTime?)jObject.SelectToken("subscriptionTo"),
             SubscriptionInterval = (int?)jObject.SelectToken("subscriptionInterval"),
+            ClaimingActive = (bool?)jObject.SelectToken("claimingActive"),
+            ClaimingInterval = (int?)jObject.SelectToken("claimingInterval"),
             IsAcknowledged = (bool?)jObject.SelectToken("isAcknowledged"),
             CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
@@ -141,6 +155,8 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
+            TitleAcquisitionsUnits = jObject.SelectToken("acqUnitIds")?.Select(jt => TitleAcquisitionsUnit.FromJObject((JValue)jt)).ToArray(),
+            TitleBindItemIds = jObject.SelectToken("bindItemIds")?.Select(jt => TitleBindItemId.FromJObject((JValue)jt)).ToArray(),
             TitleContributors = jObject.SelectToken("contributors")?.Where(jt => jt.HasValues).Select(jt => TitleContributor.FromJObject((JObject)jt)).ToArray(),
             TitleProductIds = jObject.SelectToken("productIds")?.Where(jt => jt.HasValues).Select(jt => TitleProductId.FromJObject((JObject)jt)).ToArray()
         } : null;
@@ -160,6 +176,8 @@ namespace FolioLibrary
             new JProperty("subscriptionFrom", SubscriptionFrom?.ToLocalTime()),
             new JProperty("subscriptionTo", SubscriptionTo?.ToLocalTime()),
             new JProperty("subscriptionInterval", SubscriptionInterval),
+            new JProperty("claimingActive", ClaimingActive),
+            new JProperty("claimingInterval", ClaimingInterval),
             new JProperty("isAcknowledged", IsAcknowledged),
             new JProperty("metadata", new JObject(
                 new JProperty("createdDate", CreationTime?.ToLocalTime()),
@@ -168,6 +186,8 @@ namespace FolioLibrary
                 new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
+            new JProperty("acqUnitIds", TitleAcquisitionsUnits?.Select(tau => tau.ToJObject())),
+            new JProperty("bindItemIds", TitleBindItemIds?.Select(tbii => tbii.ToJObject())),
             new JProperty("contributors", TitleContributors?.Select(tc => tc.ToJObject())),
             new JProperty("productIds", TitleProductIds?.Select(tpi => tpi.ToJObject()))).RemoveNullAndEmptyProperties();
     }

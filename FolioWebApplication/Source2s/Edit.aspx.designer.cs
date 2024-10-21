@@ -13,6 +13,10 @@ namespace FolioWebApplication.Source2s
 
         protected RadGrid Holding2sRadGrid;
 
+        protected Panel SubjectsPanel;
+
+        protected RadGrid SubjectsRadGrid;
+
         protected RadAjaxManager RadAjaxManager1;
     }
 }

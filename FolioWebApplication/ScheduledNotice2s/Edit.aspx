@@ -49,6 +49,14 @@
                                     <asp:HyperLink ID="RecipientUserHyperLink" runat="server" Text='<%#: Eval("RecipientUser.Username") %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("RecipientUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("SessionId") != null %>'>
+                                <td>
+                                    <asp:Label ID="SessionIdLabel" runat="server" Text="Session Id:" AssociatedControlID="SessionIdLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="SessionIdLiteral" runat="server" Text='<%#: Eval("SessionId") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("NextRunTime") != null %>'>
                                 <td>
                                     <asp:Label ID="NextRunTimeLabel" runat="server" Text="Next Run Time:" AssociatedControlID="NextRunTimeLiteral" />

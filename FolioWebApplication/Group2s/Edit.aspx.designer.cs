@@ -9,6 +9,10 @@ namespace FolioWebApplication.Group2s
 
         protected FormView Group2FormView;
 
+        protected Panel ActualCostRecord2sPanel;
+
+        protected RadGrid ActualCostRecord2sRadGrid;
+
         protected Panel BlockLimit2sPanel;
 
         protected RadGrid BlockLimit2sRadGrid;

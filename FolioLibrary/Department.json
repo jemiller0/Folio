@@ -26,6 +26,10 @@
       "readonly": true,
       "type": "integer"
     },
+    "source": {
+      "description": "Origin of the department record, i.e. 'System' or 'User'",
+      "type": "string"
+    },
     "metadata": {
       "title": "Metadata Schema",
       "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",

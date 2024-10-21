@@ -42,16 +42,21 @@ namespace FolioLibrary
         [Column("alternative_title"), Display(Order = 6), JsonProperty("alternativeTitle"), StringLength(1024)]
         public virtual string Content { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(InstanceId)} = {InstanceId}, {nameof(AlternativeTitleTypeId)} = {AlternativeTitleTypeId}, {nameof(Content)} = {Content} }}";
+        [Column("authority_id"), Display(Name = "Authority Id", Order = 7), JsonProperty("authorityId")]
+        public virtual Guid? AuthorityId { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(InstanceId)} = {InstanceId}, {nameof(AlternativeTitleTypeId)} = {AlternativeTitleTypeId}, {nameof(Content)} = {Content}, {nameof(AuthorityId)} = {AuthorityId} }}";
 
         public static AlternativeTitle FromJObject(JObject jObject) => jObject != null ? new AlternativeTitle
         {
             AlternativeTitleTypeId = (Guid?)jObject.SelectToken("alternativeTitleTypeId"),
-            Content = (string)jObject.SelectToken("alternativeTitle")
+            Content = (string)jObject.SelectToken("alternativeTitle"),
+            AuthorityId = (Guid?)jObject.SelectToken("authorityId")
         } : null;
 
         public JObject ToJObject() => new JObject(
             new JProperty("alternativeTitleTypeId", AlternativeTitleTypeId),
-            new JProperty("alternativeTitle", Content)).RemoveNullAndEmptyProperties();
+            new JProperty("alternativeTitle", Content),
+            new JProperty("authorityId", AuthorityId)).RemoveNullAndEmptyProperties();
     }
 }

@@ -34,87 +34,100 @@ namespace FolioLibrary
         [Column("name"), Display(Order = 2), JsonProperty("name"), Required, StringLength(1024)]
         public virtual string Name { get; set; }
 
-        [Column("is_deleted"), Display(Name = "Is Deleted", Order = 3), JsonProperty("isDeleted")]
+        [Column("description"), Display(Order = 3), JsonProperty("description"), StringLength(1024)]
+        public virtual string Description { get; set; }
+
+        [Column("is_deleted"), Display(Name = "Is Deleted", Order = 4), JsonProperty("isDeleted")]
         public virtual bool? IsDeleted { get; set; }
 
-        [Column("protect_create"), Display(Name = "Protect Create", Order = 4), JsonProperty("protectCreate")]
+        [Column("protect_create"), Display(Name = "Protect Create", Order = 5), JsonProperty("protectCreate")]
         public virtual bool? ProtectCreate { get; set; }
 
-        [Column("protect_read"), Display(Name = "Protect Read", Order = 5), JsonProperty("protectRead")]
+        [Column("protect_read"), Display(Name = "Protect Read", Order = 6), JsonProperty("protectRead")]
         public virtual bool? ProtectRead { get; set; }
 
-        [Column("protect_update"), Display(Name = "Protect Update", Order = 6), JsonProperty("protectUpdate")]
+        [Column("protect_update"), Display(Name = "Protect Update", Order = 7), JsonProperty("protectUpdate")]
         public virtual bool? ProtectUpdate { get; set; }
 
-        [Column("protect_delete"), Display(Name = "Protect Delete", Order = 7), JsonProperty("protectDelete")]
+        [Column("protect_delete"), Display(Name = "Protect Delete", Order = 8), JsonProperty("protectDelete")]
         public virtual bool? ProtectDelete { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 8), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 9), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 9), InverseProperty("AcquisitionsUnit2s")]
+        [Display(Name = "Creation User", Order = 10), InverseProperty("AcquisitionsUnit2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 10), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 11), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 12), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 13), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 13), InverseProperty("AcquisitionsUnit2s1")]
+        [Display(Name = "Last Write User", Order = 14), InverseProperty("AcquisitionsUnit2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 14), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 15), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(AcquisitionsUnit), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 16), Editable(false)]
+        [Column("content"), CustomValidation(typeof(AcquisitionsUnit), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 17), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Budget Acquisitions Units", Order = 17)]
+        [Display(Name = "Budget Acquisitions Units", Order = 18)]
         public virtual ICollection<BudgetAcquisitionsUnit> BudgetAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Finance Group Acquisitions Units", Order = 18)]
+        [Display(Name = "Finance Group Acquisitions Units", Order = 19)]
         public virtual ICollection<FinanceGroupAcquisitionsUnit> FinanceGroupAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Fiscal Year Acquisitions Units", Order = 19)]
+        [Display(Name = "Fiscal Year Acquisitions Units", Order = 20)]
         public virtual ICollection<FiscalYearAcquisitionsUnit> FiscalYearAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Fund Acquisitions Units", Order = 20)]
+        [Display(Name = "Fund Acquisitions Units", Order = 21)]
         public virtual ICollection<FundAcquisitionsUnit> FundAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Invoice Acquisitions Units", Order = 21)]
+        [Display(Name = "Invoice Acquisitions Units", Order = 22)]
         public virtual ICollection<InvoiceAcquisitionsUnit> InvoiceAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Ledger Acquisitions Units", Order = 22)]
+        [Display(Name = "Ledger Acquisitions Units", Order = 23)]
         public virtual ICollection<LedgerAcquisitionsUnit> LedgerAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Order Acquisitions Units", Order = 23)]
+        [Display(Name = "Order Acquisitions Units", Order = 24)]
         public virtual ICollection<OrderAcquisitionsUnit> OrderAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Organization Account Acquisitions Units", Order = 24)]
+        [Display(Name = "Organization Account Acquisitions Units", Order = 25)]
         public virtual ICollection<OrganizationAccountAcquisitionsUnit> OrganizationAccountAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Organization Acquisitions Units", Order = 25)]
+        [Display(Name = "Organization Acquisitions Units", Order = 26)]
         public virtual ICollection<OrganizationAcquisitionsUnit> OrganizationAcquisitionsUnits { get; set; }
 
-        [Display(Name = "User Acquisitions Units", Order = 26)]
+        [Display(Name = "Rollover Budget Acquisitions Units", Order = 27)]
+        public virtual ICollection<RolloverBudgetAcquisitionsUnit2> RolloverBudgetAcquisitionsUnit2s { get; set; }
+
+        [Display(Name = "Rollover Budget Acquisitions Units", Order = 28)]
+        public virtual ICollection<RolloverBudgetAcquisitionsUnit> RolloverBudgetAcquisitionsUnits { get; set; }
+
+        [Display(Name = "Title Acquisitions Units", Order = 29)]
+        public virtual ICollection<TitleAcquisitionsUnit> TitleAcquisitionsUnits { get; set; }
+
+        [Display(Name = "User Acquisitions Units", Order = 30)]
         public virtual ICollection<UserAcquisitionsUnit2> UserAcquisitionsUnit2s { get; set; }
 
-        [Display(Name = "Voucher Acquisitions Units", Order = 27)]
+        [Display(Name = "Voucher Acquisitions Units", Order = 31)]
         public virtual ICollection<VoucherAcquisitionsUnit> VoucherAcquisitionsUnits { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(IsDeleted)} = {IsDeleted}, {nameof(ProtectCreate)} = {ProtectCreate}, {nameof(ProtectRead)} = {ProtectRead}, {nameof(ProtectUpdate)} = {ProtectUpdate}, {nameof(ProtectDelete)} = {ProtectDelete}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Description)} = {Description}, {nameof(IsDeleted)} = {IsDeleted}, {nameof(ProtectCreate)} = {ProtectCreate}, {nameof(ProtectRead)} = {ProtectRead}, {nameof(ProtectUpdate)} = {ProtectUpdate}, {nameof(ProtectDelete)} = {ProtectDelete}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
 
         public static AcquisitionsUnit2 FromJObject(JObject jObject) => jObject != null ? new AcquisitionsUnit2
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Name = (string)jObject.SelectToken("name"),
+            Description = (string)jObject.SelectToken("description"),
             IsDeleted = (bool?)jObject.SelectToken("isDeleted"),
             ProtectCreate = (bool?)jObject.SelectToken("protectCreate"),
             ProtectRead = (bool?)jObject.SelectToken("protectRead"),
@@ -132,6 +145,7 @@ namespace FolioLibrary
         public JObject ToJObject() => new JObject(
             new JProperty("id", Id),
             new JProperty("name", Name),
+            new JProperty("description", Description),
             new JProperty("isDeleted", IsDeleted),
             new JProperty("protectCreate", ProtectCreate),
             new JProperty("protectRead", ProtectRead),

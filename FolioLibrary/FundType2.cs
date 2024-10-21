@@ -43,8 +43,11 @@ namespace FolioLibrary
         [Display(Name = "Funds", Order = 5)]
         public virtual ICollection<Fund2> Fund2s { get; set; }
 
-        [Display(Name = "Ledger Rollover Budgets Rollovers", Order = 6)]
-        public virtual ICollection<LedgerRolloverBudgetsRollover> LedgerRolloverBudgetsRollovers { get; set; }
+        [Display(Name = "Rollover Budgets", Order = 6)]
+        public virtual ICollection<RolloverBudget2> RolloverBudget2s { get; set; }
+
+        [Display(Name = "Rollover Budgets Rollovers", Order = 7)]
+        public virtual ICollection<RolloverBudgetsRollover> RolloverBudgetsRollovers { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(Name)} = {Name}, {nameof(Content)} = {Content} }}";
 

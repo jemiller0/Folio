@@ -17,6 +17,14 @@
                                     <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("SessionId") != null %>'>
+                                <td>
+                                    <asp:Label ID="SessionIdLabel" runat="server" Text="Session Id:" AssociatedControlID="SessionIdLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="SessionIdLiteral" runat="server" Text='<%#: Eval("SessionId") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("Patron") != null %>'>
                                 <td>
                                     <asp:Label ID="PatronLabel" runat="server" Text="Patron:" AssociatedControlID="PatronHyperLink" />

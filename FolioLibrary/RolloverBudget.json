@@ -1,0 +1,360 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A budget",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "_version": {
+      "description": "Record version for optimistic locking",
+      "type": "integer"
+    },
+    "budgetId": {
+      "$ref": "#/properties/id"
+    },
+    "ledgerRolloverId": {
+      "$ref": "#/properties/id"
+    },
+    "name": {
+      "description": "The name of the budget",
+      "type": "string"
+    },
+    "fundDetails": {
+      "description": "Fund details dto",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "The UUID format string",
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        },
+        "name": {
+          "description": "The name of the fund",
+          "type": "string"
+        },
+        "code": {
+          "description": "The code of the fund",
+          "type": "string"
+        },
+        "fundStatus": {
+          "description": "The current status of this fund",
+          "type": "string",
+          "enum": [
+            "Active",
+            "Frozen",
+            "Inactive"
+          ]
+        },
+        "fundTypeId": {
+          "$ref": "#/properties/fundDetails/properties/id"
+        },
+        "fundTypeName": {
+          "description": "Name of the fund type associated with this fund",
+          "type": "string"
+        },
+        "externalAccountNo": {
+          "description": "Corresponding account in the financial system. Will be recorded in payment generated as well.",
+          "type": "string"
+        },
+        "description": {
+          "description": "The description of this fund",
+          "type": "string"
+        },
+        "acqUnitIds": {
+          "description": "acquisition unit ids associated with this fund",
+          "type": "array",
+          "items": {
+            "$ref": "#/properties/fundDetails/properties/id"
+          }
+        },
+        "donorOrganizationIds": {
+          "description": "donor organization ids associated with this fund",
+          "type": "array",
+          "items": {
+            "$ref": "#/properties/fundDetails/properties/id"
+          }
+        },
+        "restrictByLocations": {
+          "description": "restrict usage of this fund by locations",
+          "type": "boolean",
+          "default": false
+        },
+        "locations": {
+          "description": "Locations associated with this fund",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "locationId": {
+                "$ref": "#/properties/fundDetails/properties/id"
+              },
+              "tenantId": {
+                "description": "Tenant id of the associated location",
+                "type": "string"
+              }
+            },
+            "required": [
+              "locationId"
+            ]
+          }
+        },
+        "allocatedFromIds": {
+          "description": "All the funds ids that this fund is allowed to receive money from. This would be 1 fund or none. If this field is blank their is no restriction on allocating to this fund",
+          "type": "array",
+          "items": {
+            "$ref": "#/properties/fundDetails/properties/id"
+          }
+        },
+        "allocatedFromNames": {
+          "description": "All the funds names that this fund is allowed to receive money from. This would be 1 fund or none. If this field is blank their is no restriction on allocating to this fund",
+          "type": "array",
+          "items": {
+            "description": "UUID of the fund this fund is allowed to receive money from",
+            "type": "string"
+          }
+        },
+        "allocatedToIds": {
+          "description": "All the fund ids that this fund is allowed to send money to. This could be one or many.",
+          "type": "array",
+          "items": {
+            "$ref": "#/properties/fundDetails/properties/id"
+          }
+        },
+        "allocatedToNames": {
+          "description": "All the fund names that this fund is allowed to send money to. This could be one or many.",
+          "type": "array",
+          "items": {
+            "description": "UUID of the fund this fund is allowed to send money to",
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "code",
+        "fundStatus",
+        "name"
+      ]
+    },
+    "expenseClassDetails": {
+      "description": "Expense class details for a budget",
+      "type": "array",
+      "items": {
+        "description": "Budget expense class totals schema",
+        "javaType": "org.folio.rest.jaxrs.model.BudgetExpenseClassTotal",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/properties/fundDetails/properties/id"
+          },
+          "expenseClassName": {
+            "description": "The name of the expense class",
+            "type": "string"
+          },
+          "expenseClassCode": {
+            "description": "The name of the expense class",
+            "type": "string"
+          },
+          "expenseClassStatus": {
+            "description": "Status for expense class within the budget ",
+            "type": "string",
+            "enum": [
+              "Active",
+              "Inactive"
+            ]
+          },
+          "encumbered": {
+            "description": "Total encumbered for expense class within a given budget",
+            "type": "number"
+          },
+          "awaitingPayment": {
+            "description": "Total awaitingPayment for expense class within a given budget",
+            "type": "number"
+          },
+          "credited": {
+            "description": "Total credited for expense class within a given budget",
+            "type": "number"
+          },
+          "percentageCredited": {
+            "description": "The percentage credited for the class on the total credited on a given budget",
+            "type": "number"
+          },
+          "expended": {
+            "description": "Total expended for expense class within a given budget",
+            "type": "number"
+          },
+          "percentageExpended": {
+            "description": "The percentage expended for the class on the total spent on a given budget",
+            "type": "number"
+          }
+        }
+      }
+    },
+    "budgetStatus": {
+      "description": "The status of the budget",
+      "type": "string",
+      "enum": [
+        "Active",
+        "Frozen",
+        "Inactive",
+        "Planned",
+        "Closed"
+      ]
+    },
+    "allowableEncumbrance": {
+      "description": "The encumbrance percentage limit for this budget",
+      "type": "number"
+    },
+    "allowableExpenditure": {
+      "description": "The expenditure percentage limit for this budget",
+      "type": "number"
+    },
+    "allocated": {
+      "description": "The amount currently allocated to this budget",
+      "type": "number"
+    },
+    "awaitingPayment": {
+      "description": "The amount currently awaiting payment for this budget",
+      "type": "number",
+      "default": 0
+    },
+    "available": {
+      "description": "The amount currently available for this budge",
+      "type": "number"
+    },
+    "credits": {
+      "description": "The amount currently credited to this budget",
+      "type": "number",
+      "default": 0
+    },
+    "encumbered": {
+      "description": "The amount currently encumbered for this budget",
+      "type": "number",
+      "default": 0
+    },
+    "expenditures": {
+      "description": "The amount currently expended for this budget",
+      "type": "number",
+      "default": 0
+    },
+    "netTransfers": {
+      "description": "Summing all the transfers on this budget",
+      "type": "number",
+      "default": 0
+    },
+    "unavailable": {
+      "description": "Unavailable amount for this budget",
+      "type": "number"
+    },
+    "overEncumbrance": {
+      "description": "The amount currently over-encumbered for this budget",
+      "type": "number"
+    },
+    "overExpended": {
+      "description": "Amount the budget is over expended.",
+      "type": "number"
+    },
+    "fundId": {
+      "$ref": "#/properties/id"
+    },
+    "fiscalYearId": {
+      "$ref": "#/properties/id"
+    },
+    "acqUnitIds": {
+      "description": "acquisition unit ids associated with this budget",
+      "type": "array",
+      "items": {
+        "$ref": "#/properties/id"
+      }
+    },
+    "tags": {
+      "title": "tags",
+      "description": "List of simple tags that can be added to an object",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tagList": {
+          "description": "List of tags",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate"
+      ]
+    },
+    "initialAllocation": {
+      "description": "The amount of the first allocation made to this budget",
+      "type": "number",
+      "default": 0
+    },
+    "allocationTo": {
+      "description": "The sum of all allocation transaction amounts made TO this budget not including the Initial allocation",
+      "type": "number",
+      "default": 0
+    },
+    "allocationFrom": {
+      "description": "The sum of all allocation transaction amounts made FROM this budget not including the Initial allocation",
+      "type": "number",
+      "default": 0
+    },
+    "totalFunding": {
+      "description": "budget.allocated + budget.netTransfers",
+      "type": "number"
+    },
+    "cashBalance": {
+      "description": "Total Funding minus Expended",
+      "type": "number"
+    }
+  },
+  "required": [
+    "budgetStatus",
+    "name",
+    "fundId",
+    "fiscalYearId"
+  ]
+}

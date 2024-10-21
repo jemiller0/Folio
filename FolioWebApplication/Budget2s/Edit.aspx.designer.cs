@@ -25,6 +25,10 @@ namespace FolioWebApplication.Budget2s
 
         protected RadGrid BudgetTagsRadGrid;
 
+        protected Panel RolloverBudget2sPanel;
+
+        protected RadGrid RolloverBudget2sRadGrid;
+
         protected RadAjaxManager RadAjaxManager1;
     }
 }

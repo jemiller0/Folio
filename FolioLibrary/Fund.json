@@ -66,6 +66,38 @@
         "$ref": "#/properties/id"
       }
     },
+    "donorOrganizationIds": {
+      "description": "donor organization ids associated with this fund",
+      "type": "array",
+      "items": {
+        "$ref": "#/properties/id"
+      }
+    },
+    "restrictByLocations": {
+      "description": "restrict usage of this fund by locations",
+      "type": "boolean",
+      "default": false
+    },
+    "locations": {
+      "description": "Locations associated with this fund",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "locationId": {
+            "$ref": "#/properties/id"
+          },
+          "tenantId": {
+            "description": "Tenant id of the associated location",
+            "type": "string"
+          }
+        },
+        "required": [
+          "locationId"
+        ]
+      }
+    },
     "tags": {
       "title": "tags",
       "description": "List of simple tags that can be added to an object",

@@ -39,6 +39,20 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void Circulation_DeserializeActualCostRecord2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var acr2 = folioServiceContext.ActualCostRecord2s(take: 1).SingleOrDefault();
+            if (acr2 == null) Assert.Inconclusive();
+            acr2.ActualCostRecordContributors = null;
+            acr2.ActualCostRecordIdentifiers = null;
+            var acr3 = folioDapperContext.ActualCostRecord2s(take: 1).SingleOrDefault();
+            acr3.Content = null;
+            Assert.AreEqual(acr2.ToString(), acr3.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Circulation_DeserializeActualCostRecord2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void Users_DeserializeAddressType2Test()
         {
             var s = Stopwatch.StartNew();
@@ -489,6 +503,8 @@ namespace FolioLibraryTest
             f2.AllocatedFromFunds = null;
             f2.AllocatedToFunds = null;
             f2.FundAcquisitionsUnits = null;
+            f2.FundLocation2s = null;
+            f2.FundOrganization2s = null;
             f2.FundTags = null;
             var f3 = folioDapperContext.Fund2s(take: 1).SingleOrDefault();
             f3.Content = null;
@@ -772,44 +788,6 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
-        public void Finance_DeserializeLedgerRollover2Test()
-        {
-            var s = Stopwatch.StartNew();
-            var lr2 = folioServiceContext.LedgerRollover2s(take: 1).SingleOrDefault();
-            if (lr2 == null) Assert.Inconclusive();
-            lr2.LedgerRolloverBudgetsRollovers = null;
-            lr2.LedgerRolloverEncumbrancesRollovers = null;
-            var lr3 = folioDapperContext.LedgerRollover2s(take: 1).SingleOrDefault();
-            lr3.Content = null;
-            Assert.AreEqual(lr2.ToString(), lr3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeLedgerRollover2Test()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void Finance_DeserializeLedgerRolloverError2Test()
-        {
-            var s = Stopwatch.StartNew();
-            var lre2 = folioServiceContext.LedgerRolloverError2s(take: 1).SingleOrDefault();
-            if (lre2 == null) Assert.Inconclusive();
-            var lre3 = folioDapperContext.LedgerRolloverError2s(take: 1).SingleOrDefault();
-            lre3.Content = null;
-            Assert.AreEqual(lre2.ToString(), lre3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeLedgerRolloverError2Test()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void Finance_DeserializeLedgerRolloverProgress2Test()
-        {
-            var s = Stopwatch.StartNew();
-            var lrp2 = folioServiceContext.LedgerRolloverProgress2s(take: 1).SingleOrDefault();
-            if (lrp2 == null) Assert.Inconclusive();
-            var lrp3 = folioDapperContext.LedgerRolloverProgress2s(take: 1).SingleOrDefault();
-            lrp3.Content = null;
-            Assert.AreEqual(lrp2.ToString(), lrp3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeLedgerRolloverProgress2Test()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
         public void Inventory_DeserializeLibrary2Test()
         {
             var s = Stopwatch.StartNew();
@@ -989,9 +967,11 @@ namespace FolioLibraryTest
             oi2.OrderItemContributors = null;
             oi2.OrderItemFunds = null;
             oi2.OrderItemLocation2s = null;
+            oi2.OrderItemOrganizations = null;
             oi2.OrderItemProductIds = null;
             oi2.OrderItemReferenceNumbers = null;
             oi2.OrderItemReportingCodes = null;
+            oi2.OrderItemSearchLocations = null;
             oi2.OrderItemTags = null;
             oi2.OrderItemVolumes = null;
             var oi3 = folioDapperContext.OrderItem2s(take: 1).SingleOrDefault();
@@ -1029,6 +1009,7 @@ namespace FolioLibraryTest
             o2.OrganizationEmails = null;
             o2.OrganizationInterfaces = null;
             o2.OrganizationPhoneNumbers = null;
+            o2.OrganizationPrivilegedContacts = null;
             o2.OrganizationTags = null;
             o2.OrganizationTypes = null;
             o2.OrganizationUrls = null;
@@ -1302,6 +1283,66 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void Finance_DeserializeRollover2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var r2 = folioServiceContext.Rollover2s(take: 1).SingleOrDefault();
+            if (r2 == null) Assert.Inconclusive();
+            r2.RolloverBudgetsRollovers = null;
+            r2.RolloverEncumbrancesRollovers = null;
+            var r3 = folioDapperContext.Rollover2s(take: 1).SingleOrDefault();
+            r3.Content = null;
+            Assert.AreEqual(r2.ToString(), r3.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeRollover2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Finance_DeserializeRolloverBudget2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var rb2 = folioServiceContext.RolloverBudget2s(take: 1).SingleOrDefault();
+            if (rb2 == null) Assert.Inconclusive();
+            rb2.RolloverBudgetAcquisitionsUnit2s = null;
+            rb2.RolloverBudgetAcquisitionsUnits = null;
+            rb2.RolloverBudgetAllocatedFromNames = null;
+            rb2.RolloverBudgetAllocatedToNames = null;
+            rb2.RolloverBudgetExpenseClassDetails = null;
+            rb2.RolloverBudgetFromFunds = null;
+            rb2.RolloverBudgetLocations = null;
+            rb2.RolloverBudgetOrganizations = null;
+            rb2.RolloverBudgetTags = null;
+            rb2.RolloverBudgetToFunds = null;
+            var rb3 = folioDapperContext.RolloverBudget2s(take: 1).SingleOrDefault();
+            rb3.Content = null;
+            Assert.AreEqual(rb2.ToString(), rb3.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeRolloverBudget2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Finance_DeserializeRolloverError2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var re2 = folioServiceContext.RolloverError2s(take: 1).SingleOrDefault();
+            if (re2 == null) Assert.Inconclusive();
+            var re3 = folioDapperContext.RolloverError2s(take: 1).SingleOrDefault();
+            re3.Content = null;
+            Assert.AreEqual(re2.ToString(), re3.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeRolloverError2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Finance_DeserializeRolloverProgress2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var rp2 = folioServiceContext.RolloverProgress2s(take: 1).SingleOrDefault();
+            if (rp2 == null) Assert.Inconclusive();
+            var rp3 = folioDapperContext.RolloverProgress2s(take: 1).SingleOrDefault();
+            rp3.Content = null;
+            Assert.AreEqual(rp2.ToString(), rp3.ToString());
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeRolloverProgress2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void Circulation_DeserializeScheduledNotice2Test()
         {
             var s = Stopwatch.StartNew();
@@ -1463,6 +1504,8 @@ namespace FolioLibraryTest
             var s = Stopwatch.StartNew();
             var t2 = folioServiceContext.Title2s(take: 1).SingleOrDefault();
             if (t2 == null) Assert.Inconclusive();
+            t2.TitleAcquisitionsUnits = null;
+            t2.TitleBindItemIds = null;
             t2.TitleContributors = null;
             t2.TitleProductIds = null;
             var t3 = folioDapperContext.Title2s(take: 1).SingleOrDefault();
@@ -1514,6 +1557,7 @@ namespace FolioLibraryTest
             var s = Stopwatch.StartNew();
             var u2 = folioServiceContext.User2s(take: 1).SingleOrDefault();
             if (u2 == null) Assert.Inconclusive();
+            u2.PreferredEmailCommunications = null;
             u2.UserAddresses = null;
             u2.UserDepartments = null;
             u2.UserTags = null;

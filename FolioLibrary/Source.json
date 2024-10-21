@@ -17,7 +17,8 @@
       "type": "string",
       "enum": [
         "folio",
-        "local"
+        "local",
+        "consortium"
       ]
     },
     "metadata": {

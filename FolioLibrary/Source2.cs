@@ -34,7 +34,7 @@ namespace FolioLibrary
         [Column("name"), Display(Order = 2), JsonProperty("name"), StringLength(1024)]
         public virtual string Name { get; set; }
 
-        [Column("source"), Display(Order = 3), JsonProperty("source"), RegularExpression(@"^(folio|local)$"), StringLength(1024)]
+        [Column("source"), Display(Order = 3), JsonProperty("source"), RegularExpression(@"^(folio|local|consortium)$"), StringLength(1024)]
         public virtual string Source { get; set; }
 
         [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 4), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
@@ -66,6 +66,9 @@ namespace FolioLibrary
 
         [Display(Name = "Holdings", Order = 13)]
         public virtual ICollection<Holding2> Holding2s { get; set; }
+
+        [Display(Order = 14)]
+        public virtual ICollection<Subject> Subjects { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Source)} = {Source}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
 

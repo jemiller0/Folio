@@ -109,76 +109,85 @@ namespace FolioLibrary
         [Column("due_date_changed_by_recall"), Display(Name = "Due Date Changed By Recall", Order = 27), JsonProperty("dueDateChangedByRecall")]
         public virtual bool? DueDateChangedByRecall { get; set; }
 
-        [Column("declared_lost_date"), DataType(DataType.Date), Display(Name = "Declared Lost Date", Order = 28), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("declaredLostDate")]
+        [Column("is_dcb"), Display(Name = "Is Dcb", Order = 28), JsonProperty("isDcb")]
+        public virtual bool? IsDcb { get; set; }
+
+        [Column("declared_lost_date"), DataType(DataType.Date), Display(Name = "Declared Lost Date", Order = 29), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("declaredLostDate")]
         public virtual DateTime? DeclaredLostDate { get; set; }
 
-        [Column("claimed_returned_date"), DataType(DataType.Date), Display(Name = "Claimed Returned Date", Order = 29), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("claimedReturnedDate")]
+        [Column("claimed_returned_date"), DataType(DataType.Date), Display(Name = "Claimed Returned Date", Order = 30), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("claimedReturnedDate")]
         public virtual DateTime? ClaimedReturnedDate { get; set; }
 
-        [Display(Name = "Overdue Fine Policy", Order = 30)]
+        [Display(Name = "Overdue Fine Policy", Order = 31)]
         public virtual OverdueFinePolicy2 OverdueFinePolicy { get; set; }
 
-        [Column("overdue_fine_policy_id"), Display(Name = "Overdue Fine Policy", Order = 31), JsonProperty("overdueFinePolicyId")]
+        [Column("overdue_fine_policy_id"), Display(Name = "Overdue Fine Policy", Order = 32), JsonProperty("overdueFinePolicyId")]
         public virtual Guid? OverdueFinePolicyId { get; set; }
 
-        [Display(Name = "Lost Item Policy", Order = 32)]
+        [Display(Name = "Lost Item Policy", Order = 33)]
         public virtual LostItemFeePolicy2 LostItemPolicy { get; set; }
 
-        [Column("lost_item_policy_id"), Display(Name = "Lost Item Policy", Order = 33), JsonProperty("lostItemPolicyId")]
+        [Column("lost_item_policy_id"), Display(Name = "Lost Item Policy", Order = 34), JsonProperty("lostItemPolicyId")]
         public virtual Guid? LostItemPolicyId { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 34), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 35), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 35), InverseProperty("Loan2s")]
+        [Display(Name = "Creation User", Order = 36), InverseProperty("Loan2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 36), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 37), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 38), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 39), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 39), InverseProperty("Loan2s2")]
+        [Display(Name = "Last Write User", Order = 40), InverseProperty("Loan2s2")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 40), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 41), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("aged_to_lost_delayed_billing_lost_item_has_been_billed"), Display(Name = "Aged To Lost Delayed Billing Lost Item Has Been Billed", Order = 42), JsonProperty("agedToLostDelayedBilling.lostItemHasBeenBilled")]
+        [Column("aged_to_lost_delayed_billing_lost_item_has_been_billed"), Display(Name = "Aged To Lost Delayed Billing Lost Item Has Been Billed", Order = 43), JsonProperty("agedToLostDelayedBilling.lostItemHasBeenBilled")]
         public virtual bool? AgedToLostDelayedBillingLostItemHasBeenBilled { get; set; }
 
-        [Column("aged_to_lost_delayed_billing_date_lost_item_should_be_billed"), Display(Name = "Aged To Lost Delayed Billing Date Lost Item Should Be Billed", Order = 43), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("agedToLostDelayedBilling.dateLostItemShouldBeBilled")]
+        [Column("aged_to_lost_delayed_billing_date_lost_item_should_be_billed"), Display(Name = "Aged To Lost Delayed Billing Date Lost Item Should Be Billed", Order = 44), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("agedToLostDelayedBilling.dateLostItemShouldBeBilled")]
         public virtual DateTime? AgedToLostDelayedBillingDateLostItemShouldBeBilled { get; set; }
 
-        [Column("aged_to_lost_delayed_billing_aged_to_lost_date"), DataType(DataType.Date), Display(Name = "Aged To Lost Delayed Billing Aged To Lost Date", Order = 44), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("agedToLostDelayedBilling.agedToLostDate")]
+        [Column("aged_to_lost_delayed_billing_aged_to_lost_date"), DataType(DataType.Date), Display(Name = "Aged To Lost Delayed Billing Aged To Lost Date", Order = 45), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("agedToLostDelayedBilling.agedToLostDate")]
         public virtual DateTime? AgedToLostDelayedBillingAgedToLostDate { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Loan), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 45), Editable(false)]
+        [Column("reminders_last_fee_billed_number"), Display(Name = "Reminders Last Fee Billed Number", Order = 46), JsonProperty("reminders.lastFeeBilled.number")]
+        public virtual int? RemindersLastFeeBilledNumber { get; set; }
+
+        [Column("reminders_last_fee_billed_date"), DataType(DataType.Date), Display(Name = "Reminders Last Fee Billed Date", Order = 47), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("reminders.lastFeeBilled.date")]
+        public virtual DateTime? RemindersLastFeeBilledDate { get; set; }
+
+        [Column("content"), CustomValidation(typeof(Loan), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 48), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Fees", Order = 46)]
+        [Display(Name = "Fees", Order = 49)]
         public virtual ICollection<Fee2> Fee2s { get; set; }
 
-        [Display(Name = "Patron Action Sessions", Order = 47)]
+        [Display(Name = "Patron Action Sessions", Order = 50)]
         public virtual ICollection<PatronActionSession2> PatronActionSession2s { get; set; }
 
-        [Display(Name = "Scheduled Notices", Order = 48)]
+        [Display(Name = "Scheduled Notices", Order = 51)]
         public virtual ICollection<ScheduledNotice2> ScheduledNotice2s { get; set; }
 
-        [Display(Name = "User Summary Open Fees Fines", Order = 49)]
+        [Display(Name = "User Summary Open Fees Fines", Order = 52)]
         public virtual ICollection<UserSummaryOpenFeesFine> UserSummaryOpenFeesFines { get; set; }
 
-        [Display(Name = "User Summary Open Loans", Order = 50)]
+        [Display(Name = "User Summary Open Loans", Order = 53)]
         public virtual ICollection<UserSummaryOpenLoan> UserSummaryOpenLoans { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(UserId)} = {UserId}, {nameof(ProxyUserId)} = {ProxyUserId}, {nameof(ItemId)} = {ItemId}, {nameof(ItemEffectiveLocationAtCheckOutId)} = {ItemEffectiveLocationAtCheckOutId}, {nameof(StatusName)} = {StatusName}, {nameof(LoanTime)} = {LoanTime}, {nameof(DueTime)} = {DueTime}, {nameof(ReturnTime)} = {ReturnTime}, {nameof(SystemReturnTime)} = {SystemReturnTime}, {nameof(Action)} = {Action}, {nameof(ActionComment)} = {ActionComment}, {nameof(ItemStatus)} = {ItemStatus}, {nameof(RenewalCount)} = {RenewalCount}, {nameof(LoanPolicyId)} = {LoanPolicyId}, {nameof(CheckoutServicePointId)} = {CheckoutServicePointId}, {nameof(CheckinServicePointId)} = {CheckinServicePointId}, {nameof(GroupId)} = {GroupId}, {nameof(DueDateChangedByRecall)} = {DueDateChangedByRecall}, {nameof(DeclaredLostDate)} = {DeclaredLostDate}, {nameof(ClaimedReturnedDate)} = {ClaimedReturnedDate}, {nameof(OverdueFinePolicyId)} = {OverdueFinePolicyId}, {nameof(LostItemPolicyId)} = {LostItemPolicyId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(AgedToLostDelayedBillingLostItemHasBeenBilled)} = {AgedToLostDelayedBillingLostItemHasBeenBilled}, {nameof(AgedToLostDelayedBillingDateLostItemShouldBeBilled)} = {AgedToLostDelayedBillingDateLostItemShouldBeBilled}, {nameof(AgedToLostDelayedBillingAgedToLostDate)} = {AgedToLostDelayedBillingAgedToLostDate}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(UserId)} = {UserId}, {nameof(ProxyUserId)} = {ProxyUserId}, {nameof(ItemId)} = {ItemId}, {nameof(ItemEffectiveLocationAtCheckOutId)} = {ItemEffectiveLocationAtCheckOutId}, {nameof(StatusName)} = {StatusName}, {nameof(LoanTime)} = {LoanTime}, {nameof(DueTime)} = {DueTime}, {nameof(ReturnTime)} = {ReturnTime}, {nameof(SystemReturnTime)} = {SystemReturnTime}, {nameof(Action)} = {Action}, {nameof(ActionComment)} = {ActionComment}, {nameof(ItemStatus)} = {ItemStatus}, {nameof(RenewalCount)} = {RenewalCount}, {nameof(LoanPolicyId)} = {LoanPolicyId}, {nameof(CheckoutServicePointId)} = {CheckoutServicePointId}, {nameof(CheckinServicePointId)} = {CheckinServicePointId}, {nameof(GroupId)} = {GroupId}, {nameof(DueDateChangedByRecall)} = {DueDateChangedByRecall}, {nameof(IsDcb)} = {IsDcb}, {nameof(DeclaredLostDate)} = {DeclaredLostDate}, {nameof(ClaimedReturnedDate)} = {ClaimedReturnedDate}, {nameof(OverdueFinePolicyId)} = {OverdueFinePolicyId}, {nameof(LostItemPolicyId)} = {LostItemPolicyId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(AgedToLostDelayedBillingLostItemHasBeenBilled)} = {AgedToLostDelayedBillingLostItemHasBeenBilled}, {nameof(AgedToLostDelayedBillingDateLostItemShouldBeBilled)} = {AgedToLostDelayedBillingDateLostItemShouldBeBilled}, {nameof(AgedToLostDelayedBillingAgedToLostDate)} = {AgedToLostDelayedBillingAgedToLostDate}, {nameof(RemindersLastFeeBilledNumber)} = {RemindersLastFeeBilledNumber}, {nameof(RemindersLastFeeBilledDate)} = {RemindersLastFeeBilledDate}, {nameof(Content)} = {Content} }}";
 
         public static Loan2 FromJObject(JObject jObject) => jObject != null ? new Loan2
         {
@@ -201,6 +210,7 @@ namespace FolioLibrary
             CheckinServicePointId = (Guid?)jObject.SelectToken("checkinServicePointId"),
             GroupId = (Guid?)jObject.SelectToken("patronGroupIdAtCheckout"),
             DueDateChangedByRecall = (bool?)jObject.SelectToken("dueDateChangedByRecall"),
+            IsDcb = (bool?)jObject.SelectToken("isDcb"),
             DeclaredLostDate = ((DateTime?)jObject.SelectToken("declaredLostDate"))?.ToUniversalTime(),
             ClaimedReturnedDate = ((DateTime?)jObject.SelectToken("claimedReturnedDate"))?.ToUniversalTime(),
             OverdueFinePolicyId = (Guid?)jObject.SelectToken("overdueFinePolicyId"),
@@ -214,6 +224,8 @@ namespace FolioLibrary
             AgedToLostDelayedBillingLostItemHasBeenBilled = (bool?)jObject.SelectToken("agedToLostDelayedBilling.lostItemHasBeenBilled"),
             AgedToLostDelayedBillingDateLostItemShouldBeBilled = (DateTime?)jObject.SelectToken("agedToLostDelayedBilling.dateLostItemShouldBeBilled"),
             AgedToLostDelayedBillingAgedToLostDate = ((DateTime?)jObject.SelectToken("agedToLostDelayedBilling.agedToLostDate"))?.ToUniversalTime(),
+            RemindersLastFeeBilledNumber = (int?)jObject.SelectToken("reminders.lastFeeBilled.number"),
+            RemindersLastFeeBilledDate = ((DateTime?)jObject.SelectToken("reminders.lastFeeBilled.date"))?.ToUniversalTime(),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings)
         } : null;
 
@@ -238,6 +250,7 @@ namespace FolioLibrary
             new JProperty("checkinServicePointId", CheckinServicePointId),
             new JProperty("patronGroupIdAtCheckout", GroupId),
             new JProperty("dueDateChangedByRecall", DueDateChangedByRecall),
+            new JProperty("isDcb", IsDcb),
             new JProperty("declaredLostDate", DeclaredLostDate?.ToLocalTime()),
             new JProperty("claimedReturnedDate", ClaimedReturnedDate?.ToLocalTime()),
             new JProperty("overdueFinePolicyId", OverdueFinePolicyId),
@@ -252,6 +265,10 @@ namespace FolioLibrary
             new JProperty("agedToLostDelayedBilling", new JObject(
                 new JProperty("lostItemHasBeenBilled", AgedToLostDelayedBillingLostItemHasBeenBilled),
                 new JProperty("dateLostItemShouldBeBilled", AgedToLostDelayedBillingDateLostItemShouldBeBilled?.ToLocalTime()),
-                new JProperty("agedToLostDate", AgedToLostDelayedBillingAgedToLostDate?.ToLocalTime())))).RemoveNullAndEmptyProperties();
+                new JProperty("agedToLostDate", AgedToLostDelayedBillingAgedToLostDate?.ToLocalTime()))),
+            new JProperty("reminders", new JObject(
+                new JProperty("lastFeeBilled", new JObject(
+                    new JProperty("number", RemindersLastFeeBilledNumber),
+                    new JProperty("date", RemindersLastFeeBilledDate?.ToLocalTime())))))).RemoveNullAndEmptyProperties();
     }
 }

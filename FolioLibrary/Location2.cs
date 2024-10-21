@@ -70,70 +70,88 @@ namespace FolioLibrary
         [Column("primary_service_point_id"), Display(Name = "Primary Service Point", Order = 14), JsonProperty("primaryServicePoint"), Required]
         public virtual Guid? PrimaryServicePointId { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 15), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("is_floating_collection"), Display(Name = "Is Floating Collection", Order = 15), JsonProperty("isFloatingCollection")]
+        public virtual bool? IsFloatingCollection { get; set; }
+
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 16), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 16), InverseProperty("Location2s")]
+        [Display(Name = "Creation User", Order = 17), InverseProperty("Location2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 17), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 18), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 19), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 20), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 20), InverseProperty("Location2s1")]
+        [Display(Name = "Last Write User", Order = 21), InverseProperty("Location2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 21), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 22), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Location), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 23), Editable(false)]
+        [Column("content"), CustomValidation(typeof(Location), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 24), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Check Ins", Order = 24)]
+        [Display(Name = "Actual Cost Records", Order = 25)]
+        public virtual ICollection<ActualCostRecord2> ActualCostRecord2s { get; set; }
+
+        [Display(Name = "Actual Cost Records 1", Order = 26)]
+        public virtual ICollection<ActualCostRecord2> ActualCostRecord2s1 { get; set; }
+
+        [Display(Name = "Check Ins", Order = 27)]
         public virtual ICollection<CheckIn2> CheckIn2s { get; set; }
 
-        [Display(Name = "Holdings", Order = 25)]
+        [Display(Name = "Fund Locations", Order = 28)]
+        public virtual ICollection<FundLocation2> FundLocation2s { get; set; }
+
+        [Display(Name = "Holdings", Order = 29)]
         public virtual ICollection<Holding2> Holding2s { get; set; }
 
-        [Display(Name = "Holdings 1", Order = 26)]
+        [Display(Name = "Holdings 1", Order = 30)]
         public virtual ICollection<Holding2> Holding2s1 { get; set; }
 
-        [Display(Name = "Holdings 2", Order = 27)]
+        [Display(Name = "Holdings 2", Order = 31)]
         public virtual ICollection<Holding2> Holding2s2 { get; set; }
 
-        [Display(Name = "Items", Order = 28)]
+        [Display(Name = "Items", Order = 32)]
         public virtual ICollection<Item2> Item2s { get; set; }
 
-        [Display(Name = "Items 1", Order = 29)]
+        [Display(Name = "Items 1", Order = 33)]
         public virtual ICollection<Item2> Item2s1 { get; set; }
 
-        [Display(Name = "Items 2", Order = 30)]
+        [Display(Name = "Items 2", Order = 34)]
         public virtual ICollection<Item2> Item2s2 { get; set; }
 
-        [Display(Name = "Loans", Order = 31)]
+        [Display(Name = "Loans", Order = 35)]
         public virtual ICollection<Loan2> Loan2s { get; set; }
 
-        [Display(Name = "Location Service Points", Order = 32), JsonConverter(typeof(ArrayJsonConverter<List<LocationServicePoint>, LocationServicePoint>), "ServicePointId"), JsonProperty("servicePointIds")]
+        [Display(Name = "Location Service Points", Order = 36), JsonConverter(typeof(ArrayJsonConverter<List<LocationServicePoint>, LocationServicePoint>), "ServicePointId"), JsonProperty("servicePointIds")]
         public virtual ICollection<LocationServicePoint> LocationServicePoints { get; set; }
 
-        [Display(Name = "Location Settings", Order = 33)]
+        [Display(Name = "Location Settings", Order = 37)]
         public virtual ICollection<LocationSetting> LocationSettings { get; set; }
 
-        [Display(Name = "Order Item Locations", Order = 34)]
+        [Display(Name = "Order Item Locations", Order = 38)]
         public virtual ICollection<OrderItemLocation2> OrderItemLocation2s { get; set; }
 
-        [Display(Name = "Receivings", Order = 35)]
+        [Display(Name = "Order Item Search Locations", Order = 39)]
+        public virtual ICollection<OrderItemSearchLocation> OrderItemSearchLocations { get; set; }
+
+        [Display(Name = "Receivings", Order = 40)]
         public virtual ICollection<Receiving2> Receiving2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Code)} = {Code}, {nameof(Description)} = {Description}, {nameof(DiscoveryDisplayName)} = {DiscoveryDisplayName}, {nameof(IsActive)} = {IsActive}, {nameof(InstitutionId)} = {InstitutionId}, {nameof(CampusId)} = {CampusId}, {nameof(LibraryId)} = {LibraryId}, {nameof(PrimaryServicePointId)} = {PrimaryServicePointId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(LocationServicePoints)} = {(LocationServicePoints != null ? $"{{ {string.Join(", ", LocationServicePoints)} }}" : "")} }}";
+        [Display(Name = "Rollover Budget Locations", Order = 41)]
+        public virtual ICollection<RolloverBudgetLocation> RolloverBudgetLocations { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Code)} = {Code}, {nameof(Description)} = {Description}, {nameof(DiscoveryDisplayName)} = {DiscoveryDisplayName}, {nameof(IsActive)} = {IsActive}, {nameof(InstitutionId)} = {InstitutionId}, {nameof(CampusId)} = {CampusId}, {nameof(LibraryId)} = {LibraryId}, {nameof(PrimaryServicePointId)} = {PrimaryServicePointId}, {nameof(IsFloatingCollection)} = {IsFloatingCollection}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(LocationServicePoints)} = {(LocationServicePoints != null ? $"{{ {string.Join(", ", LocationServicePoints)} }}" : "")} }}";
 
         public static Location2 FromJObject(JObject jObject) => jObject != null ? new Location2
         {
@@ -147,6 +165,7 @@ namespace FolioLibrary
             CampusId = (Guid?)jObject.SelectToken("campusId"),
             LibraryId = (Guid?)jObject.SelectToken("libraryId"),
             PrimaryServicePointId = (Guid?)jObject.SelectToken("primaryServicePoint"),
+            IsFloatingCollection = (bool?)jObject.SelectToken("isFloatingCollection"),
             CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
@@ -168,6 +187,7 @@ namespace FolioLibrary
             new JProperty("campusId", CampusId),
             new JProperty("libraryId", LibraryId),
             new JProperty("primaryServicePoint", PrimaryServicePointId),
+            new JProperty("isFloatingCollection", IsFloatingCollection),
             new JProperty("metadata", new JObject(
                 new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),

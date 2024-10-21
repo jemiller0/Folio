@@ -96,12 +96,12 @@ namespace FolioLibrary
         public static string GetCollectionCode(string locationCode)
         {
             if (locationCode == null) return null;
-            if (locationCode == "RecASR") return "Rec";
-            if (locationCode == "GameASR") return "Games";
+            //if (locationCode == "RecASR") return "Rec";
+            //if (locationCode == "GameASR") return "Games";
             if (locationCode == "GenHY") return "Gen";
             if (locationCode == "EckX") return "Eck";
-            if (locationCode == "JRLASR") return "Gen";
-            if (locationCode == "SciASR") return "Sci";
+            //if (locationCode == "JRLASR") return "Gen";
+            //if (locationCode == "SciASR") return "Sci";
             if (locationCode == "SSAdX") return "SSAd";
             if (locationCode == "XClosedGen") return "Gen";
             if (locationCode == "XClosedCJK") return "CJK";

@@ -1,0 +1,220 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Ledger fiscal year rollover",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "_version": {
+      "description": "Record version for optimistic locking",
+      "type": "integer"
+    },
+    "ledgerId": {
+      "$ref": "#/properties/id"
+    },
+    "rolloverType": {
+      "description": "Type of rollover. Action Commit means run real rollover",
+      "javaName": "RolloverType",
+      "javaEnums": [
+        {
+          "name": "PREVIEW",
+          "title": "Preview",
+          "description": "Run only budget and encumbrance rollover. Result will be not saved in real tables."
+        },
+        {
+          "name": "COMMIT",
+          "title": "Commit",
+          "description": "Run real for budgets, encumbrances and orders rollover. Result will be saved in real tables."
+        },
+        {
+          "name": "ROLLBACK",
+          "title": "Rollback",
+          "description": "Rollback budgets, encumbrances and orders rollover."
+        }
+      ],
+      "type": "string",
+      "default": "Commit",
+      "enum": [
+        "Preview",
+        "Commit",
+        "Rollback"
+      ]
+    },
+    "fromFiscalYearId": {
+      "$ref": "#/properties/id"
+    },
+    "toFiscalYearId": {
+      "$ref": "#/properties/id"
+    },
+    "restrictEncumbrance": {
+      "description": "Imposes restrictions on encumbrances",
+      "type": "boolean",
+      "default": false
+    },
+    "restrictExpenditures": {
+      "description": "Imposes restrictions on payments",
+      "type": "boolean",
+      "default": false
+    },
+    "needCloseBudgets": {
+      "description": "Control that all budget must be closed in rollover time",
+      "type": "boolean",
+      "default": true
+    },
+    "currencyFactor": {
+      "description": "Currency factor",
+      "readonly": true,
+      "type": "integer"
+    },
+    "budgetsRollover": {
+      "id": "budgetsRollover",
+      "description": "Budget rollover info",
+      "type": "array",
+      "items": {
+        "description": "Budget rollover info",
+        "javaType": "org.folio.rest.jaxrs.model.BudgetRollover",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "fundTypeId": {
+            "description": "The UUID format string",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+          },
+          "rolloverAllocation": {
+            "description": "Should allocated amount needs to be rollover",
+            "type": "boolean",
+            "default": false
+          },
+          "rolloverBudgetValue": {
+            "description": "Which type of value to be rollover: None, CashBalance or Available",
+            "type": "string",
+            "default": "None",
+            "enum": [
+              "None",
+              "CashBalance",
+              "Available"
+            ]
+          },
+          "setAllowances": {
+            "description": "Indicate to get Allowances from previous year budget if false and if true then values will be specified",
+            "type": "boolean",
+            "default": false
+          },
+          "adjustAllocation": {
+            "description": "How much should we increase the allocation",
+            "type": "number",
+            "default": 0
+          },
+          "addAvailableTo": {
+            "description": "Where to add available : Available or Allocation",
+            "type": "string",
+            "default": "Available",
+            "enum": [
+              "Available",
+              "Allocation"
+            ]
+          },
+          "allowableEncumbrance": {
+            "description": "The encumbrance percentage limit for this budget",
+            "type": "number"
+          },
+          "allowableExpenditure": {
+            "description": "The expenditure percentage limit for this budget",
+            "type": "number"
+          }
+        }
+      }
+    },
+    "encumbrancesRollover": {
+      "id": "encumbrancesRollover",
+      "description": "Encumbrances rollover info",
+      "type": "array",
+      "items": {
+        "description": "Encumbrance rollover info",
+        "javaName": "EncumbranceRollover",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "orderType": {
+            "description": "Order type",
+            "type": "string",
+            "enum": [
+              "Ongoing",
+              "Ongoing-Subscription",
+              "One-time"
+            ]
+          },
+          "basedOn": {
+            "description": "Based on Expended, Remaining or InitialAmount",
+            "type": "string",
+            "enum": [
+              "Expended",
+              "Remaining",
+              "InitialAmount"
+            ]
+          },
+          "increaseBy": {
+            "description": "How much should we increase the encumbrance amount based on basedOn",
+            "type": "number",
+            "default": 0
+          }
+        },
+        "required": [
+          "orderType",
+          "basedOn"
+        ]
+      }
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate"
+      ]
+    }
+  },
+  "required": [
+    "ledgerId",
+    "fromFiscalYearId",
+    "toFiscalYearId",
+    "budgetsRollover",
+    "encumbrancesRollover"
+  ]
+}

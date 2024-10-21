@@ -5,16 +5,19 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "description": "The globally unique (UUIDO) id of the user",
+      "description": "The primary key (UUID) of this permissionUser record",
       "type": "string"
     },
     "userId": {
-      "description": "A foreign key (UUID) from the users module",
+      "description": "A foreign key to the id field (UUID) of the user record in the users module",
       "type": "string"
     },
     "permissions": {
       "description": "A list of permission names owned by this user",
-      "type": "array"
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     },
     "metadata": {
       "title": "Metadata Schema",
@@ -55,5 +58,8 @@
         "createdDate"
       ]
     }
-  }
+  },
+  "required": [
+    "userId"
+  ]
 }

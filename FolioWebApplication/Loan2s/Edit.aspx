@@ -161,6 +161,14 @@
                                     <asp:Literal ID="DueDateChangedByRecallLiteral" runat="server" Text='<%#: Eval("DueDateChangedByRecall") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("IsDcb") != null %>'>
+                                <td>
+                                    <asp:Label ID="IsDcbLabel" runat="server" Text="Is Dcb:" AssociatedControlID="IsDcbLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="IsDcbLiteral" runat="server" Text='<%#: Eval("IsDcb") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("DeclaredLostDate") != null %>'>
                                 <td>
                                     <asp:Label ID="DeclaredLostDateLabel" runat="server" Text="Declared Lost Date:" AssociatedControlID="DeclaredLostDateLiteral" />
@@ -247,6 +255,22 @@
                                 </td>
                                 <td>
                                     <asp:Literal ID="AgedToLostDelayedBillingAgedToLostDateLiteral" runat="server" Text='<%# Eval("AgedToLostDelayedBillingAgedToLostDate", "{0:d}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("RemindersLastFeeBilledNumber") != null %>'>
+                                <td>
+                                    <asp:Label ID="RemindersLastFeeBilledNumberLabel" runat="server" Text="Reminders Last Fee Billed Number:" AssociatedControlID="RemindersLastFeeBilledNumberLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="RemindersLastFeeBilledNumberLiteral" runat="server" Text='<%#: Eval("RemindersLastFeeBilledNumber") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("RemindersLastFeeBilledDate") != null %>'>
+                                <td>
+                                    <asp:Label ID="RemindersLastFeeBilledDateLabel" runat="server" Text="Reminders Last Fee Billed Date:" AssociatedControlID="RemindersLastFeeBilledDateLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="RemindersLastFeeBilledDateLiteral" runat="server" Text='<%# Eval("RemindersLastFeeBilledDate", "{0:d}") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Content") != null %>'>
@@ -376,6 +400,7 @@
                                 <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"~/PatronActionSession2s/Edit.aspx?Id={Eval("Id")}" %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Session Id" DataField="SessionId" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo" />
                         <telerik:GridTemplateColumn HeaderText="Patron" DataField="Patron.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="PatronHyperLink" runat="server" Text='<%#: Eval("PatronId") != null ? Eval("Patron.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("PatronId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
@@ -434,6 +459,7 @@
                                 <asp:HyperLink ID="RecipientUserHyperLink" runat="server" Text='<%#: Eval("RecipientUserId") != null ? Eval("RecipientUser.Username") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("RecipientUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Session Id" DataField="SessionId" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo" />
                         <telerik:GridBoundColumn HeaderText="Next Run Time" DataField="NextRunTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridBoundColumn HeaderText="Triggering Event" DataField="TriggeringEvent" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Notice Config Timing" DataField="NoticeConfigTiming" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />

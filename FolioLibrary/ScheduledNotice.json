@@ -1,5 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Scheduled patron notice",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -20,6 +21,9 @@
     "recipientUserId": {
       "$ref": "#/properties/id"
     },
+    "sessionId": {
+      "$ref": "#/properties/id"
+    },
     "nextRunTime": {
       "description": "Next run time",
       "type": "string",
@@ -34,13 +38,16 @@
         "Due date",
         "Overdue fine returned",
         "Overdue fine renewed",
+        "Due date - with reminder fee",
         "Aged to lost",
         "Aged to lost - fine charged",
         "Aged to lost & item returned - fine adjusted",
-        "Aged to lost & item replaced - fine adjusted"
+        "Aged to lost & item replaced - fine adjusted",
+        "Title level request expiration"
       ]
     },
     "noticeConfig": {
+      "description": "Scheduled notice configuration",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -54,6 +61,7 @@
           ]
         },
         "recurringPeriod": {
+          "description": "Time interval defined by its duration",
           "type": "object",
           "additionalProperties": false,
           "properties": {

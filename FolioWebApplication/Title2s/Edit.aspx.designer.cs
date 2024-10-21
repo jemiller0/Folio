@@ -13,6 +13,14 @@ namespace FolioWebApplication.Title2s
 
         protected RadGrid Receiving2sRadGrid;
 
+        protected Panel TitleAcquisitionsUnitsPanel;
+
+        protected RadGrid TitleAcquisitionsUnitsRadGrid;
+
+        protected Panel TitleBindItemIdsPanel;
+
+        protected RadGrid TitleBindItemIdsRadGrid;
+
         protected Panel TitleContributorsPanel;
 
         protected RadGrid TitleContributorsRadGrid;

@@ -37,6 +37,14 @@ namespace FolioWebApplication.Fund2s
 
         protected RadGrid FundAcquisitionsUnitsRadGrid;
 
+        protected Panel FundLocation2sPanel;
+
+        protected RadGrid FundLocation2sRadGrid;
+
+        protected Panel FundOrganization2sPanel;
+
+        protected RadGrid FundOrganization2sRadGrid;
+
         protected Panel FundTagsPanel;
 
         protected RadGrid FundTagsRadGrid;
@@ -56,6 +64,18 @@ namespace FolioWebApplication.Fund2s
         protected Panel OrderItemFundsPanel;
 
         protected RadGrid OrderItemFundsRadGrid;
+
+        protected Panel RolloverBudget2sPanel;
+
+        protected RadGrid RolloverBudget2sRadGrid;
+
+        protected Panel RolloverBudgetFromFundsPanel;
+
+        protected RadGrid RolloverBudgetFromFundsRadGrid;
+
+        protected Panel RolloverBudgetToFundsPanel;
+
+        protected RadGrid RolloverBudgetToFundsRadGrid;
 
         protected Panel Transaction2sPanel;
 

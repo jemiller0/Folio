@@ -39,6 +39,7 @@
                         <telerik:GridBoundColumn HeaderText="Pickup Location" DataField="PickupLocation" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Hold Shelf Expiry Period Duration" DataField="HoldShelfExpiryPeriodDuration" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Hold Shelf Expiry Period Interval" DataField="HoldShelfExpiryPeriodInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Hold Shelf Closed Library Date Management" DataField="HoldShelfClosedLibraryDateManagement" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridTemplateColumn HeaderText="Creation User" DataField="CreationUser.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>

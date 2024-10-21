@@ -50,10 +50,13 @@ namespace FolioLibrary
         [Column("contributor_name_type_id"), Display(Name = "Contributor Name Type", Order = 9), JsonProperty("contributorNameTypeId"), Required]
         public virtual Guid? ContributorNameTypeId { get; set; }
 
-        [Column("primary"), Display(Order = 10), JsonProperty("primary")]
+        [Column("authority_id"), Display(Name = "Authority Id", Order = 10), JsonProperty("authorityId")]
+        public virtual Guid? AuthorityId { get; set; }
+
+        [Column("primary"), Display(Order = 11), JsonProperty("primary")]
         public virtual bool? Primary { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(InstanceId)} = {InstanceId}, {nameof(Name)} = {Name}, {nameof(ContributorTypeId)} = {ContributorTypeId}, {nameof(ContributorTypeText)} = {ContributorTypeText}, {nameof(ContributorNameTypeId)} = {ContributorNameTypeId}, {nameof(Primary)} = {Primary} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(InstanceId)} = {InstanceId}, {nameof(Name)} = {Name}, {nameof(ContributorTypeId)} = {ContributorTypeId}, {nameof(ContributorTypeText)} = {ContributorTypeText}, {nameof(ContributorNameTypeId)} = {ContributorNameTypeId}, {nameof(AuthorityId)} = {AuthorityId}, {nameof(Primary)} = {Primary} }}";
 
         public static Contributor FromJObject(JObject jObject) => jObject != null ? new Contributor
         {
@@ -61,6 +64,7 @@ namespace FolioLibrary
             ContributorTypeId = (Guid?)jObject.SelectToken("contributorTypeId"),
             ContributorTypeText = (string)jObject.SelectToken("contributorTypeText"),
             ContributorNameTypeId = (Guid?)jObject.SelectToken("contributorNameTypeId"),
+            AuthorityId = (Guid?)jObject.SelectToken("authorityId"),
             Primary = (bool?)jObject.SelectToken("primary")
         } : null;
 
@@ -69,6 +73,7 @@ namespace FolioLibrary
             new JProperty("contributorTypeId", ContributorTypeId),
             new JProperty("contributorTypeText", ContributorTypeText),
             new JProperty("contributorNameTypeId", ContributorNameTypeId),
+            new JProperty("authorityId", AuthorityId),
             new JProperty("primary", Primary)).RemoveNullAndEmptyProperties();
     }
 }

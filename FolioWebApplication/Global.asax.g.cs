@@ -49,6 +49,9 @@ namespace FolioWebApplication
 
         private void SetCirculationPermissions(HashSet<string> roles)
         {
+            Session["ActualCostRecord2sPermission"] = roles.Contains("all") || roles.Contains("circulation.all") || roles.Contains("uc.actualcostrecords.view") ? "View" : null;
+            Session["ActualCostRecordContributorsPermission"] = roles.Contains("all") || roles.Contains("circulation.all") || roles.Contains("uc.actualcostrecordcontributors.view") ? "View" : null;
+            Session["ActualCostRecordIdentifiersPermission"] = roles.Contains("all") || roles.Contains("circulation.all") || roles.Contains("uc.actualcostrecordidentifiers.view") ? "View" : null;
             Session["CancellationReason2sPermission"] = roles.Contains("all") || roles.Contains("circulation.all") || roles.Contains("uc.cancellationreasons.view") ? "View" : null;
             Session["CheckIn2sPermission"] = roles.Contains("all") || roles.Contains("circulation.all") || roles.Contains("uc.checkins.view") ? "View" : null;
             Session["CirculationRule2sPermission"] = roles.Contains("all") || roles.Contains("circulation.all") || roles.Contains("uc.circulationrules.view") ? "View" : null;
@@ -117,15 +120,28 @@ namespace FolioWebApplication
             Session["FiscalYearAcquisitionsUnitsPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.fiscalyearacquisitionsunits.view") ? "View" : null;
             Session["Fund2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.funds.view") ? "View" : null;
             Session["FundAcquisitionsUnitsPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.fundacquisitionsunits.view") ? "View" : null;
+            Session["FundLocation2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.fundlocations.view") ? "View" : null;
+            Session["FundOrganization2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.fundorganizations.view") ? "View" : null;
             Session["FundTagsPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.fundtags.view") ? "View" : null;
             Session["FundType2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.fundtypes.view") ? "View" : null;
             Session["Ledger2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgers.view") ? "View" : null;
             Session["LedgerAcquisitionsUnitsPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgeracquisitionsunits.view") ? "View" : null;
-            Session["LedgerRollover2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgerrollovers.view") ? "View" : null;
-            Session["LedgerRolloverBudgetsRolloversPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgerrolloverbudgetsrollovers.view") ? "View" : null;
-            Session["LedgerRolloverEncumbrancesRolloversPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgerrolloverencumbrancesrollovers.view") ? "View" : null;
-            Session["LedgerRolloverError2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgerrollovererrors.view") ? "View" : null;
-            Session["LedgerRolloverProgress2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.ledgerrolloverprogresses.view") ? "View" : null;
+            Session["Rollover2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.rollovers.view") ? "View" : null;
+            Session["RolloverBudget2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.rolloverbudgets.view") ? "View" : null;
+            Session["RolloverBudgetAcquisitionsUnitsPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.rolloverbudgetacquisitionsunits.view") ? "View" : null;
+            Session["RolloverBudgetAcquisitionsUnit2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.rolloverbudgetacquisitionsunits.view") ? "View" : null;
+            Session["RolloverBudgetAllocatedFromNamesPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.rolloverbudgetallocatedfromnames.view") ? "View" : null;
+            Session["RolloverBudgetAllocatedToNamesPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.rolloverbudgetallocatedtonames.view") ? "View" : null;
+            Session["RolloverBudgetExpenseClassDetailsPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.rolloverbudgetexpenseclassdetails.view") ? "View" : null;
+            Session["RolloverBudgetFromFundsPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.rolloverbudgetfromfunds.view") ? "View" : null;
+            Session["RolloverBudgetLocationsPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.rolloverbudgetlocations.view") ? "View" : null;
+            Session["RolloverBudgetOrganizationsPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.rolloverbudgetorganizations.view") ? "View" : null;
+            Session["RolloverBudgetsRolloversPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.rolloverbudgetsrollovers.view") ? "View" : null;
+            Session["RolloverBudgetTagsPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.rolloverbudgettags.view") ? "View" : null;
+            Session["RolloverBudgetToFundsPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.rolloverbudgettofunds.view") ? "View" : null;
+            Session["RolloverEncumbrancesRolloversPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.rolloverencumbrancesrollovers.view") ? "View" : null;
+            Session["RolloverError2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.rollovererrors.view") ? "View" : null;
+            Session["RolloverProgress2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.rolloverprogresses.view") ? "View" : null;
             Session["Transaction2sPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.transactions.view") ? "View" : null;
             Session["TransactionTagsPermission"] = roles.Contains("all") || roles.Contains("finance.all") || roles.Contains("uc.transactiontags.view") ? "View" : null;
         }
@@ -269,9 +285,11 @@ namespace FolioWebApplication
             Session["OrderItemFundsPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemfunds.view") ? "View" : null;
             Session["OrderItemLocation2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemlocations.view") ? "View" : null;
             Session["OrderItemNotesPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemnotes.view") ? "View" : null;
+            Session["OrderItemOrganizationsPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemorganizations.view") ? "View" : null;
             Session["OrderItemProductIdsPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemproductids.view") ? "View" : null;
             Session["OrderItemReferenceNumbersPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemreferencenumbers.view") ? "View" : null;
             Session["OrderItemReportingCodesPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemreportingcodes.view") ? "View" : null;
+            Session["OrderItemSearchLocationsPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemsearchlocations.view") ? "View" : null;
             Session["OrderItemTagsPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemtags.view") ? "View" : null;
             Session["OrderItemVolumesPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemvolumes.view") ? "View" : null;
             Session["OrderNotesPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.ordernotes.view") ? "View" : null;
@@ -285,6 +303,8 @@ namespace FolioWebApplication
             Session["ReportingCode2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.reportingcodes.view") ? "View" : null;
             Session["Suffix2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.suffixes.view") ? "View" : null;
             Session["Title2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.titles.view") ? "View" : null;
+            Session["TitleAcquisitionsUnitsPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.titleacquisitionsunits.view") ? "View" : null;
+            Session["TitleBindItemIdsPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.titlebinditemids.view") ? "View" : null;
             Session["TitleContributorsPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.titlecontributors.view") ? "View" : null;
             Session["TitleProductIdsPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.titleproductids.view") ? "View" : null;
             Session["UserAcquisitionsUnit2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.useracquisitionsunits.view") ? "View" : null;
@@ -314,6 +334,8 @@ namespace FolioWebApplication
             Session["OrganizationAddressesPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationaddresses.view") ? "View" : null;
             Session["OrganizationAddressCategoriesPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationaddresscategories.view") ? "View" : null;
             Session["OrganizationAgreementsPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationagreements.view") ? "View" : null;
+            Session["OrganizationAgreementOrgsPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationagreementorgs.view") ? "View" : null;
+            Session["OrganizationAgreementPeriodsPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationagreementperiods.view") ? "View" : null;
             Session["OrganizationAliasesPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationaliases.view") ? "View" : null;
             Session["OrganizationChangelogsPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationchangelogs.view") ? "View" : null;
             Session["OrganizationContactsPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationcontacts.view") ? "View" : null;
@@ -323,6 +345,7 @@ namespace FolioWebApplication
             Session["OrganizationNotesPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationnotes.view") ? "View" : null;
             Session["OrganizationPhoneNumbersPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationphonenumbers.view") ? "View" : null;
             Session["OrganizationPhoneNumberCategoriesPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationphonenumbercategories.view") ? "View" : null;
+            Session["OrganizationPrivilegedContactsPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationprivilegedcontacts.view") ? "View" : null;
             Session["OrganizationTagsPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationtags.view") ? "View" : null;
             Session["OrganizationTypesPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationtypes.view") ? "View" : null;
             Session["OrganizationUrlsPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.organizationurls.view") ? "View" : null;
@@ -366,6 +389,7 @@ namespace FolioWebApplication
             Session["CustomFieldValuesPermission"] = roles.Contains("all") || roles.Contains("uc.customfieldvalues.view") || roles.Contains("users.all") ? "View" : null;
             Session["Department2sPermission"] = roles.Contains("all") || roles.Contains("uc.departments.view") || roles.Contains("users.all") ? "View" : null;
             Session["Group2sPermission"] = roles.Contains("all") || roles.Contains("uc.groups.view") || roles.Contains("users.all") ? "View" : null;
+            Session["PreferredEmailCommunicationsPermission"] = roles.Contains("all") || roles.Contains("uc.preferredemailcommunications.view") || roles.Contains("users.all") ? "View" : null;
             Session["Proxy2sPermission"] = roles.Contains("all") || roles.Contains("uc.proxies.view") || roles.Contains("users.all") ? "View" : null;
             Session["User2sPermission"] = roles.Contains("uc.users.edit") ? "Edit" : roles.Contains("all") || roles.Contains("uc.users.view") || roles.Contains("users.all") ? "View" : null;
             Session["UserAddressesPermission"] = roles.Contains("all") || roles.Contains("uc.useraddresses.view") || roles.Contains("users.all") ? "View" : null;
@@ -408,6 +432,9 @@ namespace FolioWebApplication
 
         private void SetCirculationPermissions(string permission = null)
         {
+            Session["ActualCostRecord2sPermission"] = permission;
+            Session["ActualCostRecordContributorsPermission"] = permission;
+            Session["ActualCostRecordIdentifiersPermission"] = permission;
             Session["CancellationReason2sPermission"] = permission;
             Session["CheckIn2sPermission"] = permission;
             Session["CirculationRule2sPermission"] = permission;
@@ -476,15 +503,28 @@ namespace FolioWebApplication
             Session["FiscalYearAcquisitionsUnitsPermission"] = permission;
             Session["Fund2sPermission"] = permission;
             Session["FundAcquisitionsUnitsPermission"] = permission;
+            Session["FundLocation2sPermission"] = permission;
+            Session["FundOrganization2sPermission"] = permission;
             Session["FundTagsPermission"] = permission;
             Session["FundType2sPermission"] = permission;
             Session["Ledger2sPermission"] = permission;
             Session["LedgerAcquisitionsUnitsPermission"] = permission;
-            Session["LedgerRollover2sPermission"] = permission;
-            Session["LedgerRolloverBudgetsRolloversPermission"] = permission;
-            Session["LedgerRolloverEncumbrancesRolloversPermission"] = permission;
-            Session["LedgerRolloverError2sPermission"] = permission;
-            Session["LedgerRolloverProgress2sPermission"] = permission;
+            Session["Rollover2sPermission"] = permission;
+            Session["RolloverBudget2sPermission"] = permission;
+            Session["RolloverBudgetAcquisitionsUnitsPermission"] = permission;
+            Session["RolloverBudgetAcquisitionsUnit2sPermission"] = permission;
+            Session["RolloverBudgetAllocatedFromNamesPermission"] = permission;
+            Session["RolloverBudgetAllocatedToNamesPermission"] = permission;
+            Session["RolloverBudgetExpenseClassDetailsPermission"] = permission;
+            Session["RolloverBudgetFromFundsPermission"] = permission;
+            Session["RolloverBudgetLocationsPermission"] = permission;
+            Session["RolloverBudgetOrganizationsPermission"] = permission;
+            Session["RolloverBudgetsRolloversPermission"] = permission;
+            Session["RolloverBudgetTagsPermission"] = permission;
+            Session["RolloverBudgetToFundsPermission"] = permission;
+            Session["RolloverEncumbrancesRolloversPermission"] = permission;
+            Session["RolloverError2sPermission"] = permission;
+            Session["RolloverProgress2sPermission"] = permission;
             Session["Transaction2sPermission"] = permission;
             Session["TransactionTagsPermission"] = permission;
         }
@@ -628,9 +668,11 @@ namespace FolioWebApplication
             Session["OrderItemFundsPermission"] = permission;
             Session["OrderItemLocation2sPermission"] = permission;
             Session["OrderItemNotesPermission"] = permission;
+            Session["OrderItemOrganizationsPermission"] = permission;
             Session["OrderItemProductIdsPermission"] = permission;
             Session["OrderItemReferenceNumbersPermission"] = permission;
             Session["OrderItemReportingCodesPermission"] = permission;
+            Session["OrderItemSearchLocationsPermission"] = permission;
             Session["OrderItemTagsPermission"] = permission;
             Session["OrderItemVolumesPermission"] = permission;
             Session["OrderNotesPermission"] = permission;
@@ -644,6 +686,8 @@ namespace FolioWebApplication
             Session["ReportingCode2sPermission"] = permission;
             Session["Suffix2sPermission"] = permission;
             Session["Title2sPermission"] = permission;
+            Session["TitleAcquisitionsUnitsPermission"] = permission;
+            Session["TitleBindItemIdsPermission"] = permission;
             Session["TitleContributorsPermission"] = permission;
             Session["TitleProductIdsPermission"] = permission;
             Session["UserAcquisitionsUnit2sPermission"] = permission;
@@ -673,6 +717,8 @@ namespace FolioWebApplication
             Session["OrganizationAddressesPermission"] = permission;
             Session["OrganizationAddressCategoriesPermission"] = permission;
             Session["OrganizationAgreementsPermission"] = permission;
+            Session["OrganizationAgreementOrgsPermission"] = permission;
+            Session["OrganizationAgreementPeriodsPermission"] = permission;
             Session["OrganizationAliasesPermission"] = permission;
             Session["OrganizationChangelogsPermission"] = permission;
             Session["OrganizationContactsPermission"] = permission;
@@ -682,6 +728,7 @@ namespace FolioWebApplication
             Session["OrganizationNotesPermission"] = permission;
             Session["OrganizationPhoneNumbersPermission"] = permission;
             Session["OrganizationPhoneNumberCategoriesPermission"] = permission;
+            Session["OrganizationPrivilegedContactsPermission"] = permission;
             Session["OrganizationTagsPermission"] = permission;
             Session["OrganizationTypesPermission"] = permission;
             Session["OrganizationUrlsPermission"] = permission;
@@ -725,6 +772,7 @@ namespace FolioWebApplication
             Session["CustomFieldValuesPermission"] = permission;
             Session["Department2sPermission"] = permission;
             Session["Group2sPermission"] = permission;
+            Session["PreferredEmailCommunicationsPermission"] = permission;
             Session["Proxy2sPermission"] = permission;
             Session["User2sPermission"] = permission;
             Session["UserAddressesPermission"] = permission;

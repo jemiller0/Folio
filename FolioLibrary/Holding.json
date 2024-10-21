@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "A holdings record",
+  "javaType": "org.folio.rest.jaxrs.model.HoldingsRecord",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -12,6 +13,9 @@
     "_version": {
       "description": "Record version for optimistic locking",
       "type": "integer"
+    },
+    "sourceId": {
+      "$ref": "#/properties/id"
     },
     "hrid": {
       "description": "the human readable ID, also called eye readable ID. A system-assigned sequential ID which maps to the Instance ID",
@@ -34,17 +38,6 @@
     "permanentLocationId": {
       "$ref": "#/properties/id"
     },
-    "permanentLocation": {
-      "description": "The permanent shelving location in which an item resides",
-      "folio:$ref": "location.json",
-      "readonly": true,
-      "folio:isVirtual": true,
-      "folio:linkBase": "locations",
-      "folio:linkFromField": "permanentLocationId",
-      "folio:linkToField": "id",
-      "folio:includedElement": "locations.0",
-      "type": "object"
-    },
     "temporaryLocationId": {
       "$ref": "#/properties/id"
     },
@@ -55,6 +48,8 @@
       "description": "List of electronic access items",
       "type": "array",
       "items": {
+        "description": "Electronic access item",
+        "javaType": "org.folio.rest.jaxrs.model.ElectronicAccessItem",
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -127,22 +122,15 @@
       "description": "Notes about action, copy, binding etc.",
       "type": "array",
       "items": {
+        "description": "A holdings record note",
+        "javaType": "org.folio.rest.jaxrs.model.HoldingsNote",
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "holdingsNoteTypeId": {
-            "$ref": "#/properties/id"
-          },
-          "holdingsNoteType": {
-            "description": "expanded note-type object corresponding to holdingsNoteTypeId",
-            "javaType": "org.folio.rest.jaxrs.model.HoldingsNoteTypeVirtual",
-            "folio:$ref": "holdingsnotetype.json",
-            "readonly": true,
-            "folio:isVirtual": true,
-            "folio:linkBase": "holdings-note-types",
-            "folio:linkFromField": "holdingsNoteTypeId",
-            "folio:linkToField": "id",
-            "folio:includedElement": "holdingsNoteTypes.0",
-            "type": "object"
+            "description": "The UUID format string",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
           },
           "note": {
             "description": "Text content of the note",
@@ -159,18 +147,6 @@
     "illPolicyId": {
       "$ref": "#/properties/id"
     },
-    "illPolicy": {
-      "description": "expanded ILL Policy object corresponding to illPolicyId",
-      "javaType": "org.folio.rest.jaxrs.model.IllPolicyVirtual",
-      "folio:$ref": "illpolicy.json",
-      "readonly": true,
-      "folio:isVirtual": true,
-      "folio:linkBase": "ill-policies",
-      "folio:linkFromField": "illPolicyId",
-      "folio:linkToField": "id",
-      "folio:includedElement": "illPolicies.0",
-      "type": "object"
-    },
     "retentionPolicy": {
       "description": "Records information regarding how long we have agreed to keep something.",
       "type": "string"
@@ -180,13 +156,16 @@
       "type": "string"
     },
     "holdingsStatements": {
-      "description": "Notes about action, copy, binding etc.",
+      "description": "Holdings record statements",
       "type": "array",
       "items": {
+        "description": "Holdings record statement",
+        "javaType": "org.folio.rest.jaxrs.model.HoldingsStatement",
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "statement": {
-            "description": "Specifices the exact content to which the library has access, typically for continuing publications.",
+            "description": "Specifies the exact content to which the library has access, typically for continuing publications.",
             "type": "string"
           },
           "note": {
@@ -194,7 +173,7 @@
             "type": "string"
           },
           "staffNote": {
-            "description": "Private note attached to a holdings statment",
+            "description": "Private note attached to a holdings statement",
             "type": "string"
           }
         }
@@ -204,42 +183,14 @@
       "description": "Holdings record indexes statements",
       "type": "array",
       "items": {
-        "type": "object",
-        "properties": {
-          "statement": {
-            "description": "Textual description of the holdings of indexes",
-            "type": "string"
-          },
-          "note": {
-            "description": "Note attached to a holdings statement",
-            "type": "string"
-          },
-          "staffNote": {
-            "description": "Private note attached to a holdings statment",
-            "type": "string"
-          }
-        }
+        "$ref": "#/properties/holdingsStatements/items"
       }
     },
     "holdingsStatementsForSupplements": {
       "description": "Holdings record supplements statements",
       "type": "array",
       "items": {
-        "type": "object",
-        "properties": {
-          "statement": {
-            "description": "textual description of the holdings of supplementary material",
-            "type": "string"
-          },
-          "note": {
-            "description": "note attached to a holdings statement",
-            "type": "string"
-          },
-          "staffNote": {
-            "description": "Private note attached to a holdings statment",
-            "type": "string"
-          }
-        }
+        "$ref": "#/properties/holdingsStatements/items"
       }
     },
     "copyNumber": {
@@ -252,7 +203,9 @@
     },
     "receivingHistory": {
       "description": "Receiving history of holdings record",
+      "javaType": "org.folio.rest.jaxrs.model.HoldingsReceivingHistory",
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "displayType": {
           "description": "Display hint. 1: Display fields separately. 2: Display fields concatenated",
@@ -262,7 +215,10 @@
           "description": "Entries of receiving history",
           "type": "array",
           "items": {
+            "description": "Receiving history entry of holdings record",
+            "javaType": "org.folio.rest.jaxrs.model.HoldingsReceivingHistoryEntry",
             "type": "object",
+            "additionalProperties": false,
             "properties": {
               "publicDisplay": {
                 "description": "Defines if the receivingHistory should be visible to the public.",
@@ -293,530 +249,63 @@
       },
       "uniqueItems": true
     },
-    "holdingsItems": {
-      "description": "Items related to holdings record",
-      "readonly": true,
-      "folio:isVirtual": true,
-      "folio:linkBase": "inventory/items",
-      "folio:linkFromField": "id",
-      "folio:linkToField": "holdingsRecordId",
-      "folio:includedElement": "items",
-      "type": "array",
-      "items": {
-        "description": "An item record",
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "description": "Unique ID of the item record",
-            "type": "string"
-          },
-          "_version": {
-            "description": "Record version for optimistic locking",
-            "type": "integer"
-          },
-          "hrid": {
-            "description": "The human readable ID, also called eye readable ID. A system-assigned sequential alternate ID",
-            "type": "string"
-          },
-          "holdingsRecordId": {
-            "description": "ID of the holdings record the item is a member of.",
-            "type": "string"
-          },
-          "formerIds": {
-            "description": "Previous identifiers assigned to the item",
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "uniqueItems": true
-          },
-          "discoverySuppress": {
-            "description": "Records the fact that the record should not be displayed in a discovery system",
-            "type": "boolean"
-          },
-          "accessionNumber": {
-            "description": "Also called inventar number",
-            "type": "string"
-          },
-          "barcode": {
-            "description": "Unique inventory control number for physical resources, used largely for circulation purposes",
-            "type": "string"
-          },
-          "effectiveShelvingOrder": {
-            "description": "A system generated normalization of the call number that allows for call number sorting in reports and search results",
-            "readonly": true,
-            "type": "string"
-          },
-          "itemLevelCallNumber": {
-            "description": "Call Number is an identifier assigned to an item, usually printed on a label attached to the item. The call number is used to determine the items physical position in a shelving sequence, e.g. K1 .M44. The Item level call number, is the call number on item level.",
-            "type": "string"
-          },
-          "itemLevelCallNumberPrefix": {
-            "description": "Prefix of the call number on the item level.",
-            "type": "string"
-          },
-          "itemLevelCallNumberSuffix": {
-            "description": "Suffix of the call number on the item level.",
-            "type": "string"
-          },
-          "itemLevelCallNumberTypeId": {
-            "description": "Identifies the source of the call number, e.g., LCC, Dewey, NLM, etc.",
-            "type": "string"
-          },
-          "effectiveCallNumberComponents": {
-            "description": "Elements of a full call number generated from the item or holding",
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "callNumber": {
-                "description": "Effective Call Number is an identifier assigned to an item or its holding and associated with the item.",
-                "readonly": true,
-                "type": "string"
-              },
-              "prefix": {
-                "description": "Effective Call Number Prefix is the prefix of the identifier assigned to an item or its holding and associated with the item.",
-                "readonly": true,
-                "type": "string"
-              },
-              "suffix": {
-                "description": "Effective Call Number Suffix is the suffix of the identifier assigned to an item or its holding and associated with the item.",
-                "readonly": true,
-                "type": "string"
-              },
-              "typeId": {
-                "$ref": "#/properties/id"
-              }
-            }
-          },
-          "volume": {
-            "description": "Volume is intended for monographs when a multipart monograph (e.g. a biography of George Bernard Shaw in three volumes).",
-            "type": "string"
-          },
-          "enumeration": {
-            "description": "Enumeration is the descriptive information for the numbering scheme of a serial.",
-            "type": "string"
-          },
-          "chronology": {
-            "description": "Chronology is the descriptive information for the dating scheme of a serial.",
-            "type": "string"
-          },
-          "yearCaption": {
-            "description": "In multipart monographs, a caption is a character(s) used to label a level of chronology, e.g., year 1985.",
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "uniqueItems": true
-          },
-          "itemIdentifier": {
-            "description": "Item identifier number, e.g. imported from the union catalogue (read only).",
-            "type": "string"
-          },
-          "copyNumber": {
-            "description": "Copy number is the piece identifier. The copy number reflects if the library has a copy of a single-volume monograph; one copy of a multi-volume, (e.g. Copy 1, or C.7.)",
-            "type": "string"
-          },
-          "numberOfPieces": {
-            "description": "Number of pieces. Used when an item is checked out or returned to verify that all parts are present (e.g. 7 CDs in a set).",
-            "type": "string"
-          },
-          "descriptionOfPieces": {
-            "description": "Description of item pieces.",
-            "type": "string"
-          },
-          "numberOfMissingPieces": {
-            "description": "Number of missing pieces.",
-            "type": "string"
-          },
-          "missingPieces": {
-            "description": "Description of the missing pieces. ",
-            "type": "string"
-          },
-          "missingPiecesDate": {
-            "description": "Date when the piece(s) went missing.",
-            "type": "string"
-          },
-          "itemDamagedStatusId": {
-            "description": "Item dame status id identifier.",
-            "type": "string"
-          },
-          "itemDamagedStatusDate": {
-            "description": "Date and time when the item was damaged.",
-            "type": "string"
-          },
-          "administrativeNotes": {
-            "description": "Administrative notes",
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "minItems": 0
-          },
-          "notes": {
-            "description": "Notes about action, copy, binding etc.",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "itemNoteTypeId": {
-                  "description": "ID of the type of note",
-                  "type": "string"
-                },
-                "itemNoteType": {
-                  "description": "Type of item's note",
-                  "folio:$ref": "itemnotetype.json",
-                  "javaType": "org.folio.rest.jaxrs.model.itemNoteTypeVirtual",
-                  "readonly": true,
-                  "folio:isVirtual": true,
-                  "folio:linkBase": "item-note-types",
-                  "folio:linkFromField": "itemNoteTypeId",
-                  "folio:linkToField": "id",
-                  "folio:includedElement": "itemNoteTypes.0",
-                  "type": "object"
-                },
-                "note": {
-                  "description": "Text content of the note",
-                  "type": "string"
-                },
-                "staffOnly": {
-                  "description": "If true, determines that the note should not be visible for others than staff",
-                  "type": "boolean",
-                  "default": false
-                }
-              }
-            }
-          },
-          "circulationNotes": {
-            "description": "Notes to be displayed in circulation processes",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "additionalProperties": false,
-              "properties": {
-                "id": {
-                  "description": "The id of the circulation note",
-                  "type": "string"
-                },
-                "noteType": {
-                  "description": "Type of circulation process that the note applies to",
-                  "type": "string",
-                  "enum": [
-                    "Check in",
-                    "Check out"
-                  ]
-                },
-                "note": {
-                  "description": "Text to display",
-                  "type": "string"
-                },
-                "source": {
-                  "description": "The user who added/updated the note. The property is generated by the server and needed to support sorting. Points to /users/{id} resource.",
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "description": "The id of the user who added/updated the note. The user information is generated by the server and needed to support sorting. Points to /users/{id} resource.",
-                      "type": "string"
-                    },
-                    "personal": {
-                      "description": "Personal information about the user",
-                      "type": "object",
-                      "properties": {
-                        "lastName": {
-                          "description": "The user's last name",
-                          "type": "string"
-                        },
-                        "firstName": {
-                          "description": "The user's first name",
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "date": {
-                  "description": "Date and time the record is added/updated. The property is generated by the server and needed to support sorting.",
-                  "type": "string"
-                },
-                "staffOnly": {
-                  "description": "Flag to restrict display of this note",
-                  "type": "boolean",
-                  "default": false
-                }
-              }
-            }
-          },
-          "status": {
-            "description": "The status of the item",
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "name": {
-                "description": "Name of the status e.g. Available, Checked out, In transit",
-                "type": "string",
-                "enum": [
-                  "Aged to lost",
-                  "Available",
-                  "Awaiting pickup",
-                  "Awaiting delivery",
-                  "Checked out",
-                  "Claimed returned",
-                  "Declared lost",
-                  "In process",
-                  "In process (non-requestable)",
-                  "In transit",
-                  "Intellectual item",
-                  "Long missing",
-                  "Lost and paid",
-                  "Missing",
-                  "On order",
-                  "Paged",
-                  "Restricted",
-                  "Order closed",
-                  "Unavailable",
-                  "Unknown",
-                  "Withdrawn"
-                ]
-              },
-              "date": {
-                "description": "Date and time when the status was last changed",
-                "readonly": true,
-                "type": "string",
-                "format": "date-time"
-              }
-            },
-            "required": [
-              "name"
-            ]
-          },
-          "materialTypeId": {
-            "description": "Material type, term. Define what type of thing the item is.",
-            "type": "string"
-          },
-          "materialType": {
-            "description": "Item's material type",
-            "folio:$ref": "materialtype.json",
-            "javaType": "org.folio.rest.jaxrs.model.materialTypeVirtual",
-            "readonly": true,
-            "folio:isVirtual": true,
-            "folio:linkBase": "material-types",
-            "folio:linkFromField": "materialTypeId",
-            "folio:linkToField": "id",
-            "folio:includedElement": "mtypes.0",
-            "type": "object"
-          },
-          "permanentLoanTypeId": {
-            "description": "The permanent loan type, is the default loan type for a given item. Loan types are tenant-defined.",
-            "type": "string"
-          },
-          "temporaryLoanTypeId": {
-            "description": "Temporary loan type, is the temporary loan type for a given item.",
-            "type": "string"
-          },
-          "permanentLocationId": {
-            "description": "Permanent item location is the default location, shelving location, or holding which is a physical place where items are stored, or an Online location.",
-            "type": "string"
-          },
-          "permanentLocation": {
-            "description": "The permanent shelving location in which an item resides",
-            "readonly": true,
-            "type": "object"
-          },
-          "temporaryLocationId": {
-            "description": "Temporary item location is the temporarily location, shelving location, or holding which is a physical place where items are stored, or an Online location.",
-            "type": "string"
-          },
-          "temporaryLocation": {
-            "description": "Temporary location, shelving location, or holding which is a physical place where items are stored, or an Online location",
-            "folio:$ref": "location.json",
-            "readonly": true,
-            "folio:isVirtual": true,
-            "folio:linkBase": "locations",
-            "folio:linkFromField": "temporaryLocationId",
-            "folio:linkToField": "id",
-            "folio:includedElement": "locations.0",
-            "type": "object"
-          },
-          "effectiveLocationId": {
-            "$ref": "#/properties/id"
-          },
-          "electronicAccess": {
-            "description": "References for accessing the item by URL.",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "additionalProperties": false,
-              "properties": {
-                "uri": {
-                  "description": "uniform resource identifier (URI) is a string of characters designed for unambiguous identification of resources",
-                  "type": "string"
-                },
-                "linkText": {
-                  "description": "the value of the MARC tag field 856 2nd indicator, where the values are: no information provided, resource, version of resource, related resource, no display constant generated",
-                  "type": "string"
-                },
-                "materialsSpecification": {
-                  "description": "materials specified is used to specify to what portion or aspect of the resource the electronic location and access information applies (e.g. a portion or subset of the item is electronic, or a related electronic resource is being linked to the record)",
-                  "type": "string"
-                },
-                "publicNote": {
-                  "description": "URL public note to be displayed in the discovery",
-                  "type": "string"
-                },
-                "relationshipId": {
-                  "description": "relationship between the electronic resource at the location identified and the item described in the record as a whole",
-                  "type": "string"
-                }
-              },
-              "required": [
-                "uri"
-              ]
-            }
-          },
-          "inTransitDestinationServicePointId": {
-            "description": "Service point an item is intended to be transited to (should only be present when in transit)",
-            "type": "string",
-            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
-          },
-          "statisticalCodeIds": {
-            "description": "List of statistical code IDs",
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "uniqueItems": true
-          },
-          "purchaseOrderLineIdentifier": {
-            "description": "ID referencing a remote purchase order object related to this item",
-            "type": "string"
-          },
-          "tags": {
-            "title": "tags",
-            "description": "List of simple tags that can be added to an object",
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "tagList": {
-                "description": "List of tags",
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "metadata": {
-            "title": "Metadata Schema",
-            "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "createdDate": {
-                "description": "Date and time when the record was created",
-                "type": "string",
-                "format": "date-time"
-              },
-              "createdByUserId": {
-                "description": "ID of the user who created the record (when available)",
-                "type": "string",
-                "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
-              },
-              "createdByUsername": {
-                "description": "Username of the user who created the record (when available)",
-                "type": "string"
-              },
-              "updatedDate": {
-                "description": "Date and time when the record was last updated",
-                "type": "string",
-                "format": "date-time"
-              },
-              "updatedByUserId": {
-                "description": "ID of the user who last updated the record (when available)",
-                "type": "string",
-                "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
-              },
-              "updatedByUsername": {
-                "description": "Username of the user who last updated the record (when available)",
-                "type": "string"
-              }
-            },
-            "required": [
-              "createdDate"
-            ]
-          },
-          "holdingsRecord2": {
-            "description": "Item associated holdings record object.",
-            "folio:$ref": "holdingsrecord.json",
-            "readonly": true,
-            "folio:isVirtual": true,
-            "folio:linkBase": "holdings-storage/holdings",
-            "folio:linkFromField": "holdingsRecordId",
-            "folio:linkToField": "id",
-            "folio:includedElement": "holdingsRecords.0",
-            "type": "object"
-          },
-          "lastCheckIn": {
-            "description": "Information about when an item was last scanned in the Inventory app.",
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "dateTime": {
-                "description": "Date and time of the last check in of the item.",
-                "type": "string",
-                "format": "date-time"
-              },
-              "servicePointId": {
-                "$ref": "#/properties/id"
-              },
-              "staffMemberId": {
-                "$ref": "#/properties/id"
-              }
-            }
-          }
-        },
-        "required": [
-          "materialTypeId",
-          "permanentLoanTypeId",
-          "holdingsRecordId",
-          "status"
-        ]
-      }
-    },
-    "bareHoldingsItems": {
-      "description": "Items of bareHoldings",
-      "readonly": true,
-      "folio:isVirtual": true,
-      "folio:linkBase": "item-storage/items",
-      "folio:linkFromField": "id",
-      "folio:linkToField": "holdingsRecordId",
-      "folio:includedElement": "items",
-      "type": "array",
-      "items": {
-        "$ref": "#/properties/holdingsItems/items"
-      }
-    },
-    "holdingsInstance": {
-      "description": "Instance of holding record",
-      "folio:$ref": "instance.json",
-      "readonly": true,
-      "folio:isVirtual": true,
-      "folio:linkBase": "inventory/instances",
-      "folio:linkFromField": "instanceId",
-      "folio:linkToField": "id",
-      "folio:includedElement": "instances.0",
-      "type": "object"
-    },
     "tags": {
-      "$ref": "#/properties/holdingsItems/items/properties/tags"
+      "title": "tags",
+      "description": "List of simple tags that can be added to an object",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tagList": {
+          "description": "List of tags",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
     },
     "metadata": {
-      "$ref": "#/properties/holdingsItems/items/properties/metadata"
-    },
-    "sourceId": {
-      "$ref": "#/properties/id"
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate"
+      ]
     }
   },
   "required": [
+    "sourceId",
     "instanceId",
     "permanentLocationId"
   ]

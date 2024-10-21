@@ -9,6 +9,10 @@ namespace FolioWebApplication.Fee2s
 
         protected FormView Fee2FormView;
 
+        protected Panel ActualCostRecord2sPanel;
+
+        protected RadGrid ActualCostRecord2sRadGrid;
+
         protected Panel Payment2sPanel;
 
         protected RadGrid Payment2sRadGrid;

@@ -14,6 +14,7 @@
       "type": "string"
     },
     "itemAgedLostOverdue": {
+      "description": "Time interval defined by its duration",
       "type": "object",
       "additionalProperties": false,
       "properties": {

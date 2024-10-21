@@ -17,6 +17,10 @@ namespace FolioWebApplication.Organization2s
 
         protected RadGrid CurrenciesRadGrid;
 
+        protected Panel FundOrganization2sPanel;
+
+        protected RadGrid FundOrganization2sRadGrid;
+
         protected Panel Invoice2sPanel;
 
         protected RadGrid Invoice2sRadGrid;
@@ -32,6 +36,10 @@ namespace FolioWebApplication.Organization2s
         protected Panel OrderItem2s1Panel;
 
         protected RadGrid OrderItem2s1RadGrid;
+
+        protected Panel OrderItemOrganizationsPanel;
+
+        protected RadGrid OrderItemOrganizationsRadGrid;
 
         protected Panel OrganizationAccountsPanel;
 
@@ -77,6 +85,10 @@ namespace FolioWebApplication.Organization2s
 
         protected RadGrid OrganizationPhoneNumbersRadGrid;
 
+        protected Panel OrganizationPrivilegedContactsPanel;
+
+        protected RadGrid OrganizationPrivilegedContactsRadGrid;
+
         protected Panel OrganizationTagsPanel;
 
         protected RadGrid OrganizationTagsRadGrid;
@@ -88,6 +100,10 @@ namespace FolioWebApplication.Organization2s
         protected Panel OrganizationUrlsPanel;
 
         protected RadGrid OrganizationUrlsRadGrid;
+
+        protected Panel RolloverBudgetOrganizationsPanel;
+
+        protected RadGrid RolloverBudgetOrganizationsRadGrid;
 
         protected Panel Voucher2sPanel;
 

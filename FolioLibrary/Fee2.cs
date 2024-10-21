@@ -154,16 +154,19 @@ namespace FolioLibrary
         [Column("content"), CustomValidation(typeof(Fee), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 42), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Payments", Order = 43)]
+        [Display(Name = "Actual Cost Records", Order = 43)]
+        public virtual ICollection<ActualCostRecord2> ActualCostRecord2s { get; set; }
+
+        [Display(Name = "Payments", Order = 44)]
         public virtual ICollection<Payment2> Payment2s { get; set; }
 
-        [Display(Name = "Refund Reasons", Order = 44)]
+        [Display(Name = "Refund Reasons", Order = 45)]
         public virtual ICollection<RefundReason2> RefundReason2s { get; set; }
 
-        [Display(Name = "User Summary Open Fees Fines", Order = 45)]
+        [Display(Name = "User Summary Open Fees Fines", Order = 46)]
         public virtual ICollection<UserSummaryOpenFeesFine> UserSummaryOpenFeesFines { get; set; }
 
-        [Display(Name = "Waive Reasons", Order = 46)]
+        [Display(Name = "Waive Reasons", Order = 47)]
         public virtual ICollection<WaiveReason2> WaiveReason2s { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Amount)} = {Amount}, {nameof(RemainingAmount)} = {RemainingAmount}, {nameof(DateCreated)} = {DateCreated}, {nameof(DateUpdated)} = {DateUpdated}, {nameof(StatusName)} = {StatusName}, {nameof(PaymentStatusName)} = {PaymentStatusName}, {nameof(FeeFineType)} = {FeeFineType}, {nameof(FeeFineOwner)} = {FeeFineOwner}, {nameof(Title)} = {Title}, {nameof(CallNumber)} = {CallNumber}, {nameof(Barcode)} = {Barcode}, {nameof(MaterialType)} = {MaterialType}, {nameof(ItemStatusName)} = {ItemStatusName}, {nameof(Location)} = {Location}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(DueTime)} = {DueTime}, {nameof(ReturnedTime)} = {ReturnedTime}, {nameof(LoanId)} = {LoanId}, {nameof(UserId)} = {UserId}, {nameof(ItemId)} = {ItemId}, {nameof(MaterialTypeId)} = {MaterialTypeId}, {nameof(FeeTypeId)} = {FeeTypeId}, {nameof(OwnerId)} = {OwnerId}, {nameof(HoldingId)} = {HoldingId}, {nameof(InstanceId)} = {InstanceId}, {nameof(Content)} = {Content} }}";

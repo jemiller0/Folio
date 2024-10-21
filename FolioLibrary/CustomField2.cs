@@ -37,7 +37,7 @@ namespace FolioLibrary
         [Column("ref_id"), Display(Name = "Ref Id", Order = 3), Editable(false), JsonProperty("refId"), StringLength(128)]
         public virtual string RefId { get; set; }
 
-        [Column("type"), Display(Order = 4), JsonProperty("type"), RegularExpression(@"^(RADIO_BUTTON|SINGLE_CHECKBOX|SINGLE_SELECT_DROPDOWN|MULTI_SELECT_DROPDOWN|TEXTBOX_SHORT|TEXTBOX_LONG)$"), Required, StringLength(1024)]
+        [Column("type"), Display(Order = 4), JsonProperty("type"), RegularExpression(@"^(RADIO_BUTTON|SINGLE_CHECKBOX|SINGLE_SELECT_DROPDOWN|MULTI_SELECT_DROPDOWN|TEXTBOX_SHORT|TEXTBOX_LONG|DATE_PICKER)$"), Required, StringLength(1024)]
         public virtual string Type { get; set; }
 
         [Column("entity_type"), Display(Name = "Entity Type", Order = 5), JsonProperty("entityType"), Required, StringLength(1024)]

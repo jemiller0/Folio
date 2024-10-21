@@ -64,6 +64,7 @@
                         <telerik:GridHyperLinkColumn HeaderText="Mobile Phone Number" DataTextField="MobilePhoneNumber" DataNavigateUrlFormatString="tel:{0}" DataNavigateUrlFields="MobilePhoneNumber" SortExpression="MobilePhoneNumber" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Birth Date" DataField="BirthDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
                         <telerik:GridBoundColumn HeaderText="Preferred Contact Type" DataField="PreferredContactType" AutoPostBackOnFilter="true" AllowSorting="false" />
+                        <telerik:GridBoundColumn HeaderText="Profile Picture Link" DataField="ProfilePictureLink" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Start Date" DataField="StartDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
                         <telerik:GridBoundColumn HeaderText="End Date" DataField="EndDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
                         <telerik:GridBoundColumn HeaderText="Source" DataField="Source" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />

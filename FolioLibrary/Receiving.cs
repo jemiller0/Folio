@@ -54,6 +54,8 @@ namespace FolioLibrary
         {
             Id = (Guid?)jObject.SelectToken("id"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
+            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToUniversalTime(),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId"),
             Polineid = (Guid?)jObject.SelectToken("poLineId"),
             Titleid = (Guid?)jObject.SelectToken("titleId")
         } : null;

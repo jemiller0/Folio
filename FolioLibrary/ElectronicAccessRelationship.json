@@ -10,6 +10,10 @@
       "description": "label for the type of relationship between a URL and an Instance",
       "type": "string"
     },
+    "source": {
+      "description": "Origin of the electronic access relationship record, e.g. 'local', 'consortium' etc.",
+      "type": "string"
+    },
     "metadata": {
       "title": "Metadata Schema",
       "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",

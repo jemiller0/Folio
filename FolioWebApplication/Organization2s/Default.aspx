@@ -90,6 +90,7 @@
                         <telerik:GridBoundColumn HeaderText="EDI Job Notify Error Only" DataField="EdiJobNotifyErrorOnly" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="EDI Job Scheduling Notes" DataField="EdiJobSchedulingNotes" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Is Vendor" DataField="IsVendor" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Is Donor" DataField="IsDonor" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="San Code" DataField="SanCode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridTemplateColumn HeaderText="Creation User" DataField="CreationUser.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">

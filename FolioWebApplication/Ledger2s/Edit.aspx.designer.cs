@@ -17,9 +17,9 @@ namespace FolioWebApplication.Ledger2s
 
         protected RadGrid LedgerAcquisitionsUnitsRadGrid;
 
-        protected Panel LedgerRollover2sPanel;
+        protected Panel Rollover2sPanel;
 
-        protected RadGrid LedgerRollover2sRadGrid;
+        protected RadGrid Rollover2sRadGrid;
 
         protected RadAjaxManager RadAjaxManager1;
     }

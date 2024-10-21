@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "purchase order line",
+  "javaName": "PoLine",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -72,6 +73,15 @@
           }
         }
       }
+    },
+    "claimingActive": {
+      "description": "Indicates if there is an active claim or dispute",
+      "type": "boolean",
+      "default": false
+    },
+    "claimingInterval": {
+      "description": "Specifies the time interval, in days, within which claims or disputes must be initiated",
+      "type": "integer"
     },
     "collection": {
       "description": "whether or not this purchase order line is for a collection",
@@ -174,6 +184,16 @@
           "description": "notes regarding receiving instructions",
           "type": "string"
         },
+        "isAcknowledged": {
+          "description": "Flag for acknowledge receiving note",
+          "type": "boolean",
+          "default": false
+        },
+        "isBinderyActive": {
+          "description": "Indicates that this POL is designated as required binding",
+          "type": "boolean",
+          "default": false
+        },
         "productIds": {
           "id": "productIds",
           "description": "a list of product identifiers",
@@ -224,6 +244,13 @@
     "donor": {
       "description": "the donor contributing to this purchase order line",
       "type": "string"
+    },
+    "donorOrganizationIds": {
+      "description": "donor organization ids associated with this fund",
+      "type": "array",
+      "items": {
+        "$ref": "#/properties/id"
+      }
     },
     "eresource": {
       "description": "purchase order line e-resource details",
@@ -373,18 +400,29 @@
             "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
           },
           "quantity": {
-            "description": "combined/total quanitity of physical and electronic items",
+            "description": "Combined/total quanitity of physical and electronic items",
             "type": "integer"
           },
           "quantityElectronic": {
-            "description": "quantity of electronic items",
+            "description": "Quantity of electronic items",
             "type": "integer"
           },
           "quantityPhysical": {
-            "description": "quantity of physical items",
+            "description": "Quantity of physical items",
             "type": "integer"
+          },
+          "tenantId": {
+            "description": "Associated tenant for ECS-enabled clusters",
+            "type": "string"
           }
         }
+      }
+    },
+    "searchLocationIds": {
+      "description": "location ids used for search",
+      "type": "array",
+      "items": {
+        "$ref": "#/properties/id"
       }
     },
     "lastEDIExportDate": {
@@ -634,6 +672,10 @@
           }
         }
       }
+    },
+    "customFields": {
+      "description": "Object that contains custom field",
+      "type": "object"
     },
     "metadata": {
       "title": "Metadata Schema",

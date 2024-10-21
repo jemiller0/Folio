@@ -117,6 +117,10 @@ namespace FolioWebApplication.Instance2s
 
         protected RadGrid Relationships1RadGrid;
 
+        protected Panel Request2sPanel;
+
+        protected RadGrid Request2sRadGrid;
+
         protected Panel SeriesPanel;
 
         protected RadGrid SeriesRadGrid;

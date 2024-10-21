@@ -26,8 +26,7 @@
     },
     "code": {
       "description": "The code of the fiscal year",
-      "type": "string",
-      "pattern": "^[a-zA-Z]+[0-9]{4}$"
+      "type": "string"
     },
     "currency": {
       "description": "Currency code which is recorded when the FY ends, otherwise the system currency can be assumed",
@@ -98,6 +97,11 @@
         },
         "awaitingPayment": {
           "description": "Summary of all related to this fiscal year budgets awaitingPayment",
+          "readonly": true,
+          "type": "number"
+        },
+        "credits": {
+          "description": "Summary of all related to this fiscal year budgets credits",
           "readonly": true,
           "type": "number"
         },

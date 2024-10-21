@@ -9,6 +9,10 @@ namespace FolioWebApplication.IdType2s
 
         protected FormView IdType2FormView;
 
+        protected Panel ActualCostRecordIdentifiersPanel;
+
+        protected RadGrid ActualCostRecordIdentifiersRadGrid;
+
         protected Panel IdentifiersPanel;
 
         protected RadGrid IdentifiersRadGrid;

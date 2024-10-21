@@ -1,9 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "A financial transaction",
-  "extends": {
-    "$ref": "../../common/schemas/entity.json"
-  },
+  "javaName": "transaction",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -52,6 +50,11 @@
       "properties": {
         "amountAwaitingPayment": {
           "description": "Deprecated! Going to be removed in next release. The amount of awaiting for payment",
+          "type": "number",
+          "default": 0
+        },
+        "amountCredited": {
+          "description": "The amount currently credited to this encumbrance",
           "type": "number",
           "default": 0
         },

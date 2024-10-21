@@ -39,7 +39,7 @@ namespace FolioWebApplication.FiscalYear2s
             if (Session["Budget2sPermission"] == null) return;
             var id = (Guid?)FiscalYear2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "BudgetStatus", "budgetStatus" }, { "AllowableEncumbrance", "allowableEncumbrance" }, { "AllowableExpenditure", "allowableExpenditure" }, { "Allocated", "allocated" }, { "AwaitingPayment", "awaitingPayment" }, { "Available", "available" }, { "Encumbered", "encumbered" }, { "Expenditures", "expenditures" }, { "NetTransfers", "netTransfers" }, { "Unavailable", "unavailable" }, { "OverEncumbrance", "overEncumbrance" }, { "OverExpended", "overExpended" }, { "FundId", "fundId" }, { "FiscalYearId", "fiscalYearId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "InitialAllocation", "initialAllocation" }, { "AllocationTo", "allocationTo" }, { "AllocationFrom", "allocationFrom" }, { "TotalFunding", "totalFunding" }, { "CashBalance", "cashBalance" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "BudgetStatus", "budgetStatus" }, { "AllowableEncumbrance", "allowableEncumbrance" }, { "AllowableExpenditure", "allowableExpenditure" }, { "Allocated", "allocated" }, { "AwaitingPayment", "awaitingPayment" }, { "Available", "available" }, { "Credits", "credits" }, { "Encumbered", "encumbered" }, { "Expenditures", "expenditures" }, { "NetTransfers", "netTransfers" }, { "Unavailable", "unavailable" }, { "OverEncumbrance", "overEncumbrance" }, { "OverExpended", "overExpended" }, { "FundId", "fundId" }, { "FiscalYearId", "fiscalYearId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "InitialAllocation", "initialAllocation" }, { "AllocationTo", "allocationTo" }, { "AllocationFrom", "allocationFrom" }, { "TotalFunding", "totalFunding" }, { "CashBalance", "cashBalance" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"fiscalYearId == \"{id}\"",
@@ -51,6 +51,7 @@ namespace FolioWebApplication.FiscalYear2s
                 Global.GetCqlFilter(Budget2sRadGrid, "Allocated", "allocated"),
                 Global.GetCqlFilter(Budget2sRadGrid, "AwaitingPayment", "awaitingPayment"),
                 Global.GetCqlFilter(Budget2sRadGrid, "Available", "available"),
+                Global.GetCqlFilter(Budget2sRadGrid, "Credits", "credits"),
                 Global.GetCqlFilter(Budget2sRadGrid, "Encumbered", "encumbered"),
                 Global.GetCqlFilter(Budget2sRadGrid, "Expenditures", "expenditures"),
                 Global.GetCqlFilter(Budget2sRadGrid, "NetTransfers", "netTransfers"),
@@ -176,7 +177,7 @@ namespace FolioWebApplication.FiscalYear2s
             if (Session["Ledger2sPermission"] == null) return;
             var id = (Guid?)FiscalYear2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Code", "code" }, { "Description", "description" }, { "FiscalYearOneId", "fiscalYearOneId" }, { "LedgerStatus", "ledgerStatus" }, { "Allocated", "allocated" }, { "Available", "available" }, { "NetTransfers", "netTransfers" }, { "Unavailable", "unavailable" }, { "Currency", "currency" }, { "RestrictEncumbrance", "restrictEncumbrance" }, { "RestrictExpenditures", "restrictExpenditures" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "InitialAllocation", "initialAllocation" }, { "AllocationTo", "allocationTo" }, { "AllocationFrom", "allocationFrom" }, { "TotalFunding", "totalFunding" }, { "CashBalance", "cashBalance" }, { "AwaitingPayment", "awaitingPayment" }, { "Encumbered", "encumbered" }, { "Expenditures", "expenditures" }, { "OverEncumbrance", "overEncumbrance" }, { "OverExpended", "overExpended" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Code", "code" }, { "Description", "description" }, { "FiscalYearOneId", "fiscalYearOneId" }, { "LedgerStatus", "ledgerStatus" }, { "Allocated", "allocated" }, { "Available", "available" }, { "NetTransfers", "netTransfers" }, { "Unavailable", "unavailable" }, { "Currency", "currency" }, { "RestrictEncumbrance", "restrictEncumbrance" }, { "RestrictExpenditures", "restrictExpenditures" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "InitialAllocation", "initialAllocation" }, { "AllocationTo", "allocationTo" }, { "AllocationFrom", "allocationFrom" }, { "TotalFunding", "totalFunding" }, { "CashBalance", "cashBalance" }, { "AwaitingPayment", "awaitingPayment" }, { "Credits", "credits" }, { "Encumbered", "encumbered" }, { "Expenditures", "expenditures" }, { "OverEncumbrance", "overEncumbrance" }, { "OverExpended", "overExpended" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"fiscalYearOneId == \"{id}\"",
@@ -202,6 +203,7 @@ namespace FolioWebApplication.FiscalYear2s
                 Global.GetCqlFilter(Ledger2sRadGrid, "TotalFunding", "totalFunding"),
                 Global.GetCqlFilter(Ledger2sRadGrid, "CashBalance", "cashBalance"),
                 Global.GetCqlFilter(Ledger2sRadGrid, "AwaitingPayment", "awaitingPayment"),
+                Global.GetCqlFilter(Ledger2sRadGrid, "Credits", "credits"),
                 Global.GetCqlFilter(Ledger2sRadGrid, "Encumbered", "encumbered"),
                 Global.GetCqlFilter(Ledger2sRadGrid, "Expenditures", "expenditures"),
                 Global.GetCqlFilter(Ledger2sRadGrid, "OverEncumbrance", "overEncumbrance"),
@@ -217,64 +219,121 @@ namespace FolioWebApplication.FiscalYear2s
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
-        protected void LedgerRollover2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        protected void Rollover2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            if (Session["LedgerRollover2sPermission"] == null) return;
+            if (Session["Rollover2sPermission"] == null) return;
             var id = (Guid?)FiscalYear2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "LedgerId", "ledgerId" }, { "FromFiscalYearId", "fromFiscalYearId" }, { "ToFiscalYearId", "toFiscalYearId" }, { "RestrictEncumbrance", "restrictEncumbrance" }, { "RestrictExpenditures", "restrictExpenditures" }, { "NeedCloseBudgets", "needCloseBudgets" }, { "CurrencyFactor", "currencyFactor" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "LedgerId", "ledgerId" }, { "RolloverType", "rolloverType" }, { "FromFiscalYearId", "fromFiscalYearId" }, { "ToFiscalYearId", "toFiscalYearId" }, { "RestrictEncumbrance", "restrictEncumbrance" }, { "RestrictExpenditures", "restrictExpenditures" }, { "NeedCloseBudgets", "needCloseBudgets" }, { "CurrencyFactor", "currencyFactor" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"fromFiscalYearId == \"{id}\"",
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "Id", "id"),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "Ledger.Name", "ledgerId", "name", folioServiceContext.FolioServiceClient.Ledgers),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "ToFiscalYear.Name", "toFiscalYearId", "name", folioServiceContext.FolioServiceClient.FiscalYears),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "RestrictEncumbrance", "restrictEncumbrance"),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "RestrictExpenditures", "restrictExpenditures"),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "NeedCloseBudgets", "needCloseBudgets"),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "CurrencyFactor", "currencyFactor"),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "CreationTime", "metadata.createdDate"),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
-                Global.GetCqlFilter(LedgerRollover2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+                Global.GetCqlFilter(Rollover2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(Rollover2sRadGrid, "Ledger.Name", "ledgerId", "name", folioServiceContext.FolioServiceClient.Ledgers),
+                Global.GetCqlFilter(Rollover2sRadGrid, "RolloverType", "rolloverType"),
+                Global.GetCqlFilter(Rollover2sRadGrid, "ToFiscalYear.Name", "toFiscalYearId", "name", folioServiceContext.FolioServiceClient.FiscalYears),
+                Global.GetCqlFilter(Rollover2sRadGrid, "RestrictEncumbrance", "restrictEncumbrance"),
+                Global.GetCqlFilter(Rollover2sRadGrid, "RestrictExpenditures", "restrictExpenditures"),
+                Global.GetCqlFilter(Rollover2sRadGrid, "NeedCloseBudgets", "needCloseBudgets"),
+                Global.GetCqlFilter(Rollover2sRadGrid, "CurrencyFactor", "currencyFactor"),
+                Global.GetCqlFilter(Rollover2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(Rollover2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Rollover2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(Rollover2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            LedgerRollover2sRadGrid.DataSource = folioServiceContext.LedgerRollover2s(out var i, where, LedgerRollover2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[LedgerRollover2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(LedgerRollover2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, LedgerRollover2sRadGrid.PageSize * LedgerRollover2sRadGrid.CurrentPageIndex, LedgerRollover2sRadGrid.PageSize, true);
-            LedgerRollover2sRadGrid.VirtualItemCount = i;
-            if (LedgerRollover2sRadGrid.MasterTableView.FilterExpression == "")
+            Rollover2sRadGrid.DataSource = folioServiceContext.Rollover2s(out var i, where, Rollover2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Rollover2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Rollover2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Rollover2sRadGrid.PageSize * Rollover2sRadGrid.CurrentPageIndex, Rollover2sRadGrid.PageSize, true);
+            Rollover2sRadGrid.VirtualItemCount = i;
+            if (Rollover2sRadGrid.MasterTableView.FilterExpression == "")
             {
-                LedgerRollover2sRadGrid.AllowFilteringByColumn = LedgerRollover2sRadGrid.VirtualItemCount > 10;
-                LedgerRollover2sPanel.Visible = FiscalYear2FormView.DataKey.Value != null && Session["LedgerRollover2sPermission"] != null && LedgerRollover2sRadGrid.VirtualItemCount > 0;
+                Rollover2sRadGrid.AllowFilteringByColumn = Rollover2sRadGrid.VirtualItemCount > 10;
+                Rollover2sPanel.Visible = FiscalYear2FormView.DataKey.Value != null && Session["Rollover2sPermission"] != null && Rollover2sRadGrid.VirtualItemCount > 0;
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
-        protected void LedgerRollover2s1RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        protected void Rollover2s1RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            if (Session["LedgerRollover2sPermission"] == null) return;
+            if (Session["Rollover2sPermission"] == null) return;
             var id = (Guid?)FiscalYear2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "LedgerId", "ledgerId" }, { "FromFiscalYearId", "fromFiscalYearId" }, { "ToFiscalYearId", "toFiscalYearId" }, { "RestrictEncumbrance", "restrictEncumbrance" }, { "RestrictExpenditures", "restrictExpenditures" }, { "NeedCloseBudgets", "needCloseBudgets" }, { "CurrencyFactor", "currencyFactor" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "LedgerId", "ledgerId" }, { "RolloverType", "rolloverType" }, { "FromFiscalYearId", "fromFiscalYearId" }, { "ToFiscalYearId", "toFiscalYearId" }, { "RestrictEncumbrance", "restrictEncumbrance" }, { "RestrictExpenditures", "restrictExpenditures" }, { "NeedCloseBudgets", "needCloseBudgets" }, { "CurrencyFactor", "currencyFactor" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"toFiscalYearId == \"{id}\"",
-                Global.GetCqlFilter(LedgerRollover2s1RadGrid, "Id", "id"),
-                Global.GetCqlFilter(LedgerRollover2s1RadGrid, "Ledger.Name", "ledgerId", "name", folioServiceContext.FolioServiceClient.Ledgers),
-                Global.GetCqlFilter(LedgerRollover2s1RadGrid, "FromFiscalYear.Name", "fromFiscalYearId", "name", folioServiceContext.FolioServiceClient.FiscalYears),
-                Global.GetCqlFilter(LedgerRollover2s1RadGrid, "RestrictEncumbrance", "restrictEncumbrance"),
-                Global.GetCqlFilter(LedgerRollover2s1RadGrid, "RestrictExpenditures", "restrictExpenditures"),
-                Global.GetCqlFilter(LedgerRollover2s1RadGrid, "NeedCloseBudgets", "needCloseBudgets"),
-                Global.GetCqlFilter(LedgerRollover2s1RadGrid, "CurrencyFactor", "currencyFactor"),
-                Global.GetCqlFilter(LedgerRollover2s1RadGrid, "CreationTime", "metadata.createdDate"),
-                Global.GetCqlFilter(LedgerRollover2s1RadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
-                Global.GetCqlFilter(LedgerRollover2s1RadGrid, "LastWriteTime", "metadata.updatedDate"),
-                Global.GetCqlFilter(LedgerRollover2s1RadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+                Global.GetCqlFilter(Rollover2s1RadGrid, "Id", "id"),
+                Global.GetCqlFilter(Rollover2s1RadGrid, "Ledger.Name", "ledgerId", "name", folioServiceContext.FolioServiceClient.Ledgers),
+                Global.GetCqlFilter(Rollover2s1RadGrid, "RolloverType", "rolloverType"),
+                Global.GetCqlFilter(Rollover2s1RadGrid, "FromFiscalYear.Name", "fromFiscalYearId", "name", folioServiceContext.FolioServiceClient.FiscalYears),
+                Global.GetCqlFilter(Rollover2s1RadGrid, "RestrictEncumbrance", "restrictEncumbrance"),
+                Global.GetCqlFilter(Rollover2s1RadGrid, "RestrictExpenditures", "restrictExpenditures"),
+                Global.GetCqlFilter(Rollover2s1RadGrid, "NeedCloseBudgets", "needCloseBudgets"),
+                Global.GetCqlFilter(Rollover2s1RadGrid, "CurrencyFactor", "currencyFactor"),
+                Global.GetCqlFilter(Rollover2s1RadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(Rollover2s1RadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Rollover2s1RadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(Rollover2s1RadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            LedgerRollover2s1RadGrid.DataSource = folioServiceContext.LedgerRollover2s(out var i, where, LedgerRollover2s1RadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[LedgerRollover2s1RadGrid.MasterTableView.SortExpressions[0].FieldName]}{(LedgerRollover2s1RadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, LedgerRollover2s1RadGrid.PageSize * LedgerRollover2s1RadGrid.CurrentPageIndex, LedgerRollover2s1RadGrid.PageSize, true);
-            LedgerRollover2s1RadGrid.VirtualItemCount = i;
-            if (LedgerRollover2s1RadGrid.MasterTableView.FilterExpression == "")
+            Rollover2s1RadGrid.DataSource = folioServiceContext.Rollover2s(out var i, where, Rollover2s1RadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Rollover2s1RadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Rollover2s1RadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Rollover2s1RadGrid.PageSize * Rollover2s1RadGrid.CurrentPageIndex, Rollover2s1RadGrid.PageSize, true);
+            Rollover2s1RadGrid.VirtualItemCount = i;
+            if (Rollover2s1RadGrid.MasterTableView.FilterExpression == "")
             {
-                LedgerRollover2s1RadGrid.AllowFilteringByColumn = LedgerRollover2s1RadGrid.VirtualItemCount > 10;
-                LedgerRollover2s1Panel.Visible = FiscalYear2FormView.DataKey.Value != null && Session["LedgerRollover2sPermission"] != null && LedgerRollover2s1RadGrid.VirtualItemCount > 0;
+                Rollover2s1RadGrid.AllowFilteringByColumn = Rollover2s1RadGrid.VirtualItemCount > 10;
+                Rollover2s1Panel.Visible = FiscalYear2FormView.DataKey.Value != null && Session["Rollover2sPermission"] != null && Rollover2s1RadGrid.VirtualItemCount > 0;
+            }
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
+        }
+
+        protected void RolloverBudget2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["RolloverBudget2sPermission"] == null) return;
+            var id = (Guid?)FiscalYear2FormView.DataKey.Value;
+            if (id == null) return;
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "BudgetId", "budgetId" }, { "RolloverId", "ledgerRolloverId" }, { "Name", "name" }, { "FundDetailsName", "fundDetails.name" }, { "FundDetailsCode", "fundDetails.code" }, { "FundDetailsFundStatus", "fundDetails.fundStatus" }, { "FundDetailsFundTypeId", "fundDetails.fundTypeId" }, { "FundDetailsFundTypeName", "fundDetails.fundTypeName" }, { "FundDetailsExternalAccountNo", "fundDetails.externalAccountNo" }, { "FundDetailsDescription", "fundDetails.description" }, { "FundDetailsRestrictByLocations", "fundDetails.restrictByLocations" }, { "BudgetStatus", "budgetStatus" }, { "AllowableEncumbrance", "allowableEncumbrance" }, { "AllowableExpenditure", "allowableExpenditure" }, { "Allocated", "allocated" }, { "AwaitingPayment", "awaitingPayment" }, { "Available", "available" }, { "Credits", "credits" }, { "Encumbered", "encumbered" }, { "Expenditures", "expenditures" }, { "NetTransfers", "netTransfers" }, { "Unavailable", "unavailable" }, { "OverEncumbrance", "overEncumbrance" }, { "OverExpended", "overExpended" }, { "FundId", "fundId" }, { "FiscalYearId", "fiscalYearId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" }, { "InitialAllocation", "initialAllocation" }, { "AllocationTo", "allocationTo" }, { "AllocationFrom", "allocationFrom" }, { "TotalFunding", "totalFunding" }, { "CashBalance", "cashBalance" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                $"fiscalYearId == \"{id}\"",
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "Id", "id"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "Budget.Name", "budgetId", "name", folioServiceContext.FolioServiceClient.Budgets),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "Rollover.Id", "ledgerRolloverId", "id", folioServiceContext.FolioServiceClient.Rollovers),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "FundDetailsName", "fundDetails.name"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "FundDetailsCode", "fundDetails.code"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "FundDetailsFundStatus", "fundDetails.fundStatus"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "FundDetailsFundType.Name", "fundDetails.fundTypeId", "name", folioServiceContext.FolioServiceClient.FundTypes),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "FundDetailsFundTypeName", "fundDetails.fundTypeName"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "FundDetailsExternalAccountNo", "fundDetails.externalAccountNo"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "FundDetailsDescription", "fundDetails.description"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "FundDetailsRestrictByLocations", "fundDetails.restrictByLocations"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "BudgetStatus", "budgetStatus"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "AllowableEncumbrance", "allowableEncumbrance"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "AllowableExpenditure", "allowableExpenditure"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "Allocated", "allocated"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "AwaitingPayment", "awaitingPayment"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "Available", "available"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "Credits", "credits"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "Encumbered", "encumbered"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "Expenditures", "expenditures"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "NetTransfers", "netTransfers"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "Unavailable", "unavailable"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "OverEncumbrance", "overEncumbrance"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "OverExpended", "overExpended"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "Fund.Name", "fundId", "name", folioServiceContext.FolioServiceClient.Funds),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "InitialAllocation", "initialAllocation"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "AllocationTo", "allocationTo"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "AllocationFrom", "allocationFrom"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "TotalFunding", "totalFunding"),
+                Global.GetCqlFilter(RolloverBudget2sRadGrid, "CashBalance", "cashBalance")
+            }.Where(s => s != null)));
+            RolloverBudget2sRadGrid.DataSource = folioServiceContext.RolloverBudget2s(out var i, where, RolloverBudget2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[RolloverBudget2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(RolloverBudget2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, RolloverBudget2sRadGrid.PageSize * RolloverBudget2sRadGrid.CurrentPageIndex, RolloverBudget2sRadGrid.PageSize, true);
+            RolloverBudget2sRadGrid.VirtualItemCount = i;
+            if (RolloverBudget2sRadGrid.MasterTableView.FilterExpression == "")
+            {
+                RolloverBudget2sRadGrid.AllowFilteringByColumn = RolloverBudget2sRadGrid.VirtualItemCount > 10;
+                RolloverBudget2sPanel.Visible = FiscalYear2FormView.DataKey.Value != null && Session["RolloverBudget2sPermission"] != null && RolloverBudget2sRadGrid.VirtualItemCount > 0;
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
@@ -284,7 +343,7 @@ namespace FolioWebApplication.FiscalYear2s
             if (Session["Transaction2sPermission"] == null) return;
             var id = (Guid?)FiscalYear2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Amount", "amount" }, { "AwaitingPaymentEncumbranceId", "awaitingPayment.encumbranceId" }, { "AwaitingPaymentReleaseEncumbrance", "awaitingPayment.releaseEncumbrance" }, { "Currency", "currency" }, { "Description", "description" }, { "AwaitingPaymentAmount", "encumbrance.amountAwaitingPayment" }, { "ExpendedAmount", "encumbrance.amountExpended" }, { "InitialEncumberedAmount", "encumbrance.initialAmountEncumbered" }, { "Status", "encumbrance.status" }, { "OrderType", "encumbrance.orderType" }, { "OrderStatus", "encumbrance.orderStatus" }, { "Subscription", "encumbrance.subscription" }, { "ReEncumber", "encumbrance.reEncumber" }, { "OrderId", "encumbrance.sourcePurchaseOrderId" }, { "OrderItemId", "encumbrance.sourcePoLineId" }, { "ExpenseClassId", "expenseClassId" }, { "FiscalYearId", "fiscalYearId" }, { "FromFundId", "fromFundId" }, { "InvoiceCancelled", "invoiceCancelled" }, { "PaymentEncumbranceId", "paymentEncumbranceId" }, { "Source", "source" }, { "SourceFiscalYearId", "sourceFiscalYearId" }, { "InvoiceId", "sourceInvoiceId" }, { "InvoiceItemId", "sourceInvoiceLineId" }, { "ToFundId", "toFundId" }, { "TransactionType", "transactionType" }, { "VoidedAmount", "voidedAmount" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Amount", "amount" }, { "AwaitingPaymentEncumbranceId", "awaitingPayment.encumbranceId" }, { "AwaitingPaymentReleaseEncumbrance", "awaitingPayment.releaseEncumbrance" }, { "Currency", "currency" }, { "Description", "description" }, { "AwaitingPaymentAmount", "encumbrance.amountAwaitingPayment" }, { "EncumbranceAmountCredited", "encumbrance.amountCredited" }, { "ExpendedAmount", "encumbrance.amountExpended" }, { "InitialEncumberedAmount", "encumbrance.initialAmountEncumbered" }, { "Status", "encumbrance.status" }, { "OrderType", "encumbrance.orderType" }, { "OrderStatus", "encumbrance.orderStatus" }, { "Subscription", "encumbrance.subscription" }, { "ReEncumber", "encumbrance.reEncumber" }, { "OrderId", "encumbrance.sourcePurchaseOrderId" }, { "OrderItemId", "encumbrance.sourcePoLineId" }, { "ExpenseClassId", "expenseClassId" }, { "FiscalYearId", "fiscalYearId" }, { "FromFundId", "fromFundId" }, { "InvoiceCancelled", "invoiceCancelled" }, { "PaymentEncumbranceId", "paymentEncumbranceId" }, { "Source", "source" }, { "SourceFiscalYearId", "sourceFiscalYearId" }, { "InvoiceId", "sourceInvoiceId" }, { "InvoiceItemId", "sourceInvoiceLineId" }, { "ToFundId", "toFundId" }, { "TransactionType", "transactionType" }, { "VoidedAmount", "voidedAmount" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"sourceFiscalYearId == \"{id}\"",
@@ -295,6 +354,7 @@ namespace FolioWebApplication.FiscalYear2s
                 Global.GetCqlFilter(Transaction2sRadGrid, "Currency", "currency"),
                 Global.GetCqlFilter(Transaction2sRadGrid, "Description", "description"),
                 Global.GetCqlFilter(Transaction2sRadGrid, "AwaitingPaymentAmount", "encumbrance.amountAwaitingPayment"),
+                Global.GetCqlFilter(Transaction2sRadGrid, "EncumbranceAmountCredited", "encumbrance.amountCredited"),
                 Global.GetCqlFilter(Transaction2sRadGrid, "ExpendedAmount", "encumbrance.amountExpended"),
                 Global.GetCqlFilter(Transaction2sRadGrid, "InitialEncumberedAmount", "encumbrance.initialAmountEncumbered"),
                 Global.GetCqlFilter(Transaction2sRadGrid, "Status", "encumbrance.status"),
@@ -335,7 +395,7 @@ namespace FolioWebApplication.FiscalYear2s
             if (Session["Transaction2sPermission"] == null) return;
             var id = (Guid?)FiscalYear2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Amount", "amount" }, { "AwaitingPaymentEncumbranceId", "awaitingPayment.encumbranceId" }, { "AwaitingPaymentReleaseEncumbrance", "awaitingPayment.releaseEncumbrance" }, { "Currency", "currency" }, { "Description", "description" }, { "AwaitingPaymentAmount", "encumbrance.amountAwaitingPayment" }, { "ExpendedAmount", "encumbrance.amountExpended" }, { "InitialEncumberedAmount", "encumbrance.initialAmountEncumbered" }, { "Status", "encumbrance.status" }, { "OrderType", "encumbrance.orderType" }, { "OrderStatus", "encumbrance.orderStatus" }, { "Subscription", "encumbrance.subscription" }, { "ReEncumber", "encumbrance.reEncumber" }, { "OrderId", "encumbrance.sourcePurchaseOrderId" }, { "OrderItemId", "encumbrance.sourcePoLineId" }, { "ExpenseClassId", "expenseClassId" }, { "FiscalYearId", "fiscalYearId" }, { "FromFundId", "fromFundId" }, { "InvoiceCancelled", "invoiceCancelled" }, { "PaymentEncumbranceId", "paymentEncumbranceId" }, { "Source", "source" }, { "SourceFiscalYearId", "sourceFiscalYearId" }, { "InvoiceId", "sourceInvoiceId" }, { "InvoiceItemId", "sourceInvoiceLineId" }, { "ToFundId", "toFundId" }, { "TransactionType", "transactionType" }, { "VoidedAmount", "voidedAmount" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Amount", "amount" }, { "AwaitingPaymentEncumbranceId", "awaitingPayment.encumbranceId" }, { "AwaitingPaymentReleaseEncumbrance", "awaitingPayment.releaseEncumbrance" }, { "Currency", "currency" }, { "Description", "description" }, { "AwaitingPaymentAmount", "encumbrance.amountAwaitingPayment" }, { "EncumbranceAmountCredited", "encumbrance.amountCredited" }, { "ExpendedAmount", "encumbrance.amountExpended" }, { "InitialEncumberedAmount", "encumbrance.initialAmountEncumbered" }, { "Status", "encumbrance.status" }, { "OrderType", "encumbrance.orderType" }, { "OrderStatus", "encumbrance.orderStatus" }, { "Subscription", "encumbrance.subscription" }, { "ReEncumber", "encumbrance.reEncumber" }, { "OrderId", "encumbrance.sourcePurchaseOrderId" }, { "OrderItemId", "encumbrance.sourcePoLineId" }, { "ExpenseClassId", "expenseClassId" }, { "FiscalYearId", "fiscalYearId" }, { "FromFundId", "fromFundId" }, { "InvoiceCancelled", "invoiceCancelled" }, { "PaymentEncumbranceId", "paymentEncumbranceId" }, { "Source", "source" }, { "SourceFiscalYearId", "sourceFiscalYearId" }, { "InvoiceId", "sourceInvoiceId" }, { "InvoiceItemId", "sourceInvoiceLineId" }, { "ToFundId", "toFundId" }, { "TransactionType", "transactionType" }, { "VoidedAmount", "voidedAmount" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"fiscalYearId == \"{id}\"",
@@ -346,6 +406,7 @@ namespace FolioWebApplication.FiscalYear2s
                 Global.GetCqlFilter(Transaction2s1RadGrid, "Currency", "currency"),
                 Global.GetCqlFilter(Transaction2s1RadGrid, "Description", "description"),
                 Global.GetCqlFilter(Transaction2s1RadGrid, "AwaitingPaymentAmount", "encumbrance.amountAwaitingPayment"),
+                Global.GetCqlFilter(Transaction2s1RadGrid, "EncumbranceAmountCredited", "encumbrance.amountCredited"),
                 Global.GetCqlFilter(Transaction2s1RadGrid, "ExpendedAmount", "encumbrance.amountExpended"),
                 Global.GetCqlFilter(Transaction2s1RadGrid, "InitialEncumberedAmount", "encumbrance.initialAmountEncumbered"),
                 Global.GetCqlFilter(Transaction2s1RadGrid, "Status", "encumbrance.status"),

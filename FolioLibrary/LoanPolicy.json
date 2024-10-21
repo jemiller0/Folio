@@ -1,5 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Rules governing loans",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -7,15 +8,19 @@
       "type": "string"
     },
     "name": {
+      "description": "The name of the policy.",
       "type": "string"
     },
     "description": {
+      "description": "Description of the loan policy",
       "type": "string"
     },
     "loanable": {
+      "description": "Flag that indicates whether this policy allows loans",
       "type": "boolean"
     },
     "loansPolicy": {
+      "description": "Settings for loans",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -24,6 +29,7 @@
           "type": "string"
         },
         "period": {
+          "description": "Time interval defined by its duration",
           "type": "object",
           "additionalProperties": false,
           "properties": {
@@ -76,6 +82,7 @@
       "type": "boolean"
     },
     "renewalsPolicy": {
+      "description": "Settings for renewals",
       "type": "object",
       "properties": {
         "unlimited": {
@@ -104,10 +111,12 @@
       }
     },
     "requestManagement": {
+      "description": "Settings for various request types",
       "type": "object",
       "additionalProperties": false,
       "properties": {
         "recalls": {
+          "description": "Settings for recall requests",
           "type": "object",
           "additionalProperties": false,
           "properties": {
@@ -131,6 +140,7 @@
           }
         },
         "holds": {
+          "description": "Settings for hold requests",
           "type": "object",
           "additionalProperties": false,
           "properties": {
@@ -147,6 +157,7 @@
           }
         },
         "pages": {
+          "description": "Settings for page requests",
           "type": "object",
           "additionalProperties": false,
           "properties": {

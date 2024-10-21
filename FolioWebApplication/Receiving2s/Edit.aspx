@@ -17,12 +17,12 @@
                                     <asp:HyperLink ID="IdHyperLink" runat="server" Text='<%# Eval("Id") %>' NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("Caption") != null %>'>
+                            <tr runat="server" visible='<%# Eval("DisplaySummary") != null %>'>
                                 <td>
-                                    <asp:Label ID="CaptionLabel" runat="server" Text="Caption:" AssociatedControlID="CaptionLiteral" />
+                                    <asp:Label ID="DisplaySummaryLabel" runat="server" Text="Display Summary:" AssociatedControlID="DisplaySummaryLiteral" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="CaptionLiteral" runat="server" Text='<%#: Eval("Caption") %>' />
+                                    <asp:Literal ID="DisplaySummaryLiteral" runat="server" Text='<%#: Eval("DisplaySummary") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Comment") != null %>'>
@@ -47,6 +47,22 @@
                                 </td>
                                 <td>
                                     <asp:HyperLink ID="ItemHyperLink" runat="server" Text='<%# Eval("Item.ShortId") %>' NavigateUrl='<%# $"~/Item2s/Edit.aspx?Id={Eval("ItemId")}" %>' Enabled='<%# Session["Item2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("BindItemId") != null %>'>
+                                <td>
+                                    <asp:Label ID="BindItemIdLabel" runat="server" Text="Bind Item Id:" AssociatedControlID="BindItemIdLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="BindItemIdLiteral" runat="server" Text='<%#: Eval("BindItemId") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("BindItemTenantId") != null %>'>
+                                <td>
+                                    <asp:Label ID="BindItemTenantIdLabel" runat="server" Text="Bind Item Tenant Id:" AssociatedControlID="BindItemTenantIdLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="BindItemTenantIdLiteral" runat="server" Text='<%#: Eval("BindItemTenantId") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Location") != null %>'>
@@ -81,12 +97,28 @@
                                     <asp:HyperLink ID="HoldingHyperLink" runat="server" Text='<%# Eval("Holding.ShortId") %>' NavigateUrl='<%# $"~/Holding2s/Edit.aspx?Id={Eval("HoldingId")}" %>' Enabled='<%# Session["Holding2sPermission"] != null %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("ReceivingTenantId") != null %>'>
+                                <td>
+                                    <asp:Label ID="ReceivingTenantIdLabel" runat="server" Text="Receiving Tenant Id:" AssociatedControlID="ReceivingTenantIdLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="ReceivingTenantIdLiteral" runat="server" Text='<%#: Eval("ReceivingTenantId") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("DisplayOnHolding") != null %>'>
                                 <td>
                                     <asp:Label ID="DisplayOnHoldingLabel" runat="server" Text="Display On Holding:" AssociatedControlID="DisplayOnHoldingLiteral" />
                                 </td>
                                 <td>
                                     <asp:Literal ID="DisplayOnHoldingLiteral" runat="server" Text='<%#: Eval("DisplayOnHolding") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("DisplayToPublic") != null %>'>
+                                <td>
+                                    <asp:Label ID="DisplayToPublicLabel" runat="server" Text="Display To Public:" AssociatedControlID="DisplayToPublicLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="DisplayToPublicLiteral" runat="server" Text='<%#: Eval("DisplayToPublic") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Enumeration") != null %>'>
@@ -103,6 +135,30 @@
                                 </td>
                                 <td>
                                     <asp:Literal ID="ChronologyLiteral" runat="server" Text='<%#: Eval("Chronology") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Barcode") != null %>'>
+                                <td>
+                                    <asp:Label ID="BarcodeLabel" runat="server" Text="Barcode:" AssociatedControlID="BarcodeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="BarcodeLiteral" runat="server" Text='<%#: Eval("Barcode") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("AccessionNumber") != null %>'>
+                                <td>
+                                    <asp:Label ID="AccessionNumberLabel" runat="server" Text="Accession Number:" AssociatedControlID="AccessionNumberLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="AccessionNumberLiteral" runat="server" Text='<%#: Eval("AccessionNumber") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("CallNumber") != null %>'>
+                                <td>
+                                    <asp:Label ID="CallNumberLabel" runat="server" Text="Call Number:" AssociatedControlID="CallNumberLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="CallNumberLiteral" runat="server" Text='<%#: Eval("CallNumber") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("DiscoverySuppress") != null %>'>
@@ -137,6 +193,14 @@
                                     <asp:Literal ID="SupplementLiteral" runat="server" Text='<%#: Eval("Supplement") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("IsBound") != null %>'>
+                                <td>
+                                    <asp:Label ID="IsBoundLabel" runat="server" Text="Is Bound:" AssociatedControlID="IsBoundLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="IsBoundLiteral" runat="server" Text='<%#: Eval("IsBound") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("ReceiptTime") != null %>'>
                                 <td>
                                     <asp:Label ID="ReceiptTimeLabel" runat="server" Text="Receipt Time:" AssociatedControlID="ReceiptTimeLiteral" />
@@ -151,6 +215,70 @@
                                 </td>
                                 <td>
                                     <asp:Literal ID="ReceiveTimeLiteral" runat="server" Text='<%# Eval("ReceiveTime", "{0:g}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("StatusUpdatedDate") != null %>'>
+                                <td>
+                                    <asp:Label ID="StatusUpdatedDateLabel" runat="server" Text="Status Updated Date:" AssociatedControlID="StatusUpdatedDateLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="StatusUpdatedDateLiteral" runat="server" Text='<%# Eval("StatusUpdatedDate", "{0:d}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("ClaimingInterval") != null %>'>
+                                <td>
+                                    <asp:Label ID="ClaimingIntervalLabel" runat="server" Text="Claiming Interval:" AssociatedControlID="ClaimingIntervalLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="ClaimingIntervalLiteral" runat="server" Text='<%#: Eval("ClaimingInterval") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("InternalNote") != null %>'>
+                                <td>
+                                    <asp:Label ID="InternalNoteLabel" runat="server" Text="Internal Note:" AssociatedControlID="InternalNoteLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="InternalNoteLiteral" runat="server" Text='<%#: Eval("InternalNote") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("ExternalNote") != null %>'>
+                                <td>
+                                    <asp:Label ID="ExternalNoteLabel" runat="server" Text="External Note:" AssociatedControlID="ExternalNoteLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="ExternalNoteLiteral" runat="server" Text='<%#: Eval("ExternalNote") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>
+                                <td>
+                                    <asp:Label ID="CreationTimeLabel" runat="server" Text="Creation Time:" AssociatedControlID="CreationTimeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="CreationTimeLiteral" runat="server" Text='<%# Eval("CreationTime", "{0:g}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("CreationUser") != null %>'>
+                                <td>
+                                    <asp:Label ID="CreationUserLabel" runat="server" Text="Creation User:" AssociatedControlID="CreationUserHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="CreationUserHyperLink" runat="server" Text='<%#: Eval("CreationUser.Username") %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("CreationUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("LastWriteTime") != null %>'>
+                                <td>
+                                    <asp:Label ID="LastWriteTimeLabel" runat="server" Text="Last Write Time:" AssociatedControlID="LastWriteTimeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="LastWriteTimeLiteral" runat="server" Text='<%# Eval("LastWriteTime", "{0:g}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("LastWriteUser") != null %>'>
+                                <td>
+                                    <asp:Label ID="LastWriteUserLabel" runat="server" Text="Last Write User:" AssociatedControlID="LastWriteUserHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="LastWriteUserHyperLink" runat="server" Text='<%#: Eval("LastWriteUser.Username") %>' NavigateUrl='<%# $"~/User2s/Edit.aspx?Id={Eval("LastWriteUserId")}" %>' Enabled='<%# Session["User2sPermission"] != null %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Content") != null %>'>

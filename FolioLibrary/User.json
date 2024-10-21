@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "User Schema",
   "description": "A user",
+  "javaName": "User",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -14,32 +15,31 @@
       "type": "string"
     },
     "externalSystemId": {
-      "description": "An ID that corresponds to an external authority",
+      "description": "A unique ID that corresponds to an external authority",
       "type": "string"
     },
     "barcode": {
-      "description": "The library barcode for this user",
+      "description": "The unique library barcode for this user",
       "type": "string"
     },
     "active": {
-      "description": "A flag to determine if a user can log in, take out loans, etc.",
+      "description": "A flag to determine if the user's account is effective and not expired. The tenant configuration can require the user to be active for login. Active is different from the loan patron block",
       "type": "boolean"
     },
     "type": {
-      "description": "The class of user",
+      "description": "The class of user like staff or patron; this is different from patronGroup; it can store shadow, system user and dcb types also",
       "type": "string"
     },
     "patronGroup": {
-      "description": "A UUID corresponding to the group the user belongs to",
-      "type": "string"
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
     "departments": {
-      "description": "A UUIDs corresponding to the departments the user belongs to",
+      "description": "A list of UUIDs corresponding to the departments the user belongs to, see /departments API",
       "type": "array",
       "items": {
-        "description": "The UUID format string",
-        "type": "string",
-        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        "$ref": "#/properties/patronGroup"
       },
       "uniqueItems": true
     },
@@ -128,20 +128,27 @@
                 "type": "string"
               },
               "addressTypeId": {
-                "description": "A UUID that corresponds with an address type object",
-                "type": "string"
+                "$ref": "#/properties/patronGroup"
               },
               "primaryAddress": {
                 "description": "Is this the user's primary address?",
                 "type": "boolean"
               }
-            }
+            },
+            "required": [
+              "addressTypeId"
+            ]
           },
           "minItems": 0
         },
         "preferredContactTypeId": {
-          "description": "Id of user's preferred contact type",
+          "description": "Id of user's preferred contact type like Email, Mail or Text Message, see /addresstypes API",
           "type": "string"
+        },
+        "profilePictureLink": {
+          "description": "Link to the profile picture",
+          "type": "string",
+          "format": "uri"
         }
       },
       "required": [
@@ -225,6 +232,20 @@
     "customFields": {
       "description": "Object that contains custom field",
       "type": "object"
+    },
+    "preferredEmailCommunication": {
+      "description": "Preferred email communication types",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "Support",
+          "Programs",
+          "Services"
+        ]
+      },
+      "uniqueItems": true,
+      "maxItems": 3
     }
   }
 }

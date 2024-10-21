@@ -48,6 +48,7 @@
             "default": false
           },
           "gracePeriod": {
+            "description": "Time interval defined by its duration",
             "type": "object",
             "additionalProperties": false,
             "properties": {

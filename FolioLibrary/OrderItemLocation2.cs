@@ -42,7 +42,10 @@ namespace FolioLibrary
         [Column("quantity_physical"), Display(Name = "Physical Quantity", Order = 10), JsonProperty("quantityPhysical")]
         public virtual int? PhysicalQuantity { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(LocationId)} = {LocationId}, {nameof(HoldingId)} = {HoldingId}, {nameof(Quantity)} = {Quantity}, {nameof(ElectronicQuantity)} = {ElectronicQuantity}, {nameof(PhysicalQuantity)} = {PhysicalQuantity} }}";
+        [Column("tenant_id"), Display(Name = "Tenant Id", Order = 11), JsonProperty("tenantId")]
+        public virtual Guid? TenantId { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(LocationId)} = {LocationId}, {nameof(HoldingId)} = {HoldingId}, {nameof(Quantity)} = {Quantity}, {nameof(ElectronicQuantity)} = {ElectronicQuantity}, {nameof(PhysicalQuantity)} = {PhysicalQuantity}, {nameof(TenantId)} = {TenantId} }}";
 
         public static OrderItemLocation2 FromJObject(JObject jObject) => jObject != null ? new OrderItemLocation2
         {
@@ -50,7 +53,8 @@ namespace FolioLibrary
             HoldingId = (Guid?)jObject.SelectToken("holdingId"),
             Quantity = (int?)jObject.SelectToken("quantity"),
             ElectronicQuantity = (int?)jObject.SelectToken("quantityElectronic"),
-            PhysicalQuantity = (int?)jObject.SelectToken("quantityPhysical")
+            PhysicalQuantity = (int?)jObject.SelectToken("quantityPhysical"),
+            TenantId = (Guid?)jObject.SelectToken("tenantId")
         } : null;
 
         public JObject ToJObject() => new JObject(
@@ -58,6 +62,7 @@ namespace FolioLibrary
             new JProperty("holdingId", HoldingId),
             new JProperty("quantity", Quantity),
             new JProperty("quantityElectronic", ElectronicQuantity),
-            new JProperty("quantityPhysical", PhysicalQuantity)).RemoveNullAndEmptyProperties();
+            new JProperty("quantityPhysical", PhysicalQuantity),
+            new JProperty("tenantId", TenantId)).RemoveNullAndEmptyProperties();
     }
 }

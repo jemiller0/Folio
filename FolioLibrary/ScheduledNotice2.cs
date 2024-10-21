@@ -54,61 +54,64 @@ namespace FolioLibrary
         [Column("recipient_user_id"), Display(Name = "Recipient User", Order = 9), JsonProperty("recipientUserId")]
         public virtual Guid? RecipientUserId { get; set; }
 
-        [Column("next_run_time"), DataType(DataType.DateTime), Display(Name = "Next Run Time", Order = 10), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("nextRunTime"), Required]
+        [Column("session_id"), Display(Name = "Session Id", Order = 10), JsonProperty("sessionId")]
+        public virtual Guid? SessionId { get; set; }
+
+        [Column("next_run_time"), DataType(DataType.DateTime), Display(Name = "Next Run Time", Order = 11), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("nextRunTime"), Required]
         public virtual DateTime? NextRunTime { get; set; }
 
-        [Column("triggering_event"), Display(Name = "Triggering Event", Order = 11), JsonProperty("triggeringEvent"), RegularExpression(@"^(Hold expiration|Request expiration|Due date|Overdue fine returned|Overdue fine renewed|Aged to lost|Aged to lost - fine charged|Aged to lost & item returned - fine adjusted|Aged to lost & item replaced - fine adjusted)$"), StringLength(1024)]
+        [Column("triggering_event"), Display(Name = "Triggering Event", Order = 12), JsonProperty("triggeringEvent"), RegularExpression(@"^(Hold expiration|Request expiration|Due date|Overdue fine returned|Overdue fine renewed|Due date - with reminder fee|Aged to lost|Aged to lost - fine charged|Aged to lost & item returned - fine adjusted|Aged to lost & item replaced - fine adjusted|Title level request expiration)$"), StringLength(1024)]
         public virtual string TriggeringEvent { get; set; }
 
-        [Column("notice_config_timing"), Display(Name = "Notice Config Timing", Order = 12), JsonProperty("noticeConfig.timing"), RegularExpression(@"^(Upon At|Before|After)$"), Required, StringLength(1024)]
+        [Column("notice_config_timing"), Display(Name = "Notice Config Timing", Order = 13), JsonProperty("noticeConfig.timing"), RegularExpression(@"^(Upon At|Before|After)$"), Required, StringLength(1024)]
         public virtual string NoticeConfigTiming { get; set; }
 
-        [Column("notice_config_recurring_period_duration"), Display(Name = "Notice Config Recurring Period Duration", Order = 13), JsonProperty("noticeConfig.recurringPeriod.duration"), Required]
+        [Column("notice_config_recurring_period_duration"), Display(Name = "Notice Config Recurring Period Duration", Order = 14), JsonProperty("noticeConfig.recurringPeriod.duration"), Required]
         public virtual int? NoticeConfigRecurringPeriodDuration { get; set; }
 
-        [Column("notice_config_recurring_period_interval_id"), Display(Name = "Notice Config Recurring Period Interval", Order = 14), JsonProperty("noticeConfig.recurringPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("notice_config_recurring_period_interval_id"), Display(Name = "Notice Config Recurring Period Interval", Order = 15), JsonProperty("noticeConfig.recurringPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
         public virtual string NoticeConfigRecurringPeriodInterval { get; set; }
 
-        [Display(Name = "Notice Config Template", Order = 15)]
+        [Display(Name = "Notice Config Template", Order = 16)]
         public virtual Template2 NoticeConfigTemplate { get; set; }
 
-        [Column("notice_config_template_id"), Display(Name = "Notice Config Template", Order = 16), JsonProperty("noticeConfig.templateId"), Required]
+        [Column("notice_config_template_id"), Display(Name = "Notice Config Template", Order = 17), JsonProperty("noticeConfig.templateId"), Required]
         public virtual Guid? NoticeConfigTemplateId { get; set; }
 
-        [Column("notice_config_format"), Display(Name = "Notice Config Format", Order = 17), JsonProperty("noticeConfig.format"), RegularExpression(@"^(Email|SMS|Print)$"), Required, StringLength(1024)]
+        [Column("notice_config_format"), Display(Name = "Notice Config Format", Order = 18), JsonProperty("noticeConfig.format"), RegularExpression(@"^(Email|SMS|Print)$"), Required, StringLength(1024)]
         public virtual string NoticeConfigFormat { get; set; }
 
-        [Column("notice_config_send_in_real_time"), Display(Name = "Notice Config Send In Real Time", Order = 18), JsonProperty("noticeConfig.sendInRealTime")]
+        [Column("notice_config_send_in_real_time"), Display(Name = "Notice Config Send In Real Time", Order = 19), JsonProperty("noticeConfig.sendInRealTime")]
         public virtual bool? NoticeConfigSendInRealTime { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 19), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 20), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 20), InverseProperty("ScheduledNotice2s1")]
+        [Display(Name = "Creation User", Order = 21), InverseProperty("ScheduledNotice2s1")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 21), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 22), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 23), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 24), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 24), InverseProperty("ScheduledNotice2s2")]
+        [Display(Name = "Last Write User", Order = 25), InverseProperty("ScheduledNotice2s2")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 25), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 26), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(ScheduledNotice), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 27), Editable(false)]
+        [Column("content"), CustomValidation(typeof(ScheduledNotice), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 28), Editable(false)]
         public virtual string Content { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(LoanId)} = {LoanId}, {nameof(RequestId)} = {RequestId}, {nameof(PaymentId)} = {PaymentId}, {nameof(RecipientUserId)} = {RecipientUserId}, {nameof(NextRunTime)} = {NextRunTime}, {nameof(TriggeringEvent)} = {TriggeringEvent}, {nameof(NoticeConfigTiming)} = {NoticeConfigTiming}, {nameof(NoticeConfigRecurringPeriodDuration)} = {NoticeConfigRecurringPeriodDuration}, {nameof(NoticeConfigRecurringPeriodInterval)} = {NoticeConfigRecurringPeriodInterval}, {nameof(NoticeConfigTemplateId)} = {NoticeConfigTemplateId}, {nameof(NoticeConfigFormat)} = {NoticeConfigFormat}, {nameof(NoticeConfigSendInRealTime)} = {NoticeConfigSendInRealTime}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(LoanId)} = {LoanId}, {nameof(RequestId)} = {RequestId}, {nameof(PaymentId)} = {PaymentId}, {nameof(RecipientUserId)} = {RecipientUserId}, {nameof(SessionId)} = {SessionId}, {nameof(NextRunTime)} = {NextRunTime}, {nameof(TriggeringEvent)} = {TriggeringEvent}, {nameof(NoticeConfigTiming)} = {NoticeConfigTiming}, {nameof(NoticeConfigRecurringPeriodDuration)} = {NoticeConfigRecurringPeriodDuration}, {nameof(NoticeConfigRecurringPeriodInterval)} = {NoticeConfigRecurringPeriodInterval}, {nameof(NoticeConfigTemplateId)} = {NoticeConfigTemplateId}, {nameof(NoticeConfigFormat)} = {NoticeConfigFormat}, {nameof(NoticeConfigSendInRealTime)} = {NoticeConfigSendInRealTime}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
 
         public static ScheduledNotice2 FromJObject(JObject jObject) => jObject != null ? new ScheduledNotice2
         {
@@ -117,6 +120,7 @@ namespace FolioLibrary
             RequestId = (Guid?)jObject.SelectToken("requestId"),
             PaymentId = (Guid?)jObject.SelectToken("feeFineActionId"),
             RecipientUserId = (Guid?)jObject.SelectToken("recipientUserId"),
+            SessionId = (Guid?)jObject.SelectToken("sessionId"),
             NextRunTime = (DateTime?)jObject.SelectToken("nextRunTime"),
             TriggeringEvent = (string)jObject.SelectToken("triggeringEvent"),
             NoticeConfigTiming = (string)jObject.SelectToken("noticeConfig.timing"),
@@ -140,6 +144,7 @@ namespace FolioLibrary
             new JProperty("requestId", RequestId),
             new JProperty("feeFineActionId", PaymentId),
             new JProperty("recipientUserId", RecipientUserId),
+            new JProperty("sessionId", SessionId),
             new JProperty("nextRunTime", NextRunTime?.ToLocalTime()),
             new JProperty("triggeringEvent", TriggeringEvent),
             new JProperty("noticeConfig", new JObject(

@@ -44,8 +44,9 @@
                             <telerik:RadMenuItem Text="Reference Datas" NavigateUrl="~/ReferenceData2s/Default.aspx" Visible='<%# Session["ReferenceData2sPermission"] != null %>' />
                         </Items>
                     </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Circulation" Visible='<%# Session["CancellationReason2sPermission"] != null || Session["CheckIn2sPermission"] != null || Session["FixedDueDateSchedule2sPermission"] != null || Session["Loan2sPermission"] != null || Session["LoanPolicy2sPermission"] != null || Session["PatronActionSession2sPermission"] != null || Session["PatronNoticePolicy2sPermission"] != null || Session["Request2sPermission"] != null || Session["RequestPolicy2sPermission"] != null || Session["ScheduledNotice2sPermission"] != null || Session["StaffSlip2sPermission"] != null || Session["UserRequestPreference2sPermission"] != null %>'>
+                    <telerik:RadMenuItem Text="Circulation" Visible='<%# Session["ActualCostRecord2sPermission"] != null || Session["CancellationReason2sPermission"] != null || Session["CheckIn2sPermission"] != null || Session["FixedDueDateSchedule2sPermission"] != null || Session["Loan2sPermission"] != null || Session["LoanPolicy2sPermission"] != null || Session["PatronActionSession2sPermission"] != null || Session["PatronNoticePolicy2sPermission"] != null || Session["Request2sPermission"] != null || Session["RequestPolicy2sPermission"] != null || Session["ScheduledNotice2sPermission"] != null || Session["StaffSlip2sPermission"] != null || Session["UserRequestPreference2sPermission"] != null %>'>
                         <Items>
+                            <telerik:RadMenuItem Text="Actual Cost Records" NavigateUrl="~/ActualCostRecord2s/Default.aspx" Visible='<%# Session["ActualCostRecord2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Cancellation Reasons" NavigateUrl="~/CancellationReason2s/Default.aspx" Visible='<%# Session["CancellationReason2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Check Ins" NavigateUrl="~/CheckIn2s/Default.aspx" Visible='<%# Session["CheckIn2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Fixed Due Date Schedules" NavigateUrl="~/FixedDueDateSchedule2s/Default.aspx" Visible='<%# Session["FixedDueDateSchedule2sPermission"] != null %>' />
@@ -86,7 +87,7 @@
                             <telerik:RadMenuItem Text="Waive Reasons" NavigateUrl="~/WaiveReason2s/Default.aspx" Visible='<%# Session["WaiveReason2sPermission"] != null %>' />
                         </Items>
                     </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Finance" Visible='<%# Session["Budget2sPermission"] != null || Session["BudgetExpenseClass2sPermission"] != null || Session["BudgetGroup2sPermission"] != null || Session["ExpenseClass2sPermission"] != null || Session["FinanceGroup2sPermission"] != null || Session["FiscalYear2sPermission"] != null || Session["Fund2sPermission"] != null || Session["FundType2sPermission"] != null || Session["Ledger2sPermission"] != null || Session["LedgerRollover2sPermission"] != null || Session["LedgerRolloverError2sPermission"] != null || Session["LedgerRolloverProgress2sPermission"] != null || Session["Transaction2sPermission"] != null %>'>
+                    <telerik:RadMenuItem Text="Finance" Visible='<%# Session["Budget2sPermission"] != null || Session["BudgetExpenseClass2sPermission"] != null || Session["BudgetGroup2sPermission"] != null || Session["ExpenseClass2sPermission"] != null || Session["FinanceGroup2sPermission"] != null || Session["FiscalYear2sPermission"] != null || Session["Fund2sPermission"] != null || Session["FundType2sPermission"] != null || Session["Ledger2sPermission"] != null || Session["Rollover2sPermission"] != null || Session["RolloverBudget2sPermission"] != null || Session["RolloverError2sPermission"] != null || Session["RolloverProgress2sPermission"] != null || Session["Transaction2sPermission"] != null %>'>
                         <Items>
                             <telerik:RadMenuItem Text="Budget Expense Classes" NavigateUrl="~/BudgetExpenseClass2s/Default.aspx" Visible='<%# Session["BudgetExpenseClass2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Budget Groups" NavigateUrl="~/BudgetGroup2s/Default.aspx" Visible='<%# Session["BudgetGroup2sPermission"] != null %>' />
@@ -96,10 +97,11 @@
                             <telerik:RadMenuItem Text="Fiscal Years" NavigateUrl="~/FiscalYear2s/Default.aspx" Visible='<%# Session["FiscalYear2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Fund Types" NavigateUrl="~/FundType2s/Default.aspx" Visible='<%# Session["FundType2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Funds" NavigateUrl="~/Fund2s/Default.aspx" Visible='<%# Session["Fund2sPermission"] != null %>' />
-                            <telerik:RadMenuItem Text="Ledger Rollover Errors" NavigateUrl="~/LedgerRolloverError2s/Default.aspx" Visible='<%# Session["LedgerRolloverError2sPermission"] != null %>' />
-                            <telerik:RadMenuItem Text="Ledger Rollover Progresses" NavigateUrl="~/LedgerRolloverProgress2s/Default.aspx" Visible='<%# Session["LedgerRolloverProgress2sPermission"] != null %>' />
-                            <telerik:RadMenuItem Text="Ledger Rollovers" NavigateUrl="~/LedgerRollover2s/Default.aspx" Visible='<%# Session["LedgerRollover2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Ledgers" NavigateUrl="~/Ledger2s/Default.aspx" Visible='<%# Session["Ledger2sPermission"] != null %>' />
+                            <telerik:RadMenuItem Text="Rollover Budgets" NavigateUrl="~/RolloverBudget2s/Default.aspx" Visible='<%# Session["RolloverBudget2sPermission"] != null %>' />
+                            <telerik:RadMenuItem Text="Rollover Errors" NavigateUrl="~/RolloverError2s/Default.aspx" Visible='<%# Session["RolloverError2sPermission"] != null %>' />
+                            <telerik:RadMenuItem Text="Rollover Progresses" NavigateUrl="~/RolloverProgress2s/Default.aspx" Visible='<%# Session["RolloverProgress2sPermission"] != null %>' />
+                            <telerik:RadMenuItem Text="Rollovers" NavigateUrl="~/Rollover2s/Default.aspx" Visible='<%# Session["Rollover2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Transactions" NavigateUrl="~/Transaction2s/Default.aspx" Visible='<%# Session["Transaction2sPermission"] != null %>' />
                         </Items>
                     </telerik:RadMenuItem>

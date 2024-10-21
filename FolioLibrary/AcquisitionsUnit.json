@@ -13,6 +13,10 @@
       "description": "a name for this acquisitions unit",
       "type": "string"
     },
+    "description": {
+      "description": "The description of this acq unit",
+      "type": "string"
+    },
     "isDeleted": {
       "description": "If true, the record is marked for deletion at some point. This prevents it from being assigned to any record.",
       "type": "boolean",

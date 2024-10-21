@@ -24,7 +24,7 @@ namespace FolioWebApplication.Fund2s
 
         protected void Fund2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Code", "code" }, { "Description", "description" }, { "AccountNumber", "externalAccountNo" }, { "FundStatus", "fundStatus" }, { "FundTypeId", "fundTypeId" }, { "LedgerId", "ledgerId" }, { "Name", "name" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Code", "code" }, { "Description", "description" }, { "AccountNumber", "externalAccountNo" }, { "FundStatus", "fundStatus" }, { "FundTypeId", "fundTypeId" }, { "LedgerId", "ledgerId" }, { "Name", "name" }, { "RestrictByLocations", "restrictByLocations" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 Global.GetCqlFilter(Fund2sRadGrid, "Id", "id"),
@@ -35,6 +35,7 @@ namespace FolioWebApplication.Fund2s
                 Global.GetCqlFilter(Fund2sRadGrid, "FundType.Name", "fundTypeId", "name", folioServiceContext.FolioServiceClient.FundTypes),
                 Global.GetCqlFilter(Fund2sRadGrid, "Ledger.Name", "ledgerId", "name", folioServiceContext.FolioServiceClient.Ledgers),
                 Global.GetCqlFilter(Fund2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(Fund2sRadGrid, "RestrictByLocations", "restrictByLocations"),
                 Global.GetCqlFilter(Fund2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(Fund2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Fund2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
@@ -53,8 +54,8 @@ namespace FolioWebApplication.Fund2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"Fund2s.txt\"");
             Response.BufferOutput = false;
-            Response.Write("Id\tCode\tDescription\tAccountNumber\tFundStatus\tFundType\tFundTypeId\tLedger\tLedgerId\tName\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Code", "code" }, { "Description", "description" }, { "AccountNumber", "externalAccountNo" }, { "FundStatus", "fundStatus" }, { "FundTypeId", "fundTypeId" }, { "LedgerId", "ledgerId" }, { "Name", "name" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            Response.Write("Id\tCode\tDescription\tAccountNumber\tFundStatus\tFundType\tFundTypeId\tLedger\tLedgerId\tName\tRestrictByLocations\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Code", "code" }, { "Description", "description" }, { "AccountNumber", "externalAccountNo" }, { "FundStatus", "fundStatus" }, { "FundTypeId", "fundTypeId" }, { "LedgerId", "ledgerId" }, { "Name", "name" }, { "RestrictByLocations", "restrictByLocations" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 Global.GetCqlFilter(Fund2sRadGrid, "Id", "id"),
@@ -65,13 +66,14 @@ namespace FolioWebApplication.Fund2s
                 Global.GetCqlFilter(Fund2sRadGrid, "FundType.Name", "fundTypeId", "name", folioServiceContext.FolioServiceClient.FundTypes),
                 Global.GetCqlFilter(Fund2sRadGrid, "Ledger.Name", "ledgerId", "name", folioServiceContext.FolioServiceClient.Ledgers),
                 Global.GetCqlFilter(Fund2sRadGrid, "Name", "name"),
+                Global.GetCqlFilter(Fund2sRadGrid, "RestrictByLocations", "restrictByLocations"),
                 Global.GetCqlFilter(Fund2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(Fund2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Fund2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(Fund2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
             foreach (var f2 in folioServiceContext.Fund2s(where, Fund2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Fund2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Fund2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
-                Response.Write($"{f2.Id}\t{Global.TextEncode(f2.Code)}\t{Global.TextEncode(f2.Description)}\t{Global.TextEncode(f2.AccountNumber)}\t{Global.TextEncode(f2.FundStatus)}\t{Global.TextEncode(f2.FundType?.Name)}\t{f2.FundTypeId}\t{Global.TextEncode(f2.Ledger?.Name)}\t{f2.LedgerId}\t{Global.TextEncode(f2.Name)}\t{f2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(f2.CreationUser?.Username)}\t{f2.CreationUserId}\t{f2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(f2.LastWriteUser?.Username)}\t{f2.LastWriteUserId}\r\n");
+                Response.Write($"{f2.Id}\t{Global.TextEncode(f2.Code)}\t{Global.TextEncode(f2.Description)}\t{Global.TextEncode(f2.AccountNumber)}\t{Global.TextEncode(f2.FundStatus)}\t{Global.TextEncode(f2.FundType?.Name)}\t{f2.FundTypeId}\t{Global.TextEncode(f2.Ledger?.Name)}\t{f2.LedgerId}\t{Global.TextEncode(f2.Name)}\t{f2.RestrictByLocations}\t{f2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(f2.CreationUser?.Username)}\t{f2.CreationUserId}\t{f2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(f2.LastWriteUser?.Username)}\t{f2.LastWriteUserId}\r\n");
             Response.End();
         }
 

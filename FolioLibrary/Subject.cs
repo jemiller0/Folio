@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ namespace FolioLibrary
 {
     // uc.subjects -> uchicago_mod_inventory_storage.instance
     // Subject -> Instance
-    [DisplayColumn(nameof(Content)), Table("subjects", Schema = "uc")]
+    [DisplayColumn(nameof(Name)), JsonObject(MemberSerialization = MemberSerialization.OptIn), Table("subjects", Schema = "uc")]
     public partial class Subject
     {
         [NotMapped, ScaffoldColumn(false)]
@@ -31,16 +32,35 @@ namespace FolioLibrary
         [Column("instance_id", Order = 3), ScaffoldColumn(false)]
         public virtual Guid? InstanceId { get; set; }
 
-        [Column("content"), Display(Order = 4), Required, StringLength(1024)]
-        public virtual string Content { get; set; }
+        [Column("name"), Display(Order = 4), JsonProperty("value"), StringLength(1024)]
+        public virtual string Name { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(InstanceId)} = {InstanceId}, {nameof(Content)} = {Content} }}";
+        [Column("authority_id"), Display(Name = "Authority Id", Order = 5), JsonProperty("authorityId")]
+        public virtual Guid? AuthorityId { get; set; }
 
-        public static Subject FromJObject(JValue jObject) => jObject != null ? new Subject
+        [Display(Order = 6)]
+        public virtual Source2 Source { get; set; }
+
+        [Column("source_id"), Display(Name = "Source", Order = 7), JsonProperty("sourceId")]
+        public virtual Guid? SourceId { get; set; }
+
+        [Column("type_id"), Display(Name = "Type Id", Order = 8), JsonProperty("typeId")]
+        public virtual Guid? TypeId { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(InstanceId)} = {InstanceId}, {nameof(Name)} = {Name}, {nameof(AuthorityId)} = {AuthorityId}, {nameof(SourceId)} = {SourceId}, {nameof(TypeId)} = {TypeId} }}";
+
+        public static Subject FromJObject(JObject jObject) => jObject != null ? new Subject
         {
-            Content = (string)jObject
+            Name = (string)jObject.SelectToken("value"),
+            AuthorityId = (Guid?)jObject.SelectToken("authorityId"),
+            SourceId = (Guid?)jObject.SelectToken("sourceId"),
+            TypeId = (Guid?)jObject.SelectToken("typeId")
         } : null;
 
-        public JValue ToJObject() => new JValue(Content);
+        public JObject ToJObject() => new JObject(
+            new JProperty("value", Name),
+            new JProperty("authorityId", AuthorityId),
+            new JProperty("sourceId", SourceId),
+            new JProperty("typeId", TypeId)).RemoveNullAndEmptyProperties();
     }
 }

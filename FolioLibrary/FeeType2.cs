@@ -85,10 +85,13 @@ namespace FolioLibrary
         [Column("content"), CustomValidation(typeof(FeeType), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 19), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Fees", Order = 20)]
+        [Display(Name = "Actual Cost Records", Order = 20)]
+        public virtual ICollection<ActualCostRecord2> ActualCostRecord2s { get; set; }
+
+        [Display(Name = "Fees", Order = 21)]
         public virtual ICollection<Fee2> Fee2s { get; set; }
 
-        [Display(Name = "User Summary Open Fees Fines", Order = 21)]
+        [Display(Name = "User Summary Open Fees Fines", Order = 22)]
         public virtual ICollection<UserSummaryOpenFeesFine> UserSummaryOpenFeesFines { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Automatic)} = {Automatic}, {nameof(Name)} = {Name}, {nameof(DefaultAmount)} = {DefaultAmount}, {nameof(ChargeNoticeId)} = {ChargeNoticeId}, {nameof(ActionNoticeId)} = {ActionNoticeId}, {nameof(OwnerId)} = {OwnerId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";

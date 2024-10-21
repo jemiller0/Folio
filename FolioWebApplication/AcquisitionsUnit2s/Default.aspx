@@ -32,6 +32,7 @@
                                 <asp:HyperLink ID="NameHyperLink" runat="server" Text='<%#: Eval("Name") %>' NavigateUrl='<%# $"Edit.aspx?Id={Eval("Id")}" %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Description" DataField="Description" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Is Deleted" DataField="IsDeleted" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Protect Create" DataField="ProtectCreate" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Protect Read" DataField="ProtectRead" AutoPostBackOnFilter="true" />
