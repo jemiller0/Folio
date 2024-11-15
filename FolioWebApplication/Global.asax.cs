@@ -123,6 +123,7 @@ namespace FolioWebApplication
                             || userName == "stp0"
                             || userName == "kmarti"
                             || userName == "t-9wsch1"
+                            || userName == "skasten"
                             )
                         {
                             SetCirculationPermissions("View");
@@ -166,7 +167,18 @@ namespace FolioWebApplication
                             SetSourcePermissions("View");
                             Session["LabelsPermission"] = "Edit";
                         }
-                        else if (hs.Contains("department:Preserv Binding & Shelf Prpe") || hs.Contains("department:Preservation Conservation") || userName == "zpayne" || userName == "lyssa" || userName == "sydani" || userName == "tbledsoe" || userName == "gyasomah")
+                        else if (hs.Contains("department:Preserv Binding & Shelf Prpe") || hs.Contains("department:Preservation Conservation")
+                            || userName == "zpayne" 
+                            || userName == "lyssa" 
+                            || userName == "sydani" 
+                            || userName == "tbledsoe" 
+                            || userName == "gyasomah"
+                            || userName == "cbesler"
+                            || userName == "ncclark"
+                            || userName == "oakleya"
+                            || userName == "nmgutierrez"
+                            || userName == "krios6"
+                            )
                         {
                             SetInventoryPermissions("View");
                             Session["LabelsPermission"] = "Edit";
