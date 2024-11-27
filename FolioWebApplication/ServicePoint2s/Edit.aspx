@@ -89,6 +89,14 @@
                                     <asp:Literal ID="HoldShelfClosedLibraryDateManagementLiteral" runat="server" Text='<%#: Eval("HoldShelfClosedLibraryDateManagement") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("EcsRequestRouting") != null %>'>
+                                <td>
+                                    <asp:Label ID="EcsRequestRoutingLabel" runat="server" Text="Ecs Request Routing:" AssociatedControlID="EcsRequestRoutingLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="EcsRequestRoutingLiteral" runat="server" Text='<%#: Eval("EcsRequestRouting") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>
                                 <td>
                                     <asp:Label ID="CreationTimeLabel" runat="server" Text="Creation Time:" AssociatedControlID="CreationTimeLiteral" />
@@ -795,6 +803,7 @@
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Request Level" DataField="RequestLevel" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Request Type" DataField="RequestType" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Ecs Request Phase" DataField="EcsRequestPhase" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Request Date" DataField="RequestDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
                         <telerik:GridBoundColumn HeaderText="Patron Comments" DataField="PatronComments" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridTemplateColumn HeaderText="Requester" DataField="Requester.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">

@@ -33,6 +33,14 @@
                                     <asp:Literal ID="RequestTypeLiteral" runat="server" Text='<%#: Eval("RequestType") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("EcsRequestPhase") != null %>'>
+                                <td>
+                                    <asp:Label ID="EcsRequestPhaseLabel" runat="server" Text="Ecs Request Phase:" AssociatedControlID="EcsRequestPhaseLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="EcsRequestPhaseLiteral" runat="server" Text='<%#: Eval("EcsRequestPhase") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("RequestDate") != null %>'>
                                 <td>
                                     <asp:Label ID="RequestDateLabel" runat="server" Text="Request Date:" AssociatedControlID="RequestDateLiteral" />
