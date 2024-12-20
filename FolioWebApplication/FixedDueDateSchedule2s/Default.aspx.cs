@@ -9,7 +9,7 @@ namespace FolioWebApplication.FixedDueDateSchedule2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -35,8 +35,8 @@ namespace FolioWebApplication.FixedDueDateSchedule2s
                 Global.GetCqlFilter(FixedDueDateSchedule2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(FixedDueDateSchedule2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            FixedDueDateSchedule2sRadGrid.DataSource = folioServiceContext.FixedDueDateSchedule2s(out var i, where, FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, FixedDueDateSchedule2sRadGrid.PageSize * FixedDueDateSchedule2sRadGrid.CurrentPageIndex, FixedDueDateSchedule2sRadGrid.PageSize, true);
-            FixedDueDateSchedule2sRadGrid.VirtualItemCount = i;
+            FixedDueDateSchedule2sRadGrid.DataSource = folioServiceContext.FixedDueDateSchedule2s(where, FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(FixedDueDateSchedule2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, FixedDueDateSchedule2sRadGrid.PageSize * FixedDueDateSchedule2sRadGrid.CurrentPageIndex, FixedDueDateSchedule2sRadGrid.PageSize, true);
+            FixedDueDateSchedule2sRadGrid.VirtualItemCount = folioServiceContext.CountFixedDueDateSchedule2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

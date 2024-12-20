@@ -9,7 +9,7 @@ namespace FolioWebApplication.Snapshot2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -34,8 +34,8 @@ namespace FolioWebApplication.Snapshot2s
                 Global.GetCqlFilter(Snapshot2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Snapshot2sRadGrid, "LastWriteTime", "metadata.updatedDate")
             }.Where(s => s != null)));
-            Snapshot2sRadGrid.DataSource = folioServiceContext.Snapshot2s(out var i, where, Snapshot2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Snapshot2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Snapshot2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Snapshot2sRadGrid.PageSize * Snapshot2sRadGrid.CurrentPageIndex, Snapshot2sRadGrid.PageSize, true);
-            Snapshot2sRadGrid.VirtualItemCount = i;
+            Snapshot2sRadGrid.DataSource = folioServiceContext.Snapshot2s(where, Snapshot2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Snapshot2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Snapshot2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Snapshot2sRadGrid.PageSize * Snapshot2sRadGrid.CurrentPageIndex, Snapshot2sRadGrid.PageSize, true);
+            Snapshot2sRadGrid.VirtualItemCount = folioServiceContext.CountSnapshot2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

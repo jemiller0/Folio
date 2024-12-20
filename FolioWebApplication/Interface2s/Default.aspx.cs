@@ -9,7 +9,7 @@ namespace FolioWebApplication.Interface2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -42,8 +42,8 @@ namespace FolioWebApplication.Interface2s
                 Global.GetCqlFilter(Interface2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(Interface2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            Interface2sRadGrid.DataSource = folioServiceContext.Interface2s(out var i, where, Interface2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Interface2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Interface2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Interface2sRadGrid.PageSize * Interface2sRadGrid.CurrentPageIndex, Interface2sRadGrid.PageSize, true);
-            Interface2sRadGrid.VirtualItemCount = i;
+            Interface2sRadGrid.DataSource = folioServiceContext.Interface2s(where, Interface2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Interface2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Interface2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Interface2sRadGrid.PageSize * Interface2sRadGrid.CurrentPageIndex, Interface2sRadGrid.PageSize, true);
+            Interface2sRadGrid.VirtualItemCount = folioServiceContext.CountInterface2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

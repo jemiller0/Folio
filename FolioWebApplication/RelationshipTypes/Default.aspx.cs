@@ -9,7 +9,7 @@ namespace FolioWebApplication.RelationshipTypes
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -34,8 +34,8 @@ namespace FolioWebApplication.RelationshipTypes
                 Global.GetCqlFilter(RelationshipTypesRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(RelationshipTypesRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            RelationshipTypesRadGrid.DataSource = folioServiceContext.RelationshipTypes(out var i, where, RelationshipTypesRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[RelationshipTypesRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(RelationshipTypesRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, RelationshipTypesRadGrid.PageSize * RelationshipTypesRadGrid.CurrentPageIndex, RelationshipTypesRadGrid.PageSize, true);
-            RelationshipTypesRadGrid.VirtualItemCount = i;
+            RelationshipTypesRadGrid.DataSource = folioServiceContext.RelationshipTypes(where, RelationshipTypesRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[RelationshipTypesRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(RelationshipTypesRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, RelationshipTypesRadGrid.PageSize * RelationshipTypesRadGrid.CurrentPageIndex, RelationshipTypesRadGrid.PageSize, true);
+            RelationshipTypesRadGrid.VirtualItemCount = folioServiceContext.CountRelationshipTypes(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

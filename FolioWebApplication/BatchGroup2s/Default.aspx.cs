@@ -9,7 +9,7 @@ namespace FolioWebApplication.BatchGroup2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -35,8 +35,8 @@ namespace FolioWebApplication.BatchGroup2s
                 Global.GetCqlFilter(BatchGroup2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(BatchGroup2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            BatchGroup2sRadGrid.DataSource = folioServiceContext.BatchGroup2s(out var i, where, BatchGroup2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BatchGroup2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BatchGroup2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, BatchGroup2sRadGrid.PageSize * BatchGroup2sRadGrid.CurrentPageIndex, BatchGroup2sRadGrid.PageSize, true);
-            BatchGroup2sRadGrid.VirtualItemCount = i;
+            BatchGroup2sRadGrid.DataSource = folioServiceContext.BatchGroup2s(where, BatchGroup2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BatchGroup2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BatchGroup2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, BatchGroup2sRadGrid.PageSize * BatchGroup2sRadGrid.CurrentPageIndex, BatchGroup2sRadGrid.PageSize, true);
+            BatchGroup2sRadGrid.VirtualItemCount = folioServiceContext.CountBatchGroup2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

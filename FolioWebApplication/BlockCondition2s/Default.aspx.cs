@@ -9,7 +9,7 @@ namespace FolioWebApplication.BlockCondition2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -39,8 +39,8 @@ namespace FolioWebApplication.BlockCondition2s
                 Global.GetCqlFilter(BlockCondition2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(BlockCondition2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            BlockCondition2sRadGrid.DataSource = folioServiceContext.BlockCondition2s(out var i, where, BlockCondition2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BlockCondition2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BlockCondition2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, BlockCondition2sRadGrid.PageSize * BlockCondition2sRadGrid.CurrentPageIndex, BlockCondition2sRadGrid.PageSize, true);
-            BlockCondition2sRadGrid.VirtualItemCount = i;
+            BlockCondition2sRadGrid.DataSource = folioServiceContext.BlockCondition2s(where, BlockCondition2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[BlockCondition2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(BlockCondition2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, BlockCondition2sRadGrid.PageSize * BlockCondition2sRadGrid.CurrentPageIndex, BlockCondition2sRadGrid.PageSize, true);
+            BlockCondition2sRadGrid.VirtualItemCount = folioServiceContext.CountBlockCondition2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

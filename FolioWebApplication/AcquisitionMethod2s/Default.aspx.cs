@@ -9,7 +9,7 @@ namespace FolioWebApplication.AcquisitionMethod2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -34,8 +34,8 @@ namespace FolioWebApplication.AcquisitionMethod2s
                 Global.GetCqlFilter(AcquisitionMethod2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(AcquisitionMethod2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            AcquisitionMethod2sRadGrid.DataSource = folioServiceContext.AcquisitionMethod2s(out var i, where, AcquisitionMethod2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[AcquisitionMethod2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(AcquisitionMethod2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, AcquisitionMethod2sRadGrid.PageSize * AcquisitionMethod2sRadGrid.CurrentPageIndex, AcquisitionMethod2sRadGrid.PageSize, true);
-            AcquisitionMethod2sRadGrid.VirtualItemCount = i;
+            AcquisitionMethod2sRadGrid.DataSource = folioServiceContext.AcquisitionMethod2s(where, AcquisitionMethod2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[AcquisitionMethod2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(AcquisitionMethod2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, AcquisitionMethod2sRadGrid.PageSize * AcquisitionMethod2sRadGrid.CurrentPageIndex, AcquisitionMethod2sRadGrid.PageSize, true);
+            AcquisitionMethod2sRadGrid.VirtualItemCount = folioServiceContext.CountAcquisitionMethod2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

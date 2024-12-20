@@ -9,7 +9,7 @@ namespace FolioWebApplication.Proxy2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -40,8 +40,8 @@ namespace FolioWebApplication.Proxy2s
                 Global.GetCqlFilter(Proxy2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(Proxy2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            Proxy2sRadGrid.DataSource = folioServiceContext.Proxy2s(out var i, where, Proxy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Proxy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Proxy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Proxy2sRadGrid.PageSize * Proxy2sRadGrid.CurrentPageIndex, Proxy2sRadGrid.PageSize, true);
-            Proxy2sRadGrid.VirtualItemCount = i;
+            Proxy2sRadGrid.DataSource = folioServiceContext.Proxy2s(where, Proxy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Proxy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Proxy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Proxy2sRadGrid.PageSize * Proxy2sRadGrid.CurrentPageIndex, Proxy2sRadGrid.PageSize, true);
+            Proxy2sRadGrid.VirtualItemCount = folioServiceContext.CountProxy2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

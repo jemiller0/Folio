@@ -9,7 +9,7 @@ namespace FolioWebApplication.PatronNoticePolicy2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -36,8 +36,8 @@ namespace FolioWebApplication.PatronNoticePolicy2s
                 Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(PatronNoticePolicy2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            PatronNoticePolicy2sRadGrid.DataSource = folioServiceContext.PatronNoticePolicy2s(out var i, where, PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, PatronNoticePolicy2sRadGrid.PageSize * PatronNoticePolicy2sRadGrid.CurrentPageIndex, PatronNoticePolicy2sRadGrid.PageSize, true);
-            PatronNoticePolicy2sRadGrid.VirtualItemCount = i;
+            PatronNoticePolicy2sRadGrid.DataSource = folioServiceContext.PatronNoticePolicy2s(where, PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(PatronNoticePolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, PatronNoticePolicy2sRadGrid.PageSize * PatronNoticePolicy2sRadGrid.CurrentPageIndex, PatronNoticePolicy2sRadGrid.PageSize, true);
+            PatronNoticePolicy2sRadGrid.VirtualItemCount = folioServiceContext.CountPatronNoticePolicy2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

@@ -9,7 +9,7 @@ namespace FolioWebApplication.ItemDamagedStatus2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -35,8 +35,8 @@ namespace FolioWebApplication.ItemDamagedStatus2s
                 Global.GetCqlFilter(ItemDamagedStatus2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(ItemDamagedStatus2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            ItemDamagedStatus2sRadGrid.DataSource = folioServiceContext.ItemDamagedStatus2s(out var i, where, ItemDamagedStatus2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ItemDamagedStatus2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ItemDamagedStatus2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ItemDamagedStatus2sRadGrid.PageSize * ItemDamagedStatus2sRadGrid.CurrentPageIndex, ItemDamagedStatus2sRadGrid.PageSize, true);
-            ItemDamagedStatus2sRadGrid.VirtualItemCount = i;
+            ItemDamagedStatus2sRadGrid.DataSource = folioServiceContext.ItemDamagedStatus2s(where, ItemDamagedStatus2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ItemDamagedStatus2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ItemDamagedStatus2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ItemDamagedStatus2sRadGrid.PageSize * ItemDamagedStatus2sRadGrid.CurrentPageIndex, ItemDamagedStatus2sRadGrid.PageSize, true);
+            ItemDamagedStatus2sRadGrid.VirtualItemCount = folioServiceContext.CountItemDamagedStatus2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

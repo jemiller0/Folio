@@ -11,7 +11,7 @@ namespace FolioWebApplication.FixedDueDateSchedule2s
 {
     public partial class Edit : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -99,8 +99,8 @@ namespace FolioWebApplication.FixedDueDateSchedule2s
                 Global.GetCqlFilter(LoanPolicy2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(LoanPolicy2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            LoanPolicy2sRadGrid.DataSource = folioServiceContext.LoanPolicy2s(out var i, where, LoanPolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[LoanPolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(LoanPolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, LoanPolicy2sRadGrid.PageSize * LoanPolicy2sRadGrid.CurrentPageIndex, LoanPolicy2sRadGrid.PageSize, true);
-            LoanPolicy2sRadGrid.VirtualItemCount = i;
+            LoanPolicy2sRadGrid.DataSource = folioServiceContext.LoanPolicy2s(where, LoanPolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[LoanPolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(LoanPolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, LoanPolicy2sRadGrid.PageSize * LoanPolicy2sRadGrid.CurrentPageIndex, LoanPolicy2sRadGrid.PageSize, true);
+            LoanPolicy2sRadGrid.VirtualItemCount = folioServiceContext.CountLoanPolicy2s(where);
             if (LoanPolicy2sRadGrid.MasterTableView.FilterExpression == "")
             {
                 LoanPolicy2sRadGrid.AllowFilteringByColumn = LoanPolicy2sRadGrid.VirtualItemCount > 10;
@@ -163,8 +163,8 @@ namespace FolioWebApplication.FixedDueDateSchedule2s
                 Global.GetCqlFilter(LoanPolicy2s1RadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(LoanPolicy2s1RadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            LoanPolicy2s1RadGrid.DataSource = folioServiceContext.LoanPolicy2s(out var i, where, LoanPolicy2s1RadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[LoanPolicy2s1RadGrid.MasterTableView.SortExpressions[0].FieldName]}{(LoanPolicy2s1RadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, LoanPolicy2s1RadGrid.PageSize * LoanPolicy2s1RadGrid.CurrentPageIndex, LoanPolicy2s1RadGrid.PageSize, true);
-            LoanPolicy2s1RadGrid.VirtualItemCount = i;
+            LoanPolicy2s1RadGrid.DataSource = folioServiceContext.LoanPolicy2s(where, LoanPolicy2s1RadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[LoanPolicy2s1RadGrid.MasterTableView.SortExpressions[0].FieldName]}{(LoanPolicy2s1RadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, LoanPolicy2s1RadGrid.PageSize * LoanPolicy2s1RadGrid.CurrentPageIndex, LoanPolicy2s1RadGrid.PageSize, true);
+            LoanPolicy2s1RadGrid.VirtualItemCount = folioServiceContext.CountLoanPolicy2s(where);
             if (LoanPolicy2s1RadGrid.MasterTableView.FilterExpression == "")
             {
                 LoanPolicy2s1RadGrid.AllowFilteringByColumn = LoanPolicy2s1RadGrid.VirtualItemCount > 10;

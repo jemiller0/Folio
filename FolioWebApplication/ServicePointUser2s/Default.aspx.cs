@@ -9,7 +9,7 @@ namespace FolioWebApplication.ServicePointUser2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -35,8 +35,8 @@ namespace FolioWebApplication.ServicePointUser2s
                 Global.GetCqlFilter(ServicePointUser2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(ServicePointUser2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            ServicePointUser2sRadGrid.DataSource = folioServiceContext.ServicePointUser2s(out var i, where, ServicePointUser2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ServicePointUser2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ServicePointUser2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ServicePointUser2sRadGrid.PageSize * ServicePointUser2sRadGrid.CurrentPageIndex, ServicePointUser2sRadGrid.PageSize, true);
-            ServicePointUser2sRadGrid.VirtualItemCount = i;
+            ServicePointUser2sRadGrid.DataSource = folioServiceContext.ServicePointUser2s(where, ServicePointUser2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ServicePointUser2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ServicePointUser2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ServicePointUser2sRadGrid.PageSize * ServicePointUser2sRadGrid.CurrentPageIndex, ServicePointUser2sRadGrid.PageSize, true);
+            ServicePointUser2sRadGrid.VirtualItemCount = folioServiceContext.CountServicePointUser2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

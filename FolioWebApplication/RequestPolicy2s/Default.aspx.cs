@@ -9,7 +9,7 @@ namespace FolioWebApplication.RequestPolicy2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -35,8 +35,8 @@ namespace FolioWebApplication.RequestPolicy2s
                 Global.GetCqlFilter(RequestPolicy2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(RequestPolicy2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            RequestPolicy2sRadGrid.DataSource = folioServiceContext.RequestPolicy2s(out var i, where, RequestPolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[RequestPolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(RequestPolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, RequestPolicy2sRadGrid.PageSize * RequestPolicy2sRadGrid.CurrentPageIndex, RequestPolicy2sRadGrid.PageSize, true);
-            RequestPolicy2sRadGrid.VirtualItemCount = i;
+            RequestPolicy2sRadGrid.DataSource = folioServiceContext.RequestPolicy2s(where, RequestPolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[RequestPolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(RequestPolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, RequestPolicy2sRadGrid.PageSize * RequestPolicy2sRadGrid.CurrentPageIndex, RequestPolicy2sRadGrid.PageSize, true);
+            RequestPolicy2sRadGrid.VirtualItemCount = folioServiceContext.CountRequestPolicy2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

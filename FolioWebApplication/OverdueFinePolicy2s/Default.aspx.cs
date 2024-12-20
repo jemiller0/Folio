@@ -9,7 +9,7 @@ namespace FolioWebApplication.OverdueFinePolicy2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -44,8 +44,8 @@ namespace FolioWebApplication.OverdueFinePolicy2s
                 Global.GetCqlFilter(OverdueFinePolicy2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(OverdueFinePolicy2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            OverdueFinePolicy2sRadGrid.DataSource = folioServiceContext.OverdueFinePolicy2s(out var i, where, OverdueFinePolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[OverdueFinePolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(OverdueFinePolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, OverdueFinePolicy2sRadGrid.PageSize * OverdueFinePolicy2sRadGrid.CurrentPageIndex, OverdueFinePolicy2sRadGrid.PageSize, true);
-            OverdueFinePolicy2sRadGrid.VirtualItemCount = i;
+            OverdueFinePolicy2sRadGrid.DataSource = folioServiceContext.OverdueFinePolicy2s(where, OverdueFinePolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[OverdueFinePolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(OverdueFinePolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, OverdueFinePolicy2sRadGrid.PageSize * OverdueFinePolicy2sRadGrid.CurrentPageIndex, OverdueFinePolicy2sRadGrid.PageSize, true);
+            OverdueFinePolicy2sRadGrid.VirtualItemCount = folioServiceContext.CountOverdueFinePolicy2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

@@ -9,7 +9,7 @@ namespace FolioWebApplication.CallNumberType2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -35,8 +35,8 @@ namespace FolioWebApplication.CallNumberType2s
                 Global.GetCqlFilter(CallNumberType2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(CallNumberType2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            CallNumberType2sRadGrid.DataSource = folioServiceContext.CallNumberType2s(out var i, where, CallNumberType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[CallNumberType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(CallNumberType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, CallNumberType2sRadGrid.PageSize * CallNumberType2sRadGrid.CurrentPageIndex, CallNumberType2sRadGrid.PageSize, true);
-            CallNumberType2sRadGrid.VirtualItemCount = i;
+            CallNumberType2sRadGrid.DataSource = folioServiceContext.CallNumberType2s(where, CallNumberType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[CallNumberType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(CallNumberType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, CallNumberType2sRadGrid.PageSize * CallNumberType2sRadGrid.CurrentPageIndex, CallNumberType2sRadGrid.PageSize, true);
+            CallNumberType2sRadGrid.VirtualItemCount = folioServiceContext.CountCallNumberType2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

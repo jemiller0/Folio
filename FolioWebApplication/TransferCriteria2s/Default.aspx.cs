@@ -9,7 +9,7 @@ namespace FolioWebApplication.TransferCriteria2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -33,8 +33,8 @@ namespace FolioWebApplication.TransferCriteria2s
                 Global.GetCqlFilter(TransferCriteria2sRadGrid, "Value", "value"),
                 Global.GetCqlFilter(TransferCriteria2sRadGrid, "Interval", "interval")
             }.Where(s => s != null)));
-            TransferCriteria2sRadGrid.DataSource = folioServiceContext.TransferCriteria2s(out var i, where, TransferCriteria2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[TransferCriteria2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(TransferCriteria2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, TransferCriteria2sRadGrid.PageSize * TransferCriteria2sRadGrid.CurrentPageIndex, TransferCriteria2sRadGrid.PageSize, true);
-            TransferCriteria2sRadGrid.VirtualItemCount = i;
+            TransferCriteria2sRadGrid.DataSource = folioServiceContext.TransferCriteria2s(where, TransferCriteria2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[TransferCriteria2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(TransferCriteria2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, TransferCriteria2sRadGrid.PageSize * TransferCriteria2sRadGrid.CurrentPageIndex, TransferCriteria2sRadGrid.PageSize, true);
+            TransferCriteria2sRadGrid.VirtualItemCount = folioServiceContext.CountTransferCriteria2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

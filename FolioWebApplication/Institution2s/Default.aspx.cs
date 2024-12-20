@@ -9,7 +9,7 @@ namespace FolioWebApplication.Institution2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -35,8 +35,8 @@ namespace FolioWebApplication.Institution2s
                 Global.GetCqlFilter(Institution2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(Institution2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            Institution2sRadGrid.DataSource = folioServiceContext.Institution2s(out var i, where, Institution2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Institution2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Institution2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Institution2sRadGrid.PageSize * Institution2sRadGrid.CurrentPageIndex, Institution2sRadGrid.PageSize, true);
-            Institution2sRadGrid.VirtualItemCount = i;
+            Institution2sRadGrid.DataSource = folioServiceContext.Institution2s(where, Institution2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Institution2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Institution2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Institution2sRadGrid.PageSize * Institution2sRadGrid.CurrentPageIndex, Institution2sRadGrid.PageSize, true);
+            Institution2sRadGrid.VirtualItemCount = folioServiceContext.CountInstitution2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

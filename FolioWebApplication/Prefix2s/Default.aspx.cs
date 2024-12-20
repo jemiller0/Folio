@@ -9,7 +9,7 @@ namespace FolioWebApplication.Prefix2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -31,8 +31,8 @@ namespace FolioWebApplication.Prefix2s
                 Global.GetCqlFilter(Prefix2sRadGrid, "Name", "name"),
                 Global.GetCqlFilter(Prefix2sRadGrid, "Description", "description")
             }.Where(s => s != null)));
-            Prefix2sRadGrid.DataSource = folioServiceContext.Prefix2s(out var i, where, Prefix2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Prefix2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Prefix2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Prefix2sRadGrid.PageSize * Prefix2sRadGrid.CurrentPageIndex, Prefix2sRadGrid.PageSize, true);
-            Prefix2sRadGrid.VirtualItemCount = i;
+            Prefix2sRadGrid.DataSource = folioServiceContext.Prefix2s(where, Prefix2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Prefix2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Prefix2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Prefix2sRadGrid.PageSize * Prefix2sRadGrid.CurrentPageIndex, Prefix2sRadGrid.PageSize, true);
+            Prefix2sRadGrid.VirtualItemCount = folioServiceContext.CountPrefix2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

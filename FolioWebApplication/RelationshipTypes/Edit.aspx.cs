@@ -11,7 +11,7 @@ namespace FolioWebApplication.RelationshipTypes
 {
     public partial class Edit : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -51,8 +51,8 @@ namespace FolioWebApplication.RelationshipTypes
                 Global.GetCqlFilter(InstanceRelationshipsRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(InstanceRelationshipsRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            InstanceRelationshipsRadGrid.DataSource = folioServiceContext.Relationships(out var i, where, InstanceRelationshipsRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[InstanceRelationshipsRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(InstanceRelationshipsRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, InstanceRelationshipsRadGrid.PageSize * InstanceRelationshipsRadGrid.CurrentPageIndex, InstanceRelationshipsRadGrid.PageSize, true);
-            InstanceRelationshipsRadGrid.VirtualItemCount = i;
+            InstanceRelationshipsRadGrid.DataSource = folioServiceContext.Relationships(where, InstanceRelationshipsRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[InstanceRelationshipsRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(InstanceRelationshipsRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, InstanceRelationshipsRadGrid.PageSize * InstanceRelationshipsRadGrid.CurrentPageIndex, InstanceRelationshipsRadGrid.PageSize, true);
+            InstanceRelationshipsRadGrid.VirtualItemCount = folioServiceContext.CountRelationships(where);
             if (InstanceRelationshipsRadGrid.MasterTableView.FilterExpression == "")
             {
                 InstanceRelationshipsRadGrid.AllowFilteringByColumn = InstanceRelationshipsRadGrid.VirtualItemCount > 10;

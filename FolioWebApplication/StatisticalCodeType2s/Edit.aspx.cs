@@ -11,7 +11,7 @@ namespace FolioWebApplication.StatisticalCodeType2s
 {
     public partial class Edit : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -51,8 +51,8 @@ namespace FolioWebApplication.StatisticalCodeType2s
                 Global.GetCqlFilter(StatisticalCode2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(StatisticalCode2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            StatisticalCode2sRadGrid.DataSource = folioServiceContext.StatisticalCode2s(out var i, where, StatisticalCode2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[StatisticalCode2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(StatisticalCode2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, StatisticalCode2sRadGrid.PageSize * StatisticalCode2sRadGrid.CurrentPageIndex, StatisticalCode2sRadGrid.PageSize, true);
-            StatisticalCode2sRadGrid.VirtualItemCount = i;
+            StatisticalCode2sRadGrid.DataSource = folioServiceContext.StatisticalCode2s(where, StatisticalCode2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[StatisticalCode2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(StatisticalCode2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, StatisticalCode2sRadGrid.PageSize * StatisticalCode2sRadGrid.CurrentPageIndex, StatisticalCode2sRadGrid.PageSize, true);
+            StatisticalCode2sRadGrid.VirtualItemCount = folioServiceContext.CountStatisticalCode2s(where);
             if (StatisticalCode2sRadGrid.MasterTableView.FilterExpression == "")
             {
                 StatisticalCode2sRadGrid.AllowFilteringByColumn = StatisticalCode2sRadGrid.VirtualItemCount > 10;

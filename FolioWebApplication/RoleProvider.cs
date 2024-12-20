@@ -8,17 +8,22 @@ namespace FolioWebApplication
 {
     public class RoleProvider : System.Web.Security.RoleProvider
     {
-        private readonly/* static*/ FolioServiceClient folioServiceClient = new FolioServiceClient();
+        //private readonly/* static*/ FolioServiceClient folioServiceClient = new FolioServiceClient();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
         private string accessToken;
+        private DateTime? accessTokenExpirationTime;
+        private string cookies;
 
         public RoleProvider()
         {
-            using (var fsc = new FolioServiceClient())
-            {
-                fsc.Authenticate();
-                accessToken = fsc.AccessToken;
-            }
+            //using (var fsc = new FolioServiceClient())
+            //{
+            //    fsc.Authenticate();
+            //    accessToken = fsc.AccessToken;
+            //    accessTokenExpirationTime = fsc.AccessTokenExpirationTime;
+            //    var l = fsc.httpClient.DefaultRequestHeaders.GetValues("Set-Cookie").ToArray();
+            //    //fsc.httpClient.DefaultRequestHeaders.Add("Set-Cookie", l);
+            //}
         }
 
         public override void AddUsersToRoles(string[] usernames, string[] roleNames) => throw new NotImplementedException();
@@ -52,7 +57,8 @@ namespace FolioWebApplication
             //    return u != null ? fsc.PermissionsUsers($"userId == \"{u["id"]}\"").Single()["permissions"].Select(jt => jt.ToString()/*.Replace("juniper-basic", "all")*/.Replace("juniper-admin-perms-sorted", "all").Replace("administrator", "all")).ToArray() : new string[] { };
             //}
 
-            using (var fsc = new FolioServiceContext(accessToken: accessToken))
+            //using (var fsc = new FolioServiceContext(accessToken: accessToken))
+            using (var fsc = FolioServiceContextPool.GetFolioServiceContext())
             {
                 var u = fsc.User2s($"username == \"{Regex.Replace(userName, @"^.+\\", "", RegexOptions.Compiled)}\"").SingleOrDefault();
                 return u != null ? new[] { $"department:{u.StaffDepartment}" } : new string[] { };

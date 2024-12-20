@@ -9,7 +9,7 @@ namespace FolioWebApplication.Alert2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -30,8 +30,8 @@ namespace FolioWebApplication.Alert2s
                 Global.GetCqlFilter(Alert2sRadGrid, "Id", "id"),
                 Global.GetCqlFilter(Alert2sRadGrid, "Alert", "alert")
             }.Where(s => s != null)));
-            Alert2sRadGrid.DataSource = folioServiceContext.Alert2s(out var i, where, Alert2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Alert2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Alert2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Alert2sRadGrid.PageSize * Alert2sRadGrid.CurrentPageIndex, Alert2sRadGrid.PageSize, true);
-            Alert2sRadGrid.VirtualItemCount = i;
+            Alert2sRadGrid.DataSource = folioServiceContext.Alert2s(where, Alert2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Alert2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Alert2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Alert2sRadGrid.PageSize * Alert2sRadGrid.CurrentPageIndex, Alert2sRadGrid.PageSize, true);
+            Alert2sRadGrid.VirtualItemCount = folioServiceContext.CountAlert2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

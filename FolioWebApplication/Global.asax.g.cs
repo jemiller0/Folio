@@ -8,7 +8,7 @@ namespace FolioWebApplication
     {
         private void AddPermissionsIfNecessary()
         {
-            using (var fsc = new FolioServiceContext())
+            using (var fsc = FolioServiceContextPool.GetFolioServiceContext())
             {
                 if (!fsc.AnyPermission2s("permissionName == \"uc.locationsettings.edit\"")) fsc.Insert(new Permission2 { Code = "uc.locationsettings.edit", Name = "uc.locationsettings.edit" });
                 if (!fsc.AnyPermission2s("permissionName == \"uc.permissions.edit\"")) fsc.Insert(new Permission2 { Code = "uc.permissions.edit", Name = "uc.permissions.edit" });

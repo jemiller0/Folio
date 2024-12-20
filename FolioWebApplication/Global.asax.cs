@@ -23,6 +23,7 @@ namespace FolioWebApplication
     {
         private static string emailAddress = ConfigurationManager.AppSettings["emailAddress"];
         private static string emailName = ConfigurationManager.AppSettings["emailName"];
+        //private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private static string smtpHost = ConfigurationManager.AppSettings["smtpHost"];
         private Stopwatch stopWatch;
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
@@ -104,7 +105,7 @@ namespace FolioWebApplication
                 if (Session["UserName"] == null)
                 {
                     Session["UserName"] = Regex.Replace(User.Identity.Name, @"^.+\\", "", RegexOptions.Compiled);
-                    using (var fsc = new FolioServiceContext()) Session["UserId"] = fsc.User2s($"username == \"{Session["UserName"]}\"").Single().Id;
+                    using (var fsc = FolioServiceContextPool.GetFolioServiceContext()) Session["UserId"] = fsc.User2s($"username == \"{Session["UserName"]}\"").Single().Id;
                 }
                 var hs = Roles.GetRolesForUser().ToHashSet();
                 var userName = (string)Session["UserName"];
@@ -329,7 +330,7 @@ namespace FolioWebApplication
         {
             Session["UserName"] = userName;
             HttpContext.Current.User = new GenericPrincipal(new GenericIdentity($@"ADLOCAL\{userName}"), System.Web.Security.Roles.GetRolesForUser($@"ADLOCAL\{userName}"));
-            using (var fsc = new FolioServiceContext()) Session["UserId"] = fsc.User2s($"username == \"{Session["UserName"]}\"").Single().Id;
+            using (var fsc = FolioServiceContextPool.GetFolioServiceContext()) Session["UserId"] = fsc.User2s($"username == \"{Session["UserName"]}\"").Single().Id;
         }
 
         public static string Trim(string value)
@@ -377,5 +378,11 @@ namespace FolioWebApplication
         public static string Truncate(string value, int length) => value != null ? value.Length > length ? value.Substring(0, length - 1) + "…" : value : null;
 
         public static CultureInfo GetCultureInfo(string currencySymbol) => currencySymbol == "USD" ? CultureInfo.CurrentCulture : CultureInfo.GetCultures(CultureTypes.SpecificCultures).FirstOrDefault(ci => new RegionInfo(ci.LCID).ISOCurrencySymbol == currencySymbol) ?? CultureInfo.CurrentCulture;
+
+        //public override void Dispose()
+        //{
+        //    folioServiceContext.Dispose();
+        //    base.Dispose();
+        //}
     }
 }

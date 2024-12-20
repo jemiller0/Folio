@@ -9,7 +9,7 @@ namespace FolioWebApplication.OrderTemplate2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -32,8 +32,8 @@ namespace FolioWebApplication.OrderTemplate2s
                 Global.GetCqlFilter(OrderTemplate2sRadGrid, "Code", "templateCode"),
                 Global.GetCqlFilter(OrderTemplate2sRadGrid, "Description", "templateDescription")
             }.Where(s => s != null)));
-            OrderTemplate2sRadGrid.DataSource = folioServiceContext.OrderTemplate2s(out var i, where, OrderTemplate2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[OrderTemplate2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(OrderTemplate2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, OrderTemplate2sRadGrid.PageSize * OrderTemplate2sRadGrid.CurrentPageIndex, OrderTemplate2sRadGrid.PageSize, true);
-            OrderTemplate2sRadGrid.VirtualItemCount = i;
+            OrderTemplate2sRadGrid.DataSource = folioServiceContext.OrderTemplate2s(where, OrderTemplate2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[OrderTemplate2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(OrderTemplate2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, OrderTemplate2sRadGrid.PageSize * OrderTemplate2sRadGrid.CurrentPageIndex, OrderTemplate2sRadGrid.PageSize, true);
+            OrderTemplate2sRadGrid.VirtualItemCount = folioServiceContext.CountOrderTemplate2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

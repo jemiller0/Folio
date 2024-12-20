@@ -9,7 +9,7 @@ namespace FolioWebApplication.ReportingCode2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -31,8 +31,8 @@ namespace FolioWebApplication.ReportingCode2s
                 Global.GetCqlFilter(ReportingCode2sRadGrid, "Code", "code"),
                 Global.GetCqlFilter(ReportingCode2sRadGrid, "Description", "description")
             }.Where(s => s != null)));
-            ReportingCode2sRadGrid.DataSource = folioServiceContext.ReportingCode2s(out var i, where, ReportingCode2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ReportingCode2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ReportingCode2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ReportingCode2sRadGrid.PageSize * ReportingCode2sRadGrid.CurrentPageIndex, ReportingCode2sRadGrid.PageSize, true);
-            ReportingCode2sRadGrid.VirtualItemCount = i;
+            ReportingCode2sRadGrid.DataSource = folioServiceContext.ReportingCode2s(where, ReportingCode2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ReportingCode2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ReportingCode2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ReportingCode2sRadGrid.PageSize * ReportingCode2sRadGrid.CurrentPageIndex, ReportingCode2sRadGrid.PageSize, true);
+            ReportingCode2sRadGrid.VirtualItemCount = folioServiceContext.CountReportingCode2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

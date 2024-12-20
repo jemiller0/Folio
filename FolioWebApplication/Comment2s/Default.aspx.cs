@@ -9,7 +9,7 @@ namespace FolioWebApplication.Comment2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -37,8 +37,8 @@ namespace FolioWebApplication.Comment2s
                 Global.GetCqlFilter(Comment2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(Comment2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            Comment2sRadGrid.DataSource = folioServiceContext.Comment2s(out var i, where, Comment2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Comment2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Comment2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Comment2sRadGrid.PageSize * Comment2sRadGrid.CurrentPageIndex, Comment2sRadGrid.PageSize, true);
-            Comment2sRadGrid.VirtualItemCount = i;
+            Comment2sRadGrid.DataSource = folioServiceContext.Comment2s(where, Comment2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Comment2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Comment2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Comment2sRadGrid.PageSize * Comment2sRadGrid.CurrentPageIndex, Comment2sRadGrid.PageSize, true);
+            Comment2sRadGrid.VirtualItemCount = folioServiceContext.CountComment2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

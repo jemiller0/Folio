@@ -9,7 +9,7 @@ namespace FolioWebApplication.PaymentMethod2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -36,8 +36,8 @@ namespace FolioWebApplication.PaymentMethod2s
                 Global.GetCqlFilter(PaymentMethod2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(PaymentMethod2sRadGrid, "Owner.Name", "ownerId", "owner", folioServiceContext.FolioServiceClient.Owners)
             }.Where(s => s != null)));
-            PaymentMethod2sRadGrid.DataSource = folioServiceContext.PaymentMethod2s(out var i, where, PaymentMethod2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[PaymentMethod2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(PaymentMethod2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, PaymentMethod2sRadGrid.PageSize * PaymentMethod2sRadGrid.CurrentPageIndex, PaymentMethod2sRadGrid.PageSize, true);
-            PaymentMethod2sRadGrid.VirtualItemCount = i;
+            PaymentMethod2sRadGrid.DataSource = folioServiceContext.PaymentMethod2s(where, PaymentMethod2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[PaymentMethod2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(PaymentMethod2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, PaymentMethod2sRadGrid.PageSize * PaymentMethod2sRadGrid.CurrentPageIndex, PaymentMethod2sRadGrid.PageSize, true);
+            PaymentMethod2sRadGrid.VirtualItemCount = folioServiceContext.CountPaymentMethod2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

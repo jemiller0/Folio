@@ -9,7 +9,7 @@ namespace FolioWebApplication.HoldingNoteType2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -35,8 +35,8 @@ namespace FolioWebApplication.HoldingNoteType2s
                 Global.GetCqlFilter(HoldingNoteType2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(HoldingNoteType2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            HoldingNoteType2sRadGrid.DataSource = folioServiceContext.HoldingNoteType2s(out var i, where, HoldingNoteType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[HoldingNoteType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(HoldingNoteType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, HoldingNoteType2sRadGrid.PageSize * HoldingNoteType2sRadGrid.CurrentPageIndex, HoldingNoteType2sRadGrid.PageSize, true);
-            HoldingNoteType2sRadGrid.VirtualItemCount = i;
+            HoldingNoteType2sRadGrid.DataSource = folioServiceContext.HoldingNoteType2s(where, HoldingNoteType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[HoldingNoteType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(HoldingNoteType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, HoldingNoteType2sRadGrid.PageSize * HoldingNoteType2sRadGrid.CurrentPageIndex, HoldingNoteType2sRadGrid.PageSize, true);
+            HoldingNoteType2sRadGrid.VirtualItemCount = folioServiceContext.CountHoldingNoteType2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

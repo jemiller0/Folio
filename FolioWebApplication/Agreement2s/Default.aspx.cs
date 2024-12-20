@@ -9,7 +9,7 @@ namespace FolioWebApplication.Agreement2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -39,8 +39,8 @@ namespace FolioWebApplication.Agreement2s
                 Global.GetCqlFilter(Agreement2sRadGrid, "CreationTime", "dateCreated"),
                 Global.GetCqlFilter(Agreement2sRadGrid, "LastWriteTime", "lastUpdated")
             }.Where(s => s != null)));
-            Agreement2sRadGrid.DataSource = folioServiceContext.Agreement2s(out var i, where, Agreement2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Agreement2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Agreement2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Agreement2sRadGrid.PageSize * Agreement2sRadGrid.CurrentPageIndex, Agreement2sRadGrid.PageSize, true);
-            Agreement2sRadGrid.VirtualItemCount = i;
+            Agreement2sRadGrid.DataSource = folioServiceContext.Agreement2s(where, Agreement2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Agreement2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Agreement2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Agreement2sRadGrid.PageSize * Agreement2sRadGrid.CurrentPageIndex, Agreement2sRadGrid.PageSize, true);
+            Agreement2sRadGrid.VirtualItemCount = folioServiceContext.CountAgreement2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

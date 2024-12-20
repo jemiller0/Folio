@@ -9,7 +9,7 @@ namespace FolioWebApplication.RolloverError2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -37,8 +37,8 @@ namespace FolioWebApplication.RolloverError2s
                 Global.GetCqlFilter(RolloverError2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(RolloverError2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            RolloverError2sRadGrid.DataSource = folioServiceContext.RolloverError2s(out var i, where, RolloverError2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[RolloverError2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(RolloverError2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, RolloverError2sRadGrid.PageSize * RolloverError2sRadGrid.CurrentPageIndex, RolloverError2sRadGrid.PageSize, true);
-            RolloverError2sRadGrid.VirtualItemCount = i;
+            RolloverError2sRadGrid.DataSource = folioServiceContext.RolloverError2s(where, RolloverError2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[RolloverError2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(RolloverError2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, RolloverError2sRadGrid.PageSize * RolloverError2sRadGrid.CurrentPageIndex, RolloverError2sRadGrid.PageSize, true);
+            RolloverError2sRadGrid.VirtualItemCount = folioServiceContext.CountRolloverError2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

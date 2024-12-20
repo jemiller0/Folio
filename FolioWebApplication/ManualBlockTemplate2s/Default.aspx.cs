@@ -9,7 +9,7 @@ namespace FolioWebApplication.ManualBlockTemplate2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -41,8 +41,8 @@ namespace FolioWebApplication.ManualBlockTemplate2s
                 Global.GetCqlFilter(ManualBlockTemplate2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(ManualBlockTemplate2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            ManualBlockTemplate2sRadGrid.DataSource = folioServiceContext.ManualBlockTemplate2s(out var i, where, ManualBlockTemplate2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ManualBlockTemplate2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ManualBlockTemplate2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ManualBlockTemplate2sRadGrid.PageSize * ManualBlockTemplate2sRadGrid.CurrentPageIndex, ManualBlockTemplate2sRadGrid.PageSize, true);
-            ManualBlockTemplate2sRadGrid.VirtualItemCount = i;
+            ManualBlockTemplate2sRadGrid.DataSource = folioServiceContext.ManualBlockTemplate2s(where, ManualBlockTemplate2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ManualBlockTemplate2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ManualBlockTemplate2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ManualBlockTemplate2sRadGrid.PageSize * ManualBlockTemplate2sRadGrid.CurrentPageIndex, ManualBlockTemplate2sRadGrid.PageSize, true);
+            ManualBlockTemplate2sRadGrid.VirtualItemCount = folioServiceContext.CountManualBlockTemplate2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

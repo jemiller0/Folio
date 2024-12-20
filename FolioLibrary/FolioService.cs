@@ -155,7 +155,7 @@ namespace FolioLibrary
 
         public Label GetLabel(string barcode, Orientation? orientation = null)
         {
-            using (var fsc = new FolioServiceContext())
+            using (var fsc = FolioServiceContextPool.GetFolioServiceContext())
             {
                 var i = fsc.Item2s($"barcode == \"{barcode}\"", load: true).SingleOrDefault();
                 if (i == null) return null;

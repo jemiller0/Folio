@@ -9,7 +9,7 @@ namespace FolioWebApplication.PermissionsUser2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -34,8 +34,8 @@ namespace FolioWebApplication.PermissionsUser2s
                 Global.GetCqlFilter(PermissionsUser2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(PermissionsUser2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            PermissionsUser2sRadGrid.DataSource = folioServiceContext.PermissionsUser2s(out var i, where, PermissionsUser2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[PermissionsUser2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(PermissionsUser2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, PermissionsUser2sRadGrid.PageSize * PermissionsUser2sRadGrid.CurrentPageIndex, PermissionsUser2sRadGrid.PageSize, true);
-            PermissionsUser2sRadGrid.VirtualItemCount = i;
+            PermissionsUser2sRadGrid.DataSource = folioServiceContext.PermissionsUser2s(where, PermissionsUser2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[PermissionsUser2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(PermissionsUser2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, PermissionsUser2sRadGrid.PageSize * PermissionsUser2sRadGrid.CurrentPageIndex, PermissionsUser2sRadGrid.PageSize, true);
+            PermissionsUser2sRadGrid.VirtualItemCount = folioServiceContext.CountPermissionsUser2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

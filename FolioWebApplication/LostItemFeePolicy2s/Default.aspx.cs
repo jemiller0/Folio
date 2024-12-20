@@ -9,7 +9,7 @@ namespace FolioWebApplication.LostItemFeePolicy2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -57,8 +57,8 @@ namespace FolioWebApplication.LostItemFeePolicy2s
                 Global.GetCqlFilter(LostItemFeePolicy2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(LostItemFeePolicy2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            LostItemFeePolicy2sRadGrid.DataSource = folioServiceContext.LostItemFeePolicy2s(out var i, where, LostItemFeePolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[LostItemFeePolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(LostItemFeePolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, LostItemFeePolicy2sRadGrid.PageSize * LostItemFeePolicy2sRadGrid.CurrentPageIndex, LostItemFeePolicy2sRadGrid.PageSize, true);
-            LostItemFeePolicy2sRadGrid.VirtualItemCount = i;
+            LostItemFeePolicy2sRadGrid.DataSource = folioServiceContext.LostItemFeePolicy2s(where, LostItemFeePolicy2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[LostItemFeePolicy2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(LostItemFeePolicy2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, LostItemFeePolicy2sRadGrid.PageSize * LostItemFeePolicy2sRadGrid.CurrentPageIndex, LostItemFeePolicy2sRadGrid.PageSize, true);
+            LostItemFeePolicy2sRadGrid.VirtualItemCount = folioServiceContext.CountLostItemFeePolicy2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

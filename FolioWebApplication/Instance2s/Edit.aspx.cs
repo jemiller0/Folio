@@ -11,7 +11,7 @@ namespace FolioWebApplication.Instance2s
 {
     public partial class Edit : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -134,8 +134,8 @@ namespace FolioWebApplication.Instance2s
                 Global.GetCqlFilter(Fee2sRadGrid, "Owner.Name", "ownerId", "owner", folioServiceContext.FolioServiceClient.Owners),
                 Global.GetCqlFilter(Fee2sRadGrid, "Holding.ShortId", "holdingsRecordId", "hrid", folioServiceContext.FolioServiceClient.Holdings)
             }.Where(s => s != null)));
-            Fee2sRadGrid.DataSource = folioServiceContext.Fee2s(out var i, where, Fee2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Fee2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Fee2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Fee2sRadGrid.PageSize * Fee2sRadGrid.CurrentPageIndex, Fee2sRadGrid.PageSize, true);
-            Fee2sRadGrid.VirtualItemCount = i;
+            Fee2sRadGrid.DataSource = folioServiceContext.Fee2s(where, Fee2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Fee2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Fee2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Fee2sRadGrid.PageSize * Fee2sRadGrid.CurrentPageIndex, Fee2sRadGrid.PageSize, true);
+            Fee2sRadGrid.VirtualItemCount = folioServiceContext.CountFee2s(where);
             if (Fee2sRadGrid.MasterTableView.FilterExpression == "")
             {
                 Fee2sRadGrid.AllowFilteringByColumn = Fee2sRadGrid.VirtualItemCount > 10;
@@ -180,8 +180,8 @@ namespace FolioWebApplication.Instance2s
                 Global.GetCqlFilter(Holding2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(Holding2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            Holding2sRadGrid.DataSource = folioServiceContext.Holding2s(out var i, where, Holding2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Holding2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Holding2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Holding2sRadGrid.PageSize * Holding2sRadGrid.CurrentPageIndex, Holding2sRadGrid.PageSize, true);
-            Holding2sRadGrid.VirtualItemCount = i;
+            Holding2sRadGrid.DataSource = folioServiceContext.Holding2s(where, Holding2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Holding2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Holding2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Holding2sRadGrid.PageSize * Holding2sRadGrid.CurrentPageIndex, Holding2sRadGrid.PageSize, true);
+            Holding2sRadGrid.VirtualItemCount = folioServiceContext.CountHolding2s(where);
             if (Holding2sRadGrid.MasterTableView.FilterExpression == "")
             {
                 Holding2sRadGrid.AllowFilteringByColumn = Holding2sRadGrid.VirtualItemCount > 10;
@@ -244,8 +244,8 @@ namespace FolioWebApplication.Instance2s
                 Global.GetCqlFilter(rg, "LastCheckInServicePoint.Name", "lastCheckIn.servicePointId", "name", folioServiceContext.FolioServiceClient.ServicePoints),
                 Global.GetCqlFilter(rg, "LastCheckInStaffMember.Username", "lastCheckIn.staffMemberId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            rg.DataSource = folioServiceContext.Item2s(out var i, where, rg.MasterTableView.SortExpressions.Count > 0 ? $"{d[rg.MasterTableView.SortExpressions[0].FieldName]}{(rg.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, rg.PageSize * rg.CurrentPageIndex, rg.PageSize, true);
-            rg.VirtualItemCount = i;
+            rg.DataSource = folioServiceContext.Item2s(where, rg.MasterTableView.SortExpressions.Count > 0 ? $"{d[rg.MasterTableView.SortExpressions[0].FieldName]}{(rg.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, rg.PageSize * rg.CurrentPageIndex, rg.PageSize, true);
+            rg.VirtualItemCount = folioServiceContext.CountItem2s(where);
             if (rg.MasterTableView.FilterExpression == "")
             {
                 rg.AllowFilteringByColumn = rg.VirtualItemCount > 10;
@@ -412,8 +412,8 @@ namespace FolioWebApplication.Instance2s
                 Global.GetCqlFilter(OrderItem2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(OrderItem2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            OrderItem2sRadGrid.DataSource = folioServiceContext.OrderItem2s(out var i, where, OrderItem2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[OrderItem2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(OrderItem2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, OrderItem2sRadGrid.PageSize * OrderItem2sRadGrid.CurrentPageIndex, OrderItem2sRadGrid.PageSize, true);
-            OrderItem2sRadGrid.VirtualItemCount = i;
+            OrderItem2sRadGrid.DataSource = folioServiceContext.OrderItem2s(where, OrderItem2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[OrderItem2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(OrderItem2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, OrderItem2sRadGrid.PageSize * OrderItem2sRadGrid.CurrentPageIndex, OrderItem2sRadGrid.PageSize, true);
+            OrderItem2sRadGrid.VirtualItemCount = folioServiceContext.CountOrderItem2s(where);
             if (OrderItem2sRadGrid.MasterTableView.FilterExpression == "")
             {
                 OrderItem2sRadGrid.AllowFilteringByColumn = OrderItem2sRadGrid.VirtualItemCount > 10;
@@ -451,8 +451,8 @@ namespace FolioWebApplication.Instance2s
                 Global.GetCqlFilter(PrecedingSucceedingTitle2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(PrecedingSucceedingTitle2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            PrecedingSucceedingTitle2sRadGrid.DataSource = folioServiceContext.PrecedingSucceedingTitle2s(out var i, where, PrecedingSucceedingTitle2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[PrecedingSucceedingTitle2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(PrecedingSucceedingTitle2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, PrecedingSucceedingTitle2sRadGrid.PageSize * PrecedingSucceedingTitle2sRadGrid.CurrentPageIndex, PrecedingSucceedingTitle2sRadGrid.PageSize, true);
-            PrecedingSucceedingTitle2sRadGrid.VirtualItemCount = i;
+            PrecedingSucceedingTitle2sRadGrid.DataSource = folioServiceContext.PrecedingSucceedingTitle2s(where, PrecedingSucceedingTitle2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[PrecedingSucceedingTitle2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(PrecedingSucceedingTitle2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, PrecedingSucceedingTitle2sRadGrid.PageSize * PrecedingSucceedingTitle2sRadGrid.CurrentPageIndex, PrecedingSucceedingTitle2sRadGrid.PageSize, true);
+            PrecedingSucceedingTitle2sRadGrid.VirtualItemCount = folioServiceContext.CountPrecedingSucceedingTitle2s(where);
             if (PrecedingSucceedingTitle2sRadGrid.MasterTableView.FilterExpression == "")
             {
                 PrecedingSucceedingTitle2sRadGrid.AllowFilteringByColumn = PrecedingSucceedingTitle2sRadGrid.VirtualItemCount > 10;
@@ -479,8 +479,8 @@ namespace FolioWebApplication.Instance2s
                 Global.GetCqlFilter(PrecedingSucceedingTitle2s1RadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(PrecedingSucceedingTitle2s1RadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            PrecedingSucceedingTitle2s1RadGrid.DataSource = folioServiceContext.PrecedingSucceedingTitle2s(out var i, where, PrecedingSucceedingTitle2s1RadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[PrecedingSucceedingTitle2s1RadGrid.MasterTableView.SortExpressions[0].FieldName]}{(PrecedingSucceedingTitle2s1RadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, PrecedingSucceedingTitle2s1RadGrid.PageSize * PrecedingSucceedingTitle2s1RadGrid.CurrentPageIndex, PrecedingSucceedingTitle2s1RadGrid.PageSize, true);
-            PrecedingSucceedingTitle2s1RadGrid.VirtualItemCount = i;
+            PrecedingSucceedingTitle2s1RadGrid.DataSource = folioServiceContext.PrecedingSucceedingTitle2s(where, PrecedingSucceedingTitle2s1RadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[PrecedingSucceedingTitle2s1RadGrid.MasterTableView.SortExpressions[0].FieldName]}{(PrecedingSucceedingTitle2s1RadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, PrecedingSucceedingTitle2s1RadGrid.PageSize * PrecedingSucceedingTitle2s1RadGrid.CurrentPageIndex, PrecedingSucceedingTitle2s1RadGrid.PageSize, true);
+            PrecedingSucceedingTitle2s1RadGrid.VirtualItemCount = folioServiceContext.CountPrecedingSucceedingTitle2s(where);
             if (PrecedingSucceedingTitle2s1RadGrid.MasterTableView.FilterExpression == "")
             {
                 PrecedingSucceedingTitle2s1RadGrid.AllowFilteringByColumn = PrecedingSucceedingTitle2s1RadGrid.VirtualItemCount > 10;
@@ -539,8 +539,8 @@ namespace FolioWebApplication.Instance2s
                 Global.GetCqlFilter(RelationshipsRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(RelationshipsRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            RelationshipsRadGrid.DataSource = folioServiceContext.Relationships(out var i, where, RelationshipsRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[RelationshipsRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(RelationshipsRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, RelationshipsRadGrid.PageSize * RelationshipsRadGrid.CurrentPageIndex, RelationshipsRadGrid.PageSize, true);
-            RelationshipsRadGrid.VirtualItemCount = i;
+            RelationshipsRadGrid.DataSource = folioServiceContext.Relationships(where, RelationshipsRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[RelationshipsRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(RelationshipsRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, RelationshipsRadGrid.PageSize * RelationshipsRadGrid.CurrentPageIndex, RelationshipsRadGrid.PageSize, true);
+            RelationshipsRadGrid.VirtualItemCount = folioServiceContext.CountRelationships(where);
             if (RelationshipsRadGrid.MasterTableView.FilterExpression == "")
             {
                 RelationshipsRadGrid.AllowFilteringByColumn = RelationshipsRadGrid.VirtualItemCount > 10;
@@ -566,8 +566,8 @@ namespace FolioWebApplication.Instance2s
                 Global.GetCqlFilter(Relationships1RadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(Relationships1RadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            Relationships1RadGrid.DataSource = folioServiceContext.Relationships(out var i, where, Relationships1RadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Relationships1RadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Relationships1RadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Relationships1RadGrid.PageSize * Relationships1RadGrid.CurrentPageIndex, Relationships1RadGrid.PageSize, true);
-            Relationships1RadGrid.VirtualItemCount = i;
+            Relationships1RadGrid.DataSource = folioServiceContext.Relationships(where, Relationships1RadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Relationships1RadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Relationships1RadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Relationships1RadGrid.PageSize * Relationships1RadGrid.CurrentPageIndex, Relationships1RadGrid.PageSize, true);
+            Relationships1RadGrid.VirtualItemCount = folioServiceContext.CountRelationships(where);
             if (Relationships1RadGrid.MasterTableView.FilterExpression == "")
             {
                 Relationships1RadGrid.AllowFilteringByColumn = Relationships1RadGrid.VirtualItemCount > 10;
@@ -634,8 +634,8 @@ namespace FolioWebApplication.Instance2s
                 Global.GetCqlFilter(Request2sRadGrid, "SearchIndexPickupServicePointName", "searchIndex.pickupServicePointName"),
                 Global.GetCqlFilter(Request2sRadGrid, "ItemLocationCode", "itemLocationCode")
             }.Where(s => s != null)));
-            Request2sRadGrid.DataSource = folioServiceContext.Request2s(out var i, where, Request2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Request2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Request2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Request2sRadGrid.PageSize * Request2sRadGrid.CurrentPageIndex, Request2sRadGrid.PageSize, true);
-            Request2sRadGrid.VirtualItemCount = i;
+            Request2sRadGrid.DataSource = folioServiceContext.Request2s(where, Request2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Request2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Request2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Request2sRadGrid.PageSize * Request2sRadGrid.CurrentPageIndex, Request2sRadGrid.PageSize, true);
+            Request2sRadGrid.VirtualItemCount = folioServiceContext.CountRequest2s(where);
             if (Request2sRadGrid.MasterTableView.FilterExpression == "")
             {
                 Request2sRadGrid.AllowFilteringByColumn = Request2sRadGrid.VirtualItemCount > 10;
@@ -696,8 +696,8 @@ namespace FolioWebApplication.Instance2s
                 Global.GetCqlFilter(Title2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(Title2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            Title2sRadGrid.DataSource = folioServiceContext.Title2s(out var i, where, Title2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Title2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Title2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Title2sRadGrid.PageSize * Title2sRadGrid.CurrentPageIndex, Title2sRadGrid.PageSize, true);
-            Title2sRadGrid.VirtualItemCount = i;
+            Title2sRadGrid.DataSource = folioServiceContext.Title2s(where, Title2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Title2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Title2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Title2sRadGrid.PageSize * Title2sRadGrid.CurrentPageIndex, Title2sRadGrid.PageSize, true);
+            Title2sRadGrid.VirtualItemCount = folioServiceContext.CountTitle2s(where);
             if (Title2sRadGrid.MasterTableView.FilterExpression == "")
             {
                 Title2sRadGrid.AllowFilteringByColumn = Title2sRadGrid.VirtualItemCount > 10;

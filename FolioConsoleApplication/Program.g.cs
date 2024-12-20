@@ -46,6 +46,7 @@ namespace FolioConsoleApplication
             try
             {
                 Console.OutputEncoding = Encoding.UTF8;
+                var count = args.Any(s3 => s3.Equals("-Count", StringComparison.OrdinalIgnoreCase));
                 var query = args.Any(s3 => s3.Equals("-Query", StringComparison.OrdinalIgnoreCase));
                 var tracePath = args.SkipWhile(s3 => !s3.Equals("-TracePath", StringComparison.OrdinalIgnoreCase)).Skip(1).FirstOrDefault();
                 var verbose = args.Any(s3 => s3.Equals("-Verbose", StringComparison.OrdinalIgnoreCase));
@@ -908,6 +909,131 @@ namespace FolioConsoleApplication
                     usersPath = $"{path}/users.json";
                     if (!api) userSummariesPath = $"{path}/usersummaries.json";
                 }
+                if (count && acquisitionMethods) CountAcquisitionMethods(where);
+                if (count && acquisitionsUnits) CountAcquisitionsUnits(where);
+                if (count && actualCostRecords) CountActualCostRecords(where);
+                if (count && addressTypes) CountAddressTypes(where);
+                if (count && agreementItems) CountAgreementItems(where);
+                if (count && agreements) CountAgreements(where);
+                if (count && alerts) CountAlerts(where);
+                if (count && alternativeTitleTypes) CountAlternativeTitleTypes(where);
+                if (count && batchGroups) CountBatchGroups(where);
+                if (count && blockConditions) CountBlockConditions(where);
+                if (count && blockLimits) CountBlockLimits(where);
+                if (count && blocks) CountBlocks(where);
+                if (count && boundWithParts) CountBoundWithParts(where);
+                if (count && budgetExpenseClasses) CountBudgetExpenseClasses(where);
+                if (count && budgetGroups) CountBudgetGroups(where);
+                if (count && budgets) CountBudgets(where);
+                if (count && callNumberTypes) CountCallNumberTypes(where);
+                if (count && campuses) CountCampuses(where);
+                if (count && cancellationReasons) CountCancellationReasons(where);
+                if (count && categories) CountCategories(where);
+                if (count && checkIns) CountCheckIns(where);
+                if (count && circulationRules) CountCirculationRules(where);
+                if (count && classificationTypes) CountClassificationTypes(where);
+                if (count && closeReasons) CountCloseReasons(where);
+                if (count && comments) CountComments(where);
+                if (count && configurations) CountConfigurations(where);
+                if (count && contacts) CountContacts(where);
+                if (count && contributorNameTypes) CountContributorNameTypes(where);
+                if (count && contributorTypes) CountContributorTypes(where);
+                if (count && customFields) CountCustomFields(where);
+                if (count && departments) CountDepartments(where);
+                if (count && electronicAccessRelationships) CountElectronicAccessRelationships(where);
+                if (count && expenseClasses) CountExpenseClasses(where);
+                if (count && fees) CountFees(where);
+                if (count && feeTypes) CountFeeTypes(where);
+                if (count && financeGroups) CountFinanceGroups(where);
+                if (count && fiscalYears) CountFiscalYears(where);
+                if (count && fixedDueDateSchedules) CountFixedDueDateSchedules(where);
+                if (count && funds) CountFunds(where);
+                if (count && fundTypes) CountFundTypes(where);
+                if (count && groups) CountGroups(where);
+                if (count && holdingNoteTypes) CountHoldingNoteTypes(where);
+                if (count && holdings) CountHoldings(where);
+                if (count && holdingTypes) CountHoldingTypes(where);
+                if (count && hridSettings) CountHridSettings(where);
+                if (count && idTypes) CountIdTypes(where);
+                if (count && illPolicies) CountIllPolicies(where);
+                if (count && instanceFormats) CountInstanceFormats(where);
+                if (count && instanceNoteTypes) CountInstanceNoteTypes(where);
+                if (count && instanceRelationships) CountInstanceRelationships(where);
+                if (count && instanceRelationshipTypes) CountInstanceRelationshipTypes(where);
+                if (count && instances) CountInstances(where);
+                if (count && instanceStatuses) CountInstanceStatuses(where);
+                if (count && instanceTypes) CountInstanceTypes(where);
+                if (count && institutions) CountInstitutions(where);
+                if (count && interfaceCredentials) CountInterfaceCredentials(where);
+                if (count && interfaces) CountInterfaces(where);
+                if (count && invoiceItems) CountInvoiceItems(where);
+                if (count && invoices) CountInvoices(where);
+                if (count && itemDamagedStatuses) CountItemDamagedStatuses(where);
+                if (count && itemNoteTypes) CountItemNoteTypes(where);
+                if (count && items) CountItems(where);
+                if (count && ledgers) CountLedgers(where);
+                if (count && libraries) CountLibraries(where);
+                if (count && loanEvents) CountLoanEvents(where);
+                if (count && loanPolicies) CountLoanPolicies(where);
+                if (count && loans) CountLoans(where);
+                if (count && loanTypes) CountLoanTypes(where);
+                if (count && locations) CountLocations(where);
+                if (count && logins) CountLogins(where);
+                if (count && lostItemFeePolicies) CountLostItemFeePolicies(where);
+                if (count && manualBlockTemplates) CountManualBlockTemplates(where);
+                if (count && materialTypes) CountMaterialTypes(where);
+                if (count && modeOfIssuances) CountModeOfIssuances(where);
+                if (count && natureOfContentTerms) CountNatureOfContentTerms(where);
+                if (count && notes) CountNotes(where);
+                if (count && noteTypes) CountNoteTypes(where);
+                if (count && orderInvoices) CountOrderInvoices(where);
+                if (count && orderItems) CountOrderItems(where);
+                if (count && orders) CountOrders(where);
+                if (count && orderTemplates) CountOrderTemplates(where);
+                if (count && organizations) CountOrganizations(where);
+                if (count && overdueFinePolicies) CountOverdueFinePolicies(where);
+                if (count && owners) CountOwners(where);
+                if (count && patronActionSessions) CountPatronActionSessions(where);
+                if (count && patronNoticePolicies) CountPatronNoticePolicies(where);
+                if (count && paymentMethods) CountPaymentMethods(where);
+                if (count && payments) CountPayments(where);
+                if (count && permissions) CountPermissions(where);
+                if (count && permissionsUsers) CountPermissionsUsers(where);
+                if (count && precedingSucceedingTitles) CountPrecedingSucceedingTitles(where);
+                if (count && prefixes) CountPrefixes(where);
+                if (count && proxies) CountProxies(where);
+                if (count && receivings) CountReceivings(where);
+                if (count && records) CountRecords(where);
+                if (count && referenceDatas) CountReferenceDatas(where);
+                if (count && refundReasons) CountRefundReasons(where);
+                if (count && reportingCodes) CountReportingCodes(where);
+                if (count && requestPolicies) CountRequestPolicies(where);
+                if (count && requests) CountRequests(where);
+                if (count && rolloverBudgets) CountRolloverBudgets(where);
+                if (count && rolloverErrors) CountRolloverErrors(where);
+                if (count && rolloverProgresses) CountRolloverProgresses(where);
+                if (count && rollovers) CountRollovers(where);
+                if (count && scheduledNotices) CountScheduledNotices(where);
+                if (count && servicePoints) CountServicePoints(where);
+                if (count && servicePointUsers) CountServicePointUsers(where);
+                if (count && snapshots) CountSnapshots(where);
+                if (count && sources) CountSources(where);
+                if (count && staffSlips) CountStaffSlips(where);
+                if (count && statisticalCodes) CountStatisticalCodes(where);
+                if (count && statisticalCodeTypes) CountStatisticalCodeTypes(where);
+                if (count && suffixes) CountSuffixes(where);
+                if (count && templates) CountTemplates(where);
+                if (count && titles) CountTitles(where);
+                if (count && transactions) CountTransactions(where);
+                if (count && transferAccounts) CountTransferAccounts(where);
+                if (count && transferCriterias) CountTransferCriterias(where);
+                if (count && userAcquisitionsUnits) CountUserAcquisitionsUnits(where);
+                if (count && userRequestPreferences) CountUserRequestPreferences(where);
+                if (count && users) CountUsers(where);
+                if (count && userSummaries) CountUserSummaries(where);
+                if (count && voucherItems) CountVoucherItems(where);
+                if (count && vouchers) CountVouchers(where);
+                if (count && waiveReasons) CountWaiveReasons(where);
                 if (query && acquisitionMethods) QueryAcquisitionMethods(where, orderBy, skip, take, select);
                 if (query && acquisitionsUnits) QueryAcquisitionsUnits(where, orderBy, skip, take, select);
                 if (query && actualCostRecords) QueryActualCostRecords(where, orderBy, skip, take, select);
@@ -1446,6 +1572,15 @@ namespace FolioConsoleApplication
             }
         }
 
+        public static void CountAcquisitionMethods(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountAcquisitionMethods(where) : fdc.CountAcquisitionMethods(where))} acquisition methods");
+            }
+        }
+
         public static void QueryAcquisitionMethods(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -1591,6 +1726,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} acquisition methods");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountAcquisitionsUnits(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountAcquisitionsUnits(where) : fdc.CountAcquisitionsUnits(where))} acquisitions units");
+            }
         }
 
         public static void QueryAcquisitionsUnits(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -1740,6 +1884,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountActualCostRecords(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountActualCostRecords(where) : fdc.CountActualCostRecords(where))} actual cost records");
+            }
+        }
+
         public static void QueryActualCostRecords(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -1885,6 +2038,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} actual cost records");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountAddressTypes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountAddressTypes(where) : fdc.CountAddressTypes(where))} address types");
+            }
         }
 
         public static void QueryAddressTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -2034,6 +2196,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountAgreements(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountAgreements(where) : fdc.CountAgreements(where))} agreements");
+            }
+        }
+
         public static void QueryAgreements(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -2179,6 +2350,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} agreements");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountAgreementItems(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountAgreementItems(where) : fdc.CountAgreementItems(where))} agreement items");
+            }
         }
 
         public static void QueryAgreementItems(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -2328,6 +2508,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountAlerts(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountAlerts(where) : fdc.CountAlerts(where))} alerts");
+            }
+        }
+
         public static void QueryAlerts(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -2473,6 +2662,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} alerts");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountAlternativeTitleTypes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountAlternativeTitleTypes(where) : fdc.CountAlternativeTitleTypes(where))} alternative title types");
+            }
         }
 
         public static void QueryAlternativeTitleTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -2622,6 +2820,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountBatchGroups(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountBatchGroups(where) : fdc.CountBatchGroups(where))} batch groups");
+            }
+        }
+
         public static void QueryBatchGroups(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -2767,6 +2974,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} batch groups");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountBlocks(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountBlocks(where) : fdc.CountBlocks(where))} blocks");
+            }
         }
 
         public static void QueryBlocks(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -2916,6 +3132,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountBlockConditions(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountBlockConditions(where) : fdc.CountBlockConditions(where))} block conditions");
+            }
+        }
+
         public static void QueryBlockConditions(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -3061,6 +3286,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} block conditions");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountBlockLimits(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountBlockLimits(where) : fdc.CountBlockLimits(where))} block limits");
+            }
         }
 
         public static void QueryBlockLimits(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -3210,6 +3444,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountBoundWithParts(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountBoundWithParts(where) : fdc.CountBoundWithParts(where))} bound with parts");
+            }
+        }
+
         public static void QueryBoundWithParts(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -3355,6 +3598,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} bound with parts");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountBudgets(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountBudgets(where) : fdc.CountBudgets(where))} budgets");
+            }
         }
 
         public static void QueryBudgets(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -3504,6 +3756,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountBudgetExpenseClasses(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountBudgetExpenseClasses(where) : fdc.CountBudgetExpenseClasses(where))} budget expense classes");
+            }
+        }
+
         public static void QueryBudgetExpenseClasses(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -3649,6 +3910,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} budget expense classes");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountBudgetGroups(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountBudgetGroups(where) : fdc.CountBudgetGroups(where))} budget groups");
+            }
         }
 
         public static void QueryBudgetGroups(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -3798,6 +4068,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountCallNumberTypes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountCallNumberTypes(where) : fdc.CountCallNumberTypes(where))} call number types");
+            }
+        }
+
         public static void QueryCallNumberTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -3943,6 +4222,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} call number types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountCampuses(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountCampuses(where) : fdc.CountCampuses(where))} campuses");
+            }
         }
 
         public static void QueryCampuses(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -4092,6 +4380,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountCancellationReasons(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountCancellationReasons(where) : fdc.CountCancellationReasons(where))} cancellation reasons");
+            }
+        }
+
         public static void QueryCancellationReasons(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -4237,6 +4534,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} cancellation reasons");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountCategories(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountCategories(where) : fdc.CountCategories(where))} categories");
+            }
         }
 
         public static void QueryCategories(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -4386,6 +4692,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountCheckIns(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountCheckIns(where) : fdc.CountCheckIns(where))} check ins");
+            }
+        }
+
         public static void QueryCheckIns(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -4533,6 +4848,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountCirculationRules(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? 1 : fdc.CountCirculationRules(where))} circulation rules");
+            }
+        }
+
         public static void QueryCirculationRules(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -4667,6 +4991,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} circulation rules");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountClassificationTypes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountClassificationTypes(where) : fdc.CountClassificationTypes(where))} classification types");
+            }
         }
 
         public static void QueryClassificationTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -4816,6 +5149,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountCloseReasons(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountCloseReasons(where) : fdc.CountCloseReasons(where))} close reasons");
+            }
+        }
+
         public static void QueryCloseReasons(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -4961,6 +5303,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} close reasons");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountComments(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountComments(where) : fdc.CountComments(where))} comments");
+            }
         }
 
         public static void QueryComments(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -5110,6 +5461,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountConfigurations(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountConfigurations(where) : fdc.CountConfigurations(where))} configurations");
+            }
+        }
+
         public static void QueryConfigurations(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -5255,6 +5615,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} configurations");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountContacts(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountContacts(where) : fdc.CountContacts(where))} contacts");
+            }
         }
 
         public static void QueryContacts(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -5404,6 +5773,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountContributorNameTypes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountContributorNameTypes(where) : fdc.CountContributorNameTypes(where))} contributor name types");
+            }
+        }
+
         public static void QueryContributorNameTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -5549,6 +5927,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} contributor name types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountContributorTypes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountContributorTypes(where) : fdc.CountContributorTypes(where))} contributor types");
+            }
         }
 
         public static void QueryContributorTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -5698,6 +6085,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountCustomFields(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountCustomFields(where) : fdc.CountCustomFields(where))} custom fields");
+            }
+        }
+
         public static void QueryCustomFields(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -5843,6 +6239,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} custom fields");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountDepartments(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountDepartments(where) : fdc.CountDepartments(where))} departments");
+            }
         }
 
         public static void QueryDepartments(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -5992,6 +6397,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountElectronicAccessRelationships(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountElectronicAccessRelationships(where) : fdc.CountElectronicAccessRelationships(where))} electronic access relationships");
+            }
+        }
+
         public static void QueryElectronicAccessRelationships(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -6137,6 +6551,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} electronic access relationships");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountExpenseClasses(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountExpenseClasses(where) : fdc.CountExpenseClasses(where))} expense classes");
+            }
         }
 
         public static void QueryExpenseClasses(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -6286,6 +6709,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountFees(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountFees(where) : fdc.CountFees(where))} fees");
+            }
+        }
+
         public static void QueryFees(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -6431,6 +6863,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} fees");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountFeeTypes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountFeeTypes(where) : fdc.CountFeeTypes(where))} fee types");
+            }
         }
 
         public static void QueryFeeTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -6580,6 +7021,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountFinanceGroups(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountFinanceGroups(where) : fdc.CountFinanceGroups(where))} finance groups");
+            }
+        }
+
         public static void QueryFinanceGroups(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -6725,6 +7175,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} finance groups");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountFiscalYears(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountFiscalYears(where) : fdc.CountFiscalYears(where))} fiscal years");
+            }
         }
 
         public static void QueryFiscalYears(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -6874,6 +7333,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountFixedDueDateSchedules(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountFixedDueDateSchedules(where) : fdc.CountFixedDueDateSchedules(where))} fixed due date schedules");
+            }
+        }
+
         public static void QueryFixedDueDateSchedules(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -7019,6 +7487,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} fixed due date schedules");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountFunds(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountFunds(where) : fdc.CountFunds(where))} funds");
+            }
         }
 
         public static void QueryFunds(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -7168,6 +7645,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountFundTypes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountFundTypes(where) : fdc.CountFundTypes(where))} fund types");
+            }
+        }
+
         public static void QueryFundTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -7315,6 +7801,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountGroups(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountGroups(where) : fdc.CountGroups(where))} groups");
+            }
+        }
+
         public static void QueryGroups(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -7460,6 +7955,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} groups");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountHoldings(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountHoldings(where) : fdc.CountHoldings(where))} holdings");
+            }
         }
 
         public static void QueryHoldings(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -7616,6 +8120,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountHoldingNoteTypes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountHoldingNoteTypes(where) : fdc.CountHoldingNoteTypes(where))} holding note types");
+            }
+        }
+
         public static void QueryHoldingNoteTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -7761,6 +8274,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} holding note types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountHoldingTypes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountHoldingTypes(where) : fdc.CountHoldingTypes(where))} holding types");
+            }
         }
 
         public static void QueryHoldingTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -7910,6 +8432,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountHridSettings(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? 1 : fdc.CountHridSettings(where))} hrid settings");
+            }
+        }
+
         public static void QueryHridSettings(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -8044,6 +8575,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} hrid settings");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountIdTypes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountIdTypes(where) : fdc.CountIdTypes(where))} id types");
+            }
         }
 
         public static void QueryIdTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -8193,6 +8733,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountIllPolicies(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountIllPolicies(where) : fdc.CountIllPolicies(where))} ill policies");
+            }
+        }
+
         public static void QueryIllPolicies(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -8338,6 +8887,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} ill policies");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountInstances(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountInstances(where) : fdc.CountInstances(where))} instances");
+            }
         }
 
         public static void QueryInstances(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -8494,6 +9052,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountInstanceFormats(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountInstanceFormats(where) : fdc.CountInstanceFormats(where))} instance formats");
+            }
+        }
+
         public static void QueryInstanceFormats(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -8639,6 +9206,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} instance formats");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountInstanceNoteTypes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountInstanceNoteTypes(where) : fdc.CountInstanceNoteTypes(where))} instance note types");
+            }
         }
 
         public static void QueryInstanceNoteTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -8788,6 +9364,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountInstanceRelationships(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountInstanceRelationships(where) : fdc.CountInstanceRelationships(where))} instance relationships");
+            }
+        }
+
         public static void QueryInstanceRelationships(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -8933,6 +9518,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} instance relationships");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountInstanceRelationshipTypes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountInstanceRelationshipTypes(where) : fdc.CountInstanceRelationshipTypes(where))} instance relationship types");
+            }
         }
 
         public static void QueryInstanceRelationshipTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -9082,6 +9676,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountInstanceStatuses(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountInstanceStatuses(where) : fdc.CountInstanceStatuses(where))} instance statuses");
+            }
+        }
+
         public static void QueryInstanceStatuses(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -9227,6 +9830,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} instance statuses");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountInstanceTypes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountInstanceTypes(where) : fdc.CountInstanceTypes(where))} instance types");
+            }
         }
 
         public static void QueryInstanceTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -9376,6 +9988,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountInstitutions(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountInstitutions(where) : fdc.CountInstitutions(where))} institutions");
+            }
+        }
+
         public static void QueryInstitutions(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -9521,6 +10142,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} institutions");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountInterfaces(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountInterfaces(where) : fdc.CountInterfaces(where))} interfaces");
+            }
         }
 
         public static void QueryInterfaces(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -9670,6 +10300,14 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountInterfaceCredentials(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            {
+                Console.WriteLine($"{(api ? throw new NotSupportedException() : fdc.CountInterfaceCredentials(where))} interface credentials");
+            }
+        }
+
         public static void QueryInterfaceCredentials(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -9796,6 +10434,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} interface credentials");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountInvoices(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountInvoices(where) : fdc.CountInvoices(where))} invoices");
+            }
         }
 
         public static void QueryInvoices(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -9948,6 +10595,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountInvoiceItems(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountInvoiceItems(where) : fdc.CountInvoiceItems(where))} invoice items");
+            }
+        }
+
         public static void QueryInvoiceItems(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -10093,6 +10749,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} invoice items");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountItems(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountItems(where) : fdc.CountItems(where))} items");
+            }
         }
 
         public static void QueryItems(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -10249,6 +10914,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountItemDamagedStatuses(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountItemDamagedStatuses(where) : fdc.CountItemDamagedStatuses(where))} item damaged statuses");
+            }
+        }
+
         public static void QueryItemDamagedStatuses(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -10394,6 +11068,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} item damaged statuses");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountItemNoteTypes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountItemNoteTypes(where) : fdc.CountItemNoteTypes(where))} item note types");
+            }
         }
 
         public static void QueryItemNoteTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -10543,6 +11226,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountLedgers(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountLedgers(where) : fdc.CountLedgers(where))} ledgers");
+            }
+        }
+
         public static void QueryLedgers(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -10688,6 +11380,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} ledgers");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountLibraries(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountLibraries(where) : fdc.CountLibraries(where))} libraries");
+            }
         }
 
         public static void QueryLibraries(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -10837,6 +11538,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountLoans(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountLoans(where) : fdc.CountLoans(where))} loans");
+            }
+        }
+
         public static void QueryLoans(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -10984,6 +11694,14 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountLoanEvents(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            {
+                Console.WriteLine($"{(api ? throw new NotSupportedException() : fdc.CountLoanEvents(where))} loan events");
+            }
+        }
+
         public static void QueryLoanEvents(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -11110,6 +11828,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} loan events");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountLoanPolicies(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountLoanPolicies(where) : fdc.CountLoanPolicies(where))} loan policies");
+            }
         }
 
         public static void QueryLoanPolicies(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -11259,6 +11986,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountLoanTypes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountLoanTypes(where) : fdc.CountLoanTypes(where))} loan types");
+            }
+        }
+
         public static void QueryLoanTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -11404,6 +12140,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} loan types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountLocations(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountLocations(where) : fdc.CountLocations(where))} locations");
+            }
         }
 
         public static void QueryLocations(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -11553,6 +12298,14 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountLogins(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            {
+                Console.WriteLine($"{(api ? throw new NotSupportedException() : fdc.CountLogins(where))} logins");
+            }
+        }
+
         public static void QueryLogins(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -11685,6 +12438,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} logins");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountLostItemFeePolicies(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountLostItemFeePolicies(where) : fdc.CountLostItemFeePolicies(where))} lost item fee policies");
+            }
         }
 
         public static void QueryLostItemFeePolicies(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -11834,6 +12596,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountManualBlockTemplates(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountManualBlockTemplates(where) : fdc.CountManualBlockTemplates(where))} manual block templates");
+            }
+        }
+
         public static void QueryManualBlockTemplates(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -11979,6 +12750,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} manual block templates");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountMaterialTypes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountMaterialTypes(where) : fdc.CountMaterialTypes(where))} material types");
+            }
         }
 
         public static void QueryMaterialTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -12128,6 +12908,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountModeOfIssuances(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountModeOfIssuances(where) : fdc.CountModeOfIssuances(where))} mode of issuances");
+            }
+        }
+
         public static void QueryModeOfIssuances(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -12273,6 +13062,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} mode of issuances");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountNatureOfContentTerms(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountNatureOfContentTerms(where) : fdc.CountNatureOfContentTerms(where))} nature of content terms");
+            }
         }
 
         public static void QueryNatureOfContentTerms(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -12422,6 +13220,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountNotes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountNotes(where) : fdc.CountNotes(where))} notes");
+            }
+        }
+
         public static void QueryNotes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -12558,6 +13365,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountNoteTypes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountNoteTypes(where) : fdc.CountNoteTypes(where))} note types");
+            }
+        }
+
         public static void QueryNoteTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -12692,6 +13508,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} note types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountOrders(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountOrders(where) : fdc.CountOrders(where))} orders");
+            }
         }
 
         public static void QueryOrders(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -12844,6 +13669,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountOrderInvoices(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountOrderInvoices(where) : fdc.CountOrderInvoices(where))} order invoices");
+            }
+        }
+
         public static void QueryOrderInvoices(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -12989,6 +13823,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} order invoices");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountOrderItems(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountOrderItems(where) : fdc.CountOrderItems(where))} order items");
+            }
         }
 
         public static void QueryOrderItems(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -13138,6 +13981,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountOrderTemplates(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountOrderTemplates(where) : fdc.CountOrderTemplates(where))} order templates");
+            }
+        }
+
         public static void QueryOrderTemplates(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -13283,6 +14135,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} order templates");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountOrganizations(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountOrganizations(where) : fdc.CountOrganizations(where))} organizations");
+            }
         }
 
         public static void QueryOrganizations(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -13432,6 +14293,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountOverdueFinePolicies(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountOverdueFinePolicies(where) : fdc.CountOverdueFinePolicies(where))} overdue fine policies");
+            }
+        }
+
         public static void QueryOverdueFinePolicies(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -13577,6 +14447,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} overdue fine policies");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountOwners(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountOwners(where) : fdc.CountOwners(where))} owners");
+            }
         }
 
         public static void QueryOwners(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -13726,6 +14605,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountPatronActionSessions(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountPatronActionSessions(where) : fdc.CountPatronActionSessions(where))} patron action sessions");
+            }
+        }
+
         public static void QueryPatronActionSessions(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -13871,6 +14759,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} patron action sessions");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountPatronNoticePolicies(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountPatronNoticePolicies(where) : fdc.CountPatronNoticePolicies(where))} patron notice policies");
+            }
         }
 
         public static void QueryPatronNoticePolicies(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -14020,6 +14917,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountPayments(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountPayments(where) : fdc.CountPayments(where))} payments");
+            }
+        }
+
         public static void QueryPayments(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -14165,6 +15071,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} payments");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountPaymentMethods(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountPaymentMethods(where) : fdc.CountPaymentMethods(where))} payment methods");
+            }
         }
 
         public static void QueryPaymentMethods(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -14314,6 +15229,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountPermissions(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountPermissions(where) : fdc.CountPermissions(where))} permissions");
+            }
+        }
+
         public static void QueryPermissions(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -14459,6 +15383,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} permissions");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountPermissionsUsers(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountPermissionsUsers(where) : fdc.CountPermissionsUsers(where))} permissions users");
+            }
         }
 
         public static void QueryPermissionsUsers(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -14608,6 +15541,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountPrecedingSucceedingTitles(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountPrecedingSucceedingTitles(where) : fdc.CountPrecedingSucceedingTitles(where))} preceding succeeding titles");
+            }
+        }
+
         public static void QueryPrecedingSucceedingTitles(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -14753,6 +15695,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} preceding succeeding titles");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountPrefixes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountPrefixes(where) : fdc.CountPrefixes(where))} prefixes");
+            }
         }
 
         public static void QueryPrefixes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -14902,6 +15853,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountProxies(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountProxies(where) : fdc.CountProxies(where))} proxies");
+            }
+        }
+
         public static void QueryProxies(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -15049,6 +16009,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountReceivings(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountReceivings(where) : fdc.CountReceivings(where))} receivings");
+            }
+        }
+
         public static void QueryReceivings(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -15194,6 +16163,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} receivings");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountRecords(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountRecords(where) : fdc.CountRecords(where))} records");
+            }
         }
 
         public static void QueryRecords(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -15385,6 +16363,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountReferenceDatas(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountReferenceDatas(where) : fdc.CountReferenceDatas(where))} reference datas");
+            }
+        }
+
         public static void QueryReferenceDatas(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -15530,6 +16517,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} reference datas");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountRefundReasons(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountRefundReasons(where) : fdc.CountRefundReasons(where))} refund reasons");
+            }
         }
 
         public static void QueryRefundReasons(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -15679,6 +16675,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountReportingCodes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountReportingCodes(where) : fdc.CountReportingCodes(where))} reporting codes");
+            }
+        }
+
         public static void QueryReportingCodes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -15824,6 +16829,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} reporting codes");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountRequests(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountRequests(where) : fdc.CountRequests(where))} requests");
+            }
         }
 
         public static void QueryRequests(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -15973,6 +16987,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountRequestPolicies(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountRequestPolicies(where) : fdc.CountRequestPolicies(where))} request policies");
+            }
+        }
+
         public static void QueryRequestPolicies(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -16118,6 +17141,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} request policies");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountRollovers(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountRollovers(where) : fdc.CountRollovers(where))} rollovers");
+            }
         }
 
         public static void QueryRollovers(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -16267,6 +17299,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountRolloverBudgets(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountRolloverBudgets(where) : fdc.CountRolloverBudgets(where))} rollover budgets");
+            }
+        }
+
         public static void QueryRolloverBudgets(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -16412,6 +17453,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} rollover budgets");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountRolloverErrors(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountRolloverErrors(where) : fdc.CountRolloverErrors(where))} rollover errors");
+            }
         }
 
         public static void QueryRolloverErrors(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -16561,6 +17611,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountRolloverProgresses(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountRolloverProgresses(where) : fdc.CountRolloverProgresses(where))} rollover progresses");
+            }
+        }
+
         public static void QueryRolloverProgresses(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -16706,6 +17765,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} rollover progresses");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountScheduledNotices(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountScheduledNotices(where) : fdc.CountScheduledNotices(where))} scheduled notices");
+            }
         }
 
         public static void QueryScheduledNotices(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -16855,6 +17923,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountServicePoints(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountServicePoints(where) : fdc.CountServicePoints(where))} service points");
+            }
+        }
+
         public static void QueryServicePoints(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -17000,6 +18077,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} service points");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountServicePointUsers(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountServicePointUsers(where) : fdc.CountServicePointUsers(where))} service point users");
+            }
         }
 
         public static void QueryServicePointUsers(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -17149,6 +18235,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountSnapshots(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountSnapshots(where) : fdc.CountSnapshots(where))} snapshots");
+            }
+        }
+
         public static void QuerySnapshots(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -17283,6 +18378,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} snapshots");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountSources(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountSources(where) : fdc.CountSources(where))} sources");
+            }
         }
 
         public static void QuerySources(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -17432,6 +18536,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountStaffSlips(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountStaffSlips(where) : fdc.CountStaffSlips(where))} staff slips");
+            }
+        }
+
         public static void QueryStaffSlips(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -17577,6 +18690,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} staff slips");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountStatisticalCodes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountStatisticalCodes(where) : fdc.CountStatisticalCodes(where))} statistical codes");
+            }
         }
 
         public static void QueryStatisticalCodes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -17726,6 +18848,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountStatisticalCodeTypes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountStatisticalCodeTypes(where) : fdc.CountStatisticalCodeTypes(where))} statistical code types");
+            }
+        }
+
         public static void QueryStatisticalCodeTypes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -17871,6 +19002,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} statistical code types");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountSuffixes(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountSuffixes(where) : fdc.CountSuffixes(where))} suffixes");
+            }
         }
 
         public static void QuerySuffixes(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -18020,6 +19160,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountTemplates(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountTemplates(where) : fdc.CountTemplates(where))} templates");
+            }
+        }
+
         public static void QueryTemplates(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -18165,6 +19314,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} templates");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountTitles(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountTitles(where) : fdc.CountTitles(where))} titles");
+            }
         }
 
         public static void QueryTitles(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -18314,6 +19472,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountTransactions(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountTransactions(where) : fdc.CountTransactions(where))} transactions");
+            }
+        }
+
         public static void QueryTransactions(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -18459,6 +19626,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} transactions");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountTransferAccounts(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountTransferAccounts(where) : fdc.CountTransferAccounts(where))} transfer accounts");
+            }
         }
 
         public static void QueryTransferAccounts(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -18608,6 +19784,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountTransferCriterias(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountTransferCriterias(where) : fdc.CountTransferCriterias(where))} transfer criterias");
+            }
+        }
+
         public static void QueryTransferCriterias(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -18753,6 +19938,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} transfer criterias");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountUsers(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountUsers(where) : fdc.CountUsers(where))} users");
+            }
         }
 
         public static void QueryUsers(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -19063,6 +20257,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountUserAcquisitionsUnits(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountUserAcquisitionsUnits(where) : fdc.CountUserAcquisitionsUnits(where))} user acquisitions units");
+            }
+        }
+
         public static void QueryUserAcquisitionsUnits(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -19208,6 +20411,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} user acquisitions units");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountUserRequestPreferences(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountUserRequestPreferences(where) : fdc.CountUserRequestPreferences(where))} user request preferences");
+            }
         }
 
         public static void QueryUserRequestPreferences(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -19357,6 +20569,14 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountUserSummaries(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            {
+                Console.WriteLine($"{(api ? throw new NotSupportedException() : fdc.CountUserSummaries(where))} user summaries");
+            }
+        }
+
         public static void QueryUserSummaries(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -19483,6 +20703,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} user summaries");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountVouchers(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountVouchers(where) : fdc.CountVouchers(where))} vouchers");
+            }
         }
 
         public static void QueryVouchers(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
@@ -19635,6 +20864,15 @@ namespace FolioConsoleApplication
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
         }
 
+        public static void CountVoucherItems(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountVoucherItems(where) : fdc.CountVoucherItems(where))} voucher items");
+            }
+        }
+
         public static void QueryVoucherItems(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)
         {
             using (var fdc = new FolioDapperContext(connectionString))
@@ -19780,6 +21018,15 @@ namespace FolioConsoleApplication
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"Saved {i} voucher items");
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"{s.Elapsed} elapsed");
+        }
+
+        public static void CountWaiveReasons(string where = null)
+        {
+            using (var fdc = new FolioDapperContext(connectionString))
+            using (var fsc = new FolioServiceClient(connectionString))
+            {
+                Console.WriteLine($"{(api ? fsc.CountWaiveReasons(where) : fdc.CountWaiveReasons(where))} waive reasons");
+            }
         }
 
         public static void QueryWaiveReasons(string where = null, string orderBy = null, int? skip = null, int? take = null, string select = null)

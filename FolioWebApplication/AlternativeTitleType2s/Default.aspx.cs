@@ -9,7 +9,7 @@ namespace FolioWebApplication.AlternativeTitleType2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -35,8 +35,8 @@ namespace FolioWebApplication.AlternativeTitleType2s
                 Global.GetCqlFilter(AlternativeTitleType2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(AlternativeTitleType2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            AlternativeTitleType2sRadGrid.DataSource = folioServiceContext.AlternativeTitleType2s(out var i, where, AlternativeTitleType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[AlternativeTitleType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(AlternativeTitleType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, AlternativeTitleType2sRadGrid.PageSize * AlternativeTitleType2sRadGrid.CurrentPageIndex, AlternativeTitleType2sRadGrid.PageSize, true);
-            AlternativeTitleType2sRadGrid.VirtualItemCount = i;
+            AlternativeTitleType2sRadGrid.DataSource = folioServiceContext.AlternativeTitleType2s(where, AlternativeTitleType2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[AlternativeTitleType2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(AlternativeTitleType2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, AlternativeTitleType2sRadGrid.PageSize * AlternativeTitleType2sRadGrid.CurrentPageIndex, AlternativeTitleType2sRadGrid.PageSize, true);
+            AlternativeTitleType2sRadGrid.VirtualItemCount = folioServiceContext.CountAlternativeTitleType2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

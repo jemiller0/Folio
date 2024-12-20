@@ -9,7 +9,7 @@ namespace FolioWebApplication.RolloverProgress2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -38,8 +38,8 @@ namespace FolioWebApplication.RolloverProgress2s
                 Global.GetCqlFilter(RolloverProgress2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(RolloverProgress2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            RolloverProgress2sRadGrid.DataSource = folioServiceContext.RolloverProgress2s(out var i, where, RolloverProgress2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[RolloverProgress2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(RolloverProgress2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, RolloverProgress2sRadGrid.PageSize * RolloverProgress2sRadGrid.CurrentPageIndex, RolloverProgress2sRadGrid.PageSize, true);
-            RolloverProgress2sRadGrid.VirtualItemCount = i;
+            RolloverProgress2sRadGrid.DataSource = folioServiceContext.RolloverProgress2s(where, RolloverProgress2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[RolloverProgress2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(RolloverProgress2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, RolloverProgress2sRadGrid.PageSize * RolloverProgress2sRadGrid.CurrentPageIndex, RolloverProgress2sRadGrid.PageSize, true);
+            RolloverProgress2sRadGrid.VirtualItemCount = folioServiceContext.CountRolloverProgress2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

@@ -9,7 +9,7 @@ namespace FolioWebApplication.CancellationReason2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -38,8 +38,8 @@ namespace FolioWebApplication.CancellationReason2s
                 Global.GetCqlFilter(CancellationReason2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(CancellationReason2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            CancellationReason2sRadGrid.DataSource = folioServiceContext.CancellationReason2s(out var i, where, CancellationReason2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[CancellationReason2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(CancellationReason2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, CancellationReason2sRadGrid.PageSize * CancellationReason2sRadGrid.CurrentPageIndex, CancellationReason2sRadGrid.PageSize, true);
-            CancellationReason2sRadGrid.VirtualItemCount = i;
+            CancellationReason2sRadGrid.DataSource = folioServiceContext.CancellationReason2s(where, CancellationReason2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[CancellationReason2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(CancellationReason2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, CancellationReason2sRadGrid.PageSize * CancellationReason2sRadGrid.CurrentPageIndex, CancellationReason2sRadGrid.PageSize, true);
+            CancellationReason2sRadGrid.VirtualItemCount = folioServiceContext.CountCancellationReason2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

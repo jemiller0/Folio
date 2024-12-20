@@ -9,7 +9,7 @@ namespace FolioWebApplication.CloseReason2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -31,8 +31,8 @@ namespace FolioWebApplication.CloseReason2s
                 Global.GetCqlFilter(CloseReason2sRadGrid, "Name", "reason"),
                 Global.GetCqlFilter(CloseReason2sRadGrid, "Source", "source")
             }.Where(s => s != null)));
-            CloseReason2sRadGrid.DataSource = folioServiceContext.CloseReason2s(out var i, where, CloseReason2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[CloseReason2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(CloseReason2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, CloseReason2sRadGrid.PageSize * CloseReason2sRadGrid.CurrentPageIndex, CloseReason2sRadGrid.PageSize, true);
-            CloseReason2sRadGrid.VirtualItemCount = i;
+            CloseReason2sRadGrid.DataSource = folioServiceContext.CloseReason2s(where, CloseReason2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[CloseReason2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(CloseReason2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, CloseReason2sRadGrid.PageSize * CloseReason2sRadGrid.CurrentPageIndex, CloseReason2sRadGrid.PageSize, true);
+            CloseReason2sRadGrid.VirtualItemCount = folioServiceContext.CountCloseReason2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

@@ -9,7 +9,7 @@ namespace FolioWebApplication.Contact2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -40,8 +40,8 @@ namespace FolioWebApplication.Contact2s
                 Global.GetCqlFilter(Contact2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(Contact2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            Contact2sRadGrid.DataSource = folioServiceContext.Contact2s(out var i, where, Contact2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Contact2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Contact2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Contact2sRadGrid.PageSize * Contact2sRadGrid.CurrentPageIndex, Contact2sRadGrid.PageSize, true);
-            Contact2sRadGrid.VirtualItemCount = i;
+            Contact2sRadGrid.DataSource = folioServiceContext.Contact2s(where, Contact2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Contact2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Contact2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Contact2sRadGrid.PageSize * Contact2sRadGrid.CurrentPageIndex, Contact2sRadGrid.PageSize, true);
+            Contact2sRadGrid.VirtualItemCount = folioServiceContext.CountContact2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

@@ -9,7 +9,7 @@ namespace FolioWebApplication.ElectronicAccessRelationship2s
 {
     public partial class Default : System.Web.UI.Page
     {
-        private readonly FolioServiceContext folioServiceContext = new FolioServiceContext(timeout: TimeSpan.FromSeconds(30));
+        private readonly FolioServiceContext folioServiceContext = FolioServiceContextPool.GetFolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -35,8 +35,8 @@ namespace FolioWebApplication.ElectronicAccessRelationship2s
                 Global.GetCqlFilter(ElectronicAccessRelationship2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(ElectronicAccessRelationship2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
-            ElectronicAccessRelationship2sRadGrid.DataSource = folioServiceContext.ElectronicAccessRelationship2s(out var i, where, ElectronicAccessRelationship2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ElectronicAccessRelationship2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ElectronicAccessRelationship2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ElectronicAccessRelationship2sRadGrid.PageSize * ElectronicAccessRelationship2sRadGrid.CurrentPageIndex, ElectronicAccessRelationship2sRadGrid.PageSize, true);
-            ElectronicAccessRelationship2sRadGrid.VirtualItemCount = i;
+            ElectronicAccessRelationship2sRadGrid.DataSource = folioServiceContext.ElectronicAccessRelationship2s(where, ElectronicAccessRelationship2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[ElectronicAccessRelationship2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(ElectronicAccessRelationship2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, ElectronicAccessRelationship2sRadGrid.PageSize * ElectronicAccessRelationship2sRadGrid.CurrentPageIndex, ElectronicAccessRelationship2sRadGrid.PageSize, true);
+            ElectronicAccessRelationship2sRadGrid.VirtualItemCount = folioServiceContext.CountElectronicAccessRelationship2s(where);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 

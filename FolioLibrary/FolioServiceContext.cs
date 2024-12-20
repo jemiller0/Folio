@@ -9,10 +9,15 @@ namespace FolioLibrary
 {
     public class FolioServiceContext : IDisposable
     {
+        private bool pool;
         public FolioServiceClient FolioServiceClient { get; set; }
         Dictionary<Guid, object> objects = new Dictionary<Guid, object>();
 
-        public FolioServiceContext(string nameOrConnectionString = "FolioServiceClient", string accessToken = null, TimeSpan? timeout = null) => FolioServiceClient = new FolioServiceClient(nameOrConnectionString, accessToken, timeout);
+        public FolioServiceContext(string nameOrConnectionString = "FolioServiceClient", string accessToken = null, TimeSpan? timeout = null, bool pool = false)
+{
+            FolioServiceClient = new FolioServiceClient(nameOrConnectionString, accessToken, timeout);
+            this.pool = pool;
+}
 
         public bool AnyAcquisitionMethod2s(string where = null) => FolioServiceClient.AnyAcquisitionMethods(where);
 
@@ -10796,7 +10801,7 @@ namespace FolioLibrary
 
         public void Dispose()
         {
-            FolioServiceClient.Dispose();
+            if (!pool) FolioServiceClient.Dispose(); else FolioServiceContextPool.AddFolioServiceContext(this);
         }
     }
 }
