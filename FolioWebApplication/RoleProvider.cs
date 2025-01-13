@@ -10,9 +10,6 @@ namespace FolioWebApplication
     {
         //private readonly/* static*/ FolioServiceClient folioServiceClient = new FolioServiceClient();
         private readonly static TraceSource traceSource = new TraceSource("FolioWebApplication", SourceLevels.All);
-        private string accessToken;
-        private DateTime? accessTokenExpirationTime;
-        private string cookies;
 
         public RoleProvider()
         {

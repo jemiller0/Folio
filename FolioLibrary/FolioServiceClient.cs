@@ -21,8 +21,8 @@ namespace FolioLibrary
     public class FolioServiceClient : IDisposable
     {
         public string AccessToken { get; private set; }
-        //public DateTime? AccessTokenExpirationTime = DateTime.MinValue;
-        public DateTime? AccessTokenExpirationTime = null;
+        public DateTime? AccessTokenExpirationTime = DateTime.MinValue;
+        //public DateTime? AccessTokenExpirationTime = null;
         public readonly HttpClient httpClient = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate }) { Timeout = Timeout.InfiniteTimeSpan };
         private readonly static JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver(), NullValueHandling = NullValueHandling.Ignore, Formatting = Formatting.Indented };
         public string Password { get; set; }

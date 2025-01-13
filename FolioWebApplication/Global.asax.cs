@@ -179,6 +179,7 @@ namespace FolioWebApplication
                             || userName == "oakleya"
                             || userName == "nmgutierrez"
                             || userName == "krios6"
+                            || userName == "reillyp"
                             )
                         {
                             SetInventoryPermissions("View");
