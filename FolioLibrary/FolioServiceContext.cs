@@ -14,10 +14,10 @@ namespace FolioLibrary
         Dictionary<Guid, object> objects = new Dictionary<Guid, object>();
 
         public FolioServiceContext(string nameOrConnectionString = "FolioServiceClient", string accessToken = null, TimeSpan? timeout = null, bool pool = false)
-{
+        {
             FolioServiceClient = new FolioServiceClient(nameOrConnectionString, accessToken, timeout);
             this.pool = pool;
-}
+        }
 
         public bool AnyAcquisitionMethod2s(string where = null) => FolioServiceClient.AnyAcquisitionMethods(where);
 
@@ -10801,7 +10801,13 @@ namespace FolioLibrary
 
         public void Dispose()
         {
-            if (!pool) FolioServiceClient.Dispose(); else FolioServiceContextPool.AddFolioServiceContext(this);
+            if (!pool)
+                FolioServiceClient.Dispose();
+            else
+            {
+                objects.Clear();
+                FolioServiceContextPool.AddFolioServiceContext(this);
+            }
         }
     }
 }
