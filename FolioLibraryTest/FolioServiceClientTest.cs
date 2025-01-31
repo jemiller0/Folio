@@ -17,10 +17,7 @@ namespace FolioLibraryTest
 
         static FolioServiceClientTest()
         {
-            traceSource.Listeners.Add(new TextWriterTraceListener(new StreamWriter("Trace.log", true) { AutoFlush = true }) { TraceOutputOptions = TraceOptions.DateTime | TraceOptions.ThreadId });
-            FolioDapperContext.traceSource.Listeners.AddRange(traceSource.Listeners);
-            FolioServiceClient.traceSource.Listeners.AddRange(traceSource.Listeners);
-            traceSource.Switch.Level = FolioDapperContext.traceSource.Switch.Level = FolioServiceClient.traceSource.Switch.Level = SourceLevels.Information;
+            TraceConfiguration.Register();
         }
 
         [TestMethod]

@@ -1,2155 +1,2155 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-    <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProductVersion>
-        </ProductVersion>
-        <SchemaVersion>2.0</SchemaVersion>
-        <ProjectGuid>{53C4C098-425D-4136-9C95-54488BC034A6}</ProjectGuid>
-        <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
-        <OutputType>Library</OutputType>
-        <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>FolioWebApplication</RootNamespace>
-        <AssemblyName>FolioWebApplication</AssemblyName>
-        <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-        <UseIISExpress>true</UseIISExpress>
-        <Use64BitIISExpress />
-        <IISExpressSSLPort>44363</IISExpressSSLPort>
-        <IISExpressAnonymousAuthentication>disabled</IISExpressAnonymousAuthentication>
-        <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
-        <IISExpressUseClassicPipelineMode />
-        <UseGlobalApplicationHostFile />
-        <NuGetPackageImportStamp>
-        </NuGetPackageImportStamp>
-        <TargetFrameworkProfile />
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>bin\</OutputPath>
-        <DefineConstants>DEBUG;TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <LangVersion>7.3</LangVersion>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>pdbonly</DebugType>
-        <Optimize>true</Optimize>
-        <OutputPath>bin\</OutputPath>
-        <DefineConstants>TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-    </PropertyGroup>
-    <ItemGroup>
-        <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-            <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\lib\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.CSharp" />
-        <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-            <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-        </Reference>
-        <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-            <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
-        </Reference>
-        <Reference Include="System.ComponentModel.Composition" />
-        <Reference Include="System.Configuration.ConfigurationManager, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-            <HintPath>..\packages\System.Configuration.ConfigurationManager.9.0.0\lib\net462\System.Configuration.ConfigurationManager.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Data.DataSetExtensions" />
-        <Reference Include="System.Data.OracleClient" />
-        <Reference Include="System.DirectoryServices" />
-        <Reference Include="System.IdentityModel" />
-        <Reference Include="System.Net" />
-        <Reference Include="System.Net.Http" />
-        <Reference Include="System.Numerics" />
-        <Reference Include="System.Printing" />
-        <Reference Include="System.Runtime.InteropServices" />
-        <Reference Include="System.Security" />
-        <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-            <HintPath>..\packages\System.Security.AccessControl.6.0.1\lib\net461\System.Security.AccessControl.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Security.Permissions, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-            <HintPath>..\packages\System.Security.Permissions.9.0.0\lib\net462\System.Security.Permissions.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-            <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
-        </Reference>
-        <Reference Include="System.ServiceProcess" />
-        <Reference Include="System.Threading.Thread" />
-        <Reference Include="System.Transactions" />
-        <Reference Include="System.Web.DynamicData" />
-        <Reference Include="System.Web.Entity" />
-        <Reference Include="System.Web.ApplicationServices" />
-        <Reference Include="System.ComponentModel.DataAnnotations" />
-        <Reference Include="System" />
-        <Reference Include="System.Data" />
-        <Reference Include="System.Drawing" />
-        <Reference Include="System.Web" />
-        <Reference Include="System.Web.Extensions" />
-        <Reference Include="System.Windows.Forms" />
-        <Reference Include="System.Xml" />
-        <Reference Include="System.Configuration" />
-        <Reference Include="System.Web.Services" />
-        <Reference Include="System.EnterpriseServices" />
-        <Reference Include="System.Xml.Linq" />
-        <Reference Include="Telerik.Web.UI, Version=2024.3.805.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Progress\Telerik UI for ASP.NET AJAX 2024 Q4\Bin462\Telerik.Web.UI.dll</HintPath>
-        </Reference>
-        <Reference Include="Telerik.Web.UI.Skins, Version=2024.3.805.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Progress\Telerik UI for ASP.NET AJAX 2024 Q4\Bin462\Telerik.Web.UI.Skins.dll</HintPath>
-        </Reference>
-        <Reference Include="WindowsBase" />
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="AppSettings.config" />
-        <None Include="ConnectionStrings.config">
-            <SubType>Designer</SubType>
-        </None>
-        <Content Include="Default.master" />
-        <None Include="packages.config" />
-        <None Include="Properties\PublishProfiles\ils-test.pubxml" />
-        <None Include="Properties\PublishProfiles\ils.pubxml" />
-        <None Include="Properties\PublishProfiles\localhost.pubxml" />
-        <None Include="Properties\PublishProfiles\reports.pubxml" />
-        <None Include="SystemDiagnostics.config">
-            <SubType>Designer</SubType>
-        </None>
-        <None Include="Properties\PublishProfiles\reports-test.pubxml" />
-        <None Include="Web.Debug.config">
-            <DependentUpon>Web.config</DependentUpon>
-        </None>
-        <None Include="Web.Release.config">
-            <DependentUpon>Web.config</DependentUpon>
-        </None>
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="Default.aspx" />
-        <Content Include="Error.aspx" />
-        <Content Include="Global.asax" />
-        <Content Include="Images\Default.png" />
-        <Content Include="Labels\Default.aspx" />
-        <Content Include="Labels\Edit.aspx" />
-        <Content Include="Styles\Black.css" />
-        <Content Include="Styles\Dark.css" />
-        <Content Include="Styles\Default.css" />
-        <Content Include="Web.config">
-            <SubType>Designer</SubType>
-        </Content>
-        <Compile Include="Labels\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Labels\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Compile Include="Labels\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Labels\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Compile Include="RoleProvider.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Compile Include="Default.master.cs">
-            <DependentUpon>Default.master</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Default.master.designer.cs">
-            <DependentUpon>Default.master</DependentUpon>
-        </Compile>
-        <Compile Include="Error.aspx.cs">
-            <DependentUpon>Error.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Error.aspx.designer.cs">
-            <DependentUpon>Error.aspx</DependentUpon>
-        </Compile>
-        <Compile Include="Global.asax.cs">
-            <DependentUpon>Global.asax</DependentUpon>
-        </Compile>
-        <Compile Include="Properties\AssemblyInfo.cs" />
-    </ItemGroup>
-    <PropertyGroup>
-        <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-        <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    </PropertyGroup>
-    <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-    <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
-    <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
-    <ProjectExtensions>
-        <VisualStudio>
-            <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
-                <WebProjectProperties>
-                    <UseIIS>True</UseIIS>
-                    <AutoAssignPort>True</AutoAssignPort>
-                    <DevelopmentServerPort>52761</DevelopmentServerPort>
-                    <DevelopmentServerVPath>/</DevelopmentServerVPath>
-                    <IISUrl>http://localhost:52768/</IISUrl>
-                    <NTLMAuthentication>False</NTLMAuthentication>
-                    <UseCustomServer>False</UseCustomServer>
-                    <CustomServerUrl>
-                    </CustomServerUrl>
-                    <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
-                </WebProjectProperties>
-            </FlavorProperties>
-        </VisualStudio>
-    </ProjectExtensions>
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{53C4C098-425D-4136-9C95-54488BC034A6}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FolioWebApplication</RootNamespace>
+    <AssemblyName>FolioWebApplication</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44363</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>disabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\lib\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Configuration.ConfigurationManager, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Configuration.ConfigurationManager.9.0.1\lib\net462\System.Configuration.ConfigurationManager.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Runtime.InteropServices" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.6.0.1\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Permissions, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Permissions.9.0.1\lib\net462\System.Security.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Threading.Thread" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Telerik.Web.UI, Version=2024.3.805.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Progress\Telerik UI for ASP.NET AJAX 2024 Q4\Bin462\Telerik.Web.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Web.UI.Skins, Version=2024.3.805.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Progress\Telerik UI for ASP.NET AJAX 2024 Q4\Bin462\Telerik.Web.UI.Skins.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AppSettings.config" />
+    <None Include="ConnectionStrings.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Default.master" />
+    <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\ils-test.pubxml" />
+    <None Include="Properties\PublishProfiles\ils.pubxml" />
+    <None Include="Properties\PublishProfiles\localhost.pubxml" />
+    <None Include="Properties\PublishProfiles\reports.pubxml" />
+    <None Include="SystemDiagnostics.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\PublishProfiles\reports-test.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Default.aspx" />
+    <Content Include="Error.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\Default.png" />
+    <Content Include="Labels\Default.aspx" />
+    <Content Include="Labels\Edit.aspx" />
+    <Content Include="Styles\Black.css" />
+    <Content Include="Styles\Dark.css" />
+    <Content Include="Styles\Default.css" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Compile Include="Labels\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Labels\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Labels\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Labels\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RoleProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.master.cs">
+      <DependentUpon>Default.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.master.designer.cs">
+      <DependentUpon>Default.master</DependentUpon>
+    </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>52761</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:52768/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">
   </Target>
   -->
-    <ItemGroup Label="Scaffolded">
-        <Compile Include="Global.asax.g.cs" />
-        <Content Include="AcquisitionMethod2s\Default.aspx" />
-        <Compile Include="AcquisitionMethod2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="AcquisitionMethod2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="AcquisitionMethod2s\Edit.aspx" />
-        <Compile Include="AcquisitionMethod2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="AcquisitionMethod2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="AcquisitionsUnit2s\Default.aspx" />
-        <Compile Include="AcquisitionsUnit2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="AcquisitionsUnit2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="AcquisitionsUnit2s\Edit.aspx" />
-        <Compile Include="AcquisitionsUnit2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="AcquisitionsUnit2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ActualCostRecord2s\Default.aspx" />
-        <Compile Include="ActualCostRecord2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ActualCostRecord2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ActualCostRecord2s\Edit.aspx" />
-        <Compile Include="ActualCostRecord2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ActualCostRecord2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="AddressType2s\Default.aspx" />
-        <Compile Include="AddressType2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="AddressType2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="AddressType2s\Edit.aspx" />
-        <Compile Include="AddressType2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="AddressType2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Agreement2s\Default.aspx" />
-        <Compile Include="Agreement2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Agreement2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Agreement2s\Edit.aspx" />
-        <Compile Include="Agreement2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Agreement2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="AgreementItem2s\Default.aspx" />
-        <Compile Include="AgreementItem2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="AgreementItem2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="AgreementItem2s\Edit.aspx" />
-        <Compile Include="AgreementItem2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="AgreementItem2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Alert2s\Default.aspx" />
-        <Compile Include="Alert2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Alert2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Alert2s\Edit.aspx" />
-        <Compile Include="Alert2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Alert2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="AlternativeTitleType2s\Default.aspx" />
-        <Compile Include="AlternativeTitleType2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="AlternativeTitleType2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="AlternativeTitleType2s\Edit.aspx" />
-        <Compile Include="AlternativeTitleType2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="AlternativeTitleType2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="BatchGroup2s\Default.aspx" />
-        <Compile Include="BatchGroup2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="BatchGroup2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="BatchGroup2s\Edit.aspx" />
-        <Compile Include="BatchGroup2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="BatchGroup2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Block2s\Default.aspx" />
-        <Compile Include="Block2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Block2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Block2s\Edit.aspx" />
-        <Compile Include="Block2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Block2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="BlockCondition2s\Default.aspx" />
-        <Compile Include="BlockCondition2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="BlockCondition2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="BlockCondition2s\Edit.aspx" />
-        <Compile Include="BlockCondition2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="BlockCondition2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="BlockLimit2s\Default.aspx" />
-        <Compile Include="BlockLimit2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="BlockLimit2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="BlockLimit2s\Edit.aspx" />
-        <Compile Include="BlockLimit2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="BlockLimit2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="BoundWithPart2s\Default.aspx" />
-        <Compile Include="BoundWithPart2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="BoundWithPart2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="BoundWithPart2s\Edit.aspx" />
-        <Compile Include="BoundWithPart2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="BoundWithPart2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Budget2s\Default.aspx" />
-        <Compile Include="Budget2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Budget2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Budget2s\Edit.aspx" />
-        <Compile Include="Budget2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Budget2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="BudgetExpenseClass2s\Default.aspx" />
-        <Compile Include="BudgetExpenseClass2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="BudgetExpenseClass2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="BudgetExpenseClass2s\Edit.aspx" />
-        <Compile Include="BudgetExpenseClass2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="BudgetExpenseClass2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="BudgetGroup2s\Default.aspx" />
-        <Compile Include="BudgetGroup2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="BudgetGroup2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="BudgetGroup2s\Edit.aspx" />
-        <Compile Include="BudgetGroup2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="BudgetGroup2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="CallNumberType2s\Default.aspx" />
-        <Compile Include="CallNumberType2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="CallNumberType2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="CallNumberType2s\Edit.aspx" />
-        <Compile Include="CallNumberType2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="CallNumberType2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Campus2s\Default.aspx" />
-        <Compile Include="Campus2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Campus2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Campus2s\Edit.aspx" />
-        <Compile Include="Campus2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Campus2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="CancellationReason2s\Default.aspx" />
-        <Compile Include="CancellationReason2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="CancellationReason2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="CancellationReason2s\Edit.aspx" />
-        <Compile Include="CancellationReason2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="CancellationReason2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Category2s\Default.aspx" />
-        <Compile Include="Category2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Category2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Category2s\Edit.aspx" />
-        <Compile Include="Category2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Category2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="CheckIn2s\Default.aspx" />
-        <Compile Include="CheckIn2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="CheckIn2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="CheckIn2s\Edit.aspx" />
-        <Compile Include="CheckIn2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="CheckIn2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ClassificationType2s\Default.aspx" />
-        <Compile Include="ClassificationType2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ClassificationType2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ClassificationType2s\Edit.aspx" />
-        <Compile Include="ClassificationType2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ClassificationType2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="CloseReason2s\Default.aspx" />
-        <Compile Include="CloseReason2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="CloseReason2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="CloseReason2s\Edit.aspx" />
-        <Compile Include="CloseReason2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="CloseReason2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Comment2s\Default.aspx" />
-        <Compile Include="Comment2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Comment2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Comment2s\Edit.aspx" />
-        <Compile Include="Comment2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Comment2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Configuration2s\Default.aspx" />
-        <Compile Include="Configuration2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Configuration2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Configuration2s\Edit.aspx" />
-        <Compile Include="Configuration2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Configuration2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Contact2s\Default.aspx" />
-        <Compile Include="Contact2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Contact2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Contact2s\Edit.aspx" />
-        <Compile Include="Contact2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Contact2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ContributorNameType2s\Default.aspx" />
-        <Compile Include="ContributorNameType2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ContributorNameType2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ContributorNameType2s\Edit.aspx" />
-        <Compile Include="ContributorNameType2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ContributorNameType2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ContributorType2s\Default.aspx" />
-        <Compile Include="ContributorType2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ContributorType2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ContributorType2s\Edit.aspx" />
-        <Compile Include="ContributorType2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ContributorType2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="CustomField2s\Default.aspx" />
-        <Compile Include="CustomField2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="CustomField2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="CustomField2s\Edit.aspx" />
-        <Compile Include="CustomField2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="CustomField2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Department2s\Default.aspx" />
-        <Compile Include="Department2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Department2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Department2s\Edit.aspx" />
-        <Compile Include="Department2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Department2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ElectronicAccessRelationship2s\Default.aspx" />
-        <Compile Include="ElectronicAccessRelationship2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ElectronicAccessRelationship2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ElectronicAccessRelationship2s\Edit.aspx" />
-        <Compile Include="ElectronicAccessRelationship2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ElectronicAccessRelationship2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ExpenseClass2s\Default.aspx" />
-        <Compile Include="ExpenseClass2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ExpenseClass2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ExpenseClass2s\Edit.aspx" />
-        <Compile Include="ExpenseClass2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ExpenseClass2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Fee2s\Default.aspx" />
-        <Compile Include="Fee2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Fee2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Fee2s\Edit.aspx" />
-        <Compile Include="Fee2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Fee2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="FeeType2s\Default.aspx" />
-        <Compile Include="FeeType2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="FeeType2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="FeeType2s\Edit.aspx" />
-        <Compile Include="FeeType2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="FeeType2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="FinanceGroup2s\Default.aspx" />
-        <Compile Include="FinanceGroup2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="FinanceGroup2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="FinanceGroup2s\Edit.aspx" />
-        <Compile Include="FinanceGroup2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="FinanceGroup2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="FiscalYear2s\Default.aspx" />
-        <Compile Include="FiscalYear2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="FiscalYear2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="FiscalYear2s\Edit.aspx" />
-        <Compile Include="FiscalYear2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="FiscalYear2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="FixedDueDateSchedule2s\Default.aspx" />
-        <Compile Include="FixedDueDateSchedule2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="FixedDueDateSchedule2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="FixedDueDateSchedule2s\Edit.aspx" />
-        <Compile Include="FixedDueDateSchedule2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="FixedDueDateSchedule2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Formats\Default.aspx" />
-        <Compile Include="Formats\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Formats\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Formats\Edit.aspx" />
-        <Compile Include="Formats\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Formats\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Fund2s\Default.aspx" />
-        <Compile Include="Fund2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Fund2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Fund2s\Edit.aspx" />
-        <Compile Include="Fund2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Fund2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="FundType2s\Default.aspx" />
-        <Compile Include="FundType2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="FundType2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="FundType2s\Edit.aspx" />
-        <Compile Include="FundType2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="FundType2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Group2s\Default.aspx" />
-        <Compile Include="Group2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Group2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Group2s\Edit.aspx" />
-        <Compile Include="Group2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Group2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Holding2s\Default.aspx" />
-        <Compile Include="Holding2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Holding2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Holding2s\Edit.aspx" />
-        <Compile Include="Holding2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Holding2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="HoldingNoteType2s\Default.aspx" />
-        <Compile Include="HoldingNoteType2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="HoldingNoteType2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="HoldingNoteType2s\Edit.aspx" />
-        <Compile Include="HoldingNoteType2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="HoldingNoteType2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="HoldingType2s\Default.aspx" />
-        <Compile Include="HoldingType2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="HoldingType2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="HoldingType2s\Edit.aspx" />
-        <Compile Include="HoldingType2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="HoldingType2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="IdType2s\Default.aspx" />
-        <Compile Include="IdType2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="IdType2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="IdType2s\Edit.aspx" />
-        <Compile Include="IdType2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="IdType2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="IllPolicy2s\Default.aspx" />
-        <Compile Include="IllPolicy2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="IllPolicy2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="IllPolicy2s\Edit.aspx" />
-        <Compile Include="IllPolicy2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="IllPolicy2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Instance2s\Default.aspx" />
-        <Compile Include="Instance2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Instance2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Instance2s\Edit.aspx" />
-        <Compile Include="Instance2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Instance2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="InstanceNoteType2s\Default.aspx" />
-        <Compile Include="InstanceNoteType2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="InstanceNoteType2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="InstanceNoteType2s\Edit.aspx" />
-        <Compile Include="InstanceNoteType2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="InstanceNoteType2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="InstanceType2s\Default.aspx" />
-        <Compile Include="InstanceType2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="InstanceType2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="InstanceType2s\Edit.aspx" />
-        <Compile Include="InstanceType2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="InstanceType2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Institution2s\Default.aspx" />
-        <Compile Include="Institution2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Institution2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Institution2s\Edit.aspx" />
-        <Compile Include="Institution2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Institution2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Interface2s\Default.aspx" />
-        <Compile Include="Interface2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Interface2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Interface2s\Edit.aspx" />
-        <Compile Include="Interface2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Interface2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Invoice2s\Default.aspx" />
-        <Compile Include="Invoice2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Invoice2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Invoice2s\Edit.aspx" />
-        <Compile Include="Invoice2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Invoice2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="InvoiceItem2s\Default.aspx" />
-        <Compile Include="InvoiceItem2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="InvoiceItem2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="InvoiceItem2s\Edit.aspx" />
-        <Compile Include="InvoiceItem2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="InvoiceItem2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="IssuanceModes\Default.aspx" />
-        <Compile Include="IssuanceModes\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="IssuanceModes\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="IssuanceModes\Edit.aspx" />
-        <Compile Include="IssuanceModes\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="IssuanceModes\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Item2s\Default.aspx" />
-        <Compile Include="Item2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Item2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Item2s\Edit.aspx" />
-        <Compile Include="Item2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Item2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ItemDamagedStatus2s\Default.aspx" />
-        <Compile Include="ItemDamagedStatus2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ItemDamagedStatus2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ItemDamagedStatus2s\Edit.aspx" />
-        <Compile Include="ItemDamagedStatus2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ItemDamagedStatus2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ItemNoteType2s\Default.aspx" />
-        <Compile Include="ItemNoteType2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ItemNoteType2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ItemNoteType2s\Edit.aspx" />
-        <Compile Include="ItemNoteType2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ItemNoteType2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Ledger2s\Default.aspx" />
-        <Compile Include="Ledger2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Ledger2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Ledger2s\Edit.aspx" />
-        <Compile Include="Ledger2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Ledger2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Library2s\Default.aspx" />
-        <Compile Include="Library2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Library2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Library2s\Edit.aspx" />
-        <Compile Include="Library2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Library2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Loan2s\Default.aspx" />
-        <Compile Include="Loan2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Loan2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Loan2s\Edit.aspx" />
-        <Compile Include="Loan2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Loan2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="LoanPolicy2s\Default.aspx" />
-        <Compile Include="LoanPolicy2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="LoanPolicy2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="LoanPolicy2s\Edit.aspx" />
-        <Compile Include="LoanPolicy2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="LoanPolicy2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="LoanType2s\Default.aspx" />
-        <Compile Include="LoanType2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="LoanType2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="LoanType2s\Edit.aspx" />
-        <Compile Include="LoanType2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="LoanType2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Location2s\Default.aspx" />
-        <Compile Include="Location2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Location2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Location2s\Edit.aspx" />
-        <Compile Include="Location2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Location2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="LocationSettings\Default.aspx" />
-        <Compile Include="LocationSettings\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="LocationSettings\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="LocationSettings\Edit.aspx" />
-        <Compile Include="LocationSettings\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="LocationSettings\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="LostItemFeePolicy2s\Default.aspx" />
-        <Compile Include="LostItemFeePolicy2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="LostItemFeePolicy2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="LostItemFeePolicy2s\Edit.aspx" />
-        <Compile Include="LostItemFeePolicy2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="LostItemFeePolicy2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ManualBlockTemplate2s\Default.aspx" />
-        <Compile Include="ManualBlockTemplate2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ManualBlockTemplate2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ManualBlockTemplate2s\Edit.aspx" />
-        <Compile Include="ManualBlockTemplate2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ManualBlockTemplate2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="MaterialType2s\Default.aspx" />
-        <Compile Include="MaterialType2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="MaterialType2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="MaterialType2s\Edit.aspx" />
-        <Compile Include="MaterialType2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="MaterialType2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="NatureOfContentTerm2s\Default.aspx" />
-        <Compile Include="NatureOfContentTerm2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="NatureOfContentTerm2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="NatureOfContentTerm2s\Edit.aspx" />
-        <Compile Include="NatureOfContentTerm2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="NatureOfContentTerm2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Order2s\Default.aspx" />
-        <Compile Include="Order2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Order2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Order2s\Edit.aspx" />
-        <Compile Include="Order2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Order2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="OrderInvoice2s\Default.aspx" />
-        <Compile Include="OrderInvoice2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="OrderInvoice2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="OrderInvoice2s\Edit.aspx" />
-        <Compile Include="OrderInvoice2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="OrderInvoice2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="OrderItem2s\Default.aspx" />
-        <Compile Include="OrderItem2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="OrderItem2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="OrderItem2s\Edit.aspx" />
-        <Compile Include="OrderItem2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="OrderItem2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="OrderTemplate2s\Default.aspx" />
-        <Compile Include="OrderTemplate2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="OrderTemplate2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="OrderTemplate2s\Edit.aspx" />
-        <Compile Include="OrderTemplate2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="OrderTemplate2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Organization2s\Default.aspx" />
-        <Compile Include="Organization2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Organization2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Organization2s\Edit.aspx" />
-        <Compile Include="Organization2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Organization2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="OverdueFinePolicy2s\Default.aspx" />
-        <Compile Include="OverdueFinePolicy2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="OverdueFinePolicy2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="OverdueFinePolicy2s\Edit.aspx" />
-        <Compile Include="OverdueFinePolicy2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="OverdueFinePolicy2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Owner2s\Default.aspx" />
-        <Compile Include="Owner2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Owner2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Owner2s\Edit.aspx" />
-        <Compile Include="Owner2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Owner2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="PatronActionSession2s\Default.aspx" />
-        <Compile Include="PatronActionSession2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="PatronActionSession2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="PatronActionSession2s\Edit.aspx" />
-        <Compile Include="PatronActionSession2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="PatronActionSession2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="PatronNoticePolicy2s\Default.aspx" />
-        <Compile Include="PatronNoticePolicy2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="PatronNoticePolicy2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="PatronNoticePolicy2s\Edit.aspx" />
-        <Compile Include="PatronNoticePolicy2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="PatronNoticePolicy2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Payment2s\Default.aspx" />
-        <Compile Include="Payment2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Payment2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Payment2s\Edit.aspx" />
-        <Compile Include="Payment2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Payment2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="PaymentMethod2s\Default.aspx" />
-        <Compile Include="PaymentMethod2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="PaymentMethod2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="PaymentMethod2s\Edit.aspx" />
-        <Compile Include="PaymentMethod2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="PaymentMethod2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Permission2s\Default.aspx" />
-        <Compile Include="Permission2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Permission2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Permission2s\Edit.aspx" />
-        <Compile Include="Permission2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Permission2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="PermissionsUser2s\Default.aspx" />
-        <Compile Include="PermissionsUser2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="PermissionsUser2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="PermissionsUser2s\Edit.aspx" />
-        <Compile Include="PermissionsUser2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="PermissionsUser2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="PrecedingSucceedingTitle2s\Default.aspx" />
-        <Compile Include="PrecedingSucceedingTitle2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="PrecedingSucceedingTitle2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="PrecedingSucceedingTitle2s\Edit.aspx" />
-        <Compile Include="PrecedingSucceedingTitle2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="PrecedingSucceedingTitle2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Prefix2s\Default.aspx" />
-        <Compile Include="Prefix2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Prefix2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Prefix2s\Edit.aspx" />
-        <Compile Include="Prefix2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Prefix2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Printers\Default.aspx" />
-        <Compile Include="Printers\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Printers\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Printers\Edit.aspx" />
-        <Compile Include="Printers\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Printers\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Proxy2s\Default.aspx" />
-        <Compile Include="Proxy2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Proxy2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Proxy2s\Edit.aspx" />
-        <Compile Include="Proxy2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Proxy2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Receiving2s\Default.aspx" />
-        <Compile Include="Receiving2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Receiving2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Receiving2s\Edit.aspx" />
-        <Compile Include="Receiving2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Receiving2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Record2s\Default.aspx" />
-        <Compile Include="Record2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Record2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Record2s\Edit.aspx" />
-        <Compile Include="Record2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Record2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ReferenceData2s\Default.aspx" />
-        <Compile Include="ReferenceData2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ReferenceData2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ReferenceData2s\Edit.aspx" />
-        <Compile Include="ReferenceData2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ReferenceData2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="RefundReason2s\Default.aspx" />
-        <Compile Include="RefundReason2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="RefundReason2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="RefundReason2s\Edit.aspx" />
-        <Compile Include="RefundReason2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="RefundReason2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Relationships\Default.aspx" />
-        <Compile Include="Relationships\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Relationships\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Relationships\Edit.aspx" />
-        <Compile Include="Relationships\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Relationships\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="RelationshipTypes\Default.aspx" />
-        <Compile Include="RelationshipTypes\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="RelationshipTypes\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="RelationshipTypes\Edit.aspx" />
-        <Compile Include="RelationshipTypes\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="RelationshipTypes\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ReportingCode2s\Default.aspx" />
-        <Compile Include="ReportingCode2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ReportingCode2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ReportingCode2s\Edit.aspx" />
-        <Compile Include="ReportingCode2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ReportingCode2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Request2s\Default.aspx" />
-        <Compile Include="Request2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Request2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Request2s\Edit.aspx" />
-        <Compile Include="Request2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Request2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="RequestPolicy2s\Default.aspx" />
-        <Compile Include="RequestPolicy2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="RequestPolicy2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="RequestPolicy2s\Edit.aspx" />
-        <Compile Include="RequestPolicy2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="RequestPolicy2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Rollover2s\Default.aspx" />
-        <Compile Include="Rollover2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Rollover2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Rollover2s\Edit.aspx" />
-        <Compile Include="Rollover2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Rollover2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="RolloverBudget2s\Default.aspx" />
-        <Compile Include="RolloverBudget2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="RolloverBudget2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="RolloverBudget2s\Edit.aspx" />
-        <Compile Include="RolloverBudget2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="RolloverBudget2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="RolloverError2s\Default.aspx" />
-        <Compile Include="RolloverError2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="RolloverError2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="RolloverError2s\Edit.aspx" />
-        <Compile Include="RolloverError2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="RolloverError2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="RolloverProgress2s\Default.aspx" />
-        <Compile Include="RolloverProgress2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="RolloverProgress2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="RolloverProgress2s\Edit.aspx" />
-        <Compile Include="RolloverProgress2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="RolloverProgress2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ScheduledNotice2s\Default.aspx" />
-        <Compile Include="ScheduledNotice2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ScheduledNotice2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ScheduledNotice2s\Edit.aspx" />
-        <Compile Include="ScheduledNotice2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ScheduledNotice2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ServicePoint2s\Default.aspx" />
-        <Compile Include="ServicePoint2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ServicePoint2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ServicePoint2s\Edit.aspx" />
-        <Compile Include="ServicePoint2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ServicePoint2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ServicePointUser2s\Default.aspx" />
-        <Compile Include="ServicePointUser2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ServicePointUser2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="ServicePointUser2s\Edit.aspx" />
-        <Compile Include="ServicePointUser2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="ServicePointUser2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Settings\Default.aspx" />
-        <Compile Include="Settings\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Settings\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Settings\Edit.aspx" />
-        <Compile Include="Settings\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Settings\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Snapshot2s\Default.aspx" />
-        <Compile Include="Snapshot2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Snapshot2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Snapshot2s\Edit.aspx" />
-        <Compile Include="Snapshot2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Snapshot2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Source2s\Default.aspx" />
-        <Compile Include="Source2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Source2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Source2s\Edit.aspx" />
-        <Compile Include="Source2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Source2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="StaffSlip2s\Default.aspx" />
-        <Compile Include="StaffSlip2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="StaffSlip2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="StaffSlip2s\Edit.aspx" />
-        <Compile Include="StaffSlip2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="StaffSlip2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="StatisticalCode2s\Default.aspx" />
-        <Compile Include="StatisticalCode2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="StatisticalCode2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="StatisticalCode2s\Edit.aspx" />
-        <Compile Include="StatisticalCode2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="StatisticalCode2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="StatisticalCodeType2s\Default.aspx" />
-        <Compile Include="StatisticalCodeType2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="StatisticalCodeType2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="StatisticalCodeType2s\Edit.aspx" />
-        <Compile Include="StatisticalCodeType2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="StatisticalCodeType2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Statuses\Default.aspx" />
-        <Compile Include="Statuses\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Statuses\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Statuses\Edit.aspx" />
-        <Compile Include="Statuses\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Statuses\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Suffix2s\Default.aspx" />
-        <Compile Include="Suffix2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Suffix2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Suffix2s\Edit.aspx" />
-        <Compile Include="Suffix2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Suffix2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Template2s\Default.aspx" />
-        <Compile Include="Template2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Template2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Template2s\Edit.aspx" />
-        <Compile Include="Template2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Template2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Title2s\Default.aspx" />
-        <Compile Include="Title2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Title2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Title2s\Edit.aspx" />
-        <Compile Include="Title2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Title2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Transaction2s\Default.aspx" />
-        <Compile Include="Transaction2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Transaction2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Transaction2s\Edit.aspx" />
-        <Compile Include="Transaction2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Transaction2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="TransferAccount2s\Default.aspx" />
-        <Compile Include="TransferAccount2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="TransferAccount2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="TransferAccount2s\Edit.aspx" />
-        <Compile Include="TransferAccount2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="TransferAccount2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="TransferCriteria2s\Default.aspx" />
-        <Compile Include="TransferCriteria2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="TransferCriteria2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="TransferCriteria2s\Edit.aspx" />
-        <Compile Include="TransferCriteria2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="TransferCriteria2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="User2s\Default.aspx" />
-        <Compile Include="User2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="User2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="User2s\Edit.aspx" />
-        <Compile Include="User2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="User2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="UserAcquisitionsUnit2s\Default.aspx" />
-        <Compile Include="UserAcquisitionsUnit2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="UserAcquisitionsUnit2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="UserAcquisitionsUnit2s\Edit.aspx" />
-        <Compile Include="UserAcquisitionsUnit2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="UserAcquisitionsUnit2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="UserRequestPreference2s\Default.aspx" />
-        <Compile Include="UserRequestPreference2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="UserRequestPreference2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="UserRequestPreference2s\Edit.aspx" />
-        <Compile Include="UserRequestPreference2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="UserRequestPreference2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Voucher2s\Default.aspx" />
-        <Compile Include="Voucher2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Voucher2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="Voucher2s\Edit.aspx" />
-        <Compile Include="Voucher2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="Voucher2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="VoucherItem2s\Default.aspx" />
-        <Compile Include="VoucherItem2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="VoucherItem2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="VoucherItem2s\Edit.aspx" />
-        <Compile Include="VoucherItem2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="VoucherItem2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-        <Content Include="WaiveReason2s\Default.aspx" />
-        <Compile Include="WaiveReason2s\Default.aspx.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="WaiveReason2s\Default.aspx.designer.cs">
-            <DependentUpon>Default.aspx</DependentUpon>
-        </Compile>
-        <Content Include="WaiveReason2s\Edit.aspx" />
-        <Compile Include="WaiveReason2s\Edit.aspx.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-            <SubType>ASPXCodeBehind</SubType>
-        </Compile>
-        <Compile Include="WaiveReason2s\Edit.aspx.designer.cs">
-            <DependentUpon>Edit.aspx</DependentUpon>
-        </Compile>
-    </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\FolioLibrary\FolioLibrary.csproj">
-            <Project>{e1094404-6d18-48fc-a555-6590a4a68acf}</Project>
-            <Name>FolioLibrary</Name>
-        </ProjectReference>
-    </ItemGroup>
-    <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-        <PropertyGroup>
-            <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-        </PropertyGroup>
-        <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
-    </Target>
-    <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
+  <ItemGroup Label="Scaffolded">
+    <Compile Include="Global.asax.g.cs" />
+    <Content Include="AcquisitionMethod2s\Default.aspx" />
+    <Compile Include="AcquisitionMethod2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AcquisitionMethod2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="AcquisitionMethod2s\Edit.aspx" />
+    <Compile Include="AcquisitionMethod2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AcquisitionMethod2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="AcquisitionsUnit2s\Default.aspx" />
+    <Compile Include="AcquisitionsUnit2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AcquisitionsUnit2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="AcquisitionsUnit2s\Edit.aspx" />
+    <Compile Include="AcquisitionsUnit2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AcquisitionsUnit2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ActualCostRecord2s\Default.aspx" />
+    <Compile Include="ActualCostRecord2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ActualCostRecord2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ActualCostRecord2s\Edit.aspx" />
+    <Compile Include="ActualCostRecord2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ActualCostRecord2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="AddressType2s\Default.aspx" />
+    <Compile Include="AddressType2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddressType2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="AddressType2s\Edit.aspx" />
+    <Compile Include="AddressType2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddressType2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Agreement2s\Default.aspx" />
+    <Compile Include="Agreement2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Agreement2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Agreement2s\Edit.aspx" />
+    <Compile Include="Agreement2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Agreement2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="AgreementItem2s\Default.aspx" />
+    <Compile Include="AgreementItem2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AgreementItem2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="AgreementItem2s\Edit.aspx" />
+    <Compile Include="AgreementItem2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AgreementItem2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Alert2s\Default.aspx" />
+    <Compile Include="Alert2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Alert2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Alert2s\Edit.aspx" />
+    <Compile Include="Alert2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Alert2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="AlternativeTitleType2s\Default.aspx" />
+    <Compile Include="AlternativeTitleType2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AlternativeTitleType2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="AlternativeTitleType2s\Edit.aspx" />
+    <Compile Include="AlternativeTitleType2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AlternativeTitleType2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="BatchGroup2s\Default.aspx" />
+    <Compile Include="BatchGroup2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BatchGroup2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="BatchGroup2s\Edit.aspx" />
+    <Compile Include="BatchGroup2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BatchGroup2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Block2s\Default.aspx" />
+    <Compile Include="Block2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Block2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Block2s\Edit.aspx" />
+    <Compile Include="Block2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Block2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="BlockCondition2s\Default.aspx" />
+    <Compile Include="BlockCondition2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BlockCondition2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="BlockCondition2s\Edit.aspx" />
+    <Compile Include="BlockCondition2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BlockCondition2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="BlockLimit2s\Default.aspx" />
+    <Compile Include="BlockLimit2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BlockLimit2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="BlockLimit2s\Edit.aspx" />
+    <Compile Include="BlockLimit2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BlockLimit2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="BoundWithPart2s\Default.aspx" />
+    <Compile Include="BoundWithPart2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BoundWithPart2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="BoundWithPart2s\Edit.aspx" />
+    <Compile Include="BoundWithPart2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BoundWithPart2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Budget2s\Default.aspx" />
+    <Compile Include="Budget2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Budget2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Budget2s\Edit.aspx" />
+    <Compile Include="Budget2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Budget2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="BudgetExpenseClass2s\Default.aspx" />
+    <Compile Include="BudgetExpenseClass2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BudgetExpenseClass2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="BudgetExpenseClass2s\Edit.aspx" />
+    <Compile Include="BudgetExpenseClass2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BudgetExpenseClass2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="BudgetGroup2s\Default.aspx" />
+    <Compile Include="BudgetGroup2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BudgetGroup2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="BudgetGroup2s\Edit.aspx" />
+    <Compile Include="BudgetGroup2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BudgetGroup2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="CallNumberType2s\Default.aspx" />
+    <Compile Include="CallNumberType2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CallNumberType2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="CallNumberType2s\Edit.aspx" />
+    <Compile Include="CallNumberType2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CallNumberType2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Campus2s\Default.aspx" />
+    <Compile Include="Campus2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Campus2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Campus2s\Edit.aspx" />
+    <Compile Include="Campus2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Campus2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="CancellationReason2s\Default.aspx" />
+    <Compile Include="CancellationReason2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CancellationReason2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="CancellationReason2s\Edit.aspx" />
+    <Compile Include="CancellationReason2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CancellationReason2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Category2s\Default.aspx" />
+    <Compile Include="Category2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Category2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Category2s\Edit.aspx" />
+    <Compile Include="Category2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Category2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="CheckIn2s\Default.aspx" />
+    <Compile Include="CheckIn2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CheckIn2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="CheckIn2s\Edit.aspx" />
+    <Compile Include="CheckIn2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CheckIn2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ClassificationType2s\Default.aspx" />
+    <Compile Include="ClassificationType2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClassificationType2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ClassificationType2s\Edit.aspx" />
+    <Compile Include="ClassificationType2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClassificationType2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="CloseReason2s\Default.aspx" />
+    <Compile Include="CloseReason2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CloseReason2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="CloseReason2s\Edit.aspx" />
+    <Compile Include="CloseReason2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CloseReason2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Comment2s\Default.aspx" />
+    <Compile Include="Comment2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Comment2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Comment2s\Edit.aspx" />
+    <Compile Include="Comment2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Comment2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Configuration2s\Default.aspx" />
+    <Compile Include="Configuration2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Configuration2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Configuration2s\Edit.aspx" />
+    <Compile Include="Configuration2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Configuration2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Contact2s\Default.aspx" />
+    <Compile Include="Contact2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contact2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Contact2s\Edit.aspx" />
+    <Compile Include="Contact2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contact2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ContributorNameType2s\Default.aspx" />
+    <Compile Include="ContributorNameType2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ContributorNameType2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ContributorNameType2s\Edit.aspx" />
+    <Compile Include="ContributorNameType2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ContributorNameType2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ContributorType2s\Default.aspx" />
+    <Compile Include="ContributorType2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ContributorType2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ContributorType2s\Edit.aspx" />
+    <Compile Include="ContributorType2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ContributorType2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="CustomField2s\Default.aspx" />
+    <Compile Include="CustomField2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomField2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="CustomField2s\Edit.aspx" />
+    <Compile Include="CustomField2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomField2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Department2s\Default.aspx" />
+    <Compile Include="Department2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Department2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Department2s\Edit.aspx" />
+    <Compile Include="Department2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Department2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ElectronicAccessRelationship2s\Default.aspx" />
+    <Compile Include="ElectronicAccessRelationship2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ElectronicAccessRelationship2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ElectronicAccessRelationship2s\Edit.aspx" />
+    <Compile Include="ElectronicAccessRelationship2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ElectronicAccessRelationship2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ExpenseClass2s\Default.aspx" />
+    <Compile Include="ExpenseClass2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExpenseClass2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ExpenseClass2s\Edit.aspx" />
+    <Compile Include="ExpenseClass2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExpenseClass2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Fee2s\Default.aspx" />
+    <Compile Include="Fee2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Fee2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Fee2s\Edit.aspx" />
+    <Compile Include="Fee2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Fee2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="FeeType2s\Default.aspx" />
+    <Compile Include="FeeType2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FeeType2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="FeeType2s\Edit.aspx" />
+    <Compile Include="FeeType2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FeeType2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="FinanceGroup2s\Default.aspx" />
+    <Compile Include="FinanceGroup2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FinanceGroup2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="FinanceGroup2s\Edit.aspx" />
+    <Compile Include="FinanceGroup2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FinanceGroup2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="FiscalYear2s\Default.aspx" />
+    <Compile Include="FiscalYear2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FiscalYear2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="FiscalYear2s\Edit.aspx" />
+    <Compile Include="FiscalYear2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FiscalYear2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="FixedDueDateSchedule2s\Default.aspx" />
+    <Compile Include="FixedDueDateSchedule2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FixedDueDateSchedule2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="FixedDueDateSchedule2s\Edit.aspx" />
+    <Compile Include="FixedDueDateSchedule2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FixedDueDateSchedule2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Formats\Default.aspx" />
+    <Compile Include="Formats\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formats\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Formats\Edit.aspx" />
+    <Compile Include="Formats\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formats\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Fund2s\Default.aspx" />
+    <Compile Include="Fund2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Fund2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Fund2s\Edit.aspx" />
+    <Compile Include="Fund2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Fund2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="FundType2s\Default.aspx" />
+    <Compile Include="FundType2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FundType2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="FundType2s\Edit.aspx" />
+    <Compile Include="FundType2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FundType2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Group2s\Default.aspx" />
+    <Compile Include="Group2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Group2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Group2s\Edit.aspx" />
+    <Compile Include="Group2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Group2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Holding2s\Default.aspx" />
+    <Compile Include="Holding2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Holding2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Holding2s\Edit.aspx" />
+    <Compile Include="Holding2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Holding2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="HoldingNoteType2s\Default.aspx" />
+    <Compile Include="HoldingNoteType2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HoldingNoteType2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="HoldingNoteType2s\Edit.aspx" />
+    <Compile Include="HoldingNoteType2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HoldingNoteType2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="HoldingType2s\Default.aspx" />
+    <Compile Include="HoldingType2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HoldingType2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="HoldingType2s\Edit.aspx" />
+    <Compile Include="HoldingType2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HoldingType2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="IdType2s\Default.aspx" />
+    <Compile Include="IdType2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IdType2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="IdType2s\Edit.aspx" />
+    <Compile Include="IdType2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IdType2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="IllPolicy2s\Default.aspx" />
+    <Compile Include="IllPolicy2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IllPolicy2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="IllPolicy2s\Edit.aspx" />
+    <Compile Include="IllPolicy2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IllPolicy2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Instance2s\Default.aspx" />
+    <Compile Include="Instance2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Instance2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Instance2s\Edit.aspx" />
+    <Compile Include="Instance2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Instance2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="InstanceNoteType2s\Default.aspx" />
+    <Compile Include="InstanceNoteType2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InstanceNoteType2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="InstanceNoteType2s\Edit.aspx" />
+    <Compile Include="InstanceNoteType2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InstanceNoteType2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="InstanceType2s\Default.aspx" />
+    <Compile Include="InstanceType2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InstanceType2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="InstanceType2s\Edit.aspx" />
+    <Compile Include="InstanceType2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InstanceType2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Institution2s\Default.aspx" />
+    <Compile Include="Institution2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Institution2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Institution2s\Edit.aspx" />
+    <Compile Include="Institution2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Institution2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Interface2s\Default.aspx" />
+    <Compile Include="Interface2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Interface2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Interface2s\Edit.aspx" />
+    <Compile Include="Interface2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Interface2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Invoice2s\Default.aspx" />
+    <Compile Include="Invoice2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Invoice2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Invoice2s\Edit.aspx" />
+    <Compile Include="Invoice2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Invoice2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="InvoiceItem2s\Default.aspx" />
+    <Compile Include="InvoiceItem2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InvoiceItem2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="InvoiceItem2s\Edit.aspx" />
+    <Compile Include="InvoiceItem2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InvoiceItem2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="IssuanceModes\Default.aspx" />
+    <Compile Include="IssuanceModes\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IssuanceModes\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="IssuanceModes\Edit.aspx" />
+    <Compile Include="IssuanceModes\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IssuanceModes\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Item2s\Default.aspx" />
+    <Compile Include="Item2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Item2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Item2s\Edit.aspx" />
+    <Compile Include="Item2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Item2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ItemDamagedStatus2s\Default.aspx" />
+    <Compile Include="ItemDamagedStatus2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemDamagedStatus2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ItemDamagedStatus2s\Edit.aspx" />
+    <Compile Include="ItemDamagedStatus2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemDamagedStatus2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ItemNoteType2s\Default.aspx" />
+    <Compile Include="ItemNoteType2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemNoteType2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ItemNoteType2s\Edit.aspx" />
+    <Compile Include="ItemNoteType2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemNoteType2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Ledger2s\Default.aspx" />
+    <Compile Include="Ledger2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ledger2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Ledger2s\Edit.aspx" />
+    <Compile Include="Ledger2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ledger2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Library2s\Default.aspx" />
+    <Compile Include="Library2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Library2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Library2s\Edit.aspx" />
+    <Compile Include="Library2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Library2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Loan2s\Default.aspx" />
+    <Compile Include="Loan2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Loan2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Loan2s\Edit.aspx" />
+    <Compile Include="Loan2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Loan2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="LoanPolicy2s\Default.aspx" />
+    <Compile Include="LoanPolicy2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoanPolicy2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="LoanPolicy2s\Edit.aspx" />
+    <Compile Include="LoanPolicy2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoanPolicy2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="LoanType2s\Default.aspx" />
+    <Compile Include="LoanType2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoanType2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="LoanType2s\Edit.aspx" />
+    <Compile Include="LoanType2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoanType2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Location2s\Default.aspx" />
+    <Compile Include="Location2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Location2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Location2s\Edit.aspx" />
+    <Compile Include="Location2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Location2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="LocationSettings\Default.aspx" />
+    <Compile Include="LocationSettings\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LocationSettings\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="LocationSettings\Edit.aspx" />
+    <Compile Include="LocationSettings\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LocationSettings\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="LostItemFeePolicy2s\Default.aspx" />
+    <Compile Include="LostItemFeePolicy2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LostItemFeePolicy2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="LostItemFeePolicy2s\Edit.aspx" />
+    <Compile Include="LostItemFeePolicy2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LostItemFeePolicy2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ManualBlockTemplate2s\Default.aspx" />
+    <Compile Include="ManualBlockTemplate2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ManualBlockTemplate2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ManualBlockTemplate2s\Edit.aspx" />
+    <Compile Include="ManualBlockTemplate2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ManualBlockTemplate2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="MaterialType2s\Default.aspx" />
+    <Compile Include="MaterialType2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MaterialType2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="MaterialType2s\Edit.aspx" />
+    <Compile Include="MaterialType2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MaterialType2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="NatureOfContentTerm2s\Default.aspx" />
+    <Compile Include="NatureOfContentTerm2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NatureOfContentTerm2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="NatureOfContentTerm2s\Edit.aspx" />
+    <Compile Include="NatureOfContentTerm2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NatureOfContentTerm2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Order2s\Default.aspx" />
+    <Compile Include="Order2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Order2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Order2s\Edit.aspx" />
+    <Compile Include="Order2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Order2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="OrderInvoice2s\Default.aspx" />
+    <Compile Include="OrderInvoice2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OrderInvoice2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="OrderInvoice2s\Edit.aspx" />
+    <Compile Include="OrderInvoice2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OrderInvoice2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="OrderItem2s\Default.aspx" />
+    <Compile Include="OrderItem2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OrderItem2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="OrderItem2s\Edit.aspx" />
+    <Compile Include="OrderItem2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OrderItem2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="OrderTemplate2s\Default.aspx" />
+    <Compile Include="OrderTemplate2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OrderTemplate2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="OrderTemplate2s\Edit.aspx" />
+    <Compile Include="OrderTemplate2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OrderTemplate2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Organization2s\Default.aspx" />
+    <Compile Include="Organization2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Organization2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Organization2s\Edit.aspx" />
+    <Compile Include="Organization2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Organization2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="OverdueFinePolicy2s\Default.aspx" />
+    <Compile Include="OverdueFinePolicy2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OverdueFinePolicy2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="OverdueFinePolicy2s\Edit.aspx" />
+    <Compile Include="OverdueFinePolicy2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OverdueFinePolicy2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Owner2s\Default.aspx" />
+    <Compile Include="Owner2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Owner2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Owner2s\Edit.aspx" />
+    <Compile Include="Owner2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Owner2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="PatronActionSession2s\Default.aspx" />
+    <Compile Include="PatronActionSession2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PatronActionSession2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="PatronActionSession2s\Edit.aspx" />
+    <Compile Include="PatronActionSession2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PatronActionSession2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="PatronNoticePolicy2s\Default.aspx" />
+    <Compile Include="PatronNoticePolicy2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PatronNoticePolicy2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="PatronNoticePolicy2s\Edit.aspx" />
+    <Compile Include="PatronNoticePolicy2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PatronNoticePolicy2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Payment2s\Default.aspx" />
+    <Compile Include="Payment2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Payment2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Payment2s\Edit.aspx" />
+    <Compile Include="Payment2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Payment2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="PaymentMethod2s\Default.aspx" />
+    <Compile Include="PaymentMethod2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PaymentMethod2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="PaymentMethod2s\Edit.aspx" />
+    <Compile Include="PaymentMethod2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PaymentMethod2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Permission2s\Default.aspx" />
+    <Compile Include="Permission2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Permission2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Permission2s\Edit.aspx" />
+    <Compile Include="Permission2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Permission2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="PermissionsUser2s\Default.aspx" />
+    <Compile Include="PermissionsUser2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PermissionsUser2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="PermissionsUser2s\Edit.aspx" />
+    <Compile Include="PermissionsUser2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PermissionsUser2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="PrecedingSucceedingTitle2s\Default.aspx" />
+    <Compile Include="PrecedingSucceedingTitle2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PrecedingSucceedingTitle2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="PrecedingSucceedingTitle2s\Edit.aspx" />
+    <Compile Include="PrecedingSucceedingTitle2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PrecedingSucceedingTitle2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Prefix2s\Default.aspx" />
+    <Compile Include="Prefix2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Prefix2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Prefix2s\Edit.aspx" />
+    <Compile Include="Prefix2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Prefix2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Printers\Default.aspx" />
+    <Compile Include="Printers\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Printers\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Printers\Edit.aspx" />
+    <Compile Include="Printers\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Printers\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Proxy2s\Default.aspx" />
+    <Compile Include="Proxy2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Proxy2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Proxy2s\Edit.aspx" />
+    <Compile Include="Proxy2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Proxy2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Receiving2s\Default.aspx" />
+    <Compile Include="Receiving2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Receiving2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Receiving2s\Edit.aspx" />
+    <Compile Include="Receiving2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Receiving2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Record2s\Default.aspx" />
+    <Compile Include="Record2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Record2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Record2s\Edit.aspx" />
+    <Compile Include="Record2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Record2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ReferenceData2s\Default.aspx" />
+    <Compile Include="ReferenceData2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReferenceData2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ReferenceData2s\Edit.aspx" />
+    <Compile Include="ReferenceData2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReferenceData2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="RefundReason2s\Default.aspx" />
+    <Compile Include="RefundReason2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RefundReason2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="RefundReason2s\Edit.aspx" />
+    <Compile Include="RefundReason2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RefundReason2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Relationships\Default.aspx" />
+    <Compile Include="Relationships\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Relationships\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Relationships\Edit.aspx" />
+    <Compile Include="Relationships\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Relationships\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="RelationshipTypes\Default.aspx" />
+    <Compile Include="RelationshipTypes\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RelationshipTypes\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="RelationshipTypes\Edit.aspx" />
+    <Compile Include="RelationshipTypes\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RelationshipTypes\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ReportingCode2s\Default.aspx" />
+    <Compile Include="ReportingCode2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportingCode2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ReportingCode2s\Edit.aspx" />
+    <Compile Include="ReportingCode2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportingCode2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Request2s\Default.aspx" />
+    <Compile Include="Request2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Request2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Request2s\Edit.aspx" />
+    <Compile Include="Request2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Request2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="RequestPolicy2s\Default.aspx" />
+    <Compile Include="RequestPolicy2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RequestPolicy2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="RequestPolicy2s\Edit.aspx" />
+    <Compile Include="RequestPolicy2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RequestPolicy2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Rollover2s\Default.aspx" />
+    <Compile Include="Rollover2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rollover2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Rollover2s\Edit.aspx" />
+    <Compile Include="Rollover2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rollover2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="RolloverBudget2s\Default.aspx" />
+    <Compile Include="RolloverBudget2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RolloverBudget2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="RolloverBudget2s\Edit.aspx" />
+    <Compile Include="RolloverBudget2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RolloverBudget2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="RolloverError2s\Default.aspx" />
+    <Compile Include="RolloverError2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RolloverError2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="RolloverError2s\Edit.aspx" />
+    <Compile Include="RolloverError2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RolloverError2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="RolloverProgress2s\Default.aspx" />
+    <Compile Include="RolloverProgress2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RolloverProgress2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="RolloverProgress2s\Edit.aspx" />
+    <Compile Include="RolloverProgress2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RolloverProgress2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ScheduledNotice2s\Default.aspx" />
+    <Compile Include="ScheduledNotice2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ScheduledNotice2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ScheduledNotice2s\Edit.aspx" />
+    <Compile Include="ScheduledNotice2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ScheduledNotice2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ServicePoint2s\Default.aspx" />
+    <Compile Include="ServicePoint2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServicePoint2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ServicePoint2s\Edit.aspx" />
+    <Compile Include="ServicePoint2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServicePoint2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ServicePointUser2s\Default.aspx" />
+    <Compile Include="ServicePointUser2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServicePointUser2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="ServicePointUser2s\Edit.aspx" />
+    <Compile Include="ServicePointUser2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServicePointUser2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Settings\Default.aspx" />
+    <Compile Include="Settings\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Settings\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Settings\Edit.aspx" />
+    <Compile Include="Settings\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Settings\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Snapshot2s\Default.aspx" />
+    <Compile Include="Snapshot2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Snapshot2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Snapshot2s\Edit.aspx" />
+    <Compile Include="Snapshot2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Snapshot2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Source2s\Default.aspx" />
+    <Compile Include="Source2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Source2s\Edit.aspx" />
+    <Compile Include="Source2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="StaffSlip2s\Default.aspx" />
+    <Compile Include="StaffSlip2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StaffSlip2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="StaffSlip2s\Edit.aspx" />
+    <Compile Include="StaffSlip2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StaffSlip2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="StatisticalCode2s\Default.aspx" />
+    <Compile Include="StatisticalCode2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StatisticalCode2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="StatisticalCode2s\Edit.aspx" />
+    <Compile Include="StatisticalCode2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StatisticalCode2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="StatisticalCodeType2s\Default.aspx" />
+    <Compile Include="StatisticalCodeType2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StatisticalCodeType2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="StatisticalCodeType2s\Edit.aspx" />
+    <Compile Include="StatisticalCodeType2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StatisticalCodeType2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Statuses\Default.aspx" />
+    <Compile Include="Statuses\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Statuses\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Statuses\Edit.aspx" />
+    <Compile Include="Statuses\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Statuses\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Suffix2s\Default.aspx" />
+    <Compile Include="Suffix2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Suffix2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Suffix2s\Edit.aspx" />
+    <Compile Include="Suffix2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Suffix2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Template2s\Default.aspx" />
+    <Compile Include="Template2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Template2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Template2s\Edit.aspx" />
+    <Compile Include="Template2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Template2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Title2s\Default.aspx" />
+    <Compile Include="Title2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Title2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Title2s\Edit.aspx" />
+    <Compile Include="Title2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Title2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Transaction2s\Default.aspx" />
+    <Compile Include="Transaction2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Transaction2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Transaction2s\Edit.aspx" />
+    <Compile Include="Transaction2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Transaction2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="TransferAccount2s\Default.aspx" />
+    <Compile Include="TransferAccount2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TransferAccount2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="TransferAccount2s\Edit.aspx" />
+    <Compile Include="TransferAccount2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TransferAccount2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="TransferCriteria2s\Default.aspx" />
+    <Compile Include="TransferCriteria2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TransferCriteria2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="TransferCriteria2s\Edit.aspx" />
+    <Compile Include="TransferCriteria2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TransferCriteria2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="User2s\Default.aspx" />
+    <Compile Include="User2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="User2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="User2s\Edit.aspx" />
+    <Compile Include="User2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="User2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="UserAcquisitionsUnit2s\Default.aspx" />
+    <Compile Include="UserAcquisitionsUnit2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserAcquisitionsUnit2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="UserAcquisitionsUnit2s\Edit.aspx" />
+    <Compile Include="UserAcquisitionsUnit2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserAcquisitionsUnit2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="UserRequestPreference2s\Default.aspx" />
+    <Compile Include="UserRequestPreference2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserRequestPreference2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="UserRequestPreference2s\Edit.aspx" />
+    <Compile Include="UserRequestPreference2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserRequestPreference2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Voucher2s\Default.aspx" />
+    <Compile Include="Voucher2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Voucher2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Voucher2s\Edit.aspx" />
+    <Compile Include="Voucher2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Voucher2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="VoucherItem2s\Default.aspx" />
+    <Compile Include="VoucherItem2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VoucherItem2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="VoucherItem2s\Edit.aspx" />
+    <Compile Include="VoucherItem2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VoucherItem2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Content Include="WaiveReason2s\Default.aspx" />
+    <Compile Include="WaiveReason2s\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WaiveReason2s\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Content Include="WaiveReason2s\Edit.aspx" />
+    <Compile Include="WaiveReason2s\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WaiveReason2s\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FolioLibrary\FolioLibrary.csproj">
+      <Project>{e1094404-6d18-48fc-a555-6590a4a68acf}</Project>
+      <Name>FolioLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
+  </Target>
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
 </Project>
