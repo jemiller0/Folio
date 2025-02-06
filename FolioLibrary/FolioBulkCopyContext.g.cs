@@ -12,7 +12,7 @@ namespace FolioLibrary
 {
     public partial class FolioBulkCopyContext : IDisposable
     {
-        private DataTable acquisitionMethodsDataTable, acquisitionsUnitsDataTable, actualCostRecordsDataTable, addressTypesDataTable, agreementsDataTable, agreementItemsDataTable, alertsDataTable, alternativeTitleTypesDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authoritySourceFilesDataTable, authPasswordActionsDataTable, batchGroupsDataTable, blocksDataTable, blockConditionsDataTable, blockLimitsDataTable, boundWithPartsDataTable, budgetsDataTable, budgetExpenseClassesDataTable, budgetGroupsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, checkInsDataTable, circulationRulesDataTable, classificationTypesDataTable, closeReasonsDataTable, commentsDataTable, configurationsDataTable, contactsDataTable, contactTypesDataTable, contributorNameTypesDataTable, contributorTypesDataTable, countriesDataTable, customFieldsDataTable, departmentsDataTable, department3sDataTable, divisionsDataTable, documentsDataTable, donorsDataTable, donorFiscalYearsDataTable, electronicAccessRelationshipsDataTable, errorRecordsDataTable, eventLogsDataTable, expenseClassesDataTable, feesDataTable, feeTypesDataTable, financeGroupsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fund3sDataTable, fundTypesDataTable, groupsDataTable, holdingsDataTable, holdingDonor2sDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, hridSettingsDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoice3sDataTable, invoiceItemsDataTable, invoiceItem3sDataTable, invoiceItemDonorsDataTable, invoiceItemFund2sDataTable, invoiceStatusesDataTable, itemsDataTable, itemDamagedStatusesDataTable, itemDonor2sDataTable, itemNoteTypesDataTable, itemOrderItemsDataTable, itemStatusesDataTable, ledgersDataTable, librariesDataTable, linksDataTable, loansDataTable, loanEventsDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, lostItemFeePoliciesDataTable, manualBlockTemplatesDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteLinksDataTable, noteTypesDataTable, oclcHoldingsDataTable, oclcHolding2sDataTable, oclcNumber2sDataTable, ordersDataTable, order3sDataTable, orderInvoicesDataTable, orderItemsDataTable, orderItem3sDataTable, orderItemDonorsDataTable, orderItemFund3sDataTable, orderStatusesDataTable, orderStatus2sDataTable, orderTemplatesDataTable, orderTypesDataTable, orderType2sDataTable, organizationsDataTable, organizationType2sDataTable, overdueFinePoliciesDataTable, ownersDataTable, patronActionSessionsDataTable, patronNoticePoliciesDataTable, paymentsDataTable, paymentMethodsDataTable, paymentTypesDataTable, permissionsDataTable, permissionsUsersDataTable, personDonorsDataTable, precedingSucceedingTitlesDataTable, prefixesDataTable, proxiesDataTable, rawRecordsDataTable, receiptStatusesDataTable, receivingsDataTable, recordsDataTable, referenceDatasDataTable, refundReasonsDataTable, relatedInstanceTypesDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, rolloversDataTable, rolloverBudgetsDataTable, rolloverErrorsDataTable, rolloverProgressesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, sourcesDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, suffixesDataTable, tagsDataTable, templatesDataTable, titlesDataTable, transactionsDataTable, transferAccountsDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, userCategoriesDataTable, userRequestPreferencesDataTable, userSummariesDataTable, vendorsDataTable, vouchersDataTable, voucher3sDataTable, voucherItemsDataTable, voucherItem3sDataTable, voucherStatusesDataTable, waiveReasonsDataTable;
+        private DataTable acquisitionMethodsDataTable, acquisitionsUnitsDataTable, actualCostRecordsDataTable, addressTypesDataTable, agreementsDataTable, agreementItemsDataTable, alertsDataTable, alternativeTitleTypesDataTable, authAttemptsDataTable, authCredentialsHistoriesDataTable, authPasswordActionsDataTable, batchGroupsDataTable, blocksDataTable, blockConditionsDataTable, blockLimitsDataTable, boundWithPartsDataTable, budgetsDataTable, budgetExpenseClassesDataTable, budgetGroupsDataTable, callNumberTypesDataTable, campusesDataTable, cancellationReasonsDataTable, categoriesDataTable, checkInsDataTable, circulationRulesDataTable, classificationTypesDataTable, closeReasonsDataTable, commentsDataTable, configurationsDataTable, contactsDataTable, contactTypesDataTable, contributorNameTypesDataTable, contributorTypesDataTable, countriesDataTable, customFieldsDataTable, departmentsDataTable, department3sDataTable, divisionsDataTable, documentsDataTable, donorsDataTable, donorFiscalYearsDataTable, electronicAccessRelationshipsDataTable, errorRecordsDataTable, eventLogsDataTable, expenseClassesDataTable, feesDataTable, feeTypesDataTable, financeGroupsDataTable, fiscalYearsDataTable, fixedDueDateSchedulesDataTable, fundsDataTable, fund3sDataTable, fundTypesDataTable, groupsDataTable, holdingsDataTable, holdingDonor2sDataTable, holdingNoteTypesDataTable, holdingTypesDataTable, hridSettingsDataTable, idTypesDataTable, illPoliciesDataTable, instancesDataTable, instanceFormatsDataTable, instanceNoteTypesDataTable, instanceRelationshipsDataTable, instanceRelationshipTypesDataTable, instanceSourceMarcsDataTable, instanceStatusesDataTable, instanceTypesDataTable, institutionsDataTable, interfacesDataTable, interfaceCredentialsDataTable, invoicesDataTable, invoice3sDataTable, invoiceItemsDataTable, invoiceItem3sDataTable, invoiceItemDonorsDataTable, invoiceItemFund2sDataTable, invoiceStatusesDataTable, itemsDataTable, itemDamagedStatusesDataTable, itemDonor2sDataTable, itemNoteTypesDataTable, itemOrderItemsDataTable, itemStatusesDataTable, ledgersDataTable, librariesDataTable, linksDataTable, loansDataTable, loanEventsDataTable, loanPoliciesDataTable, loanTypesDataTable, locationsDataTable, loginsDataTable, lostItemFeePoliciesDataTable, manualBlockTemplatesDataTable, marcRecordsDataTable, materialTypesDataTable, modeOfIssuancesDataTable, natureOfContentTermsDataTable, notesDataTable, noteLinksDataTable, noteTypesDataTable, oclcHoldingsDataTable, oclcHolding2sDataTable, oclcNumber2sDataTable, ordersDataTable, order3sDataTable, orderInvoicesDataTable, orderItemsDataTable, orderItem3sDataTable, orderItemDonorsDataTable, orderItemFund3sDataTable, orderStatusesDataTable, orderStatus2sDataTable, orderTemplatesDataTable, orderTypesDataTable, orderType2sDataTable, organizationsDataTable, organizationType2sDataTable, overdueFinePoliciesDataTable, ownersDataTable, patronActionSessionsDataTable, patronNoticePoliciesDataTable, paymentsDataTable, paymentMethodsDataTable, paymentTypesDataTable, permissionsDataTable, permissionsUsersDataTable, personDonorsDataTable, precedingSucceedingTitlesDataTable, prefixesDataTable, proxiesDataTable, rawRecordsDataTable, receiptStatusesDataTable, receivingsDataTable, recordsDataTable, referenceDatasDataTable, refundReasonsDataTable, relatedInstanceTypesDataTable, reportingCodesDataTable, requestsDataTable, requestPoliciesDataTable, rolloversDataTable, rolloverBudgetsDataTable, rolloverErrorsDataTable, rolloverProgressesDataTable, scheduledNoticesDataTable, servicePointsDataTable, servicePointUsersDataTable, snapshotsDataTable, sourcesDataTable, staffSlipsDataTable, statisticalCodesDataTable, statisticalCodeTypesDataTable, suffixesDataTable, tagsDataTable, templatesDataTable, titlesDataTable, transactionsDataTable, transferAccountsDataTable, transferCriteriasDataTable, usersDataTable, userAcquisitionsUnitsDataTable, userCategoriesDataTable, userRequestPreferencesDataTable, userSummariesDataTable, vendorsDataTable, vouchersDataTable, voucher3sDataTable, voucherItemsDataTable, voucherItem3sDataTable, voucherStatusesDataTable, waiveReasonsDataTable;
         private bool checkConstraints;
         private string connectionString;
         private bool identityInsert;
@@ -219,25 +219,6 @@ namespace FolioLibrary
             dr["creation_date"] = (object)authCredentialsHistory.CreationTime ?? DBNull.Value;
             dr["created_by"] = (object)authCredentialsHistory.CreationUserId ?? DBNull.Value;
             authCredentialsHistoriesDataTable.Rows.Add(dr);
-        }
-
-        public void Insert(AuthoritySourceFile authoritySourceFile)
-        {
-            if (authoritySourceFilesDataTable == null)
-            {
-                authoritySourceFilesDataTable = new DataTable();
-                authoritySourceFilesDataTable.Columns.Add(new DataColumn { ColumnName = "id", DataType = typeof(Guid) });
-                authoritySourceFilesDataTable.Columns.Add(new DataColumn { ColumnName = "jsonb", DataType = typeof(string) });
-                authoritySourceFilesDataTable.Columns.Add(new DataColumn { ColumnName = "creation_date", DataType = typeof(DateTime) });
-                authoritySourceFilesDataTable.Columns.Add(new DataColumn { ColumnName = "created_by", DataType = typeof(string) });
-                authoritySourceFilesDataTable.Columns["jsonb"].ExtendedProperties["NpgsqlDbType"] = NpgsqlDbType.Jsonb;
-            }
-            var dr = authoritySourceFilesDataTable.NewRow();
-            dr["id"] = (object)authoritySourceFile.Id ?? DBNull.Value;
-            dr["jsonb"] = (object)authoritySourceFile.Content ?? DBNull.Value;
-            dr["creation_date"] = (object)authoritySourceFile.CreationTime ?? DBNull.Value;
-            dr["created_by"] = (object)authoritySourceFile.CreationUserId ?? DBNull.Value;
-            authoritySourceFilesDataTable.Rows.Add(dr);
         }
 
         public void Insert(AuthPasswordAction authPasswordAction)
@@ -3900,17 +3881,6 @@ namespace FolioLibrary
                 sqlBulkCopy.WriteToServer(authCredentialsHistoriesDataTable);
                 authCredentialsHistoriesDataTable.Clear();
             }
-            if (authoritySourceFilesDataTable != null && authoritySourceFilesDataTable.Rows.Count > 0)
-            {
-                sqlBulkCopy.DestinationTableName = $"uchicago_mod_inventory_storage{(IsMySql ? "_" : ".")}authority_source_file";
-                sqlBulkCopy.ColumnMappings.Clear();
-                sqlBulkCopy.ColumnMappings.Add("id", "id");
-                sqlBulkCopy.ColumnMappings.Add("jsonb", "jsonb");
-                sqlBulkCopy.ColumnMappings.Add("creation_date", "creation_date");
-                sqlBulkCopy.ColumnMappings.Add("created_by", "created_by");
-                sqlBulkCopy.WriteToServer(authoritySourceFilesDataTable);
-                authoritySourceFilesDataTable.Clear();
-            }
             if (authPasswordActionsDataTable != null && authPasswordActionsDataTable.Rows.Count > 0)
             {
                 sqlBulkCopy.DestinationTableName = $"uchicago_mod_login{(IsMySql ? "_" : ".")}auth_password_action";
@@ -5949,7 +5919,6 @@ namespace FolioLibrary
             if (alternativeTitleTypesDataTable != null) alternativeTitleTypesDataTable.Dispose();
             if (authAttemptsDataTable != null) authAttemptsDataTable.Dispose();
             if (authCredentialsHistoriesDataTable != null) authCredentialsHistoriesDataTable.Dispose();
-            if (authoritySourceFilesDataTable != null) authoritySourceFilesDataTable.Dispose();
             if (authPasswordActionsDataTable != null) authPasswordActionsDataTable.Dispose();
             if (batchGroupsDataTable != null) batchGroupsDataTable.Dispose();
             if (blocksDataTable != null) blocksDataTable.Dispose();

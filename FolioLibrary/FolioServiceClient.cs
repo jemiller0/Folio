@@ -22,7 +22,6 @@ namespace FolioLibrary
     {
         public string AccessToken { get; private set; }
         public DateTime? AccessTokenExpirationTime = DateTime.MinValue;
-        //public DateTime? AccessTokenExpirationTime = null;
         public readonly HttpClient httpClient = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate }) { Timeout = Timeout.InfiniteTimeSpan };
         private readonly static JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver(), NullValueHandling = NullValueHandling.Ignore, Formatting = Formatting.Indented };
         public string Password { get; set; }
@@ -1177,135 +1176,6 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting alternative title type {id}");
             AuthenticateIfNecessary();
             var url = $"{Url}/alternative-title-types/{id}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
-            var hrm = httpClient.DeleteAsync(url).Result;
-            var s2 = hrm.Content.ReadAsStringAsync().Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
-        }
-
-        public bool AnyAuthoritySourceFiles(string where = null) => AuthoritySourceFiles(where, take: 1).Any();
-
-        public int CountAuthoritySourceFiles(string where = null)
-        {
-            AuthoritySourceFiles(out var i, where, take: 0);
-            return i;
-        }
-
-        public JObject[] AuthoritySourceFiles(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying authority source files");
-            AuthenticateIfNecessary();
-            if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
-            var url = $"{Url}/authority-source-files{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}{(take != 0 ? "&totalRecords=none" : "")}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
-            var hrm = httpClient.GetAsync(url).Result;
-            var s2 = hrm.Content.ReadAsStringAsync().Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
-            if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
-            count = take == 0 ? (int)jo["totalRecords"] : CountAuthoritySourceFiles(where);
-            return jo.Properties().SkipWhile(jp => jp.Name == "totalRecords").First().Value.Cast<JObject>().ToArray();
-        }
-
-        public IEnumerable<JObject> AuthoritySourceFiles(string where = null, string orderBy = null, int? skip = null, int? take = null)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying authority source files");
-            AuthenticateIfNecessary();
-            if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
-            var url = $"{Url}/authority-source-files{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}&totalRecords=none";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
-            var hrm = httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", hrm.Headers);
-            if (hrm.StatusCode != HttpStatusCode.OK)
-            {
-                var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
-                traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-                throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            }
-            using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
-            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            {
-                if (!jtr.Read()) throw new InvalidDataException();
-                while (jtr.Read() && jtr.TokenType != JsonToken.StartArray) ;
-                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
-                {
-                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
-                    yield return jo;
-                }
-            }
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
-        }
-
-        public JObject GetAuthoritySourceFile(string id)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Getting authority source file {0}", id);
-            if (id == null) return null;
-            AuthenticateIfNecessary();
-            var url = $"{Url}/authority-source-files/{id}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
-            var hrm = httpClient.GetAsync(url).Result;
-            var s2 = hrm.Content.ReadAsStringAsync().Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
-            if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
-            return jo;
-        }
-
-        public JObject InsertAuthoritySourceFile(JObject authoritySourceFile)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Inserting authority source file {0}", authoritySourceFile[""]);
-            AuthenticateIfNecessary();
-            var url = $"{Url}/authority-source-files";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = JsonConvert.SerializeObject(authoritySourceFile, universalTimeJsonSerializationSettings);
-            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
-            var hrm = httpClient.PostAsync(url, sc).Result;
-            s2 = hrm.Content.ReadAsStringAsync().Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
-            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
-            return jo;
-        }
-
-        public void UpdateAuthoritySourceFile(JObject authoritySourceFile)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating authority source file {authoritySourceFile[""]}");
-            AuthenticateIfNecessary();
-            var url = $"{Url}/authority-source-files/{authoritySourceFile[""]}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = JsonConvert.SerializeObject(authoritySourceFile, universalTimeJsonSerializationSettings);
-            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
-            var hrm = httpClient.PutAsync(url, sc).Result;
-            s2 = hrm.Content.ReadAsStringAsync().Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
-        }
-
-        public void DeleteAuthoritySourceFile(string id)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting authority source file {id}");
-            AuthenticateIfNecessary();
-            var url = $"{Url}/authority-source-files/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.DeleteAsync(url).Result;
@@ -10744,7 +10614,7 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying organization types");
             AuthenticateIfNecessary();
             if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
-            var url = $"{Url}/organization-type2s{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}{(take != 0 ? "&totalRecords=none" : "")}";
+            var url = $"{Url}/organizations-storage/organization-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}{(take != 0 ? "&totalRecords=none" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.GetAsync(url).Result;
@@ -10763,7 +10633,7 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying organization types");
             AuthenticateIfNecessary();
             if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
-            var url = $"{Url}/organization-type2s{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}&totalRecords=none";
+            var url = $"{Url}/organizations-storage/organization-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}&totalRecords=none";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result;
@@ -10796,7 +10666,7 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Getting organization type {0}", id);
             if (id == null) return null;
             AuthenticateIfNecessary();
-            var url = $"{Url}/organization-type2s/{id}";
+            var url = $"{Url}/organizations-storage/organization-types/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.GetAsync(url).Result;
@@ -10813,7 +10683,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Inserting organization type {0}", organizationType2[""]);
             AuthenticateIfNecessary();
-            var url = $"{Url}/organization-type2s";
+            var url = $"{Url}/organizations-storage/organization-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = JsonConvert.SerializeObject(organizationType2, universalTimeJsonSerializationSettings);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
@@ -10832,7 +10702,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating organization type {organizationType2[""]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/organization-type2s/{organizationType2[""]}";
+            var url = $"{Url}/organizations-storage/organization-types/{organizationType2[""]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = JsonConvert.SerializeObject(organizationType2, universalTimeJsonSerializationSettings);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
@@ -10849,7 +10719,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting organization type {id}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/organization-type2s/{id}";
+            var url = $"{Url}/organizations-storage/organization-types/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.DeleteAsync(url).Result;

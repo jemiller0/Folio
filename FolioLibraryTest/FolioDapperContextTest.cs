@@ -1,5 +1,6 @@
 using FolioLibrary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -14,9 +15,7 @@ namespace FolioLibraryTest
 
         static FolioDapperContextTest()
         {
-            traceSource.Listeners.Add(new TextWriterTraceListener(new StreamWriter("Trace.log", true) { AutoFlush = true }) { TraceOutputOptions = TraceOptions.DateTime | TraceOptions.ThreadId });
-            FolioDapperContext.traceSource.Listeners.AddRange(traceSource.Listeners);
-            traceSource.Switch.Level = FolioDapperContext.traceSource.Switch.Level = SourceLevels.Information;
+            TraceConfiguration.Register();
         }
 
         [TestMethod]
@@ -1732,7 +1731,15 @@ LEFT JOIN uc.categories AS c ON c.id = cuc.category_id
         public void QueryContributorsTest()
         {
             var s = Stopwatch.StartNew();
-            folioDapperContext.Contributors(take: 1).ToArray();
+            try
+            {
+                folioDapperContext.Contributors(take: 1).ToArray();
+            }
+            catch (Exception e)
+            {
+                //folioDapperContext.Dispose();
+                Assert.Fail(e.ToString());
+            }            
             traceSource.TraceEvent(TraceEventType.Information, 0, $"ContributorsTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
