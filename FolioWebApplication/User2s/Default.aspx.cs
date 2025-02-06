@@ -288,8 +288,8 @@ namespace FolioWebApplication.User2s
                 if (folioServiceContext.AnyPayment2s($"userId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a payment");
                 if (folioServiceContext.AnyPaymentMethod2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a payment method");
                 if (folioServiceContext.AnyPaymentMethod2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a payment method");
-                if (folioServiceContext.Permission2s().Any(cu => cu.CreationUserId == id)) throw new Exception("User cannot be deleted because it is being referenced by a permission");
-                if (folioServiceContext.Permission2s().Any(lwu => lwu.LastWriteUserId == id)) throw new Exception("User cannot be deleted because it is being referenced by a permission");
+                if (folioServiceContext.AnyPermission2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a permission");
+                if (folioServiceContext.AnyPermission2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a permission");
                 if (folioServiceContext.AnyPermissionsUser2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a permissions user");
                 if (folioServiceContext.AnyPermissionsUser2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a permissions user");
                 if (folioServiceContext.AnyPermissionsUser2s($"userId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a permissions user");
