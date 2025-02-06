@@ -3835,7 +3835,7 @@ namespace FolioLibrary
             if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
             var url = $"{Url}/custom-fields{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}{(take != 0 ? "&totalRecords=none" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.3.1");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.3.2");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.GetAsync(url).Result;
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");
@@ -3856,7 +3856,7 @@ namespace FolioLibrary
             if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
             var url = $"{Url}/custom-fields{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}&totalRecords=none";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.3.1");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.3.2");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result;
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");
@@ -3891,7 +3891,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/custom-fields/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.3.1");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.3.2");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.GetAsync(url).Result;
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");
@@ -3913,7 +3913,7 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = JsonConvert.SerializeObject(customField, universalTimeJsonSerializationSettings);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.3.1");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.3.2");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
             var hrm = httpClient.PostAsync(url, sc).Result;
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");
@@ -3934,7 +3934,7 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = JsonConvert.SerializeObject(customField, universalTimeJsonSerializationSettings);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.3.1");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.3.2");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
             var hrm = httpClient.PutAsync(url, sc).Result;
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");
@@ -3951,7 +3951,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/custom-fields/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.3.1");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.3.2");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.DeleteAsync(url).Result;
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");
@@ -11533,7 +11533,7 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying permissions");
             AuthenticateIfNecessary();
             if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
-            var url = $"{Url}/perms/permissions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}start={skip + 1}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}length={take ?? int.MaxValue}{(take != 0 ? "&totalRecords=none" : "")}";
+            var url = $"{Url}/perms/permissions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}{(take != 0 ? "&totalRecords=none" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.GetAsync(url).Result;
@@ -11551,7 +11551,7 @@ namespace FolioLibrary
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying permissions");
             AuthenticateIfNecessary();
-            var url = $"{Url}/perms/permissions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}start={skip + 1}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}length={take ?? int.MaxValue}&totalRecords=none";
+            var url = $"{Url}/perms/permissions{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}&totalRecords=none";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result;
@@ -11662,7 +11662,7 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying permissions users");
             AuthenticateIfNecessary();
             if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
-            var url = $"{Url}/perms/users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}start={skip + 1}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}length={take ?? int.MaxValue}{(take != 0 ? "&totalRecords=none" : "")}";
+            var url = $"{Url}/perms/users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}{(take != 0 ? "&totalRecords=none" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.GetAsync(url).Result;
@@ -11685,7 +11685,7 @@ namespace FolioLibrary
             orderBy = orderBy ?? "id";
             while (take > 0)
             {
-                var url = $"{Url}/perms/users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}start={skip + 1}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}length={Math.Min(take.Value, 10000)}";
+                var url = $"{Url}/perms/users{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={Math.Min(take.Value, 10000)}";
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
                 var hrm = httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result;
@@ -12866,136 +12866,6 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting refund reason {id}");
             AuthenticateIfNecessary();
             var url = $"{Url}/refunds/{id}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
-            var hrm = httpClient.DeleteAsync(url).Result;
-            var s2 = hrm.Content.ReadAsStringAsync().Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
-        }
-
-        public bool AnyRelatedInstanceTypes(string where = null) => RelatedInstanceTypes(where, take: 1).Any();
-
-        public int CountRelatedInstanceTypes(string where = null)
-        {
-            RelatedInstanceTypes(out var i, where, take: 0);
-            return i;
-        }
-
-        public JObject[] RelatedInstanceTypes(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying related instance types");
-            AuthenticateIfNecessary();
-            if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
-            var url = $"{Url}/related-instance-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}{(take != 0 ? "&totalRecords=none" : "")}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
-            var hrm = httpClient.GetAsync(url).Result;
-            var s2 = hrm.Content.ReadAsStringAsync().Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
-            if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
-            count = take == 0 ? (int)jo["totalRecords"] : CountRelatedInstanceTypes(where);
-            return jo.Properties().SkipWhile(jp => jp.Name == "totalRecords").First().Value.Cast<JObject>().ToArray();
-        }
-
-        public IEnumerable<JObject> RelatedInstanceTypes(string where = null, string orderBy = null, int? skip = null, int? take = null)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying related instance types");
-            AuthenticateIfNecessary();
-            if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
-            var url = $"{Url}/related-instance-types{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}&totalRecords=none";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
-            var hrm = httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", hrm.Headers);
-            if (hrm.StatusCode != HttpStatusCode.OK)
-            {
-                var s2 = hrm.Content.ReadAsStringAsync().Result;
-                if (hrm.Content.Headers.ContentType?.MediaType == "application/json") s2 = JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings).ToString();
-                traceSource.TraceEvent(TraceEventType.Verbose, 0, s2);
-                throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            }
-            using (var sr = new StreamReader(hrm.Content.ReadAsStreamAsync().Result))
-            using (var jtr = new JsonTextReader(sr) { SupportMultipleContent = true })
-            {
-                if (!jtr.Read()) throw new InvalidDataException();
-                while (jtr.Read() && jtr.TokenType != JsonToken.StartArray) ;
-                while (jtr.Read() && jtr.TokenType != JsonToken.EndArray)
-                {
-                    var jo = (JObject)localTimeJsonSerializer.Deserialize(jtr);
-                    traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", jo);
-                    yield return jo;
-                }
-            }
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
-        }
-
-        public JObject GetRelatedInstanceType(string id)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Getting related instance type {0}", id);
-            if (id == null) return null;
-            AuthenticateIfNecessary();
-            var url = $"{Url}/related-instance-types/{id}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
-            var hrm = httpClient.GetAsync(url).Result;
-            var s2 = hrm.Content.ReadAsStringAsync().Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
-            if (hrm.StatusCode != HttpStatusCode.OK && hrm.StatusCode != HttpStatusCode.NotFound) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
-            return jo;
-        }
-
-        public JObject InsertRelatedInstanceType(JObject relatedInstanceType)
-        {
-            var s = Stopwatch.StartNew();
-            if (relatedInstanceType["id"] == null) relatedInstanceType["id"] = Guid.NewGuid();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Inserting related instance type {0}", relatedInstanceType["id"]);
-            AuthenticateIfNecessary();
-            var url = $"{Url}/related-instance-types";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = JsonConvert.SerializeObject(relatedInstanceType, universalTimeJsonSerializationSettings);
-            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
-            var hrm = httpClient.PostAsync(url, sc).Result;
-            s2 = hrm.Content.ReadAsStringAsync().Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
-            if (hrm.StatusCode != HttpStatusCode.Created) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
-            return jo;
-        }
-
-        public void UpdateRelatedInstanceType(JObject relatedInstanceType)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating related instance type {relatedInstanceType["id"]}");
-            AuthenticateIfNecessary();
-            var url = $"{Url}/related-instance-types/{relatedInstanceType["id"]}";
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = JsonConvert.SerializeObject(relatedInstanceType, universalTimeJsonSerializationSettings);
-            var sc = new StringContent(s2, Encoding.UTF8, "application/json");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
-            var hrm = httpClient.PutAsync(url, sc).Result;
-            s2 = hrm.Content.ReadAsStringAsync().Result;
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", hrm.Headers, s2);
-            if (hrm.StatusCode != HttpStatusCode.NoContent) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
-        }
-
-        public void DeleteRelatedInstanceType(string id)
-        {
-            var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting related instance type {id}");
-            AuthenticateIfNecessary();
-            var url = $"{Url}/related-instance-types/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.DeleteAsync(url).Result;
