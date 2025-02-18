@@ -79,10 +79,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MSTest.TestAdapter">
-      <Version>3.7.3</Version>
+      <Version>3.8.1</Version>
     </PackageReference>
     <PackageReference Include="MSTest.TestFramework">
-      <Version>3.7.3</Version>
+      <Version>3.8.1</Version>
     </PackageReference>
     <PackageReference Include="Npgsql">
       <Version>8.0.6</Version>

@@ -87,19 +87,7 @@ namespace FolioWebApplication
         {
             if (Request.CurrentExecutionFilePathExtension.Equals(".aspx", StringComparison.OrdinalIgnoreCase))
             {
-                //ImpersonateUser("clthomas");
-                //ImpersonateUser("dbottorff");
-                //ImpersonateUser("lar1");
-                //ImpersonateUser("stp0");
-                //ImpersonateUser("mantrone");
-                //ImpersonateUser("gatt");
-                //ImpersonateUser("psm1");
-                //ImpersonateUser("denelson");
-                //ImpersonateUser("mcdial");
-                //ImpersonateUser("igrundseth");
-                //ImpersonateUser("cecillegraham");
-                //ImpersonateUser("mhwhite19");
-                //ImpersonateUser("lhauglan");
+                //ImpersonateUser("");
 
                 traceSource.TraceEvent(TraceEventType.Verbose, 0, $"{Request.Url}\n    UserName={User?.Identity?.Name}\n    LocalDateTime={DateTime.Now:G}");
                 if (Session["UserName"] == null)
@@ -107,117 +95,67 @@ namespace FolioWebApplication
                     Session["UserName"] = Regex.Replace(User.Identity.Name, @"^.+\\", "", RegexOptions.Compiled);
                     using (var fsc = FolioServiceContextPool.GetFolioServiceContext()) Session["UserId"] = fsc.User2s($"username == \"{Session["UserName"]}\"").Single().Id;
                 }
-                var hs = Roles.GetRolesForUser().ToHashSet();
+                var l = Roles.GetRolesForUser();
                 var userName = (string)Session["UserName"];
-                if (hs.Any())
+                if (l.Any())
                 {
-                    if (ConfigurationManager.AppSettings["labelsOnly"] != "true")
+                    var administrator = new[]
                     {
-                        //SetPermissions(hs);
-
-                        if (userName == "jemiller")
-                        {
-                            SetAgreementsPermissions("View");
-                        }
-
-                        if (hs.Contains("department:Library Systems - Ils")
-                            || userName == "stp0"
-                            || userName == "kmarti"
-                            || userName == "t-9wsch1"
-                            || userName == "skasten"
-                            )
-                        {
-                            SetCirculationPermissions("View");
-                            SetConfigurationPermissions("View");
-                            SetFeesPermissions("View");
-                            SetFinancePermissions("View");
-                            SetInventoryPermissions("View");
-                            SetInvoicesPermissions("View");
-                            SetOrdersPermissions("View");
-                            SetOrganizationsPermissions("View");
-                            SetPermissionsPermissions("View");
-                            SetSourcePermissions("View");
-                            SetTemplatesPermissions("View");
-                            SetUsersPermissions("View");
-                        }
-                        else if (
-                            hs.Contains("department:Coll Servc Budg & Report")
-                            || hs.Contains("department:Tech Srvc-Cat Admin")
-                            || hs.Contains("department:Tech Srvc-Cont Resources")
-                            || hs.Contains("department:Tech Srvc-Copy Cat")
-                            || hs.Contains("department:Tech Srvc-Data Mgmt")
-                            || hs.Contains("department:Tech Srvc-Mono Order")
-                            || hs.Contains("department:Tech Srvc-Original Cat")
-                            || hs.Contains("department:Tech Srvc-Rec & Rap Cat")
-                            || hs.Contains("department:Law Cataloging")
-                            || hs.Contains("department:Law Library Administration")
-                            || hs.Contains("department:Scrc-Pres")
-                            || hs.Contains("department:Scrc-Reader Services")
-                            || hs.Contains("department:Area Studies - East Asia")
-                            || hs.Contains("department:Law Acquisitions & Erm")
-                            || hs.Contains("department:E-Resources Management")
-                            || hs.Contains("department:Preservation Management")
-                            || userName == "burnstein"
-                            )
-                        {
-                            SetFinancePermissions("View");
-                            SetInvoicesPermissions("View");
-                            SetOrdersPermissions("View");
-                            SetOrganizationsPermissions("View");
-                            SetInventoryPermissions("View");
-                            SetSourcePermissions("View");
-                            Session["LabelsPermission"] = "Edit";
-                        }
-                        else if (hs.Contains("department:Preserv Binding & Shelf Prpe") || hs.Contains("department:Preservation Conservation")
-                            || userName == "zpayne" 
-                            || userName == "lyssa" 
-                            || userName == "sydani" 
-                            || userName == "tbledsoe" 
-                            || userName == "gyasomah"
-                            || userName == "cbesler"
-                            || userName == "ncclark"
-                            || userName == "oakleya"
-                            || userName == "nmgutierrez"
-                            || userName == "krios6"
-                            || userName == "reillyp"
-                            )
-                        {
-                            SetInventoryPermissions("View");
-                            Session["LabelsPermission"] = "Edit";
-                            Session["LocationSettingsPermission"] = "View";
-                            Session["SettingsPermission"] = "View";
-                            Session["PrintersPermission"] = "Edit";
-                        }
-                        else if (hs.Contains("department:Access Serv-Privileges And Ids"))
-                        {
-                            SetFeesPermissions("View");
-                            SetUsersPermissions("View");
-                        }
-                        else if (hs.Contains("department:User Services Admin") || hs.Contains("department:Stacks Mgmt-Reg Stacks"))
-                        {
-                            SetCirculationPermissions("View");
-                            SetFeesPermissions("View");
-                            SetInventoryPermissions("View");
-                            SetUsersPermissions("View");
-                        }
-                        if (hs.Contains("department:Library Systems - Ils") || (string)Session["UserName"] == "mantrone")
-                        {
-                            Session["LabelsPermission"] = Session["LocationSettingsPermission"] = Session["PrintersPermission"] = Session["SettingsPermission"] = "Edit";
-                        }
-                    }
-                    else
+                        "department:Library Integrated Lib Systems"
+                    };
+                    var acquisitions = new[]
                     {
-                        //SetInventoryPermissions(hs);
-                        ////Session["Holding2sPermission"] = hs.Contains("uc.holdings.edit") ? "Edit" : hs.Contains("all") || hs.Contains("inventory.all") || hs.Contains("uc.holdings.view") ? "View" : null;
-                        ////Session["Instance2sPermission"] = hs.Contains("uc.instances.edit") ? "Edit" : hs.Contains("all") || hs.Contains("inventory.all") || hs.Contains("uc.instances.view") ? "View" : null;
-                        ////Session["Item2sPermission"] = hs.Contains("uc.items.edit") ? "Edit" : hs.Contains("all") || hs.Contains("inventory.all") || hs.Contains("uc.items.view") ? "View" : null;
-
-                        Session["LocationSettingsPermission"] = hs.Contains("uc.locationsettings.edit") ? "Edit" : hs.Contains("all") || hs.Contains("configuration.all") || hs.Contains("uc.locationsettings.view") ? "View" : null;
-                        Session["PrintersPermission"] = hs.Contains("uc.printers.edit") ? "Edit" : hs.Contains("all") || hs.Contains("configuration.all") || hs.Contains("uc.printers.view") ? "View" : null;
-                        Session["SettingsPermission"] = hs.Contains("uc.settings.edit") ? "Edit" : hs.Contains("all") || hs.Contains("configuration.all") || hs.Contains("uc.settings.view") ? "View" : null;
+                        "department:Library Integrated Lib Systems",
+                        "department:Law Library Admin",
+                        "department:Library CS Acquisitions",
+                        "department:Library CS Admin",
+                        "department:Library CS Collections Supp",
+                        "department:Library CS Electr Resources"
+                    };
+                    var cataloging = new[]
+                    {
+                        "division:Library",
+                        "user:amulyaj",
+                        "user:asjiac",
+                        "user:awhite6",
+                        "user:lkonjoyan",
+                        "user:maniza",
+                    };
+                    var circulation = new[]
+                    {
+                        "department:Library Integrated Lib Systems",
+                        "department:Law Library Admin",
+                        "department:Library CS Admin",
+                        "department:Library CS Collections Supp"
+                    };
+                    if (administrator.Intersect(l).Any())
+                    {
+                        SetAgreementsPermissions("View");
+                        SetConfigurationPermissions("View");
+                        SetPermissionsPermissions("View");
+                        SetSourcePermissions("View");
+                        SetTemplatesPermissions("View");
+                        Session["LocationSettingsPermission"] = Session["PrintersPermission"] = Session["SettingsPermission"] = "Edit";
                     }
-                    if (hs.Contains("all") || hs.Contains("uc.labels.edit")) Session["LabelsPermission"] = "Edit";
-                    Session["Configuration2sPermission"] = null;
+                    if (acquisitions.Intersect(l).Any())
+                    {
+                        SetFinancePermissions("View");
+                        SetInvoicesPermissions("View");
+                        SetOrdersPermissions("View");
+                        SetOrganizationsPermissions("View");
+                    }
+                    if (cataloging.Intersect(l).Any())
+                    {
+                        SetInventoryPermissions("View");
+                        Session["LabelsPermission"] = "Edit";
+                    }
+                    if (circulation.Intersect(l).Any())
+                    {
+                        SetCirculationPermissions("View");
+                        SetFeesPermissions("View");
+                        SetUsersPermissions("View");
+                    }
+                    if (userName != "jemiller") Session["Configuration2sPermission"] = null;
                 }
                 else
                 {

@@ -286,7 +286,7 @@
     <EmbeddedResource Include="WaiveReason.json" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.1.35" />
+    <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NJsonSchema" Version="11.1.0" />
     <PackageReference Include="Npgsql" Version="8.0.6" />
