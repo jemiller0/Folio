@@ -120,6 +120,7 @@ namespace FolioWebApplication
                         "user:awhite6",
                         "user:lkonjoyan",
                         "user:maniza",
+                        "user:tbledsoe"
                     };
                     var circulation = new[]
                     {
