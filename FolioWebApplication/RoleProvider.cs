@@ -57,7 +57,8 @@ namespace FolioWebApplication
             //using (var fsc = new FolioServiceContext(accessToken: accessToken))
             using (var fsc = FolioServiceContextPool.GetFolioServiceContext())
             {
-                var u = fsc.User2s($"username == \"{Regex.Replace(userName, @"^.+\\", "", RegexOptions.Compiled)}\"").SingleOrDefault();
+                userName = Regex.Replace(userName, @"^.+\\", "", RegexOptions.Compiled);
+                var u = fsc.User2s($"username == \"{userName}\"").SingleOrDefault();
                 return u != null ? new[] { $"division:{u.StaffDivision}", $"department:{u.StaffDepartment}", $"user:{userName}" } : new string[] { };
             }
         }
