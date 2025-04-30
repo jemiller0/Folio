@@ -288,7 +288,7 @@
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="NJsonSchema" Version="11.2.0" />
+    <PackageReference Include="NJsonSchema" Version="11.3.2" />
     <PackageReference Include="Npgsql" Version="8.0.7" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.0" />
