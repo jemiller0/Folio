@@ -20,7 +20,7 @@ namespace FolioLibrary
         private dynamic sqlBulkCopy;
         public readonly static TraceSource traceSource = new TraceSource("FolioLibrary", SourceLevels.Information);
 
-        public bool IsMySql => providerName == "MySql.Data.MySqlClient";
+        public bool IsMySql => providerName == "MySqlConnector" || providerName == "MySql.Data.MySqlClient";
         public bool IsPostgreSql => providerName == "Npgsql";
         public bool IsSqlServer => providerName == "System.Data.SqlClient";
         public string ProviderName => providerName;

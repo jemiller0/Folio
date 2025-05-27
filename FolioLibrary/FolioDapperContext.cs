@@ -23,7 +23,7 @@ namespace FolioLibrary
         public readonly static JsonSerializerSettings LocalTimeJsonSerializationSettings = new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Local };
         public readonly static JsonSerializerSettings UniversalTimeJsonSerializationSettings = new JsonSerializerSettings { DateTimeZoneHandling = DateTimeZoneHandling.Utc, DateFormatString = "yyyy-MM-ddTHH:mm:ss.fff+00:00" };
 
-        public bool IsMySql => providerName == "MySql.Data.MySqlClient";
+        public bool IsMySql => providerName == "MySqlConnector" || providerName == "MySql.Data.MySqlClient";
         public bool IsPostgreSql => providerName == "Npgsql";
         public bool IsSqlServer => providerName == "System.Data.SqlClient";
 
@@ -41,7 +41,7 @@ namespace FolioLibrary
             {
                 if (dbConnection == null)
                 {
-                    dbConnection = DbProviderFactories.GetFactory(IsMySql ? "MySql.Data.MySqlClient2" : providerName).CreateConnection();
+                    dbConnection = DbProviderFactories.GetFactory(providerName).CreateConnection();
                     dbConnection.ConnectionString = connectionString;
                     dbConnection.Open();
                     if (IsMySql) dbConnection.Execute("SET SQL_MODE = 'ANSI'");
@@ -8355,7 +8355,7 @@ namespace FolioLibrary
     {
         internal static DbProviderFactory GetFactory(string providerName)
         {
-            if (providerName == "MySql.Data.MySqlClient" || providerName == "MySql.Data.MySqlClient2")
+            if (providerName == "MySql.Data.MySqlClient" || providerName == "MySqlConnector")
                 throw new NotSupportedException();
             else if (providerName == "Npgsql")
                 return NpgsqlFactory.Instance;
