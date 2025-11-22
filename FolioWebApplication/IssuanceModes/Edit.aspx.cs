@@ -39,26 +39,26 @@ namespace FolioWebApplication.IssuanceModes
             if (Session["Instance2sPermission"] == null) return;
             var id = (Guid?)IssuanceModeFormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "ShortId", "hrid" }, { "MatchKey", "matchKey" }, { "Source", "source" }, { "Title", "title" }, { "Author", "contributors[0].name" }, { "PublicationStartYear", "publicationPeriod.start" }, { "PublicationEndYear", "publicationPeriod.end" }, { "DatesDateTypeId", "dates.dateTypeId" }, { "DatesDate1", "dates.date1" }, { "DatesDate2", "dates.date2" }, { "InstanceTypeId", "instanceTypeId" }, { "IssuanceModeId", "modeOfIssuanceId" }, { "CatalogedDate", "catalogedDate" }, { "PreviouslyHeld", "previouslyHeld" }, { "StaffSuppress", "staffSuppress" }, { "DiscoverySuppress", "discoverySuppress" }, { "SourceRecordFormat", "sourceRecordFormat" }, { "StatusId", "statusId" }, { "StatusLastWriteTime", "statusUpdatedDate" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "ShortId", "hrid" }, { "MatchKey", "matchKey" }, { "SourceUri", "sourceUri" }, { "Source", "source" }, { "Title", "title" }, { "Author", "contributors[0].name" }, { "DateTypeId", "dates.dateTypeId" }, { "Date1", "dates.date1" }, { "Date2", "dates.date2" }, { "InstanceTypeId", "instanceTypeId" }, { "IssuanceModeId", "modeOfIssuanceId" }, { "CatalogedDate", "catalogedDate" }, { "PreviouslyHeld", "previouslyHeld" }, { "StaffSuppress", "staffSuppress" }, { "DiscoverySuppress", "discoverySuppress" }, { "Deleted", "deleted" }, { "SourceRecordFormat", "sourceRecordFormat" }, { "StatusId", "statusId" }, { "StatusLastWriteTime", "statusUpdatedDate" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"modeOfIssuanceId == \"{id}\"",
                 Global.GetCqlFilter(Instance2sRadGrid, "Id", "id"),
                 Global.GetCqlFilter(Instance2sRadGrid, "ShortId", "hrid"),
                 Global.GetCqlFilter(Instance2sRadGrid, "MatchKey", "matchKey"),
+                Global.GetCqlFilter(Instance2sRadGrid, "SourceUri", "sourceUri"),
                 Global.GetCqlFilter(Instance2sRadGrid, "Source", "source"),
                 Global.GetCqlFilter(Instance2sRadGrid, "Title", "title"),
                 Global.GetCqlFilter(Instance2sRadGrid, "Author", "contributors[0].name"),
-                Global.GetCqlFilter(Instance2sRadGrid, "PublicationStartYear", "publicationPeriod.start"),
-                Global.GetCqlFilter(Instance2sRadGrid, "PublicationEndYear", "publicationPeriod.end"),
-                Global.GetCqlFilter(Instance2sRadGrid, "DatesDateTypeId", "dates.dateTypeId"),
-                Global.GetCqlFilter(Instance2sRadGrid, "DatesDate1", "dates.date1"),
-                Global.GetCqlFilter(Instance2sRadGrid, "DatesDate2", "dates.date2"),
+                Global.GetCqlFilter(Instance2sRadGrid, "DateType.Name", "dates.dateTypeId", "name", folioServiceContext.FolioServiceClient.DateTypes),
+                Global.GetCqlFilter(Instance2sRadGrid, "Date1", "dates.date1"),
+                Global.GetCqlFilter(Instance2sRadGrid, "Date2", "dates.date2"),
                 Global.GetCqlFilter(Instance2sRadGrid, "InstanceType.Name", "instanceTypeId", "name", folioServiceContext.FolioServiceClient.InstanceTypes),
                 Global.GetCqlFilter(Instance2sRadGrid, "CatalogedDate", "catalogedDate"),
                 Global.GetCqlFilter(Instance2sRadGrid, "PreviouslyHeld", "previouslyHeld"),
                 Global.GetCqlFilter(Instance2sRadGrid, "StaffSuppress", "staffSuppress"),
                 Global.GetCqlFilter(Instance2sRadGrid, "DiscoverySuppress", "discoverySuppress"),
+                Global.GetCqlFilter(Instance2sRadGrid, "Deleted", "deleted"),
                 Global.GetCqlFilter(Instance2sRadGrid, "SourceRecordFormat", "sourceRecordFormat"),
                 Global.GetCqlFilter(Instance2sRadGrid, "Status.Name", "statusId", "name", folioServiceContext.FolioServiceClient.InstanceStatuses),
                 Global.GetCqlFilter(Instance2sRadGrid, "StatusLastWriteTime", "statusUpdatedDate"),
@@ -66,7 +66,8 @@ namespace FolioWebApplication.IssuanceModes
                 Global.GetCqlFilter(Instance2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Instance2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(Instance2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users),
-                Global.GetCqlFilter(Instance2sRadGrid, "CompletionTime", "")
+                Global.GetCqlFilter(Instance2sRadGrid, "CompletionTime", ""),
+                Global.GetCqlFilter(Instance2sRadGrid, "DatesDatetypeid", "")
             }.Where(s => s != null)));
             Instance2sRadGrid.DataSource = folioServiceContext.Instance2s(where, Instance2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Instance2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Instance2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Instance2sRadGrid.PageSize * Instance2sRadGrid.CurrentPageIndex, Instance2sRadGrid.PageSize, true);
             Instance2sRadGrid.VirtualItemCount = folioServiceContext.CountInstance2s(where);

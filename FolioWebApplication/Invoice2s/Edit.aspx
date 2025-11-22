@@ -105,6 +105,14 @@
                                     <asp:Literal ID="ExchangeRateLiteral" runat="server" Text='<%#: Eval("ExchangeRate") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("OperationMode") != null %>'>
+                                <td>
+                                    <asp:Label ID="OperationModeLabel" runat="server" Text="Operation Mode:" AssociatedControlID="OperationModeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="OperationModeLiteral" runat="server" Text='<%#: Eval("OperationMode") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("ExportToAccounting") != null %>'>
                                 <td>
                                     <asp:Label ID="ExportToAccountingLabel" runat="server" Text="Export To Accounting:" AssociatedControlID="ExportToAccountingLiteral" />
@@ -646,6 +654,7 @@
                         <telerik:GridBoundColumn HeaderText="Enclosure" DataField="Enclosure" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Invoice Currency" DataField="InvoiceCurrency" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Exchange Rate" DataField="ExchangeRate" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Operation Mode" DataField="OperationMode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Export To Accounting" DataField="ExportToAccounting" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Status" DataField="Status" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="System Currency" DataField="SystemCurrency" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />

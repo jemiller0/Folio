@@ -73,139 +73,142 @@ namespace FolioLibrary
         [Column("exchange_rate"), Display(Name = "Exchange Rate", Order = 15), JsonProperty("exchangeRate")]
         public virtual decimal? ExchangeRate { get; set; }
 
-        [Column("export_to_accounting"), Display(Name = "Export To Accounting", Order = 16), JsonProperty("exportToAccounting")]
+        [Column("operation_mode"), Display(Name = "Operation Mode", Order = 16), JsonProperty("operationMode"), StringLength(1024)]
+        public virtual string OperationMode { get; set; }
+
+        [Column("export_to_accounting"), Display(Name = "Export To Accounting", Order = 17), JsonProperty("exportToAccounting")]
         public virtual bool? ExportToAccounting { get; set; }
 
-        [Column("folio_invoice_no"), Display(Order = 17), JsonProperty("folioInvoiceNo"), StringLength(1024)]
+        [Column("folio_invoice_no"), Display(Order = 18), JsonProperty("folioInvoiceNo"), StringLength(1024)]
         public virtual string Number { get; set; }
 
-        [Column("invoice_date"), DataType(DataType.Date), Display(Name = "Invoice Date", Order = 18), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("invoiceDate"), Required]
+        [Column("invoice_date"), DataType(DataType.Date), Display(Name = "Invoice Date", Order = 19), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("invoiceDate"), Required]
         public virtual DateTime? InvoiceDate { get; set; }
 
-        [Column("lock_total"), DataType(DataType.Currency), Display(Name = "Lock Total", Order = 19), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("lockTotal")]
+        [Column("lock_total"), DataType(DataType.Currency), Display(Name = "Lock Total", Order = 20), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("lockTotal")]
         public virtual decimal? LockTotal { get; set; }
 
-        [Column("note"), Display(Order = 20), JsonProperty("note"), StringLength(1024)]
+        [Column("note"), Display(Order = 21), JsonProperty("note"), StringLength(1024)]
         public virtual string Note { get; set; }
 
-        [Column("payment_due"), DataType(DataType.Date), Display(Name = "Payment Due Date", Order = 21), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("paymentDue")]
+        [Column("payment_due"), DataType(DataType.Date), Display(Name = "Payment Due Date", Order = 22), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("paymentDue")]
         public virtual DateTime? PaymentDueDate { get; set; }
 
-        [Column("payment_date"), DataType(DataType.Date), Display(Name = "Payment Date", Order = 22), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("paymentDate")]
+        [Column("payment_date"), DataType(DataType.Date), Display(Name = "Payment Date", Order = 23), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("paymentDate")]
         public virtual DateTime? PaymentDate { get; set; }
 
-        [Column("payment_terms"), Display(Name = "Payment Terms", Order = 23), JsonProperty("paymentTerms"), StringLength(1024)]
+        [Column("payment_terms"), Display(Name = "Payment Terms", Order = 24), JsonProperty("paymentTerms"), StringLength(1024)]
         public virtual string PaymentTerms { get; set; }
 
-        [Column("payment_method"), Display(Name = "Payment Method", Order = 24), JsonProperty("paymentMethod"), Required, StringLength(1024)]
+        [Column("payment_method"), Display(Name = "Payment Method", Order = 25), JsonProperty("paymentMethod"), Required, StringLength(1024)]
         public virtual string PaymentMethod { get; set; }
 
-        [Column("status"), Display(Order = 25), JsonProperty("status"), RegularExpression(@"^(Open|Reviewed|Approved|Paid|Cancelled)$"), Required, StringLength(1024)]
+        [Column("status"), Display(Order = 26), JsonProperty("status"), RegularExpression(@"^(Open|Reviewed|Approved|Paid|Cancelled)$"), Required, StringLength(1024)]
         public virtual string Status { get; set; }
 
-        [Column("source"), Display(Order = 26), JsonProperty("source"), RegularExpression(@"^(User|API|EDI)$"), Required, StringLength(1024)]
+        [Column("source"), Display(Order = 27), JsonProperty("source"), RegularExpression(@"^(User|API|EDI)$"), Required, StringLength(1024)]
         public virtual string Source { get; set; }
 
-        [Column("sub_total"), DataType(DataType.Currency), Display(Name = "Sub Total", Order = 27), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("subTotal")]
+        [Column("sub_total"), DataType(DataType.Currency), Display(Name = "Sub Total", Order = 28), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("subTotal")]
         public virtual decimal? SubTotal { get; set; }
 
-        [Column("total"), DataType(DataType.Currency), Display(Order = 28), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("total")]
+        [Column("total"), DataType(DataType.Currency), Display(Order = 29), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("total")]
         public virtual decimal? Total { get; set; }
 
-        [Column("vendor_invoice_no"), Display(Name = "Vendor Invoice Number", Order = 29), JsonProperty("vendorInvoiceNo"), Required, StringLength(1024)]
+        [Column("vendor_invoice_no"), Display(Name = "Vendor Invoice Number", Order = 30), JsonProperty("vendorInvoiceNo"), Required, StringLength(1024)]
         public virtual string VendorInvoiceNumber { get; set; }
 
-        [Column("disbursement_number"), Display(Name = "Disbursement Number", Order = 30), JsonProperty("disbursementNumber"), StringLength(1024)]
+        [Column("disbursement_number"), Display(Name = "Disbursement Number", Order = 31), JsonProperty("disbursementNumber"), StringLength(1024)]
         public virtual string DisbursementNumber { get; set; }
 
-        [Column("voucher_number"), Display(Name = "Voucher Number", Order = 31), JsonProperty("voucherNumber"), StringLength(1024)]
+        [Column("voucher_number"), Display(Name = "Voucher Number", Order = 32), JsonProperty("voucherNumber"), StringLength(1024)]
         public virtual string VoucherNumber { get; set; }
 
-        [Display(Order = 32)]
+        [Display(Order = 33)]
         public virtual Transaction2 Payment { get; set; }
 
-        [Column("payment_id"), Display(Name = "Payment", Order = 33), JsonProperty("paymentId")]
+        [Column("payment_id"), Display(Name = "Payment", Order = 34), JsonProperty("paymentId")]
         public virtual Guid? PaymentId { get; set; }
 
-        [Column("disbursement_date"), DataType(DataType.Date), Display(Name = "Disbursement Date", Order = 34), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("disbursementDate")]
+        [Column("disbursement_date"), DataType(DataType.Date), Display(Name = "Disbursement Date", Order = 35), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("disbursementDate")]
         public virtual DateTime? DisbursementDate { get; set; }
 
-        [Display(Order = 35)]
+        [Display(Order = 36)]
         public virtual Organization2 Vendor { get; set; }
 
-        [Column("vendor_id"), Display(Name = "Vendor", Order = 36), JsonProperty("vendorId"), Required]
+        [Column("vendor_id"), Display(Name = "Vendor", Order = 37), JsonProperty("vendorId"), Required]
         public virtual Guid? VendorId { get; set; }
 
-        [Display(Name = "Fiscal Year", Order = 37)]
+        [Display(Name = "Fiscal Year", Order = 38)]
         public virtual FiscalYear2 FiscalYear { get; set; }
 
-        [Column("fiscal_year_id"), Display(Name = "Fiscal Year", Order = 38), JsonProperty("fiscalYearId")]
+        [Column("fiscal_year_id"), Display(Name = "Fiscal Year", Order = 39), JsonProperty("fiscalYearId")]
         public virtual Guid? FiscalYearId { get; set; }
 
-        [Column("account_no"), Display(Name = "Account Number", Order = 39), JsonProperty("accountNo"), StringLength(1024)]
+        [Column("account_no"), Display(Name = "Account Number", Order = 40), JsonProperty("accountNo"), StringLength(1024)]
         public virtual string AccountNumber { get; set; }
 
-        [Column("manual_payment"), Display(Name = "Manual Payment", Order = 40), JsonProperty("manualPayment")]
+        [Column("manual_payment"), Display(Name = "Manual Payment", Order = 41), JsonProperty("manualPayment")]
         public virtual bool? ManualPayment { get; set; }
 
-        [Column("next_invoice_line_number"), Display(Name = "Next Invoice Line Number", Order = 41), Editable(false), JsonProperty("nextInvoiceLineNumber")]
+        [Column("next_invoice_line_number"), Display(Name = "Next Invoice Line Number", Order = 42), Editable(false), JsonProperty("nextInvoiceLineNumber")]
         public virtual int? NextInvoiceLineNumber { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 42), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 43), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 43), InverseProperty("Invoice2s1")]
+        [Display(Name = "Creation User", Order = 44), InverseProperty("Invoice2s1")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 44), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 45), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 46), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 47), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 47), InverseProperty("Invoice2s2")]
+        [Display(Name = "Last Write User", Order = 48), InverseProperty("Invoice2s2")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 48), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 49), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Invoice), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 50), Editable(false)]
+        [Column("content"), CustomValidation(typeof(Invoice), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 51), Editable(false)]
         public virtual string Content { get; set; }
 
         [ScaffoldColumn(false)]
         public virtual ICollection<Document2> Document2s { get; set; }
 
-        [Display(Name = "Invoice Acquisitions Units", Order = 52), JsonConverter(typeof(ArrayJsonConverter<List<InvoiceAcquisitionsUnit>, InvoiceAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
+        [Display(Name = "Invoice Acquisitions Units", Order = 53), JsonConverter(typeof(ArrayJsonConverter<List<InvoiceAcquisitionsUnit>, InvoiceAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
         public virtual ICollection<InvoiceAcquisitionsUnit> InvoiceAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Invoice Adjustments", Order = 53), JsonProperty("adjustments")]
+        [Display(Name = "Invoice Adjustments", Order = 54), JsonProperty("adjustments")]
         public virtual ICollection<InvoiceAdjustment> InvoiceAdjustments { get; set; }
 
-        [Display(Name = "Invoice Items", Order = 54)]
+        [Display(Name = "Invoice Items", Order = 55)]
         public virtual ICollection<InvoiceItem2> InvoiceItem2s { get; set; }
 
-        [Display(Name = "Invoice Order Numbers", Order = 55), JsonConverter(typeof(ArrayJsonConverter<List<InvoiceOrderNumber>, InvoiceOrderNumber>), "Content"), JsonProperty("poNumbers")]
+        [Display(Name = "Invoice Order Numbers", Order = 56), JsonConverter(typeof(ArrayJsonConverter<List<InvoiceOrderNumber>, InvoiceOrderNumber>), "Content"), JsonProperty("poNumbers")]
         public virtual ICollection<InvoiceOrderNumber> InvoiceOrderNumbers { get; set; }
 
-        [Display(Name = "Invoice Tags", Order = 56), JsonConverter(typeof(ArrayJsonConverter<List<InvoiceTag>, InvoiceTag>), "Content"), JsonProperty("tags.tagList")]
+        [Display(Name = "Invoice Tags", Order = 57), JsonConverter(typeof(ArrayJsonConverter<List<InvoiceTag>, InvoiceTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<InvoiceTag> InvoiceTags { get; set; }
 
-        [Display(Name = "Order Invoices", Order = 57)]
+        [Display(Name = "Order Invoices", Order = 58)]
         public virtual ICollection<OrderInvoice2> OrderInvoice2s { get; set; }
 
-        [Display(Name = "Transactions", Order = 58)]
+        [Display(Name = "Transactions", Order = 59)]
         public virtual ICollection<Transaction2> Transaction2s { get; set; }
 
-        [Display(Name = "Vouchers", Order = 59)]
+        [Display(Name = "Vouchers", Order = 60)]
         public virtual ICollection<Voucher2> Voucher2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AdjustmentsTotal)} = {AdjustmentsTotal}, {nameof(ApprovedById)} = {ApprovedById}, {nameof(ApprovalDate)} = {ApprovalDate}, {nameof(BatchGroupId)} = {BatchGroupId}, {nameof(BillToId)} = {BillToId}, {nameof(CheckSubscriptionOverlap)} = {CheckSubscriptionOverlap}, {nameof(CancellationNote)} = {CancellationNote}, {nameof(Currency)} = {Currency}, {nameof(Enclosure)} = {Enclosure}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(ExportToAccounting)} = {ExportToAccounting}, {nameof(Number)} = {Number}, {nameof(InvoiceDate)} = {InvoiceDate}, {nameof(LockTotal)} = {LockTotal}, {nameof(Note)} = {Note}, {nameof(PaymentDueDate)} = {PaymentDueDate}, {nameof(PaymentDate)} = {PaymentDate}, {nameof(PaymentTerms)} = {PaymentTerms}, {nameof(PaymentMethod)} = {PaymentMethod}, {nameof(Status)} = {Status}, {nameof(Source)} = {Source}, {nameof(SubTotal)} = {SubTotal}, {nameof(Total)} = {Total}, {nameof(VendorInvoiceNumber)} = {VendorInvoiceNumber}, {nameof(DisbursementNumber)} = {DisbursementNumber}, {nameof(VoucherNumber)} = {VoucherNumber}, {nameof(PaymentId)} = {PaymentId}, {nameof(DisbursementDate)} = {DisbursementDate}, {nameof(VendorId)} = {VendorId}, {nameof(FiscalYearId)} = {FiscalYearId}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(ManualPayment)} = {ManualPayment}, {nameof(NextInvoiceLineNumber)} = {NextInvoiceLineNumber}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(InvoiceAcquisitionsUnits)} = {(InvoiceAcquisitionsUnits != null ? $"{{ {string.Join(", ", InvoiceAcquisitionsUnits)} }}" : "")}, {nameof(InvoiceAdjustments)} = {(InvoiceAdjustments != null ? $"{{ {string.Join(", ", InvoiceAdjustments)} }}" : "")}, {nameof(InvoiceOrderNumbers)} = {(InvoiceOrderNumbers != null ? $"{{ {string.Join(", ", InvoiceOrderNumbers)} }}" : "")}, {nameof(InvoiceTags)} = {(InvoiceTags != null ? $"{{ {string.Join(", ", InvoiceTags)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AdjustmentsTotal)} = {AdjustmentsTotal}, {nameof(ApprovedById)} = {ApprovedById}, {nameof(ApprovalDate)} = {ApprovalDate}, {nameof(BatchGroupId)} = {BatchGroupId}, {nameof(BillToId)} = {BillToId}, {nameof(CheckSubscriptionOverlap)} = {CheckSubscriptionOverlap}, {nameof(CancellationNote)} = {CancellationNote}, {nameof(Currency)} = {Currency}, {nameof(Enclosure)} = {Enclosure}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(OperationMode)} = {OperationMode}, {nameof(ExportToAccounting)} = {ExportToAccounting}, {nameof(Number)} = {Number}, {nameof(InvoiceDate)} = {InvoiceDate}, {nameof(LockTotal)} = {LockTotal}, {nameof(Note)} = {Note}, {nameof(PaymentDueDate)} = {PaymentDueDate}, {nameof(PaymentDate)} = {PaymentDate}, {nameof(PaymentTerms)} = {PaymentTerms}, {nameof(PaymentMethod)} = {PaymentMethod}, {nameof(Status)} = {Status}, {nameof(Source)} = {Source}, {nameof(SubTotal)} = {SubTotal}, {nameof(Total)} = {Total}, {nameof(VendorInvoiceNumber)} = {VendorInvoiceNumber}, {nameof(DisbursementNumber)} = {DisbursementNumber}, {nameof(VoucherNumber)} = {VoucherNumber}, {nameof(PaymentId)} = {PaymentId}, {nameof(DisbursementDate)} = {DisbursementDate}, {nameof(VendorId)} = {VendorId}, {nameof(FiscalYearId)} = {FiscalYearId}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(ManualPayment)} = {ManualPayment}, {nameof(NextInvoiceLineNumber)} = {NextInvoiceLineNumber}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(InvoiceAcquisitionsUnits)} = {(InvoiceAcquisitionsUnits != null ? $"{{ {string.Join(", ", InvoiceAcquisitionsUnits)} }}" : "")}, {nameof(InvoiceAdjustments)} = {(InvoiceAdjustments != null ? $"{{ {string.Join(", ", InvoiceAdjustments)} }}" : "")}, {nameof(InvoiceOrderNumbers)} = {(InvoiceOrderNumbers != null ? $"{{ {string.Join(", ", InvoiceOrderNumbers)} }}" : "")}, {nameof(InvoiceTags)} = {(InvoiceTags != null ? $"{{ {string.Join(", ", InvoiceTags)} }}" : "")} }}";
 
         public static Invoice2 FromJObject(JObject jObject) => jObject != null ? new Invoice2
         {
@@ -221,6 +224,7 @@ namespace FolioLibrary
             Currency = (string)jObject.SelectToken("currency"),
             Enclosure = (bool?)jObject.SelectToken("enclosureNeeded"),
             ExchangeRate = (decimal?)jObject.SelectToken("exchangeRate"),
+            OperationMode = (string)jObject.SelectToken("operationMode"),
             ExportToAccounting = (bool?)jObject.SelectToken("exportToAccounting"),
             Number = (string)jObject.SelectToken("folioInvoiceNo"),
             InvoiceDate = ((DateTime?)jObject.SelectToken("invoiceDate"))?.ToUniversalTime(),
@@ -270,6 +274,7 @@ namespace FolioLibrary
             new JProperty("currency", Currency),
             new JProperty("enclosureNeeded", Enclosure),
             new JProperty("exchangeRate", ExchangeRate),
+            new JProperty("operationMode", OperationMode),
             new JProperty("exportToAccounting", ExportToAccounting),
             new JProperty("folioInvoiceNo", Number),
             new JProperty("invoiceDate", InvoiceDate?.ToLocalTime()),

@@ -33,6 +33,14 @@
                                     <asp:HyperLink ID="HoldingHyperLink" runat="server" Text='<%# Eval("Holding.ShortId") %>' NavigateUrl='<%# $"~/Holding2s/Edit.aspx?Id={Eval("HoldingId")}" %>' Enabled='<%# Session["Holding2sPermission"] != null %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("Order") != null %>'>
+                                <td>
+                                    <asp:Label ID="OrderLabel" runat="server" Text="Order:" AssociatedControlID="OrderLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="OrderLiteral" runat="server" Text='<%#: Eval("Order") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("DiscoverySuppress") != null %>'>
                                 <td>
                                     <asp:Label ID="DiscoverySuppressLabel" runat="server" Text="Discovery Suppress:" AssociatedControlID="DiscoverySuppressLiteral" />
@@ -581,6 +589,26 @@
             </telerik:RadGrid>
         </fieldset>
     </asp:Panel>
+    <asp:Panel ID="ItemAdditionalCallNumbersPanel" runat="server" Visible='<%# (string)Session["ItemAdditionalCallNumbersPermission"] != null && Item2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="ItemAdditionalCallNumbersHyperLink" runat="server" Text="Item Additional Call Numbers" NavigateUrl="~/ItemAdditionalCallNumbers/Default.aspx" Enabled="false" /></legend>
+            <telerik:RadGrid ID="ItemAdditionalCallNumbersRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="ItemAdditionalCallNumbersRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No item additional call numbers found">
+                    <Columns>
+                        <telerik:GridTemplateColumn HeaderText="Type" DataField="Type.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="TypeHyperLink" runat="server" Text='<%#: Eval("Type.Name") %>' NavigateUrl='<%# $"~/CallNumberType2s/Edit.aspx?Id={Eval("TypeId")}" %>' Enabled='<%# Session["CallNumberType2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Prefix" DataField="Prefix" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Call Number" DataField="CallNumber" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Suffix" DataField="Suffix" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
     <asp:Panel ID="ItemAdministrativeNotesPanel" runat="server" Visible='<%# (string)Session["ItemAdministrativeNotesPermission"] != null && Item2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
@@ -1029,6 +1057,11 @@
             <telerik:AjaxSetting AjaxControlID="Fee2sRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="Fee2sPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="ItemAdditionalCallNumbersRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="ItemAdditionalCallNumbersPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="ItemAdministrativeNotesRadGrid">

@@ -140,27 +140,6 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
-        public void Alert2sDefaultAspxTest()
-        {
-            var s = Stopwatch.StartNew();
-            try
-            {
-                var hrm = httpClient.GetAsync($"{Url}/Alert2s/Default.aspx").Result;
-                hrm.EnsureSuccessStatusCode();
-                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
-            }
-            catch (Exception e)
-            {
-                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
-                throw;
-            }
-            finally
-            {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"Alert2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
-            }
-        }
-
-        [TestMethod]
         public void AlternativeTitleType2sDefaultAspxTest()
         {
             var s = Stopwatch.StartNew();
@@ -619,6 +598,27 @@ namespace FolioWebApplicationTest
             finally
             {
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"CustomField2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
+        public void DateType2sDefaultAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var hrm = httpClient.GetAsync($"{Url}/DateType2s/Default.aspx").Result;
+                hrm.EnsureSuccessStatusCode();
+                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"DateType2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
             }
         }
 
@@ -1505,27 +1505,6 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
-        public void OrderTemplate2sDefaultAspxTest()
-        {
-            var s = Stopwatch.StartNew();
-            try
-            {
-                var hrm = httpClient.GetAsync($"{Url}/OrderTemplate2s/Default.aspx").Result;
-                hrm.EnsureSuccessStatusCode();
-                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
-            }
-            catch (Exception e)
-            {
-                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
-                throw;
-            }
-            finally
-            {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTemplate2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
-            }
-        }
-
-        [TestMethod]
         public void Organization2sDefaultAspxTest()
         {
             var s = Stopwatch.StartNew();
@@ -1736,27 +1715,6 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
-        public void Prefix2sDefaultAspxTest()
-        {
-            var s = Stopwatch.StartNew();
-            try
-            {
-                var hrm = httpClient.GetAsync($"{Url}/Prefix2s/Default.aspx").Result;
-                hrm.EnsureSuccessStatusCode();
-                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
-            }
-            catch (Exception e)
-            {
-                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
-                throw;
-            }
-            finally
-            {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"Prefix2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
-            }
-        }
-
-        [TestMethod]
         public void PrintersDefaultAspxTest()
         {
             var s = Stopwatch.StartNew();
@@ -1921,27 +1879,6 @@ namespace FolioWebApplicationTest
             finally
             {
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"RelationshipTypesDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
-            }
-        }
-
-        [TestMethod]
-        public void ReportingCode2sDefaultAspxTest()
-        {
-            var s = Stopwatch.StartNew();
-            try
-            {
-                var hrm = httpClient.GetAsync($"{Url}/ReportingCode2s/Default.aspx").Result;
-                hrm.EnsureSuccessStatusCode();
-                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
-            }
-            catch (Exception e)
-            {
-                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
-                throw;
-            }
-            finally
-            {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"ReportingCode2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
             }
         }
 
@@ -2282,12 +2219,12 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
-        public void Suffix2sDefaultAspxTest()
+        public void SubjectSource2sDefaultAspxTest()
         {
             var s = Stopwatch.StartNew();
             try
             {
-                var hrm = httpClient.GetAsync($"{Url}/Suffix2s/Default.aspx").Result;
+                var hrm = httpClient.GetAsync($"{Url}/SubjectSource2s/Default.aspx").Result;
                 hrm.EnsureSuccessStatusCode();
                 Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
             }
@@ -2298,7 +2235,28 @@ namespace FolioWebApplicationTest
             }
             finally
             {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"Suffix2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"SubjectSource2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
+        public void SubjectType2sDefaultAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var hrm = httpClient.GetAsync($"{Url}/SubjectType2s/Default.aspx").Result;
+                hrm.EnsureSuccessStatusCode();
+                Assert.IsTrue(s.Elapsed < TimeSpan.FromSeconds(30));
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"SubjectType2sDefaultAspxTest()\r\n    ElapsedTime={s.Elapsed}");
             }
         }
 

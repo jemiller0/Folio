@@ -70,28 +70,31 @@ namespace FolioLibrary
         [Column("exchange_rate"), Display(Name = "Exchange Rate", Order = 14), JsonProperty("exchangeRate")]
         public virtual decimal? ExchangeRate { get; set; }
 
-        [Column("export_to_accounting"), Display(Name = "Export To Accounting", Order = 15), JsonProperty("exportToAccounting")]
+        [Column("operation_mode"), Display(Name = "Operation Mode", Order = 15), JsonProperty("operationMode"), StringLength(1024)]
+        public virtual string OperationMode { get; set; }
+
+        [Column("export_to_accounting"), Display(Name = "Export To Accounting", Order = 16), JsonProperty("exportToAccounting")]
         public virtual bool? ExportToAccounting { get; set; }
 
-        [Column("status"), Display(Order = 16), JsonProperty("status"), RegularExpression(@"^(Awaiting payment|Paid|Cancelled)$"), Required, StringLength(1024)]
+        [Column("status"), Display(Order = 17), JsonProperty("status"), RegularExpression(@"^(Awaiting payment|Paid|Cancelled)$"), Required, StringLength(1024)]
         public virtual string Status { get; set; }
 
-        [Column("system_currency"), Display(Name = "System Currency", Order = 17), JsonProperty("systemCurrency"), Required, StringLength(1024)]
+        [Column("system_currency"), Display(Name = "System Currency", Order = 18), JsonProperty("systemCurrency"), Required, StringLength(1024)]
         public virtual string SystemCurrency { get; set; }
 
-        [Column("type"), Display(Order = 18), JsonProperty("type"), RegularExpression(@"^(Payment|Pre-payment|Credit|Voucher)$"), Required, StringLength(1024)]
+        [Column("type"), Display(Order = 19), JsonProperty("type"), RegularExpression(@"^(Payment|Pre-payment|Credit|Voucher)$"), Required, StringLength(1024)]
         public virtual string Type { get; set; }
 
-        [Column("voucher_date"), DataType(DataType.Date), Display(Name = "Voucher Date", Order = 19), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("voucherDate")]
+        [Column("voucher_date"), DataType(DataType.Date), Display(Name = "Voucher Date", Order = 20), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("voucherDate")]
         public virtual DateTime? VoucherDate { get; set; }
 
-        [Column("voucher_number"), Display(Order = 20), JsonProperty("voucherNumber"), Required, StringLength(1024)]
+        [Column("voucher_number"), Display(Order = 21), JsonProperty("voucherNumber"), Required, StringLength(1024)]
         public virtual string Number { get; set; }
 
-        [Display(Order = 21)]
+        [Display(Order = 22)]
         public virtual Organization2 Vendor { get; set; }
 
-        [Column("vendor_id"), Display(Name = "Vendor", Order = 22), JsonProperty("vendorId")]
+        [Column("vendor_id"), Display(Name = "Vendor", Order = 23), JsonProperty("vendorId")]
         public virtual Guid? VendorId { get; set; }
 
         [Column("vendor_address_address_line1"), JsonProperty("vendorAddress.addressLine1"), ScaffoldColumn(false), StringLength(1024)]
@@ -112,40 +115,40 @@ namespace FolioLibrary
         [Column("vendor_address_country"), JsonProperty("vendorAddress.country"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string VendorCountryCode { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 29), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 30), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 30), InverseProperty("Voucher2s")]
+        [Display(Name = "Creation User", Order = 31), InverseProperty("Voucher2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 31), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 32), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 33), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 34), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 34), InverseProperty("Voucher2s1")]
+        [Display(Name = "Last Write User", Order = 35), InverseProperty("Voucher2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 35), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 36), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Voucher), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 37), Editable(false)]
+        [Column("content"), CustomValidation(typeof(Voucher), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 38), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Voucher Acquisitions Units", Order = 38), JsonConverter(typeof(ArrayJsonConverter<List<VoucherAcquisitionsUnit>, VoucherAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
+        [Display(Name = "Voucher Acquisitions Units", Order = 39), JsonConverter(typeof(ArrayJsonConverter<List<VoucherAcquisitionsUnit>, VoucherAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
         public virtual ICollection<VoucherAcquisitionsUnit> VoucherAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Voucher Items", Order = 39)]
+        [Display(Name = "Voucher Items", Order = 40)]
         public virtual ICollection<VoucherItem2> VoucherItem2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(Amount)} = {Amount}, {nameof(BatchGroupId)} = {BatchGroupId}, {nameof(DisbursementNumber)} = {DisbursementNumber}, {nameof(DisbursementDate)} = {DisbursementDate}, {nameof(DisbursementAmount)} = {DisbursementAmount}, {nameof(Enclosure)} = {Enclosure}, {nameof(InvoiceCurrency)} = {InvoiceCurrency}, {nameof(InvoiceId)} = {InvoiceId}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(ExportToAccounting)} = {ExportToAccounting}, {nameof(Status)} = {Status}, {nameof(SystemCurrency)} = {SystemCurrency}, {nameof(Type)} = {Type}, {nameof(VoucherDate)} = {VoucherDate}, {nameof(Number)} = {Number}, {nameof(VendorId)} = {VendorId}, {nameof(VendorStreetAddress1)} = {VendorStreetAddress1}, {nameof(VendorStreetAddress2)} = {VendorStreetAddress2}, {nameof(VendorCity)} = {VendorCity}, {nameof(VendorState)} = {VendorState}, {nameof(VendorPostalCode)} = {VendorPostalCode}, {nameof(VendorCountryCode)} = {VendorCountryCode}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(VoucherAcquisitionsUnits)} = {(VoucherAcquisitionsUnits != null ? $"{{ {string.Join(", ", VoucherAcquisitionsUnits)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(AccountingCode)} = {AccountingCode}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(Amount)} = {Amount}, {nameof(BatchGroupId)} = {BatchGroupId}, {nameof(DisbursementNumber)} = {DisbursementNumber}, {nameof(DisbursementDate)} = {DisbursementDate}, {nameof(DisbursementAmount)} = {DisbursementAmount}, {nameof(Enclosure)} = {Enclosure}, {nameof(InvoiceCurrency)} = {InvoiceCurrency}, {nameof(InvoiceId)} = {InvoiceId}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(OperationMode)} = {OperationMode}, {nameof(ExportToAccounting)} = {ExportToAccounting}, {nameof(Status)} = {Status}, {nameof(SystemCurrency)} = {SystemCurrency}, {nameof(Type)} = {Type}, {nameof(VoucherDate)} = {VoucherDate}, {nameof(Number)} = {Number}, {nameof(VendorId)} = {VendorId}, {nameof(VendorStreetAddress1)} = {VendorStreetAddress1}, {nameof(VendorStreetAddress2)} = {VendorStreetAddress2}, {nameof(VendorCity)} = {VendorCity}, {nameof(VendorState)} = {VendorState}, {nameof(VendorPostalCode)} = {VendorPostalCode}, {nameof(VendorCountryCode)} = {VendorCountryCode}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(VoucherAcquisitionsUnits)} = {(VoucherAcquisitionsUnits != null ? $"{{ {string.Join(", ", VoucherAcquisitionsUnits)} }}" : "")} }}";
 
         public static Voucher2 FromJObject(JObject jObject) => jObject != null ? new Voucher2
         {
@@ -161,6 +164,7 @@ namespace FolioLibrary
             InvoiceCurrency = (string)jObject.SelectToken("invoiceCurrency"),
             InvoiceId = (Guid?)jObject.SelectToken("invoiceId"),
             ExchangeRate = (decimal?)jObject.SelectToken("exchangeRate"),
+            OperationMode = (string)jObject.SelectToken("operationMode"),
             ExportToAccounting = (bool?)jObject.SelectToken("exportToAccounting"),
             Status = (string)jObject.SelectToken("status"),
             SystemCurrency = (string)jObject.SelectToken("systemCurrency"),
@@ -197,6 +201,7 @@ namespace FolioLibrary
             new JProperty("invoiceCurrency", InvoiceCurrency),
             new JProperty("invoiceId", InvoiceId),
             new JProperty("exchangeRate", ExchangeRate),
+            new JProperty("operationMode", OperationMode),
             new JProperty("exportToAccounting", ExportToAccounting),
             new JProperty("status", Status),
             new JProperty("systemCurrency", SystemCurrency),

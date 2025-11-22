@@ -68,13 +68,19 @@ namespace FolioLibrary
         [Column("close_reason_note"), Display(Name = "Close Reason Note", Order = 11), JsonProperty("closeReason.note"), StringLength(1024)]
         public virtual string CloseReasonNote { get; set; }
 
-        [Column("date_ordered"), DataType(DataType.Date), Display(Name = "Order Date", Order = 12), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("dateOrdered")]
+        [Display(Name = "Opened By", Order = 12), InverseProperty("Order2s4")]
+        public virtual User2 OpenedBy { get; set; }
+
+        [Column("opened_by_id"), Display(Name = "Opened By", Order = 13), JsonProperty("openedById")]
+        public virtual Guid? OpenedById { get; set; }
+
+        [Column("date_ordered"), DataType(DataType.Date), Display(Name = "Order Date", Order = 14), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("dateOrdered")]
         public virtual DateTime? OrderDate { get; set; }
 
-        [Column("manual_po"), Display(Order = 13), JsonProperty("manualPo")]
+        [Column("manual_po"), Display(Order = 15), JsonProperty("manualPo")]
         public virtual bool? Manual { get; set; }
 
-        [Column("po_number"), Display(Order = 14), JsonProperty("poNumber"), Required, StringLength(1024)]
+        [Column("po_number"), Display(Order = 16), JsonProperty("poNumber"), Required, StringLength(1024)]
         public virtual string Number { get; set; }
 
         [Column("po_number_prefix"), JsonProperty("poNumberPrefix"), ScaffoldColumn(false), StringLength(1024)]
@@ -83,103 +89,106 @@ namespace FolioLibrary
         [Column("po_number_suffix"), JsonProperty("poNumberSuffix"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string NumberSuffix { get; set; }
 
-        [Column("order_type"), Display(Name = "Order Type", Order = 17), JsonProperty("orderType"), RegularExpression(@"^(One-Time|Ongoing)$"), StringLength(1024)]
+        [Column("order_type"), Display(Name = "Order Type", Order = 19), JsonProperty("orderType"), RegularExpression(@"^(One-Time|Ongoing)$"), StringLength(1024)]
         public virtual string OrderType { get; set; }
 
-        [Column("re_encumber"), Display(Order = 18), JsonProperty("reEncumber")]
+        [Column("re_encumber"), Display(Order = 20), JsonProperty("reEncumber")]
         public virtual bool? Reencumber { get; set; }
 
-        [Column("ongoing_interval"), Display(Name = "Ongoing Interval", Order = 19), JsonProperty("ongoing.interval")]
+        [Column("ongoing_interval"), Display(Name = "Ongoing Interval", Order = 21), JsonProperty("ongoing.interval")]
         public virtual int? OngoingInterval { get; set; }
 
-        [Column("ongoing_is_subscription"), Display(Name = "Ongoing Is Subscription", Order = 20), JsonProperty("ongoing.isSubscription")]
+        [Column("ongoing_is_subscription"), Display(Name = "Ongoing Is Subscription", Order = 22), JsonProperty("ongoing.isSubscription")]
         public virtual bool? OngoingIsSubscription { get; set; }
 
-        [Column("ongoing_manual_renewal"), Display(Name = "Ongoing Manual Renewal", Order = 21), JsonProperty("ongoing.manualRenewal")]
+        [Column("ongoing_manual_renewal"), Display(Name = "Ongoing Manual Renewal", Order = 23), JsonProperty("ongoing.manualRenewal")]
         public virtual bool? OngoingManualRenewal { get; set; }
 
-        [Column("ongoing_notes"), Display(Name = "Ongoing Notes", Order = 22), JsonProperty("ongoing.notes"), StringLength(1024)]
+        [Column("ongoing_notes"), Display(Name = "Ongoing Notes", Order = 24), JsonProperty("ongoing.notes"), StringLength(1024)]
         public virtual string OngoingNotes { get; set; }
 
-        [Column("ongoing_review_period"), Display(Name = "Ongoing Review Period", Order = 23), JsonProperty("ongoing.reviewPeriod")]
+        [Column("ongoing_review_period"), Display(Name = "Ongoing Review Period", Order = 25), JsonProperty("ongoing.reviewPeriod")]
         public virtual int? OngoingReviewPeriod { get; set; }
 
-        [Column("ongoing_renewal_date"), DataType(DataType.Date), Display(Name = "Ongoing Renewal Date", Order = 24), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("ongoing.renewalDate")]
+        [Column("ongoing_renewal_date"), DataType(DataType.Date), Display(Name = "Ongoing Renewal Date", Order = 26), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("ongoing.renewalDate")]
         public virtual DateTime? OngoingRenewalDate { get; set; }
 
-        [Column("ongoing_review_date"), DataType(DataType.Date), Display(Name = "Ongoing Review Date", Order = 25), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("ongoing.reviewDate")]
+        [Column("ongoing_review_date"), DataType(DataType.Date), Display(Name = "Ongoing Review Date", Order = 27), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("ongoing.reviewDate")]
         public virtual DateTime? OngoingReviewDate { get; set; }
 
-        [Display(Name = "Ship To", Order = 26), InverseProperty("Order2s1")]
+        [Display(Name = "Ship To", Order = 28), InverseProperty("Order2s1")]
         public virtual Address ShipTo { get; set; }
 
-        [Column("ship_to_id"), Display(Name = "Ship To", Order = 27), JsonProperty("shipTo")]
+        [Column("ship_to_id"), Display(Name = "Ship To", Order = 29), JsonProperty("shipTo")]
         public virtual Guid? ShipToId { get; set; }
 
-        [Display(Order = 28)]
-        public virtual OrderTemplate2 Template { get; set; }
-
-        [Column("template_id"), Display(Name = "Template", Order = 29), JsonProperty("template")]
+        [Column("template_id"), JsonProperty("template"), ScaffoldColumn(false)]
         public virtual Guid? TemplateId { get; set; }
 
-        [Display(Order = 30)]
+        [Display(Order = 31)]
         public virtual Organization2 Vendor { get; set; }
 
-        [Column("vendor_id"), Display(Name = "Vendor", Order = 31), JsonProperty("vendor")]
+        [Column("vendor_id"), Display(Name = "Vendor", Order = 32), JsonProperty("vendor")]
         public virtual Guid? VendorId { get; set; }
 
-        [Column("status"), Display(Order = 32), JsonProperty("workflowStatus"), RegularExpression(@"^(Pending|Open|Closed)$"), StringLength(1024)]
+        [Column("status"), Display(Order = 33), JsonProperty("workflowStatus"), RegularExpression(@"^(Pending|Open|Closed)$"), StringLength(1024)]
         public virtual string Status { get; set; }
 
-        [Column("next_pol_number"), Display(Name = "Next Pol Number", Order = 33), Editable(false), JsonProperty("nextPolNumber")]
-        public virtual int? NextPolNumber { get; set; }
+        [Column("next_pol_number"), Display(Name = "Next Number", Order = 34), Editable(false), JsonProperty("nextPolNumber")]
+        public virtual int? NextNumber { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 34), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Display(Name = "Fiscal Year", Order = 35)]
+        public virtual FiscalYear2 FiscalYear { get; set; }
+
+        [Column("fiscal_year_id"), Display(Name = "Fiscal Year", Order = 36), JsonProperty("fiscalYearId")]
+        public virtual Guid? FiscalYearId { get; set; }
+
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 37), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 35), InverseProperty("Order2s2")]
+        [Display(Name = "Creation User", Order = 38), InverseProperty("Order2s2")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 36), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 39), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 38), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 41), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 39), InverseProperty("Order2s3")]
+        [Display(Name = "Last Write User", Order = 42), InverseProperty("Order2s3")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 40), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 43), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Order), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 42), Editable(false)]
+        [Column("content"), CustomValidation(typeof(Order), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 45), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Order Acquisitions Units", Order = 43), JsonConverter(typeof(ArrayJsonConverter<List<OrderAcquisitionsUnit>, OrderAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
+        [Display(Name = "Order Acquisitions Units", Order = 46), JsonConverter(typeof(ArrayJsonConverter<List<OrderAcquisitionsUnit>, OrderAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
         public virtual ICollection<OrderAcquisitionsUnit> OrderAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Order Invoices", Order = 44)]
+        [Display(Name = "Order Invoices", Order = 47)]
         public virtual ICollection<OrderInvoice2> OrderInvoice2s { get; set; }
 
-        [Display(Name = "Order Items", Order = 45)]
+        [Display(Name = "Order Items", Order = 48)]
         public virtual ICollection<OrderItem2> OrderItem2s { get; set; }
 
-        [Display(Name = "Order Notes", Order = 46), JsonConverter(typeof(ArrayJsonConverter<List<OrderNote>, OrderNote>), "Content"), JsonProperty("notes")]
+        [Display(Name = "Order Notes", Order = 49), JsonConverter(typeof(ArrayJsonConverter<List<OrderNote>, OrderNote>), "Content"), JsonProperty("notes")]
         public virtual ICollection<OrderNote> OrderNotes { get; set; }
 
-        [Display(Name = "Order Tags", Order = 47), JsonConverter(typeof(ArrayJsonConverter<List<OrderTag>, OrderTag>), "Content"), JsonProperty("tags.tagList")]
+        [Display(Name = "Order Tags", Order = 50), JsonConverter(typeof(ArrayJsonConverter<List<OrderTag>, OrderTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<OrderTag> OrderTags { get; set; }
 
-        [Display(Name = "Transactions", Order = 48)]
+        [Display(Name = "Transactions", Order = 51)]
         public virtual ICollection<Transaction2> Transaction2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Approved)} = {Approved}, {nameof(ApprovedById)} = {ApprovedById}, {nameof(ApprovalDate)} = {ApprovalDate}, {nameof(AssignedToId)} = {AssignedToId}, {nameof(BillToId)} = {BillToId}, {nameof(CloseReasonReason)} = {CloseReasonReason}, {nameof(CloseReasonNote)} = {CloseReasonNote}, {nameof(OrderDate)} = {OrderDate}, {nameof(Manual)} = {Manual}, {nameof(Number)} = {Number}, {nameof(NumberPrefix)} = {NumberPrefix}, {nameof(NumberSuffix)} = {NumberSuffix}, {nameof(OrderType)} = {OrderType}, {nameof(Reencumber)} = {Reencumber}, {nameof(OngoingInterval)} = {OngoingInterval}, {nameof(OngoingIsSubscription)} = {OngoingIsSubscription}, {nameof(OngoingManualRenewal)} = {OngoingManualRenewal}, {nameof(OngoingNotes)} = {OngoingNotes}, {nameof(OngoingReviewPeriod)} = {OngoingReviewPeriod}, {nameof(OngoingRenewalDate)} = {OngoingRenewalDate}, {nameof(OngoingReviewDate)} = {OngoingReviewDate}, {nameof(ShipToId)} = {ShipToId}, {nameof(TemplateId)} = {TemplateId}, {nameof(VendorId)} = {VendorId}, {nameof(Status)} = {Status}, {nameof(NextPolNumber)} = {NextPolNumber}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(OrderAcquisitionsUnits)} = {(OrderAcquisitionsUnits != null ? $"{{ {string.Join(", ", OrderAcquisitionsUnits)} }}" : "")}, {nameof(OrderNotes)} = {(OrderNotes != null ? $"{{ {string.Join(", ", OrderNotes)} }}" : "")}, {nameof(OrderTags)} = {(OrderTags != null ? $"{{ {string.Join(", ", OrderTags)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Approved)} = {Approved}, {nameof(ApprovedById)} = {ApprovedById}, {nameof(ApprovalDate)} = {ApprovalDate}, {nameof(AssignedToId)} = {AssignedToId}, {nameof(BillToId)} = {BillToId}, {nameof(CloseReasonReason)} = {CloseReasonReason}, {nameof(CloseReasonNote)} = {CloseReasonNote}, {nameof(OpenedById)} = {OpenedById}, {nameof(OrderDate)} = {OrderDate}, {nameof(Manual)} = {Manual}, {nameof(Number)} = {Number}, {nameof(NumberPrefix)} = {NumberPrefix}, {nameof(NumberSuffix)} = {NumberSuffix}, {nameof(OrderType)} = {OrderType}, {nameof(Reencumber)} = {Reencumber}, {nameof(OngoingInterval)} = {OngoingInterval}, {nameof(OngoingIsSubscription)} = {OngoingIsSubscription}, {nameof(OngoingManualRenewal)} = {OngoingManualRenewal}, {nameof(OngoingNotes)} = {OngoingNotes}, {nameof(OngoingReviewPeriod)} = {OngoingReviewPeriod}, {nameof(OngoingRenewalDate)} = {OngoingRenewalDate}, {nameof(OngoingReviewDate)} = {OngoingReviewDate}, {nameof(ShipToId)} = {ShipToId}, {nameof(TemplateId)} = {TemplateId}, {nameof(VendorId)} = {VendorId}, {nameof(Status)} = {Status}, {nameof(NextNumber)} = {NextNumber}, {nameof(FiscalYearId)} = {FiscalYearId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(OrderAcquisitionsUnits)} = {(OrderAcquisitionsUnits != null ? $"{{ {string.Join(", ", OrderAcquisitionsUnits)} }}" : "")}, {nameof(OrderNotes)} = {(OrderNotes != null ? $"{{ {string.Join(", ", OrderNotes)} }}" : "")}, {nameof(OrderTags)} = {(OrderTags != null ? $"{{ {string.Join(", ", OrderTags)} }}" : "")} }}";
 
         public static Order2 FromJObject(JObject jObject) => jObject != null ? new Order2
         {
@@ -191,6 +200,7 @@ namespace FolioLibrary
             BillToId = (Guid?)jObject.SelectToken("billTo"),
             CloseReasonReason = (string)jObject.SelectToken("closeReason.reason"),
             CloseReasonNote = (string)jObject.SelectToken("closeReason.note"),
+            OpenedById = (Guid?)jObject.SelectToken("openedById"),
             OrderDate = ((DateTime?)jObject.SelectToken("dateOrdered"))?.ToUniversalTime(),
             Manual = (bool?)jObject.SelectToken("manualPo"),
             Number = (string)jObject.SelectToken("poNumber"),
@@ -209,7 +219,8 @@ namespace FolioLibrary
             TemplateId = (Guid?)jObject.SelectToken("template"),
             VendorId = (Guid?)jObject.SelectToken("vendor"),
             Status = (string)jObject.SelectToken("workflowStatus"),
-            NextPolNumber = (int?)jObject.SelectToken("nextPolNumber"),
+            NextNumber = (int?)jObject.SelectToken("nextPolNumber"),
+            FiscalYearId = (Guid?)jObject.SelectToken("fiscalYearId"),
             CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
@@ -232,6 +243,7 @@ namespace FolioLibrary
             new JProperty("closeReason", new JObject(
                 new JProperty("reason", CloseReasonReason),
                 new JProperty("note", CloseReasonNote))),
+            new JProperty("openedById", OpenedById),
             new JProperty("dateOrdered", OrderDate?.ToLocalTime()),
             new JProperty("manualPo", Manual),
             new JProperty("poNumber", Number),
@@ -251,7 +263,8 @@ namespace FolioLibrary
             new JProperty("template", TemplateId),
             new JProperty("vendor", VendorId),
             new JProperty("workflowStatus", Status),
-            new JProperty("nextPolNumber", NextPolNumber),
+            new JProperty("nextPolNumber", NextNumber),
+            new JProperty("fiscalYearId", FiscalYearId),
             new JProperty("metadata", new JObject(
                 new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),

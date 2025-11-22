@@ -105,6 +105,14 @@
                                     <asp:Literal ID="ExchangeRateLiteral" runat="server" Text='<%#: Eval("ExchangeRate") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("OperationMode") != null %>'>
+                                <td>
+                                    <asp:Label ID="OperationModeLabel" runat="server" Text="Operation Mode:" AssociatedControlID="OperationModeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="OperationModeLiteral" runat="server" Text='<%#: Eval("OperationMode") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("ExportToAccounting") != null %>'>
                                 <td>
                                     <asp:Label ID="ExportToAccountingLabel" runat="server" Text="Export To Accounting:" AssociatedControlID="ExportToAccountingLiteral" />

@@ -177,6 +177,10 @@
       "description": "Exchange rate",
       "type": "number"
     },
+    "operationMode": {
+      "description": "Operation mode performed on the exchange rate",
+      "type": "string"
+    },
     "exportToAccounting": {
       "description": "This would keep the invoice from being feed into the batch process (i.e. not generate an external voucher/payment) but would still move values in the system. This might be defined by the vendor relationship and exposed for override on the invoice.",
       "type": "boolean",

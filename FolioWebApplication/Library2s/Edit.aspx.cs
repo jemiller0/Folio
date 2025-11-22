@@ -39,7 +39,7 @@ namespace FolioWebApplication.Library2s
             if (Session["Location2sPermission"] == null) return;
             var id = (Guid?)Library2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Code", "code" }, { "Description", "description" }, { "DiscoveryDisplayName", "discoveryDisplayName" }, { "IsActive", "isActive" }, { "InstitutionId", "institutionId" }, { "CampusId", "campusId" }, { "LibraryId", "libraryId" }, { "PrimaryServicePointId", "primaryServicePoint" }, { "IsFloatingCollection", "isFloatingCollection" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "name" }, { "Code", "code" }, { "Description", "description" }, { "DiscoveryDisplayName", "discoveryDisplayName" }, { "IsActive", "isActive" }, { "InstitutionId", "institutionId" }, { "CampusId", "campusId" }, { "LibraryId", "libraryId" }, { "PrimaryServicePointId", "primaryServicePoint" }, { "IsFloatingCollection", "isFloatingCollection" }, { "IsShadow", "isShadow" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"libraryId == \"{id}\"",
@@ -53,6 +53,7 @@ namespace FolioWebApplication.Library2s
                 Global.GetCqlFilter(Location2sRadGrid, "Campus.Name", "campusId", "name", folioServiceContext.FolioServiceClient.Campuses),
                 Global.GetCqlFilter(Location2sRadGrid, "PrimaryServicePoint.Name", "primaryServicePoint", "name", folioServiceContext.FolioServiceClient.ServicePoints),
                 Global.GetCqlFilter(Location2sRadGrid, "IsFloatingCollection", "isFloatingCollection"),
+                Global.GetCqlFilter(Location2sRadGrid, "IsShadow", "isShadow"),
                 Global.GetCqlFilter(Location2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(Location2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Location2sRadGrid, "LastWriteTime", "metadata.updatedDate"),

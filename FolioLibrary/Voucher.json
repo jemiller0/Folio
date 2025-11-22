@@ -56,6 +56,10 @@
       "description": "Exchange rate used to generate transaction",
       "type": "number"
     },
+    "operationMode": {
+      "description": "Operation mode performed on the exchange rate",
+      "type": "string"
+    },
     "exportToAccounting": {
       "description": "Export this payment record to a financial system",
       "type": "boolean"

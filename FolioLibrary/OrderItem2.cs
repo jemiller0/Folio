@@ -146,8 +146,8 @@ namespace FolioLibrary
         [Column("eresource_expected_activation"), DataType(DataType.Date), Display(Name = "Eresource Expected Activation Date", Order = 37), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("eresource.expectedActivation")]
         public virtual DateTime? EresourceExpectedActivationDate { get; set; }
 
-        [Column("eresource_user_limit"), Display(Name = "Eresource User Limit", Order = 38), JsonProperty("eresource.userLimit")]
-        public virtual int? EresourceUserLimit { get; set; }
+        [Column("eresource_user_limit"), Display(Name = "Eresource User Limit", Order = 38), JsonProperty("eresource.userLimit"), StringLength(1024)]
+        public virtual string EresourceUserLimit { get; set; }
 
         [Display(Name = "Eresource Access Provider", Order = 39), InverseProperty("OrderItem2s")]
         public virtual Organization2 EresourceAccessProvider { get; set; }
@@ -269,47 +269,47 @@ namespace FolioLibrary
         [Column("vendor_detail_vendor_account"), Display(Name = "Vendor Customer Id", Order = 78), JsonProperty("vendorDetail.vendorAccount"), StringLength(1024)]
         public virtual string VendorCustomerId { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 79), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("suppress_instance_from_discovery"), Display(Name = "Suppress Instance From Discovery", Order = 79), JsonProperty("suppressInstanceFromDiscovery")]
+        public virtual bool? SuppressInstanceFromDiscovery { get; set; }
+
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 80), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 80), InverseProperty("OrderItem2s")]
+        [Display(Name = "Creation User", Order = 81), InverseProperty("OrderItem2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 81), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 82), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 83), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 84), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 84), InverseProperty("OrderItem2s1")]
+        [Display(Name = "Last Write User", Order = 85), InverseProperty("OrderItem2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 85), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 86), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(OrderItem), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 87), Editable(false)]
+        [Column("content"), CustomValidation(typeof(OrderItem), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 88), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Agreement Item Order Items", Order = 88)]
+        [Display(Name = "Agreement Item Order Items", Order = 89)]
         public virtual ICollection<AgreementItemOrderItem> AgreementItemOrderItems { get; set; }
 
-        [Display(Name = "Invoice Items", Order = 89)]
+        [Display(Name = "Invoice Items", Order = 90)]
         public virtual ICollection<InvoiceItem2> InvoiceItem2s { get; set; }
 
-        [Display(Name = "Items", Order = 90)]
+        [Display(Name = "Items", Order = 91)]
         public virtual ICollection<Item2> Item2s { get; set; }
 
-        [Display(Name = "Order Items", Order = 91)]
+        [Display(Name = "Order Items", Order = 92)]
         public virtual ICollection<OrderItem2> OrderItem2s { get; set; }
-
-        [Display(Name = "Order Item Alerts", Order = 92), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemAlert>, OrderItemAlert>), "AlertId"), JsonProperty("alerts")]
-        public virtual ICollection<OrderItemAlert> OrderItemAlerts { get; set; }
 
         [Display(Name = "Order Item Claims", Order = 93), JsonProperty("claims")]
         public virtual ICollection<OrderItemClaim> OrderItemClaims { get; set; }
@@ -335,28 +335,25 @@ namespace FolioLibrary
         [Display(Name = "Order Item Reference Numbers", Order = 100), JsonProperty("vendorDetail.referenceNumbers")]
         public virtual ICollection<OrderItemReferenceNumber> OrderItemReferenceNumbers { get; set; }
 
-        [Display(Name = "Order Item Reporting Codes", Order = 101), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemReportingCode>, OrderItemReportingCode>), "ReportingCodeId"), JsonProperty("reportingCodes")]
-        public virtual ICollection<OrderItemReportingCode> OrderItemReportingCodes { get; set; }
-
-        [Display(Name = "Order Item Search Locations", Order = 102), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemSearchLocation>, OrderItemSearchLocation>), "LocationId"), JsonProperty("searchLocationIds")]
+        [Display(Name = "Order Item Search Locations", Order = 101), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemSearchLocation>, OrderItemSearchLocation>), "LocationId"), JsonProperty("searchLocationIds")]
         public virtual ICollection<OrderItemSearchLocation> OrderItemSearchLocations { get; set; }
 
-        [Display(Name = "Order Item Tags", Order = 103), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemTag>, OrderItemTag>), "Content"), JsonProperty("tags.tagList")]
+        [Display(Name = "Order Item Tags", Order = 102), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemTag>, OrderItemTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<OrderItemTag> OrderItemTags { get; set; }
 
-        [Display(Name = "Order Item Volumes", Order = 104), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemVolume>, OrderItemVolume>), "Content"), JsonProperty("physical.volumes")]
+        [Display(Name = "Order Item Volumes", Order = 103), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemVolume>, OrderItemVolume>), "Content"), JsonProperty("physical.volumes")]
         public virtual ICollection<OrderItemVolume> OrderItemVolumes { get; set; }
 
-        [Display(Name = "Receivings", Order = 105)]
+        [Display(Name = "Receivings", Order = 104)]
         public virtual ICollection<Receiving2> Receiving2s { get; set; }
 
-        [Display(Name = "Titles", Order = 106)]
+        [Display(Name = "Titles", Order = 105)]
         public virtual ICollection<Title2> Title2s { get; set; }
 
-        [Display(Name = "Transactions", Order = 107)]
+        [Display(Name = "Transactions", Order = 106)]
         public virtual ICollection<Transaction2> Transaction2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Edition)} = {Edition}, {nameof(CheckinItems)} = {CheckinItems}, {nameof(AgreementId)} = {AgreementId}, {nameof(AcquisitionMethodId)} = {AcquisitionMethodId}, {nameof(AutomaticExport)} = {AutomaticExport}, {nameof(CancellationRestriction)} = {CancellationRestriction}, {nameof(CancellationRestrictionNote)} = {CancellationRestrictionNote}, {nameof(ClaimingActive)} = {ClaimingActive}, {nameof(ClaimingInterval)} = {ClaimingInterval}, {nameof(Collection)} = {Collection}, {nameof(PhysicalUnitListPrice)} = {PhysicalUnitListPrice}, {nameof(ElectronicUnitListPrice)} = {ElectronicUnitListPrice}, {nameof(Currency)} = {Currency}, {nameof(AdditionalCost)} = {AdditionalCost}, {nameof(Discount)} = {Discount}, {nameof(DiscountType)} = {DiscountType}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(PhysicalQuantity)} = {PhysicalQuantity}, {nameof(ElectronicQuantity)} = {ElectronicQuantity}, {nameof(EstimatedPrice)} = {EstimatedPrice}, {nameof(FiscalYearRolloverAdjustmentAmount)} = {FiscalYearRolloverAdjustmentAmount}, {nameof(InternalNote)} = {InternalNote}, {nameof(ReceivingNote)} = {ReceivingNote}, {nameof(DetailsIsAcknowledged)} = {DetailsIsAcknowledged}, {nameof(DetailsIsBinderyActive)} = {DetailsIsBinderyActive}, {nameof(SubscriptionFrom)} = {SubscriptionFrom}, {nameof(SubscriptionInterval)} = {SubscriptionInterval}, {nameof(SubscriptionTo)} = {SubscriptionTo}, {nameof(Donor)} = {Donor}, {nameof(EresourceActivated)} = {EresourceActivated}, {nameof(EresourceActivationDue)} = {EresourceActivationDue}, {nameof(EresourceCreateInventory)} = {EresourceCreateInventory}, {nameof(EresourceTrial)} = {EresourceTrial}, {nameof(EresourceExpectedActivationDate)} = {EresourceExpectedActivationDate}, {nameof(EresourceUserLimit)} = {EresourceUserLimit}, {nameof(EresourceAccessProviderId)} = {EresourceAccessProviderId}, {nameof(EresourceLicenseCode)} = {EresourceLicenseCode}, {nameof(EresourceLicenseDescription)} = {EresourceLicenseDescription}, {nameof(EresourceLicenseReference)} = {EresourceLicenseReference}, {nameof(EresourceMaterialTypeId)} = {EresourceMaterialTypeId}, {nameof(EresourceResourceUrl)} = {EresourceResourceUrl}, {nameof(InstanceId)} = {InstanceId}, {nameof(IsPackage)} = {IsPackage}, {nameof(LastEdiExportDate)} = {LastEdiExportDate}, {nameof(OrderFormat)} = {OrderFormat}, {nameof(PackageOrderItemId)} = {PackageOrderItemId}, {nameof(PaymentStatus)} = {PaymentStatus}, {nameof(PhysicalCreateInventory)} = {PhysicalCreateInventory}, {nameof(PhysicalMaterialTypeId)} = {PhysicalMaterialTypeId}, {nameof(PhysicalMaterialSupplierId)} = {PhysicalMaterialSupplierId}, {nameof(PhysicalExpectedReceiptDate)} = {PhysicalExpectedReceiptDate}, {nameof(PhysicalReceiptDue)} = {PhysicalReceiptDue}, {nameof(Description)} = {Description}, {nameof(Number)} = {Number}, {nameof(PublicationYear)} = {PublicationYear}, {nameof(Publisher)} = {Publisher}, {nameof(OrderId)} = {OrderId}, {nameof(ReceiptDate)} = {ReceiptDate}, {nameof(ReceiptStatus)} = {ReceiptStatus}, {nameof(RenewalNote)} = {RenewalNote}, {nameof(Requester)} = {Requester}, {nameof(Rush)} = {Rush}, {nameof(Selector)} = {Selector}, {nameof(Source)} = {Source}, {nameof(TitleOrPackage)} = {TitleOrPackage}, {nameof(VendorInstructions)} = {VendorInstructions}, {nameof(VendorNote)} = {VendorNote}, {nameof(VendorCustomerId)} = {VendorCustomerId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(OrderItemAlerts)} = {(OrderItemAlerts != null ? $"{{ {string.Join(", ", OrderItemAlerts)} }}" : "")}, {nameof(OrderItemClaims)} = {(OrderItemClaims != null ? $"{{ {string.Join(", ", OrderItemClaims)} }}" : "")}, {nameof(OrderItemContributors)} = {(OrderItemContributors != null ? $"{{ {string.Join(", ", OrderItemContributors)} }}" : "")}, {nameof(OrderItemFunds)} = {(OrderItemFunds != null ? $"{{ {string.Join(", ", OrderItemFunds)} }}" : "")}, {nameof(OrderItemLocation2s)} = {(OrderItemLocation2s != null ? $"{{ {string.Join(", ", OrderItemLocation2s)} }}" : "")}, {nameof(OrderItemOrganizations)} = {(OrderItemOrganizations != null ? $"{{ {string.Join(", ", OrderItemOrganizations)} }}" : "")}, {nameof(OrderItemProductIds)} = {(OrderItemProductIds != null ? $"{{ {string.Join(", ", OrderItemProductIds)} }}" : "")}, {nameof(OrderItemReferenceNumbers)} = {(OrderItemReferenceNumbers != null ? $"{{ {string.Join(", ", OrderItemReferenceNumbers)} }}" : "")}, {nameof(OrderItemReportingCodes)} = {(OrderItemReportingCodes != null ? $"{{ {string.Join(", ", OrderItemReportingCodes)} }}" : "")}, {nameof(OrderItemSearchLocations)} = {(OrderItemSearchLocations != null ? $"{{ {string.Join(", ", OrderItemSearchLocations)} }}" : "")}, {nameof(OrderItemTags)} = {(OrderItemTags != null ? $"{{ {string.Join(", ", OrderItemTags)} }}" : "")}, {nameof(OrderItemVolumes)} = {(OrderItemVolumes != null ? $"{{ {string.Join(", ", OrderItemVolumes)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Edition)} = {Edition}, {nameof(CheckinItems)} = {CheckinItems}, {nameof(AgreementId)} = {AgreementId}, {nameof(AcquisitionMethodId)} = {AcquisitionMethodId}, {nameof(AutomaticExport)} = {AutomaticExport}, {nameof(CancellationRestriction)} = {CancellationRestriction}, {nameof(CancellationRestrictionNote)} = {CancellationRestrictionNote}, {nameof(ClaimingActive)} = {ClaimingActive}, {nameof(ClaimingInterval)} = {ClaimingInterval}, {nameof(Collection)} = {Collection}, {nameof(PhysicalUnitListPrice)} = {PhysicalUnitListPrice}, {nameof(ElectronicUnitListPrice)} = {ElectronicUnitListPrice}, {nameof(Currency)} = {Currency}, {nameof(AdditionalCost)} = {AdditionalCost}, {nameof(Discount)} = {Discount}, {nameof(DiscountType)} = {DiscountType}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(PhysicalQuantity)} = {PhysicalQuantity}, {nameof(ElectronicQuantity)} = {ElectronicQuantity}, {nameof(EstimatedPrice)} = {EstimatedPrice}, {nameof(FiscalYearRolloverAdjustmentAmount)} = {FiscalYearRolloverAdjustmentAmount}, {nameof(InternalNote)} = {InternalNote}, {nameof(ReceivingNote)} = {ReceivingNote}, {nameof(DetailsIsAcknowledged)} = {DetailsIsAcknowledged}, {nameof(DetailsIsBinderyActive)} = {DetailsIsBinderyActive}, {nameof(SubscriptionFrom)} = {SubscriptionFrom}, {nameof(SubscriptionInterval)} = {SubscriptionInterval}, {nameof(SubscriptionTo)} = {SubscriptionTo}, {nameof(Donor)} = {Donor}, {nameof(EresourceActivated)} = {EresourceActivated}, {nameof(EresourceActivationDue)} = {EresourceActivationDue}, {nameof(EresourceCreateInventory)} = {EresourceCreateInventory}, {nameof(EresourceTrial)} = {EresourceTrial}, {nameof(EresourceExpectedActivationDate)} = {EresourceExpectedActivationDate}, {nameof(EresourceUserLimit)} = {EresourceUserLimit}, {nameof(EresourceAccessProviderId)} = {EresourceAccessProviderId}, {nameof(EresourceLicenseCode)} = {EresourceLicenseCode}, {nameof(EresourceLicenseDescription)} = {EresourceLicenseDescription}, {nameof(EresourceLicenseReference)} = {EresourceLicenseReference}, {nameof(EresourceMaterialTypeId)} = {EresourceMaterialTypeId}, {nameof(EresourceResourceUrl)} = {EresourceResourceUrl}, {nameof(InstanceId)} = {InstanceId}, {nameof(IsPackage)} = {IsPackage}, {nameof(LastEdiExportDate)} = {LastEdiExportDate}, {nameof(OrderFormat)} = {OrderFormat}, {nameof(PackageOrderItemId)} = {PackageOrderItemId}, {nameof(PaymentStatus)} = {PaymentStatus}, {nameof(PhysicalCreateInventory)} = {PhysicalCreateInventory}, {nameof(PhysicalMaterialTypeId)} = {PhysicalMaterialTypeId}, {nameof(PhysicalMaterialSupplierId)} = {PhysicalMaterialSupplierId}, {nameof(PhysicalExpectedReceiptDate)} = {PhysicalExpectedReceiptDate}, {nameof(PhysicalReceiptDue)} = {PhysicalReceiptDue}, {nameof(Description)} = {Description}, {nameof(Number)} = {Number}, {nameof(PublicationYear)} = {PublicationYear}, {nameof(Publisher)} = {Publisher}, {nameof(OrderId)} = {OrderId}, {nameof(ReceiptDate)} = {ReceiptDate}, {nameof(ReceiptStatus)} = {ReceiptStatus}, {nameof(RenewalNote)} = {RenewalNote}, {nameof(Requester)} = {Requester}, {nameof(Rush)} = {Rush}, {nameof(Selector)} = {Selector}, {nameof(Source)} = {Source}, {nameof(TitleOrPackage)} = {TitleOrPackage}, {nameof(VendorInstructions)} = {VendorInstructions}, {nameof(VendorNote)} = {VendorNote}, {nameof(VendorCustomerId)} = {VendorCustomerId}, {nameof(SuppressInstanceFromDiscovery)} = {SuppressInstanceFromDiscovery}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(OrderItemClaims)} = {(OrderItemClaims != null ? $"{{ {string.Join(", ", OrderItemClaims)} }}" : "")}, {nameof(OrderItemContributors)} = {(OrderItemContributors != null ? $"{{ {string.Join(", ", OrderItemContributors)} }}" : "")}, {nameof(OrderItemFunds)} = {(OrderItemFunds != null ? $"{{ {string.Join(", ", OrderItemFunds)} }}" : "")}, {nameof(OrderItemLocation2s)} = {(OrderItemLocation2s != null ? $"{{ {string.Join(", ", OrderItemLocation2s)} }}" : "")}, {nameof(OrderItemOrganizations)} = {(OrderItemOrganizations != null ? $"{{ {string.Join(", ", OrderItemOrganizations)} }}" : "")}, {nameof(OrderItemProductIds)} = {(OrderItemProductIds != null ? $"{{ {string.Join(", ", OrderItemProductIds)} }}" : "")}, {nameof(OrderItemReferenceNumbers)} = {(OrderItemReferenceNumbers != null ? $"{{ {string.Join(", ", OrderItemReferenceNumbers)} }}" : "")}, {nameof(OrderItemSearchLocations)} = {(OrderItemSearchLocations != null ? $"{{ {string.Join(", ", OrderItemSearchLocations)} }}" : "")}, {nameof(OrderItemTags)} = {(OrderItemTags != null ? $"{{ {string.Join(", ", OrderItemTags)} }}" : "")}, {nameof(OrderItemVolumes)} = {(OrderItemVolumes != null ? $"{{ {string.Join(", ", OrderItemVolumes)} }}" : "")} }}";
 
         public static OrderItem2 FromJObject(JObject jObject) => jObject != null ? new OrderItem2
         {
@@ -395,7 +392,7 @@ namespace FolioLibrary
             EresourceCreateInventory = (string)jObject.SelectToken("eresource.createInventory"),
             EresourceTrial = (bool?)jObject.SelectToken("eresource.trial"),
             EresourceExpectedActivationDate = ((DateTime?)jObject.SelectToken("eresource.expectedActivation"))?.ToUniversalTime(),
-            EresourceUserLimit = (int?)jObject.SelectToken("eresource.userLimit"),
+            EresourceUserLimit = (string)jObject.SelectToken("eresource.userLimit"),
             EresourceAccessProviderId = (Guid?)jObject.SelectToken("eresource.accessProvider"),
             EresourceLicenseCode = (string)jObject.SelectToken("eresource.license.code"),
             EresourceLicenseDescription = (string)jObject.SelectToken("eresource.license.description"),
@@ -429,6 +426,7 @@ namespace FolioLibrary
             VendorInstructions = (string)jObject.SelectToken("vendorDetail.instructions"),
             VendorNote = (string)jObject.SelectToken("vendorDetail.noteFromVendor"),
             VendorCustomerId = (string)jObject.SelectToken("vendorDetail.vendorAccount"),
+            SuppressInstanceFromDiscovery = (bool?)jObject.SelectToken("suppressInstanceFromDiscovery"),
             CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
@@ -436,7 +434,6 @@ namespace FolioLibrary
             LastWriteUserId = (Guid?)jObject.SelectToken("metadata.updatedByUserId"),
             LastWriteUserUsername = (string)jObject.SelectToken("metadata.updatedByUsername"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
-            OrderItemAlerts = jObject.SelectToken("alerts")?.Select(jt => OrderItemAlert.FromJObject((JValue)jt)).ToArray(),
             OrderItemClaims = jObject.SelectToken("claims")?.Where(jt => jt.HasValues).Select(jt => OrderItemClaim.FromJObject((JObject)jt)).ToArray(),
             OrderItemContributors = jObject.SelectToken("contributors")?.Where(jt => jt.HasValues).Select(jt => OrderItemContributor.FromJObject((JObject)jt)).ToArray(),
             OrderItemFunds = jObject.SelectToken("fundDistribution")?.Where(jt => jt.HasValues).Select(jt => OrderItemFund.FromJObject((JObject)jt)).ToArray(),
@@ -444,7 +441,6 @@ namespace FolioLibrary
             OrderItemOrganizations = jObject.SelectToken("donorOrganizationIds")?.Select(jt => OrderItemOrganization.FromJObject((JValue)jt)).ToArray(),
             OrderItemProductIds = jObject.SelectToken("details.productIds")?.Where(jt => jt.HasValues).Select(jt => OrderItemProductId.FromJObject((JObject)jt)).ToArray(),
             OrderItemReferenceNumbers = jObject.SelectToken("vendorDetail.referenceNumbers")?.Where(jt => jt.HasValues).Select(jt => OrderItemReferenceNumber.FromJObject((JObject)jt)).ToArray(),
-            OrderItemReportingCodes = jObject.SelectToken("reportingCodes")?.Select(jt => OrderItemReportingCode.FromJObject((JValue)jt)).ToArray(),
             OrderItemSearchLocations = jObject.SelectToken("searchLocationIds")?.Select(jt => OrderItemSearchLocation.FromJObject((JValue)jt)).ToArray(),
             OrderItemTags = jObject.SelectToken("tags.tagList")?.Select(jt => OrderItemTag.FromJObject((JValue)jt)).ToArray(),
             OrderItemVolumes = jObject.SelectToken("physical.volumes")?.Select(jt => OrderItemVolume.FromJObject((JValue)jt)).ToArray()
@@ -529,6 +525,7 @@ namespace FolioLibrary
                 new JProperty("noteFromVendor", VendorNote),
                 new JProperty("vendorAccount", VendorCustomerId),
                 new JProperty("referenceNumbers", OrderItemReferenceNumbers?.Select(oirn => oirn.ToJObject())))),
+            new JProperty("suppressInstanceFromDiscovery", SuppressInstanceFromDiscovery),
             new JProperty("metadata", new JObject(
                 new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),
@@ -536,13 +533,11 @@ namespace FolioLibrary
                 new JProperty("updatedDate", LastWriteTime?.ToLocalTime()),
                 new JProperty("updatedByUserId", LastWriteUserId),
                 new JProperty("updatedByUsername", LastWriteUserUsername))),
-            new JProperty("alerts", OrderItemAlerts?.Select(oia => oia.ToJObject())),
             new JProperty("claims", OrderItemClaims?.Select(oic => oic.ToJObject())),
             new JProperty("contributors", OrderItemContributors?.Select(oic => oic.ToJObject())),
             new JProperty("fundDistribution", OrderItemFunds?.Select(oif => oif.ToJObject())),
             new JProperty("locations", OrderItemLocation2s?.Select(oil2 => oil2.ToJObject())),
             new JProperty("donorOrganizationIds", OrderItemOrganizations?.Select(oio => oio.ToJObject())),
-            new JProperty("reportingCodes", OrderItemReportingCodes?.Select(oirc => oirc.ToJObject())),
             new JProperty("searchLocationIds", OrderItemSearchLocations?.Select(oisl => oisl.ToJObject())),
             new JProperty("tags", new JObject(
                 new JProperty("tagList", OrderItemTags?.Select(oit => oit.ToJObject()))))).RemoveNullAndEmptyProperties();

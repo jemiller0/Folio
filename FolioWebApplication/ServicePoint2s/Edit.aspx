@@ -89,6 +89,14 @@
                                     <asp:Literal ID="HoldShelfClosedLibraryDateManagementLiteral" runat="server" Text='<%#: Eval("HoldShelfClosedLibraryDateManagement") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("DefaultCheckInActionForUseAtLocation") != null %>'>
+                                <td>
+                                    <asp:Label ID="DefaultCheckInActionForUseAtLocationLabel" runat="server" Text="Default Check In Action For Use At Location:" AssociatedControlID="DefaultCheckInActionForUseAtLocationLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="DefaultCheckInActionForUseAtLocationLiteral" runat="server" Text='<%#: Eval("DefaultCheckInActionForUseAtLocation") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("EcsRequestRouting") != null %>'>
                                 <td>
                                     <asp:Label ID="EcsRequestRoutingLabel" runat="server" Text="Ecs Request Routing:" AssociatedControlID="EcsRequestRoutingLiteral" />
@@ -260,6 +268,7 @@
                                 <asp:HyperLink ID="HoldingHyperLink" runat="server" Text='<%# Eval("HoldingId") != null ? Eval("Holding.ShortId") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/Holding2s/Edit.aspx?Id={Eval("HoldingId")}" %>' Enabled='<%# Session["Holding2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Order" DataField="Order" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Discovery Suppress" DataField="DiscoverySuppress" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Display Summary" DataField="DisplaySummary" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Accession Number" DataField="AccessionNumber" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -398,6 +407,7 @@
                                 <asp:HyperLink ID="HoldingHyperLink" runat="server" Text='<%# Eval("HoldingId") != null ? Eval("Holding.ShortId") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/Holding2s/Edit.aspx?Id={Eval("HoldingId")}" %>' Enabled='<%# Session["Holding2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Order" DataField="Order" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Discovery Suppress" DataField="DiscoverySuppress" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Display Summary" DataField="DisplaySummary" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Accession Number" DataField="AccessionNumber" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -764,6 +774,7 @@
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Is Floating Collection" DataField="IsFloatingCollection" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Is Shadow" DataField="IsShadow" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridTemplateColumn HeaderText="Creation User" DataField="CreationUser.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>

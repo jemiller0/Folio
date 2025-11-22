@@ -257,6 +257,14 @@ namespace FolioWebApplication.User2s
 
         protected RadGrid CustomField2s1RadGrid;
 
+        protected Panel DateType2sPanel;
+
+        protected RadGrid DateType2sRadGrid;
+
+        protected Panel DateType2s1Panel;
+
+        protected RadGrid DateType2s1RadGrid;
+
         protected Panel Department2sPanel;
 
         protected RadGrid Department2sRadGrid;
@@ -665,6 +673,10 @@ namespace FolioWebApplication.User2s
 
         protected RadGrid Order2s3RadGrid;
 
+        protected Panel Order2s4Panel;
+
+        protected RadGrid Order2s4RadGrid;
+
         protected Panel OrderItem2sPanel;
 
         protected RadGrid OrderItem2sRadGrid;
@@ -1008,6 +1020,22 @@ namespace FolioWebApplication.User2s
         protected Panel Statuses2Panel;
 
         protected RadGrid Statuses2RadGrid;
+
+        protected Panel SubjectSource2sPanel;
+
+        protected RadGrid SubjectSource2sRadGrid;
+
+        protected Panel SubjectSource2s1Panel;
+
+        protected RadGrid SubjectSource2s1RadGrid;
+
+        protected Panel SubjectType2sPanel;
+
+        protected RadGrid SubjectType2sRadGrid;
+
+        protected Panel SubjectType2s1Panel;
+
+        protected RadGrid SubjectType2s1RadGrid;
 
         protected Panel Tag2sPanel;
 

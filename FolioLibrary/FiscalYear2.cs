@@ -139,19 +139,22 @@ namespace FolioLibrary
         [Display(Name = "Ledgers", Order = 37)]
         public virtual ICollection<Ledger2> Ledger2s { get; set; }
 
-        [Display(Name = "Rollovers", Order = 38)]
+        [Display(Name = "Orders", Order = 38)]
+        public virtual ICollection<Order2> Order2s { get; set; }
+
+        [Display(Name = "Rollovers", Order = 39)]
         public virtual ICollection<Rollover2> Rollover2s { get; set; }
 
-        [Display(Name = "Rollovers 1", Order = 39)]
+        [Display(Name = "Rollovers 1", Order = 40)]
         public virtual ICollection<Rollover2> Rollover2s1 { get; set; }
 
-        [Display(Name = "Rollover Budgets", Order = 40)]
+        [Display(Name = "Rollover Budgets", Order = 41)]
         public virtual ICollection<RolloverBudget2> RolloverBudget2s { get; set; }
 
-        [Display(Name = "Transactions", Order = 41)]
+        [Display(Name = "Transactions", Order = 42)]
         public virtual ICollection<Transaction2> Transaction2s { get; set; }
 
-        [Display(Name = "Transactions 1", Order = 42)]
+        [Display(Name = "Transactions 1", Order = 43)]
         public virtual ICollection<Transaction2> Transaction2s1 { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(Name)} = {Name}, {nameof(Code)} = {Code}, {nameof(Currency)} = {Currency}, {nameof(Description)} = {Description}, {nameof(StartDate)} = {StartDate}, {nameof(EndDate)} = {EndDate}, {nameof(Series)} = {Series}, {nameof(FinancialSummaryAllocated)} = {FinancialSummaryAllocated}, {nameof(FinancialSummaryAvailable)} = {FinancialSummaryAvailable}, {nameof(FinancialSummaryUnavailable)} = {FinancialSummaryUnavailable}, {nameof(FinancialSummaryInitialAllocation)} = {FinancialSummaryInitialAllocation}, {nameof(FinancialSummaryAllocationTo)} = {FinancialSummaryAllocationTo}, {nameof(FinancialSummaryAllocationFrom)} = {FinancialSummaryAllocationFrom}, {nameof(FinancialSummaryTotalFunding)} = {FinancialSummaryTotalFunding}, {nameof(FinancialSummaryCashBalance)} = {FinancialSummaryCashBalance}, {nameof(FinancialSummaryAwaitingPayment)} = {FinancialSummaryAwaitingPayment}, {nameof(FinancialSummaryCredits)} = {FinancialSummaryCredits}, {nameof(FinancialSummaryEncumbered)} = {FinancialSummaryEncumbered}, {nameof(FinancialSummaryExpenditures)} = {FinancialSummaryExpenditures}, {nameof(FinancialSummaryOverEncumbrance)} = {FinancialSummaryOverEncumbrance}, {nameof(FinancialSummaryOverExpended)} = {FinancialSummaryOverExpended}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(FiscalYearAcquisitionsUnits)} = {(FiscalYearAcquisitionsUnits != null ? $"{{ {string.Join(", ", FiscalYearAcquisitionsUnits)} }}" : "")} }}";

@@ -121,6 +121,14 @@
                                     <asp:Literal ID="TextFieldFieldFormatLiteral" runat="server" Text='<%#: Eval("TextFieldFieldFormat") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("DisplayInAccordion") != null %>'>
+                                <td>
+                                    <asp:Label ID="DisplayInAccordionLabel" runat="server" Text="Display In Accordion:" AssociatedControlID="DisplayInAccordionLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="DisplayInAccordionLiteral" runat="server" Text='<%#: Eval("DisplayInAccordion") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>
                                 <td>
                                     <asp:Label ID="CreationTimeLabel" runat="server" Text="Creation Time:" AssociatedControlID="CreationTimeLiteral" />

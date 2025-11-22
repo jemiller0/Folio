@@ -53,10 +53,12 @@
           },
           "categories": {
             "id": "categories",
-            "description": "The list of categories for this organization phone",
+            "description": "The list of category ids for this organization phone",
             "type": "array",
             "items": {
-              "type": "string"
+              "description": "The UUID format string",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
             }
           },
           "type": {
@@ -150,10 +152,12 @@
           },
           "categories": {
             "id": "categories",
-            "description": "The list of categories for this organization email",
+            "description": "The list of category ids for this organization email",
             "type": "array",
             "items": {
-              "type": "string"
+              "description": "The UUID format string",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
             }
           },
           "language": {
@@ -213,10 +217,12 @@
           },
           "categories": {
             "id": "categories",
-            "description": "The list of categories for this organization address",
+            "description": "The list of category ids for this organization address",
             "type": "array",
             "items": {
-              "type": "string"
+              "description": "The UUID format string",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
             }
           },
           "language": {
@@ -262,10 +268,12 @@
           },
           "categories": {
             "id": "categories",
-            "description": "The list of categories for this organization URL",
+            "description": "The list of category ids for this organization URL",
             "type": "array",
             "items": {
-              "type": "string"
+              "description": "The UUID format string",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
             }
           },
           "notes": {
@@ -283,7 +291,7 @@
     },
     "categories": {
       "id": "contactCategory",
-      "description": "The list of contact categories associated with this organization contact person",
+      "description": "The list of category ids for this organization contact person",
       "type": "array",
       "items": {
         "description": "The UUID format string",

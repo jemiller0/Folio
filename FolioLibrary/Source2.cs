@@ -67,9 +67,6 @@ namespace FolioLibrary
         [Display(Name = "Holdings", Order = 13)]
         public virtual ICollection<Holding2> Holding2s { get; set; }
 
-        [Display(Order = 14)]
-        public virtual ICollection<Subject> Subjects { get; set; }
-
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Source)} = {Source}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
 
         public static Source2 FromJObject(JObject jObject) => jObject != null ? new Source2

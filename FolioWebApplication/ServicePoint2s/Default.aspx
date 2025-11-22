@@ -40,6 +40,7 @@
                         <telerik:GridBoundColumn HeaderText="Hold Shelf Expiry Period Duration" DataField="HoldShelfExpiryPeriodDuration" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Hold Shelf Expiry Period Interval" DataField="HoldShelfExpiryPeriodInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Hold Shelf Closed Library Date Management" DataField="HoldShelfClosedLibraryDateManagement" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Default Check In Action For Use At Location" DataField="DefaultCheckInActionForUseAtLocation" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Ecs Request Routing" DataField="EcsRequestRouting" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridTemplateColumn HeaderText="Creation User" DataField="CreationUser.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">

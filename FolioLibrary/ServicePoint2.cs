@@ -58,76 +58,79 @@ namespace FolioLibrary
         [Column("hold_shelf_closed_library_date_management"), Display(Name = "Hold Shelf Closed Library Date Management", Order = 10), JsonProperty("holdShelfClosedLibraryDateManagement"), RegularExpression(@"^(Keep_the_current_due_date|Move_to_the_end_of_the_previous_open_day|Move_to_the_end_of_the_next_open_day|Keep_the_current_due_date_time|Move_to_end_of_current_service_point_hours|Move_to_beginning_of_next_open_service_point_hours)$"), StringLength(1024)]
         public virtual string HoldShelfClosedLibraryDateManagement { get; set; }
 
-        [Column("ecs_request_routing"), Display(Name = "Ecs Request Routing", Order = 11), JsonProperty("ecsRequestRouting")]
+        [Column("default_check_in_action_for_use_at_location"), Display(Name = "Default Check In Action For Use At Location", Order = 11), JsonProperty("defaultCheckInActionForUseAtLocation"), RegularExpression(@"^(Keep_on_hold_shelf|Close_loan_and_return_item|Ask_for_action)$"), StringLength(1024)]
+        public virtual string DefaultCheckInActionForUseAtLocation { get; set; }
+
+        [Column("ecs_request_routing"), Display(Name = "Ecs Request Routing", Order = 12), JsonProperty("ecsRequestRouting")]
         public virtual bool? EcsRequestRouting { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 12), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 13), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 13), InverseProperty("ServicePoint2s")]
+        [Display(Name = "Creation User", Order = 14), InverseProperty("ServicePoint2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 14), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 15), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 16), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 17), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 17), InverseProperty("ServicePoint2s1")]
+        [Display(Name = "Last Write User", Order = 18), InverseProperty("ServicePoint2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 18), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 19), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(ServicePoint), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 20), Editable(false)]
+        [Column("content"), CustomValidation(typeof(ServicePoint), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 21), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Check Ins", Order = 21)]
+        [Display(Name = "Check Ins", Order = 22)]
         public virtual ICollection<CheckIn2> CheckIn2s { get; set; }
 
-        [Display(Name = "Default Service Point Users", Order = 22)]
+        [Display(Name = "Default Service Point Users", Order = 23)]
         public virtual ICollection<ServicePointUser2> DefaultServicePointUsers { get; set; }
 
-        [Display(Name = "Items", Order = 23)]
+        [Display(Name = "Items", Order = 24)]
         public virtual ICollection<Item2> Item2s { get; set; }
 
-        [Display(Name = "Items 1", Order = 24)]
+        [Display(Name = "Items 1", Order = 25)]
         public virtual ICollection<Item2> Item2s1 { get; set; }
 
-        [Display(Name = "Loans", Order = 25)]
+        [Display(Name = "Loans", Order = 26)]
         public virtual ICollection<Loan2> Loan2s { get; set; }
 
-        [Display(Name = "Loans 1", Order = 26)]
+        [Display(Name = "Loans 1", Order = 27)]
         public virtual ICollection<Loan2> Loan2s1 { get; set; }
 
-        [Display(Name = "Locations", Order = 27)]
+        [Display(Name = "Locations", Order = 28)]
         public virtual ICollection<Location2> Location2s { get; set; }
 
-        [Display(Name = "Location Service Points", Order = 28)]
+        [Display(Name = "Location Service Points", Order = 29)]
         public virtual ICollection<LocationServicePoint> LocationServicePoints { get; set; }
 
-        [Display(Name = "Requests", Order = 29)]
+        [Display(Name = "Requests", Order = 30)]
         public virtual ICollection<Request2> Request2s { get; set; }
 
-        [Display(Name = "Service Point Owners", Order = 30)]
+        [Display(Name = "Service Point Owners", Order = 31)]
         public virtual ICollection<ServicePointOwner> ServicePointOwners { get; set; }
 
-        [Display(Name = "Service Point Staff Slips", Order = 31), JsonProperty("staffSlips")]
+        [Display(Name = "Service Point Staff Slips", Order = 32), JsonProperty("staffSlips")]
         public virtual ICollection<ServicePointStaffSlip> ServicePointStaffSlips { get; set; }
 
-        [Display(Name = "Service Point User Service Points", Order = 32)]
+        [Display(Name = "Service Point User Service Points", Order = 33)]
         public virtual ICollection<ServicePointUserServicePoint> ServicePointUserServicePoints { get; set; }
 
-        [Display(Name = "User Request Preferences", Order = 33)]
+        [Display(Name = "User Request Preferences", Order = 34)]
         public virtual ICollection<UserRequestPreference2> UserRequestPreference2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Code)} = {Code}, {nameof(DiscoveryDisplayName)} = {DiscoveryDisplayName}, {nameof(Description)} = {Description}, {nameof(ShelvingLagTime)} = {ShelvingLagTime}, {nameof(PickupLocation)} = {PickupLocation}, {nameof(HoldShelfExpiryPeriodDuration)} = {HoldShelfExpiryPeriodDuration}, {nameof(HoldShelfExpiryPeriodInterval)} = {HoldShelfExpiryPeriodInterval}, {nameof(HoldShelfClosedLibraryDateManagement)} = {HoldShelfClosedLibraryDateManagement}, {nameof(EcsRequestRouting)} = {EcsRequestRouting}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(ServicePointStaffSlips)} = {(ServicePointStaffSlips != null ? $"{{ {string.Join(", ", ServicePointStaffSlips)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Code)} = {Code}, {nameof(DiscoveryDisplayName)} = {DiscoveryDisplayName}, {nameof(Description)} = {Description}, {nameof(ShelvingLagTime)} = {ShelvingLagTime}, {nameof(PickupLocation)} = {PickupLocation}, {nameof(HoldShelfExpiryPeriodDuration)} = {HoldShelfExpiryPeriodDuration}, {nameof(HoldShelfExpiryPeriodInterval)} = {HoldShelfExpiryPeriodInterval}, {nameof(HoldShelfClosedLibraryDateManagement)} = {HoldShelfClosedLibraryDateManagement}, {nameof(DefaultCheckInActionForUseAtLocation)} = {DefaultCheckInActionForUseAtLocation}, {nameof(EcsRequestRouting)} = {EcsRequestRouting}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(ServicePointStaffSlips)} = {(ServicePointStaffSlips != null ? $"{{ {string.Join(", ", ServicePointStaffSlips)} }}" : "")} }}";
 
         public static ServicePoint2 FromJObject(JObject jObject) => jObject != null ? new ServicePoint2
         {
@@ -141,6 +144,7 @@ namespace FolioLibrary
             HoldShelfExpiryPeriodDuration = (int?)jObject.SelectToken("holdShelfExpiryPeriod.duration"),
             HoldShelfExpiryPeriodInterval = (string)jObject.SelectToken("holdShelfExpiryPeriod.intervalId"),
             HoldShelfClosedLibraryDateManagement = (string)jObject.SelectToken("holdShelfClosedLibraryDateManagement"),
+            DefaultCheckInActionForUseAtLocation = (string)jObject.SelectToken("defaultCheckInActionForUseAtLocation"),
             EcsRequestRouting = (bool?)jObject.SelectToken("ecsRequestRouting"),
             CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
@@ -164,6 +168,7 @@ namespace FolioLibrary
                 new JProperty("duration", HoldShelfExpiryPeriodDuration),
                 new JProperty("intervalId", HoldShelfExpiryPeriodInterval))),
             new JProperty("holdShelfClosedLibraryDateManagement", HoldShelfClosedLibraryDateManagement),
+            new JProperty("defaultCheckInActionForUseAtLocation", DefaultCheckInActionForUseAtLocation),
             new JProperty("ecsRequestRouting", EcsRequestRouting),
             new JProperty("metadata", new JObject(
                 new JProperty("createdDate", CreationTime?.ToLocalTime()),

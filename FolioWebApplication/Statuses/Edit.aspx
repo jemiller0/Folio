@@ -115,6 +115,7 @@
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Match Key" DataField="MatchKey" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridHyperLinkColumn HeaderText="Source URI" DataTextField="SourceUri" DataNavigateUrlFields="SourceUri" Target="_blank" SortExpression="SourceUri" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Source" DataField="Source" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridTemplateColumn HeaderText="Title" DataField="Title" SortExpression="Title" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
@@ -122,11 +123,13 @@
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Author" DataField="Author" AllowFiltering="false" AllowSorting="false" HtmlEncode="true" />
-                        <telerik:GridBoundColumn HeaderText="Publication Start Year" DataField="PublicationStartYear" AutoPostBackOnFilter="true" />
-                        <telerik:GridBoundColumn HeaderText="Publication End Year" DataField="PublicationEndYear" AutoPostBackOnFilter="true" />
-                        <telerik:GridBoundColumn HeaderText="Dates Date Type Id" DataField="DatesDateTypeId" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo" />
-                        <telerik:GridBoundColumn HeaderText="Dates Date 1" DataField="DatesDate1" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                        <telerik:GridBoundColumn HeaderText="Dates Date 2" DataField="DatesDate2" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridTemplateColumn HeaderText="Date Type" DataField="DateType.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="DateTypeHyperLink" runat="server" Text='<%#: Eval("DateTypeId") != null ? Eval("DateType.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/DateType2s/Edit.aspx?Id={Eval("DateTypeId")}" %>' Enabled='<%# Session["DateType2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Date 1" DataField="Date1" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Date 2" DataField="Date2" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridTemplateColumn HeaderText="Instance Type" DataField="InstanceType.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="InstanceTypeHyperLink" runat="server" Text='<%#: Eval("InstanceType.Name") %>' NavigateUrl='<%# $"~/InstanceType2s/Edit.aspx?Id={Eval("InstanceTypeId")}" %>' Enabled='<%# Session["InstanceType2sPermission"] != null %>' />
@@ -141,6 +144,7 @@
                         <telerik:GridBoundColumn HeaderText="Previously Held" DataField="PreviouslyHeld" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Staff Suppress" DataField="StaffSuppress" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Discovery Suppress" DataField="DiscoverySuppress" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Deleted" DataField="Deleted" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Source Record Format" DataField="SourceRecordFormat" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Status Last Write Time" DataField="StatusLastWriteTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
@@ -156,6 +160,7 @@
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Completion Time" DataField="CompletionTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
+                        <telerik:GridBoundColumn HeaderText="Dates Datetypeid" DataField="DatesDatetypeid" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>

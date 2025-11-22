@@ -29,6 +29,10 @@ namespace FolioWebApplication.FiscalYear2s
 
         protected RadGrid Ledger2sRadGrid;
 
+        protected Panel Order2sPanel;
+
+        protected RadGrid Order2sRadGrid;
+
         protected Panel Rollover2sPanel;
 
         protected RadGrid Rollover2sRadGrid;

@@ -180,33 +180,6 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
-        public void Alert2sEditAspxTest()
-        {
-            var s = Stopwatch.StartNew();
-            try
-            {
-                var a2 = folioServiceContext.Alert2s(take: 1).SingleOrDefault();
-                if (a2 != null)
-                {
-                    var hrm = httpClient.GetAsync($"{Url}/Alert2s/Edit.aspx?Id={a2.Id}").Result;
-                    hrm.EnsureSuccessStatusCode();
-                    Assert.IsTrue(s.Elapsed < timeSpan);
-                }
-                else
-                    Assert.IsTrue(true);
-            }
-            catch (Exception e)
-            {
-                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
-                throw;
-            }
-            finally
-            {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"Alert2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
-            }
-        }
-
-        [TestMethod]
         public void AlternativeTitleType2sEditAspxTest()
         {
             var s = Stopwatch.StartNew();
@@ -797,6 +770,33 @@ namespace FolioWebApplicationTest
             finally
             {
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"CustomField2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
+        public void DateType2sEditAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var dt2 = folioServiceContext.DateType2s(take: 1).SingleOrDefault();
+                if (dt2 != null)
+                {
+                    var hrm = httpClient.GetAsync($"{Url}/DateType2s/Edit.aspx?Id={dt2.Id}").Result;
+                    hrm.EnsureSuccessStatusCode();
+                    Assert.IsTrue(s.Elapsed < timeSpan);
+                }
+                else
+                    Assert.IsTrue(true);
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"DateType2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
             }
         }
 
@@ -1935,33 +1935,6 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
-        public void OrderTemplate2sEditAspxTest()
-        {
-            var s = Stopwatch.StartNew();
-            try
-            {
-                var ot2 = folioServiceContext.OrderTemplate2s(take: 1).SingleOrDefault();
-                if (ot2 != null)
-                {
-                    var hrm = httpClient.GetAsync($"{Url}/OrderTemplate2s/Edit.aspx?Id={ot2.Id}").Result;
-                    hrm.EnsureSuccessStatusCode();
-                    Assert.IsTrue(s.Elapsed < timeSpan);
-                }
-                else
-                    Assert.IsTrue(true);
-            }
-            catch (Exception e)
-            {
-                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
-                throw;
-            }
-            finally
-            {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTemplate2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
-            }
-        }
-
-        [TestMethod]
         public void Organization2sEditAspxTest()
         {
             var s = Stopwatch.StartNew();
@@ -2232,33 +2205,6 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
-        public void Prefix2sEditAspxTest()
-        {
-            var s = Stopwatch.StartNew();
-            try
-            {
-                var p2 = folioServiceContext.Prefix2s(take: 1).SingleOrDefault();
-                if (p2 != null)
-                {
-                    var hrm = httpClient.GetAsync($"{Url}/Prefix2s/Edit.aspx?Id={p2.Id}").Result;
-                    hrm.EnsureSuccessStatusCode();
-                    Assert.IsTrue(s.Elapsed < timeSpan);
-                }
-                else
-                    Assert.IsTrue(true);
-            }
-            catch (Exception e)
-            {
-                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
-                throw;
-            }
-            finally
-            {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"Prefix2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
-            }
-        }
-
-        [TestMethod]
         public void PrintersEditAspxTest()
         {
             var s = Stopwatch.StartNew();
@@ -2471,33 +2417,6 @@ namespace FolioWebApplicationTest
             finally
             {
                 traceSource.TraceEvent(TraceEventType.Information, 0, $"RelationshipTypesEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
-            }
-        }
-
-        [TestMethod]
-        public void ReportingCode2sEditAspxTest()
-        {
-            var s = Stopwatch.StartNew();
-            try
-            {
-                var rc2 = folioServiceContext.ReportingCode2s(take: 1).SingleOrDefault();
-                if (rc2 != null)
-                {
-                    var hrm = httpClient.GetAsync($"{Url}/ReportingCode2s/Edit.aspx?Id={rc2.Id}").Result;
-                    hrm.EnsureSuccessStatusCode();
-                    Assert.IsTrue(s.Elapsed < timeSpan);
-                }
-                else
-                    Assert.IsTrue(true);
-            }
-            catch (Exception e)
-            {
-                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
-                throw;
-            }
-            finally
-            {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"ReportingCode2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
             }
         }
 
@@ -2934,15 +2853,15 @@ namespace FolioWebApplicationTest
         }
 
         [TestMethod]
-        public void Suffix2sEditAspxTest()
+        public void SubjectSource2sEditAspxTest()
         {
             var s = Stopwatch.StartNew();
             try
             {
-                var s2 = folioServiceContext.Suffix2s(take: 1).SingleOrDefault();
-                if (s2 != null)
+                var ss2 = folioServiceContext.SubjectSource2s(take: 1).SingleOrDefault();
+                if (ss2 != null)
                 {
-                    var hrm = httpClient.GetAsync($"{Url}/Suffix2s/Edit.aspx?Id={s2.Id}").Result;
+                    var hrm = httpClient.GetAsync($"{Url}/SubjectSource2s/Edit.aspx?Id={ss2.Id}").Result;
                     hrm.EnsureSuccessStatusCode();
                     Assert.IsTrue(s.Elapsed < timeSpan);
                 }
@@ -2956,7 +2875,34 @@ namespace FolioWebApplicationTest
             }
             finally
             {
-                traceSource.TraceEvent(TraceEventType.Information, 0, $"Suffix2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"SubjectSource2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
+            }
+        }
+
+        [TestMethod]
+        public void SubjectType2sEditAspxTest()
+        {
+            var s = Stopwatch.StartNew();
+            try
+            {
+                var st2 = folioServiceContext.SubjectType2s(take: 1).SingleOrDefault();
+                if (st2 != null)
+                {
+                    var hrm = httpClient.GetAsync($"{Url}/SubjectType2s/Edit.aspx?Id={st2.Id}").Result;
+                    hrm.EnsureSuccessStatusCode();
+                    Assert.IsTrue(s.Elapsed < timeSpan);
+                }
+                else
+                    Assert.IsTrue(true);
+            }
+            catch (Exception e)
+            {
+                traceSource.TraceEvent(TraceEventType.Error, 0, e.ToString());
+                throw;
+            }
+            finally
+            {
+                traceSource.TraceEvent(TraceEventType.Information, 0, $"SubjectType2sEditAspxTest()\r\n    ElapsedTime={s.Elapsed}");
             }
         }
 

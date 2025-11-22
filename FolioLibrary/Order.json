@@ -24,14 +24,10 @@
       "format": "date-time"
     },
     "assignedTo": {
-      "description": "UUID of the user this purchase order his assigned to",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "#/properties/id"
     },
     "billTo": {
-      "description": "UUID of the billing address",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "#/properties/id"
     },
     "closeReason": {
       "description": "purchase order closing reason record",
@@ -47,6 +43,9 @@
           "type": "string"
         }
       }
+    },
+    "openedById": {
+      "$ref": "#/properties/id"
     },
     "dateOrdered": {
       "description": "Date and time when purchase order was opened",
@@ -131,19 +130,13 @@
       }
     },
     "shipTo": {
-      "description": "UUID of the shipping address",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "#/properties/id"
     },
     "template": {
-      "description": "The ID of the order template used for this order. Applies to both PO and POL",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "#/properties/id"
     },
     "vendor": {
-      "description": "UUID of the vendor record",
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "#/properties/id"
     },
     "workflowStatus": {
       "description": "Composite workflow status",
@@ -184,7 +177,11 @@
     },
     "customFields": {
       "description": "Object that contains custom field",
+      "javaName": "CustomFields",
       "type": "object"
+    },
+    "fiscalYearId": {
+      "$ref": "#/properties/id"
     },
     "metadata": {
       "title": "Metadata Schema",

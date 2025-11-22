@@ -505,69 +505,6 @@ namespace FolioLibrary
 
         public void DeleteAgreementItem2(Guid? id) => FolioServiceClient.DeleteAgreementItem(id?.ToString());
 
-        public bool AnyAlert2s(string where = null) => FolioServiceClient.AnyAlerts(where);
-
-        public int CountAlert2s(string where = null) => FolioServiceClient.CountAlerts(where);
-
-        public Alert2[] Alert2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
-        {
-            return FolioServiceClient.Alerts(out count, where, orderBy, skip, take).Select(jo =>
-            {
-                var id = Guid.Parse((string)jo["id"]);
-                var a2 = cache ? (Alert2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Alert2.FromJObject(jo)) : Alert2.FromJObject(jo);
-                return a2;
-            }).ToArray();
-        }
-
-        public IEnumerable<Alert2> Alert2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
-        {
-            foreach (var jo in FolioServiceClient.Alerts(where, orderBy, skip, take))
-            {
-                var id = Guid.Parse((string)jo["id"]);
-                var a2 = cache ? (Alert2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Alert2.FromJObject(jo)) : Alert2.FromJObject(jo);
-                yield return a2;
-            }
-        }
-
-        public Alert2 FindAlert2(Guid? id, bool load = false, bool cache = true) => Alert2.FromJObject(FolioServiceClient.GetAlert(id?.ToString()));
-
-        public void Insert(Alert2 alert2)
-        {
-            if (alert2.Id == null) alert2.Id = Guid.NewGuid();
-            FolioServiceClient.InsertAlert(alert2.ToJObject());
-        }
-
-        public void Update(Alert2 alert2) => FolioServiceClient.UpdateAlert(alert2.ToJObject());
-
-        public void UpdateOrInsert(Alert2 alert2)
-        {
-            if (alert2.Id == null)
-                Insert(alert2);
-            else
-                try
-                {
-                    Update(alert2);
-                }
-                catch (HttpRequestException e)
-                {
-                    if (e.Message.Contains("NotFound")) Insert(alert2); else throw;
-                }
-        }
-
-        public void InsertOrUpdate(Alert2 alert2)
-        {
-            try
-            {
-                Insert(alert2);
-            }
-            catch (HttpRequestException e)
-            {
-                if (e.Message.Contains("duplicate key")) Update(alert2); else throw;
-            }
-        }
-
-        public void DeleteAlert2(Guid? id) => FolioServiceClient.DeleteAlert(id?.ToString());
-
         public bool AnyAlternativeTitleType2s(string where = null) => FolioServiceClient.AnyAlternativeTitleTypes(where);
 
         public int CountAlternativeTitleType2s(string where = null) => FolioServiceClient.CountAlternativeTitleTypes(where);
@@ -2320,6 +2257,81 @@ namespace FolioLibrary
 
         public void DeleteCustomField2(Guid? id) => FolioServiceClient.DeleteCustomField(id?.ToString());
 
+        public bool AnyDateType2s(string where = null) => FolioServiceClient.AnyDateTypes(where);
+
+        public int CountDateType2s(string where = null) => FolioServiceClient.CountDateTypes(where);
+
+        public DateType2[] DateType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
+        {
+            return FolioServiceClient.DateTypes(out count, where, orderBy, skip, take).Select(jo =>
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var dt2 = cache ? (DateType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = DateType2.FromJObject(jo)) : DateType2.FromJObject(jo);
+                if (load && dt2.CreationUserId != null) dt2.CreationUser = FindUser2(dt2.CreationUserId, cache: cache);
+                if (load && dt2.LastWriteUserId != null) dt2.LastWriteUser = FindUser2(dt2.LastWriteUserId, cache: cache);
+                return dt2;
+            }).ToArray();
+        }
+
+        public IEnumerable<DateType2> DateType2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        {
+            foreach (var jo in FolioServiceClient.DateTypes(where, orderBy, skip, take))
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var dt2 = cache ? (DateType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = DateType2.FromJObject(jo)) : DateType2.FromJObject(jo);
+                if (load && dt2.CreationUserId != null) dt2.CreationUser = FindUser2(dt2.CreationUserId, cache: cache);
+                if (load && dt2.LastWriteUserId != null) dt2.LastWriteUser = FindUser2(dt2.LastWriteUserId, cache: cache);
+                yield return dt2;
+            }
+        }
+
+        public DateType2 FindDateType2(Guid? id, bool load = false, bool cache = true)
+        {
+            if (id == null) return null;
+            var dt2 = cache ? (DateType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = DateType2.FromJObject(FolioServiceClient.GetDateType(id?.ToString()))) : DateType2.FromJObject(FolioServiceClient.GetDateType(id?.ToString()));
+            if (dt2 == null) return null;
+            if (load && dt2.CreationUserId != null) dt2.CreationUser = FindUser2(dt2.CreationUserId, cache: cache);
+            if (load && dt2.LastWriteUserId != null) dt2.LastWriteUser = FindUser2(dt2.LastWriteUserId, cache: cache);
+            return dt2;
+        }
+
+        public void Insert(DateType2 dateType2)
+        {
+            if (dateType2.Id == null) dateType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertDateType(dateType2.ToJObject());
+        }
+
+        public void Update(DateType2 dateType2) => FolioServiceClient.UpdateDateType(dateType2.ToJObject());
+
+        public void UpdateOrInsert(DateType2 dateType2)
+        {
+            if (dateType2.Id == null)
+                Insert(dateType2);
+            else
+                try
+                {
+                    Update(dateType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(dateType2); else throw;
+                }
+        }
+
+        public void InsertOrUpdate(DateType2 dateType2)
+        {
+            try
+            {
+                Insert(dateType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(dateType2); else throw;
+            }
+        }
+
+        public void DeleteDateType2(Guid? id) => FolioServiceClient.DeleteDateType(id?.ToString());
+
         public bool AnyDepartment2s(string where = null) => FolioServiceClient.AnyDepartments(where);
 
         public int CountDepartment2s(string where = null) => FolioServiceClient.CountDepartments(where);
@@ -3440,6 +3452,14 @@ namespace FolioLibrary
                     e2.Holding = h2;
                 }
             i = 0;
+            if (h2.HoldingAdditionalCallNumbers != null) foreach (var hacn in h2.HoldingAdditionalCallNumbers)
+                {
+                    hacn.Id = (++i).ToString();
+                    hacn.HoldingId = h2.Id;
+                    hacn.Holding = h2;
+                    if (load && hacn.TypeId != null) hacn.Type = FindCallNumberType2(hacn.TypeId, cache: cache);
+                }
+            i = 0;
             if (h2.HoldingAdministrativeNotes != null) foreach (var han in h2.HoldingAdministrativeNotes)
                 {
                     han.Id = (++i).ToString();
@@ -3868,6 +3888,7 @@ namespace FolioLibrary
             {
                 var id = Guid.Parse((string)jo["id"]);
                 var i2 = cache ? (Instance2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Instance2.FromJObject(jo)) : Instance2.FromJObject(jo);
+                if (load && i2.DateTypeId != null) i2.DateType = FindDateType2(i2.DateTypeId, cache: cache);
                 if (load && i2.InstanceTypeId != null) i2.InstanceType = FindInstanceType2(i2.InstanceTypeId, cache: cache);
                 if (load && i2.IssuanceModeId != null) i2.IssuanceMode = FindIssuanceMode(i2.IssuanceModeId, cache: cache);
                 if (load && i2.StatusId != null) i2.Status = FindStatus(i2.StatusId, cache: cache);
@@ -3883,6 +3904,7 @@ namespace FolioLibrary
             {
                 var id = Guid.Parse((string)jo["id"]);
                 var i2 = cache ? (Instance2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Instance2.FromJObject(jo)) : Instance2.FromJObject(jo);
+                if (load && i2.DateTypeId != null) i2.DateType = FindDateType2(i2.DateTypeId, cache: cache);
                 if (load && i2.InstanceTypeId != null) i2.InstanceType = FindInstanceType2(i2.InstanceTypeId, cache: cache);
                 if (load && i2.IssuanceModeId != null) i2.IssuanceMode = FindIssuanceMode(i2.IssuanceModeId, cache: cache);
                 if (load && i2.StatusId != null) i2.Status = FindStatus(i2.StatusId, cache: cache);
@@ -3897,6 +3919,7 @@ namespace FolioLibrary
             if (id == null) return null;
             var i2 = cache ? (Instance2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = Instance2.FromJObject(FolioServiceClient.GetInstance(id?.ToString()))) : Instance2.FromJObject(FolioServiceClient.GetInstance(id?.ToString()));
             if (i2 == null) return null;
+            if (load && i2.DateTypeId != null) i2.DateType = FindDateType2(i2.DateTypeId, cache: cache);
             if (load && i2.InstanceTypeId != null) i2.InstanceType = FindInstanceType2(i2.InstanceTypeId, cache: cache);
             if (load && i2.IssuanceModeId != null) i2.IssuanceMode = FindIssuanceMode(i2.IssuanceModeId, cache: cache);
             if (load && i2.StatusId != null) i2.Status = FindStatus(i2.StatusId, cache: cache);
@@ -4044,7 +4067,8 @@ namespace FolioLibrary
                     s2.Id = (++i).ToString();
                     s2.InstanceId = i2.Id;
                     s2.Instance = i2;
-                    if (load && s2.SourceId != null) s2.Source = FindSource2(s2.SourceId, cache: cache);
+                    if (load && s2.SourceId != null) s2.Source = FindSubjectSource2(s2.SourceId, cache: cache);
+                    if (load && s2.TypeId != null) s2.Type = FindSubjectType2(s2.TypeId, cache: cache);
                 }
             return i2;
         }
@@ -4788,6 +4812,14 @@ namespace FolioLibrary
                     cn.Id = (++i).ToString();
                     cn.ItemId = i2.Id;
                     cn.Item = i2;
+                }
+            i = 0;
+            if (i2.ItemAdditionalCallNumbers != null) foreach (var iacn in i2.ItemAdditionalCallNumbers)
+                {
+                    iacn.Id = (++i).ToString();
+                    iacn.ItemId = i2.Id;
+                    iacn.Item = i2;
+                    if (load && iacn.TypeId != null) iacn.Type = FindCallNumberType2(iacn.TypeId, cache: cache);
                 }
             i = 0;
             if (i2.ItemAdministrativeNotes != null) foreach (var ian in i2.ItemAdministrativeNotes)
@@ -6105,8 +6137,9 @@ namespace FolioLibrary
                 var o2 = cache ? (Order2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Order2.FromJObject(jo)) : Order2.FromJObject(jo);
                 if (load && o2.ApprovedById != null) o2.ApprovedBy = FindUser2(o2.ApprovedById, cache: cache);
                 if (load && o2.AssignedToId != null) o2.AssignedTo = FindUser2(o2.AssignedToId, cache: cache);
-                if (load && o2.TemplateId != null) o2.Template = FindOrderTemplate2(o2.TemplateId, cache: cache);
+                if (load && o2.OpenedById != null) o2.OpenedBy = FindUser2(o2.OpenedById, cache: cache);
                 if (load && o2.VendorId != null) o2.Vendor = FindOrganization2(o2.VendorId, cache: cache);
+                if (load && o2.FiscalYearId != null) o2.FiscalYear = FindFiscalYear2(o2.FiscalYearId, cache: cache);
                 if (load && o2.CreationUserId != null) o2.CreationUser = FindUser2(o2.CreationUserId, cache: cache);
                 if (load && o2.LastWriteUserId != null) o2.LastWriteUser = FindUser2(o2.LastWriteUserId, cache: cache);
                 return o2;
@@ -6121,8 +6154,9 @@ namespace FolioLibrary
                 var o2 = cache ? (Order2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Order2.FromJObject(jo)) : Order2.FromJObject(jo);
                 if (load && o2.ApprovedById != null) o2.ApprovedBy = FindUser2(o2.ApprovedById, cache: cache);
                 if (load && o2.AssignedToId != null) o2.AssignedTo = FindUser2(o2.AssignedToId, cache: cache);
-                if (load && o2.TemplateId != null) o2.Template = FindOrderTemplate2(o2.TemplateId, cache: cache);
+                if (load && o2.OpenedById != null) o2.OpenedBy = FindUser2(o2.OpenedById, cache: cache);
                 if (load && o2.VendorId != null) o2.Vendor = FindOrganization2(o2.VendorId, cache: cache);
+                if (load && o2.FiscalYearId != null) o2.FiscalYear = FindFiscalYear2(o2.FiscalYearId, cache: cache);
                 if (load && o2.CreationUserId != null) o2.CreationUser = FindUser2(o2.CreationUserId, cache: cache);
                 if (load && o2.LastWriteUserId != null) o2.LastWriteUser = FindUser2(o2.LastWriteUserId, cache: cache);
                 yield return o2;
@@ -6136,8 +6170,9 @@ namespace FolioLibrary
             if (o2 == null) return null;
             if (load && o2.ApprovedById != null) o2.ApprovedBy = FindUser2(o2.ApprovedById, cache: cache);
             if (load && o2.AssignedToId != null) o2.AssignedTo = FindUser2(o2.AssignedToId, cache: cache);
-            if (load && o2.TemplateId != null) o2.Template = FindOrderTemplate2(o2.TemplateId, cache: cache);
+            if (load && o2.OpenedById != null) o2.OpenedBy = FindUser2(o2.OpenedById, cache: cache);
             if (load && o2.VendorId != null) o2.Vendor = FindOrganization2(o2.VendorId, cache: cache);
+            if (load && o2.FiscalYearId != null) o2.FiscalYear = FindFiscalYear2(o2.FiscalYearId, cache: cache);
             if (load && o2.CreationUserId != null) o2.CreationUser = FindUser2(o2.CreationUserId, cache: cache);
             if (load && o2.LastWriteUserId != null) o2.LastWriteUser = FindUser2(o2.LastWriteUserId, cache: cache);
             var i = 0;
@@ -6340,14 +6375,6 @@ namespace FolioLibrary
             if (load && oi2.CreationUserId != null) oi2.CreationUser = FindUser2(oi2.CreationUserId, cache: cache);
             if (load && oi2.LastWriteUserId != null) oi2.LastWriteUser = FindUser2(oi2.LastWriteUserId, cache: cache);
             var i = 0;
-            if (oi2.OrderItemAlerts != null) foreach (var oia in oi2.OrderItemAlerts)
-                {
-                    oia.Id = (++i).ToString();
-                    oia.OrderItemId = oi2.Id;
-                    oia.OrderItem = oi2;
-                    if (load && oia.AlertId != null) oia.Alert = FindAlert2(oia.AlertId, cache: cache);
-                }
-            i = 0;
             if (oi2.OrderItemClaims != null) foreach (var oic in oi2.OrderItemClaims)
                 {
                     oic.Id = (++i).ToString();
@@ -6403,14 +6430,6 @@ namespace FolioLibrary
                     oirn.Id = (++i).ToString();
                     oirn.OrderItemId = oi2.Id;
                     oirn.OrderItem = oi2;
-                }
-            i = 0;
-            if (oi2.OrderItemReportingCodes != null) foreach (var oirc in oi2.OrderItemReportingCodes)
-                {
-                    oirc.Id = (++i).ToString();
-                    oirc.OrderItemId = oi2.Id;
-                    oirc.OrderItem = oi2;
-                    if (load && oirc.ReportingCodeId != null) oirc.ReportingCode = FindReportingCode2(oirc.ReportingCodeId, cache: cache);
                 }
             i = 0;
             if (oi2.OrderItemSearchLocations != null) foreach (var oisl in oi2.OrderItemSearchLocations)
@@ -6473,69 +6492,6 @@ namespace FolioLibrary
         }
 
         public void DeleteOrderItem2(Guid? id) => FolioServiceClient.DeleteOrderItem(id?.ToString());
-
-        public bool AnyOrderTemplate2s(string where = null) => FolioServiceClient.AnyOrderTemplates(where);
-
-        public int CountOrderTemplate2s(string where = null) => FolioServiceClient.CountOrderTemplates(where);
-
-        public OrderTemplate2[] OrderTemplate2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
-        {
-            return FolioServiceClient.OrderTemplates(out count, where, orderBy, skip, take).Select(jo =>
-            {
-                var id = Guid.Parse((string)jo["id"]);
-                var ot2 = cache ? (OrderTemplate2)(objects.ContainsKey(id) ? objects[id] : objects[id] = OrderTemplate2.FromJObject(jo)) : OrderTemplate2.FromJObject(jo);
-                return ot2;
-            }).ToArray();
-        }
-
-        public IEnumerable<OrderTemplate2> OrderTemplate2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
-        {
-            foreach (var jo in FolioServiceClient.OrderTemplates(where, orderBy, skip, take))
-            {
-                var id = Guid.Parse((string)jo["id"]);
-                var ot2 = cache ? (OrderTemplate2)(objects.ContainsKey(id) ? objects[id] : objects[id] = OrderTemplate2.FromJObject(jo)) : OrderTemplate2.FromJObject(jo);
-                yield return ot2;
-            }
-        }
-
-        public OrderTemplate2 FindOrderTemplate2(Guid? id, bool load = false, bool cache = true) => OrderTemplate2.FromJObject(FolioServiceClient.GetOrderTemplate(id?.ToString()));
-
-        public void Insert(OrderTemplate2 orderTemplate2)
-        {
-            if (orderTemplate2.Id == null) orderTemplate2.Id = Guid.NewGuid();
-            FolioServiceClient.InsertOrderTemplate(orderTemplate2.ToJObject());
-        }
-
-        public void Update(OrderTemplate2 orderTemplate2) => FolioServiceClient.UpdateOrderTemplate(orderTemplate2.ToJObject());
-
-        public void UpdateOrInsert(OrderTemplate2 orderTemplate2)
-        {
-            if (orderTemplate2.Id == null)
-                Insert(orderTemplate2);
-            else
-                try
-                {
-                    Update(orderTemplate2);
-                }
-                catch (HttpRequestException e)
-                {
-                    if (e.Message.Contains("NotFound")) Insert(orderTemplate2); else throw;
-                }
-        }
-
-        public void InsertOrUpdate(OrderTemplate2 orderTemplate2)
-        {
-            try
-            {
-                Insert(orderTemplate2);
-            }
-            catch (HttpRequestException e)
-            {
-                if (e.Message.Contains("duplicate key")) Update(orderTemplate2); else throw;
-            }
-        }
-
-        public void DeleteOrderTemplate2(Guid? id) => FolioServiceClient.DeleteOrderTemplate(id?.ToString());
 
         public bool AnyOrganization2s(string where = null) => FolioServiceClient.AnyOrganizations(where);
 
@@ -7503,69 +7459,6 @@ namespace FolioLibrary
 
         public void DeletePrecedingSucceedingTitle2(Guid? id) => FolioServiceClient.DeletePrecedingSucceedingTitle(id?.ToString());
 
-        public bool AnyPrefix2s(string where = null) => FolioServiceClient.AnyPrefixes(where);
-
-        public int CountPrefix2s(string where = null) => FolioServiceClient.CountPrefixes(where);
-
-        public Prefix2[] Prefix2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
-        {
-            return FolioServiceClient.Prefixes(out count, where, orderBy, skip, take).Select(jo =>
-            {
-                var id = Guid.Parse((string)jo["id"]);
-                var p2 = cache ? (Prefix2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Prefix2.FromJObject(jo)) : Prefix2.FromJObject(jo);
-                return p2;
-            }).ToArray();
-        }
-
-        public IEnumerable<Prefix2> Prefix2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
-        {
-            foreach (var jo in FolioServiceClient.Prefixes(where, orderBy, skip, take))
-            {
-                var id = Guid.Parse((string)jo["id"]);
-                var p2 = cache ? (Prefix2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Prefix2.FromJObject(jo)) : Prefix2.FromJObject(jo);
-                yield return p2;
-            }
-        }
-
-        public Prefix2 FindPrefix2(Guid? id, bool load = false, bool cache = true) => Prefix2.FromJObject(FolioServiceClient.GetPrefix(id?.ToString()));
-
-        public void Insert(Prefix2 prefix2)
-        {
-            if (prefix2.Id == null) prefix2.Id = Guid.NewGuid();
-            FolioServiceClient.InsertPrefix(prefix2.ToJObject());
-        }
-
-        public void Update(Prefix2 prefix2) => FolioServiceClient.UpdatePrefix(prefix2.ToJObject());
-
-        public void UpdateOrInsert(Prefix2 prefix2)
-        {
-            if (prefix2.Id == null)
-                Insert(prefix2);
-            else
-                try
-                {
-                    Update(prefix2);
-                }
-                catch (HttpRequestException e)
-                {
-                    if (e.Message.Contains("NotFound")) Insert(prefix2); else throw;
-                }
-        }
-
-        public void InsertOrUpdate(Prefix2 prefix2)
-        {
-            try
-            {
-                Insert(prefix2);
-            }
-            catch (HttpRequestException e)
-            {
-                if (e.Message.Contains("duplicate key")) Update(prefix2); else throw;
-            }
-        }
-
-        public void DeletePrefix2(Guid? id) => FolioServiceClient.DeletePrefix(id?.ToString());
-
         public bool AnyPrinters(string where = null) => FolioServiceClient.AnyPrinters(where);
 
         public int CountPrinters(string where = null) => FolioServiceClient.CountPrinters(where);
@@ -8192,69 +8085,6 @@ namespace FolioLibrary
         }
 
         public void DeleteRelationshipType(Guid? id) => FolioServiceClient.DeleteInstanceRelationshipType(id?.ToString());
-
-        public bool AnyReportingCode2s(string where = null) => FolioServiceClient.AnyReportingCodes(where);
-
-        public int CountReportingCode2s(string where = null) => FolioServiceClient.CountReportingCodes(where);
-
-        public ReportingCode2[] ReportingCode2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
-        {
-            return FolioServiceClient.ReportingCodes(out count, where, orderBy, skip, take).Select(jo =>
-            {
-                var id = Guid.Parse((string)jo["id"]);
-                var rc2 = cache ? (ReportingCode2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ReportingCode2.FromJObject(jo)) : ReportingCode2.FromJObject(jo);
-                return rc2;
-            }).ToArray();
-        }
-
-        public IEnumerable<ReportingCode2> ReportingCode2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
-        {
-            foreach (var jo in FolioServiceClient.ReportingCodes(where, orderBy, skip, take))
-            {
-                var id = Guid.Parse((string)jo["id"]);
-                var rc2 = cache ? (ReportingCode2)(objects.ContainsKey(id) ? objects[id] : objects[id] = ReportingCode2.FromJObject(jo)) : ReportingCode2.FromJObject(jo);
-                yield return rc2;
-            }
-        }
-
-        public ReportingCode2 FindReportingCode2(Guid? id, bool load = false, bool cache = true) => ReportingCode2.FromJObject(FolioServiceClient.GetReportingCode(id?.ToString()));
-
-        public void Insert(ReportingCode2 reportingCode2)
-        {
-            if (reportingCode2.Id == null) reportingCode2.Id = Guid.NewGuid();
-            FolioServiceClient.InsertReportingCode(reportingCode2.ToJObject());
-        }
-
-        public void Update(ReportingCode2 reportingCode2) => FolioServiceClient.UpdateReportingCode(reportingCode2.ToJObject());
-
-        public void UpdateOrInsert(ReportingCode2 reportingCode2)
-        {
-            if (reportingCode2.Id == null)
-                Insert(reportingCode2);
-            else
-                try
-                {
-                    Update(reportingCode2);
-                }
-                catch (HttpRequestException e)
-                {
-                    if (e.Message.Contains("NotFound")) Insert(reportingCode2); else throw;
-                }
-        }
-
-        public void InsertOrUpdate(ReportingCode2 reportingCode2)
-        {
-            try
-            {
-                Insert(reportingCode2);
-            }
-            catch (HttpRequestException e)
-            {
-                if (e.Message.Contains("duplicate key")) Update(reportingCode2); else throw;
-            }
-        }
-
-        public void DeleteReportingCode2(Guid? id) => FolioServiceClient.DeleteReportingCode(id?.ToString());
 
         public bool AnyRequest2s(string where = null) => FolioServiceClient.AnyRequests(where);
 
@@ -9669,68 +9499,155 @@ namespace FolioLibrary
 
         public void DeleteStatus(Guid? id) => FolioServiceClient.DeleteInstanceStatus(id?.ToString());
 
-        public bool AnySuffix2s(string where = null) => FolioServiceClient.AnySuffixes(where);
+        public bool AnySubjectSource2s(string where = null) => FolioServiceClient.AnySubjectSources(where);
 
-        public int CountSuffix2s(string where = null) => FolioServiceClient.CountSuffixes(where);
+        public int CountSubjectSource2s(string where = null) => FolioServiceClient.CountSubjectSources(where);
 
-        public Suffix2[] Suffix2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
+        public SubjectSource2[] SubjectSource2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
         {
-            return FolioServiceClient.Suffixes(out count, where, orderBy, skip, take).Select(jo =>
+            return FolioServiceClient.SubjectSources(out count, where, orderBy, skip, take).Select(jo =>
             {
                 var id = Guid.Parse((string)jo["id"]);
-                var s2 = cache ? (Suffix2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Suffix2.FromJObject(jo)) : Suffix2.FromJObject(jo);
-                return s2;
+                var ss2 = cache ? (SubjectSource2)(objects.ContainsKey(id) ? objects[id] : objects[id] = SubjectSource2.FromJObject(jo)) : SubjectSource2.FromJObject(jo);
+                if (load && ss2.CreationUserId != null) ss2.CreationUser = FindUser2(ss2.CreationUserId, cache: cache);
+                if (load && ss2.LastWriteUserId != null) ss2.LastWriteUser = FindUser2(ss2.LastWriteUserId, cache: cache);
+                return ss2;
             }).ToArray();
         }
 
-        public IEnumerable<Suffix2> Suffix2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        public IEnumerable<SubjectSource2> SubjectSource2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
         {
-            foreach (var jo in FolioServiceClient.Suffixes(where, orderBy, skip, take))
+            foreach (var jo in FolioServiceClient.SubjectSources(where, orderBy, skip, take))
             {
                 var id = Guid.Parse((string)jo["id"]);
-                var s2 = cache ? (Suffix2)(objects.ContainsKey(id) ? objects[id] : objects[id] = Suffix2.FromJObject(jo)) : Suffix2.FromJObject(jo);
-                yield return s2;
+                var ss2 = cache ? (SubjectSource2)(objects.ContainsKey(id) ? objects[id] : objects[id] = SubjectSource2.FromJObject(jo)) : SubjectSource2.FromJObject(jo);
+                if (load && ss2.CreationUserId != null) ss2.CreationUser = FindUser2(ss2.CreationUserId, cache: cache);
+                if (load && ss2.LastWriteUserId != null) ss2.LastWriteUser = FindUser2(ss2.LastWriteUserId, cache: cache);
+                yield return ss2;
             }
         }
 
-        public Suffix2 FindSuffix2(Guid? id, bool load = false, bool cache = true) => Suffix2.FromJObject(FolioServiceClient.GetSuffix(id?.ToString()));
-
-        public void Insert(Suffix2 suffix2)
+        public SubjectSource2 FindSubjectSource2(Guid? id, bool load = false, bool cache = true)
         {
-            if (suffix2.Id == null) suffix2.Id = Guid.NewGuid();
-            FolioServiceClient.InsertSuffix(suffix2.ToJObject());
+            if (id == null) return null;
+            var ss2 = cache ? (SubjectSource2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = SubjectSource2.FromJObject(FolioServiceClient.GetSubjectSource(id?.ToString()))) : SubjectSource2.FromJObject(FolioServiceClient.GetSubjectSource(id?.ToString()));
+            if (ss2 == null) return null;
+            if (load && ss2.CreationUserId != null) ss2.CreationUser = FindUser2(ss2.CreationUserId, cache: cache);
+            if (load && ss2.LastWriteUserId != null) ss2.LastWriteUser = FindUser2(ss2.LastWriteUserId, cache: cache);
+            return ss2;
         }
 
-        public void Update(Suffix2 suffix2) => FolioServiceClient.UpdateSuffix(suffix2.ToJObject());
-
-        public void UpdateOrInsert(Suffix2 suffix2)
+        public void Insert(SubjectSource2 subjectSource2)
         {
-            if (suffix2.Id == null)
-                Insert(suffix2);
+            if (subjectSource2.Id == null) subjectSource2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertSubjectSource(subjectSource2.ToJObject());
+        }
+
+        public void Update(SubjectSource2 subjectSource2) => FolioServiceClient.UpdateSubjectSource(subjectSource2.ToJObject());
+
+        public void UpdateOrInsert(SubjectSource2 subjectSource2)
+        {
+            if (subjectSource2.Id == null)
+                Insert(subjectSource2);
             else
                 try
                 {
-                    Update(suffix2);
+                    Update(subjectSource2);
                 }
                 catch (HttpRequestException e)
                 {
-                    if (e.Message.Contains("NotFound")) Insert(suffix2); else throw;
+                    if (e.Message.Contains("NotFound")) Insert(subjectSource2); else throw;
                 }
         }
 
-        public void InsertOrUpdate(Suffix2 suffix2)
+        public void InsertOrUpdate(SubjectSource2 subjectSource2)
         {
             try
             {
-                Insert(suffix2);
+                Insert(subjectSource2);
             }
             catch (HttpRequestException e)
             {
-                if (e.Message.Contains("duplicate key")) Update(suffix2); else throw;
+                if (e.Message.Contains("duplicate key")) Update(subjectSource2); else throw;
             }
         }
 
-        public void DeleteSuffix2(Guid? id) => FolioServiceClient.DeleteSuffix(id?.ToString());
+        public void DeleteSubjectSource2(Guid? id) => FolioServiceClient.DeleteSubjectSource(id?.ToString());
+
+        public bool AnySubjectType2s(string where = null) => FolioServiceClient.AnySubjectTypes(where);
+
+        public int CountSubjectType2s(string where = null) => FolioServiceClient.CountSubjectTypes(where);
+
+        public SubjectType2[] SubjectType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
+        {
+            return FolioServiceClient.SubjectTypes(out count, where, orderBy, skip, take).Select(jo =>
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var st2 = cache ? (SubjectType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = SubjectType2.FromJObject(jo)) : SubjectType2.FromJObject(jo);
+                if (load && st2.CreationUserId != null) st2.CreationUser = FindUser2(st2.CreationUserId, cache: cache);
+                if (load && st2.LastWriteUserId != null) st2.LastWriteUser = FindUser2(st2.LastWriteUserId, cache: cache);
+                return st2;
+            }).ToArray();
+        }
+
+        public IEnumerable<SubjectType2> SubjectType2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        {
+            foreach (var jo in FolioServiceClient.SubjectTypes(where, orderBy, skip, take))
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var st2 = cache ? (SubjectType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = SubjectType2.FromJObject(jo)) : SubjectType2.FromJObject(jo);
+                if (load && st2.CreationUserId != null) st2.CreationUser = FindUser2(st2.CreationUserId, cache: cache);
+                if (load && st2.LastWriteUserId != null) st2.LastWriteUser = FindUser2(st2.LastWriteUserId, cache: cache);
+                yield return st2;
+            }
+        }
+
+        public SubjectType2 FindSubjectType2(Guid? id, bool load = false, bool cache = true)
+        {
+            if (id == null) return null;
+            var st2 = cache ? (SubjectType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = SubjectType2.FromJObject(FolioServiceClient.GetSubjectType(id?.ToString()))) : SubjectType2.FromJObject(FolioServiceClient.GetSubjectType(id?.ToString()));
+            if (st2 == null) return null;
+            if (load && st2.CreationUserId != null) st2.CreationUser = FindUser2(st2.CreationUserId, cache: cache);
+            if (load && st2.LastWriteUserId != null) st2.LastWriteUser = FindUser2(st2.LastWriteUserId, cache: cache);
+            return st2;
+        }
+
+        public void Insert(SubjectType2 subjectType2)
+        {
+            if (subjectType2.Id == null) subjectType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertSubjectType(subjectType2.ToJObject());
+        }
+
+        public void Update(SubjectType2 subjectType2) => FolioServiceClient.UpdateSubjectType(subjectType2.ToJObject());
+
+        public void UpdateOrInsert(SubjectType2 subjectType2)
+        {
+            if (subjectType2.Id == null)
+                Insert(subjectType2);
+            else
+                try
+                {
+                    Update(subjectType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(subjectType2); else throw;
+                }
+        }
+
+        public void InsertOrUpdate(SubjectType2 subjectType2)
+        {
+            try
+            {
+                Insert(subjectType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(subjectType2); else throw;
+            }
+        }
+
+        public void DeleteSubjectType2(Guid? id) => FolioServiceClient.DeleteSubjectType(id?.ToString());
 
         public bool AnyTag2s(string where = null) => FolioServiceClient.AnyTags(where);
 

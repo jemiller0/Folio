@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "An instance date type that indicates the type of dates given in Date 1 and Date 2",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "Unique ID of the instance date type; a UUID",
+      "readonly": true,
+      "type": "string"
+    },
+    "name": {
+      "description": "Name of the instance date type",
+      "readonly": true,
+      "type": "string"
+    },
+    "code": {
+      "description": "Code of the instance date type",
+      "readonly": true,
+      "type": "string",
+      "maxLength": 1
+    },
+    "displayFormat": {
+      "description": "Describes how to format Date 1 and Date 2",
+      "readonly": true,
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "delimiter": {
+          "description": "Delimiter that will be used to format Date 1 and Date 2",
+          "example": ",",
+          "readonly": true,
+          "type": "string"
+        },
+        "keepDelimiter": {
+          "description": "Define if formated date string should keep delimiter if one of dates is not exist",
+          "example": false,
+          "readonly": true,
+          "type": "boolean"
+        }
+      }
+    },
+    "source": {
+      "description": "label indicating where the instance date type entry originates from, i.e. 'folio' or 'local'",
+      "readonly": true,
+      "type": "string",
+      "enum": [
+        "folio",
+        "local"
+      ]
+    },
+    "metadata": {
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate"
+      ]
+    }
+  }
+}

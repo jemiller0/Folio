@@ -38,6 +38,7 @@
                                 <asp:HyperLink ID="CampusHyperLink" runat="server" Text='<%#: Eval("Campus.Name") %>' NavigateUrl='<%# $"~/Campus2s/Edit.aspx?Id={Eval("CampusId")}" %>' Enabled='<%# Session["Campus2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
+                        <telerik:GridBoundColumn HeaderText="Is Shadow" DataField="IsShadow" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridTemplateColumn HeaderText="Creation User" DataField="CreationUser.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>

@@ -177,6 +177,10 @@
         "fieldFormat"
       ]
     },
+    "displayInAccordion": {
+      "description": "Display in accordion names for the custom field",
+      "type": "string"
+    },
     "metadata": {
       "title": "Metadata Schema",
       "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",

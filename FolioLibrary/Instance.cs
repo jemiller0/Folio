@@ -58,6 +58,12 @@ namespace FolioLibrary
         [Column("complete_updated_date"), DataType(DataType.DateTime), Display(Name = "Completion Time", Order = 11), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true)]
         public virtual DateTime? CompletionTime { get; set; }
 
+        [Column("dates_datetypeid"), Display(Name = "Date Type", Order = 12), ForeignKey("DateType")]
+        public virtual Guid? DatesDatetypeid { get; set; }
+
+        [Display(Name = "Date Type", Order = 13)]
+        public virtual DateType DateType { get; set; }
+
         [ScaffoldColumn(false)]
         public virtual ICollection<Holding> Holdings { get; set; }
 
@@ -67,7 +73,7 @@ namespace FolioLibrary
         [ScaffoldColumn(false)]
         public virtual ICollection<InstanceRelationship> InstanceRelationships1 { get; set; }
 
-        [Display(Name = "Instance Source Marc", Order = 15)]
+        [Display(Name = "Instance Source Marc", Order = 17)]
         public virtual InstanceSourceMarc InstanceSourceMarc { get; set; }
 
         [ScaffoldColumn(false)]
@@ -76,7 +82,7 @@ namespace FolioLibrary
         [ScaffoldColumn(false)]
         public virtual ICollection<PrecedingSucceedingTitle> PrecedingSucceedingTitles1 { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Instancestatusid)} = {Instancestatusid}, {nameof(Modeofissuanceid)} = {Modeofissuanceid}, {nameof(Instancetypeid)} = {Instancetypeid}, {nameof(CompletionTime)} = {CompletionTime} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(Instancestatusid)} = {Instancestatusid}, {nameof(Modeofissuanceid)} = {Modeofissuanceid}, {nameof(Instancetypeid)} = {Instancetypeid}, {nameof(CompletionTime)} = {CompletionTime}, {nameof(DatesDatetypeid)} = {DatesDatetypeid} }}";
 
         public static Instance FromJObject(JObject jObject) => jObject != null ? new Instance
         {

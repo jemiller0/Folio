@@ -13,6 +13,10 @@ namespace FolioWebApplication.CallNumberType2s
 
         protected RadGrid Holding2sRadGrid;
 
+        protected Panel HoldingAdditionalCallNumbersPanel;
+
+        protected RadGrid HoldingAdditionalCallNumbersRadGrid;
+
         protected Panel Item2sPanel;
 
         protected RadGrid Item2sRadGrid;
@@ -20,6 +24,10 @@ namespace FolioWebApplication.CallNumberType2s
         protected Panel Item2s1Panel;
 
         protected RadGrid Item2s1RadGrid;
+
+        protected Panel ItemAdditionalCallNumbersPanel;
+
+        protected RadGrid ItemAdditionalCallNumbersRadGrid;
 
         protected RadAjaxManager RadAjaxManager1;
     }

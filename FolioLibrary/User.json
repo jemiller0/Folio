@@ -59,6 +59,11 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "pronouns": {
+          "description": "The user's pronouns",
+          "type": "string",
+          "maxLength": 300
+        },
         "lastName": {
           "description": "The user's surname",
           "type": "string"
@@ -146,7 +151,7 @@
           "type": "string"
         },
         "profilePictureLink": {
-          "description": "Link to the profile picture",
+          "description": "Link to the profile picture, or only the id of the /users/profile-picture entry",
           "type": "string",
           "format": "uri"
         }

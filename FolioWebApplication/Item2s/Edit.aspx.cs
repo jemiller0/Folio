@@ -142,6 +142,17 @@ namespace FolioWebApplication.Item2s
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }
 
+        protected void ItemAdditionalCallNumbersRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["ItemAdditionalCallNumbersPermission"] == null) return;
+            var id = (Guid?)Item2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindItem2(id, true).ItemAdditionalCallNumbers ?? new ItemAdditionalCallNumber[] { };
+            ItemAdditionalCallNumbersRadGrid.DataSource = l;
+            ItemAdditionalCallNumbersRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            ItemAdditionalCallNumbersPanel.Visible = Item2FormView.DataKey.Value != null && ((string)Session["ItemAdditionalCallNumbersPermission"] == "Edit" || Session["ItemAdditionalCallNumbersPermission"] != null && l.Any());
+        }
+
         protected void ItemAdministrativeNotesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             if (Session["ItemAdministrativeNotesPermission"] == null) return;

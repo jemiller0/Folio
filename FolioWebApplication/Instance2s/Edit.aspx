@@ -33,6 +33,14 @@
                                     <asp:Literal ID="MatchKeyLiteral" runat="server" Text='<%#: Eval("MatchKey") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("SourceUri") != null %>'>
+                                <td>
+                                    <asp:Label ID="SourceUriLabel" runat="server" Text="Source URI:" AssociatedControlID="SourceUriHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="SourceUriHyperLink" runat="server" Text='<%#: Eval("SourceUri") %>' NavigateUrl='<%#: Eval("SourceUri") %>' Target="_blank" />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("Source") != null %>'>
                                 <td>
                                     <asp:Label ID="SourceLabel" runat="server" Text="Source:" AssociatedControlID="SourceLiteral" />
@@ -57,44 +65,28 @@
                                     <asp:Literal ID="AuthorLiteral" runat="server" Text='<%#: Eval("Author") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("PublicationStartYear") != null %>'>
+                            <tr runat="server" visible='<%# Eval("DateType") != null %>'>
                                 <td>
-                                    <asp:Label ID="PublicationStartYearLabel" runat="server" Text="Publication Start Year:" AssociatedControlID="PublicationStartYearLiteral" />
+                                    <asp:Label ID="DateTypeLabel" runat="server" Text="Date Type:" AssociatedControlID="DateTypeHyperLink" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="PublicationStartYearLiteral" runat="server" Text='<%#: Eval("PublicationStartYear") %>' />
-                                </td>
-                            </tr>
-                            <tr runat="server" visible='<%# Eval("PublicationEndYear") != null %>'>
-                                <td>
-                                    <asp:Label ID="PublicationEndYearLabel" runat="server" Text="Publication End Year:" AssociatedControlID="PublicationEndYearLiteral" />
-                                </td>
-                                <td>
-                                    <asp:Literal ID="PublicationEndYearLiteral" runat="server" Text='<%#: Eval("PublicationEndYear") %>' />
+                                    <asp:HyperLink ID="DateTypeHyperLink" runat="server" Text='<%#: Eval("DateType.Name") %>' NavigateUrl='<%# $"~/DateType2s/Edit.aspx?Id={Eval("DateTypeId")}" %>' Enabled='<%# Session["DateType2sPermission"] != null %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("DatesDateTypeId") != null %>'>
+                            <tr runat="server" visible='<%# Eval("Date1") != null %>'>
                                 <td>
-                                    <asp:Label ID="DatesDateTypeIdLabel" runat="server" Text="Dates Date Type Id:" AssociatedControlID="DatesDateTypeIdLiteral" />
+                                    <asp:Label ID="Date1Label" runat="server" Text="Date 1:" AssociatedControlID="Date1Literal" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="DatesDateTypeIdLiteral" runat="server" Text='<%#: Eval("DatesDateTypeId") %>' />
-                                </td>
-                            </tr>
-                            <tr runat="server" visible='<%# Eval("DatesDate1") != null %>'>
-                                <td>
-                                    <asp:Label ID="DatesDate1Label" runat="server" Text="Dates Date 1:" AssociatedControlID="DatesDate1Literal" />
-                                </td>
-                                <td>
-                                    <asp:Literal ID="DatesDate1Literal" runat="server" Text='<%#: Eval("DatesDate1") %>' />
+                                    <asp:Literal ID="Date1Literal" runat="server" Text='<%#: Eval("Date1") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("DatesDate2") != null %>'>
+                            <tr runat="server" visible='<%# Eval("Date2") != null %>'>
                                 <td>
-                                    <asp:Label ID="DatesDate2Label" runat="server" Text="Dates Date 2:" AssociatedControlID="DatesDate2Literal" />
+                                    <asp:Label ID="Date2Label" runat="server" Text="Date 2:" AssociatedControlID="Date2Literal" />
                                 </td>
                                 <td>
-                                    <asp:Literal ID="DatesDate2Literal" runat="server" Text='<%#: Eval("DatesDate2") %>' />
+                                    <asp:Literal ID="Date2Literal" runat="server" Text='<%#: Eval("Date2") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("InstanceType") != null %>'>
@@ -143,6 +135,14 @@
                                 </td>
                                 <td>
                                     <asp:Literal ID="DiscoverySuppressLiteral" runat="server" Text='<%#: Eval("DiscoverySuppress") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("Deleted") != null %>'>
+                                <td>
+                                    <asp:Label ID="DeletedLabel" runat="server" Text="Deleted:" AssociatedControlID="DeletedLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="DeletedLiteral" runat="server" Text='<%#: Eval("Deleted") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("SourceRecordFormat") != null %>'>
@@ -215,6 +215,14 @@
                                 </td>
                                 <td>
                                     <asp:Literal ID="CompletionTimeLiteral" runat="server" Text='<%# Eval("CompletionTime", "{0:g}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("DatesDatetypeid") != null %>'>
+                                <td>
+                                    <asp:Label ID="DatesDatetypeidLabel" runat="server" Text="Dates Datetypeid:" AssociatedControlID="DatesDatetypeidLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="DatesDatetypeidLiteral" runat="server" Text='<%#: Eval("DatesDatetypeid") %>' />
                                 </td>
                             </tr>
                         </table>
@@ -553,6 +561,7 @@
                                                     <asp:HyperLink ID="ShortIdHyperLink" runat="server" Text='<%# Eval("ShortId") ?? "&nbsp;" %>' NavigateUrl='<%# $"~/Item2s/Edit.aspx?Id={Eval("Id")}" %>' />
                                                 </ItemTemplate>
                                             </telerik:GridTemplateColumn>
+                                            <telerik:GridBoundColumn HeaderText="Order" DataField="Order" AutoPostBackOnFilter="true" />
                                             <telerik:GridBoundColumn HeaderText="Discovery Suppress" DataField="DiscoverySuppress" AutoPostBackOnFilter="true" />
                                             <telerik:GridBoundColumn HeaderText="Display Summary" DataField="DisplaySummary" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                                             <telerik:GridBoundColumn HeaderText="Accession Number" DataField="AccessionNumber" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -859,7 +868,7 @@
                         <telerik:GridBoundColumn HeaderText="Eresource Create Inventory" DataField="EresourceCreateInventory" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Eresource Trial" DataField="EresourceTrial" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Eresource Expected Activation Date" DataField="EresourceExpectedActivationDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
-                        <telerik:GridBoundColumn HeaderText="Eresource User Limit" DataField="EresourceUserLimit" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Eresource User Limit" DataField="EresourceUserLimit" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridTemplateColumn HeaderText="Eresource Access Provider" DataField="EresourceAccessProvider.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="EresourceAccessProviderHyperLink" runat="server" Text='<%#: Eval("EresourceAccessProvider.Name") %>' NavigateUrl='<%# $"~/Organization2s/Edit.aspx?Id={Eval("EresourceAccessProviderId")}" %>' Enabled='<%# Session["Organization2sPermission"] != null %>' />
@@ -920,6 +929,7 @@
                         <telerik:GridBoundColumn HeaderText="Vendor Instructions" DataField="VendorInstructions" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Vendor Note" DataField="VendorNote" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Vendor Customer Id" DataField="VendorCustomerId" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Suppress Instance From Discovery" DataField="SuppressInstanceFromDiscovery" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridTemplateColumn HeaderText="Creation User" DataField="CreationUser.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
@@ -1338,10 +1348,14 @@
                         <telerik:GridBoundColumn HeaderText="Authority Id" DataField="AuthorityId" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo" />
                         <telerik:GridTemplateColumn HeaderText="Source" DataField="Source.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
-                                <asp:HyperLink ID="SourceHyperLink" runat="server" Text='<%#: Eval("SourceId") != null ? Eval("Source.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/Source2s/Edit.aspx?Id={Eval("SourceId")}" %>' Enabled='<%# Session["Source2sPermission"] != null %>' />
+                                <asp:HyperLink ID="SourceHyperLink" runat="server" Text='<%#: Eval("SourceId") != null ? Eval("Source.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/SubjectSource2s/Edit.aspx?Id={Eval("SourceId")}" %>' Enabled='<%# Session["SubjectSource2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
-                        <telerik:GridBoundColumn HeaderText="Type Id" DataField="TypeId" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo" />
+                        <telerik:GridTemplateColumn HeaderText="Type" DataField="Type.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="TypeHyperLink" runat="server" Text='<%#: Eval("TypeId") != null ? Eval("Type.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/SubjectType2s/Edit.aspx?Id={Eval("TypeId")}" %>' Enabled='<%# Session["SubjectType2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>

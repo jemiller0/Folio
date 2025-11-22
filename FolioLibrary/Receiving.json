@@ -92,7 +92,8 @@
       "type": "string"
     },
     "receivingStatus": {
-      "description": "The status of this piece",
+      "description": "The status of a piece",
+      "javaName": "ReceivingStatus",
       "type": "string",
       "default": "Expected",
       "enum": [

@@ -63,6 +63,7 @@ namespace FolioWebApplication.User2s
             u2.Barcode = Global.Trim((string)e.NewValues["Barcode"]);
             u2.Active = (bool?)e.NewValues["Active"];
             u2.GroupId = (Guid?)Guid.Parse((string)e.NewValues["GroupId"]);
+            u2.Pronouns = Global.Trim((string)e.NewValues["Pronouns"]);
             u2.LastName = Global.Trim((string)e.NewValues["LastName"]);
             u2.FirstName = Global.Trim((string)e.NewValues["FirstName"]);
             u2.MiddleName = Global.Trim((string)e.NewValues["MiddleName"]);
@@ -150,6 +151,8 @@ namespace FolioWebApplication.User2s
                 if (folioServiceContext.AnyContributorType2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a contributor type");
                 if (folioServiceContext.AnyCustomField2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a custom field");
                 if (folioServiceContext.AnyCustomField2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a custom field");
+                if (folioServiceContext.AnyDateType2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a date type");
+                if (folioServiceContext.AnyDateType2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a date type");
                 if (folioServiceContext.AnyDepartment2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a department");
                 if (folioServiceContext.AnyDepartment2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a department");
                 if (folioServiceContext.AnyElectronicAccessRelationship2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a electronic access relationship");
@@ -239,6 +242,7 @@ namespace FolioWebApplication.User2s
                 if (folioServiceContext.AnyOrder2s($"assignedTo == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a order");
                 if (folioServiceContext.AnyOrder2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a order");
                 if (folioServiceContext.AnyOrder2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a order");
+                if (folioServiceContext.AnyOrder2s($"openedById == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a order");
                 if (folioServiceContext.AnyOrderItem2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a order item");
                 if (folioServiceContext.AnyOrderItem2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a order item");
                 if (folioServiceContext.AnyOrganization2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a organization");
@@ -316,6 +320,10 @@ namespace FolioWebApplication.User2s
                 if (folioServiceContext.AnyStatisticalCodeType2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a statistical code type");
                 if (folioServiceContext.AnyStatuses($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a status");
                 if (folioServiceContext.AnyStatuses($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a status");
+                if (folioServiceContext.AnySubjectSource2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a subject source");
+                if (folioServiceContext.AnySubjectSource2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a subject source");
+                if (folioServiceContext.AnySubjectType2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a subject type");
+                if (folioServiceContext.AnySubjectType2s($"metadata.updatedByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a subject type");
                 if (folioServiceContext.AnyTag2s($" == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a tag");
                 if (folioServiceContext.AnyTag2s($" == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a tag");
                 if (folioServiceContext.AnyTemplate2s($"metadata.createdByUserId == \"{id}\"")) throw new Exception("User cannot be deleted because it is being referenced by a template");
@@ -491,7 +499,7 @@ namespace FolioWebApplication.User2s
             if (Session["Invoice2sPermission"] == null) return;
             var id = (Guid?)User2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "AccountingCode", "accountingCode" }, { "AdjustmentsTotal", "adjustmentsTotal" }, { "ApprovedById", "approvedBy" }, { "ApprovalDate", "approvalDate" }, { "BatchGroupId", "batchGroupId" }, { "BillToId", "billTo" }, { "CheckSubscriptionOverlap", "chkSubscriptionOverlap" }, { "CancellationNote", "cancellationNote" }, { "Currency", "currency" }, { "Enclosure", "enclosureNeeded" }, { "ExchangeRate", "exchangeRate" }, { "ExportToAccounting", "exportToAccounting" }, { "Number", "folioInvoiceNo" }, { "InvoiceDate", "invoiceDate" }, { "LockTotal", "lockTotal" }, { "Note", "note" }, { "PaymentDueDate", "paymentDue" }, { "PaymentDate", "paymentDate" }, { "PaymentTerms", "paymentTerms" }, { "PaymentMethod", "paymentMethod" }, { "Status", "status" }, { "Source", "source" }, { "SubTotal", "subTotal" }, { "Total", "total" }, { "VendorInvoiceNumber", "vendorInvoiceNo" }, { "DisbursementNumber", "disbursementNumber" }, { "VoucherNumber", "voucherNumber" }, { "PaymentId", "paymentId" }, { "DisbursementDate", "disbursementDate" }, { "VendorId", "vendorId" }, { "FiscalYearId", "fiscalYearId" }, { "AccountNumber", "accountNo" }, { "ManualPayment", "manualPayment" }, { "NextInvoiceLineNumber", "nextInvoiceLineNumber" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "AccountingCode", "accountingCode" }, { "AdjustmentsTotal", "adjustmentsTotal" }, { "ApprovedById", "approvedBy" }, { "ApprovalDate", "approvalDate" }, { "BatchGroupId", "batchGroupId" }, { "BillToId", "billTo" }, { "CheckSubscriptionOverlap", "chkSubscriptionOverlap" }, { "CancellationNote", "cancellationNote" }, { "Currency", "currency" }, { "Enclosure", "enclosureNeeded" }, { "ExchangeRate", "exchangeRate" }, { "OperationMode", "operationMode" }, { "ExportToAccounting", "exportToAccounting" }, { "Number", "folioInvoiceNo" }, { "InvoiceDate", "invoiceDate" }, { "LockTotal", "lockTotal" }, { "Note", "note" }, { "PaymentDueDate", "paymentDue" }, { "PaymentDate", "paymentDate" }, { "PaymentTerms", "paymentTerms" }, { "PaymentMethod", "paymentMethod" }, { "Status", "status" }, { "Source", "source" }, { "SubTotal", "subTotal" }, { "Total", "total" }, { "VendorInvoiceNumber", "vendorInvoiceNo" }, { "DisbursementNumber", "disbursementNumber" }, { "VoucherNumber", "voucherNumber" }, { "PaymentId", "paymentId" }, { "DisbursementDate", "disbursementDate" }, { "VendorId", "vendorId" }, { "FiscalYearId", "fiscalYearId" }, { "AccountNumber", "accountNo" }, { "ManualPayment", "manualPayment" }, { "NextInvoiceLineNumber", "nextInvoiceLineNumber" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"approvedBy == \"{id}\"",
@@ -506,6 +514,7 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(Invoice2sRadGrid, "Currency", "currency"),
                 Global.GetCqlFilter(Invoice2sRadGrid, "Enclosure", "enclosureNeeded"),
                 Global.GetCqlFilter(Invoice2sRadGrid, "ExchangeRate", "exchangeRate"),
+                Global.GetCqlFilter(Invoice2sRadGrid, "OperationMode", "operationMode"),
                 Global.GetCqlFilter(Invoice2sRadGrid, "ExportToAccounting", "exportToAccounting"),
                 Global.GetCqlFilter(Invoice2sRadGrid, "Number", "folioInvoiceNo"),
                 Global.GetCqlFilter(Invoice2sRadGrid, "InvoiceDate", "invoiceDate"),
@@ -653,7 +662,7 @@ namespace FolioWebApplication.User2s
             if (Session["Order2sPermission"] == null) return;
             var id = (Guid?)User2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Approved", "approved" }, { "ApprovedById", "approvedById" }, { "ApprovalDate", "approvalDate" }, { "AssignedToId", "assignedTo" }, { "BillToId", "billTo" }, { "CloseReasonReason", "closeReason.reason" }, { "CloseReasonNote", "closeReason.note" }, { "OrderDate", "dateOrdered" }, { "Manual", "manualPo" }, { "Number", "poNumber" }, { "OrderType", "orderType" }, { "Reencumber", "reEncumber" }, { "OngoingInterval", "ongoing.interval" }, { "OngoingIsSubscription", "ongoing.isSubscription" }, { "OngoingManualRenewal", "ongoing.manualRenewal" }, { "OngoingNotes", "ongoing.notes" }, { "OngoingReviewPeriod", "ongoing.reviewPeriod" }, { "OngoingRenewalDate", "ongoing.renewalDate" }, { "OngoingReviewDate", "ongoing.reviewDate" }, { "ShipToId", "shipTo" }, { "TemplateId", "template" }, { "VendorId", "vendor" }, { "Status", "workflowStatus" }, { "NextPolNumber", "nextPolNumber" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Approved", "approved" }, { "ApprovedById", "approvedById" }, { "ApprovalDate", "approvalDate" }, { "AssignedToId", "assignedTo" }, { "BillToId", "billTo" }, { "CloseReasonReason", "closeReason.reason" }, { "CloseReasonNote", "closeReason.note" }, { "OpenedById", "openedById" }, { "OrderDate", "dateOrdered" }, { "Manual", "manualPo" }, { "Number", "poNumber" }, { "OrderType", "orderType" }, { "Reencumber", "reEncumber" }, { "OngoingInterval", "ongoing.interval" }, { "OngoingIsSubscription", "ongoing.isSubscription" }, { "OngoingManualRenewal", "ongoing.manualRenewal" }, { "OngoingNotes", "ongoing.notes" }, { "OngoingReviewPeriod", "ongoing.reviewPeriod" }, { "OngoingRenewalDate", "ongoing.renewalDate" }, { "OngoingReviewDate", "ongoing.reviewDate" }, { "ShipToId", "shipTo" }, { "VendorId", "vendor" }, { "Status", "workflowStatus" }, { "NextNumber", "nextPolNumber" }, { "FiscalYearId", "fiscalYearId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"approvedById == \"{id}\"",
@@ -663,6 +672,7 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(Order2sRadGrid, "AssignedTo.Username", "assignedTo", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Order2sRadGrid, "CloseReasonReason", "closeReason.reason"),
                 Global.GetCqlFilter(Order2sRadGrid, "CloseReasonNote", "closeReason.note"),
+                Global.GetCqlFilter(Order2sRadGrid, "OpenedBy.Username", "openedById", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Order2sRadGrid, "OrderDate", "dateOrdered"),
                 Global.GetCqlFilter(Order2sRadGrid, "Manual", "manualPo"),
                 Global.GetCqlFilter(Order2sRadGrid, "Number", "poNumber"),
@@ -675,10 +685,10 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(Order2sRadGrid, "OngoingReviewPeriod", "ongoing.reviewPeriod"),
                 Global.GetCqlFilter(Order2sRadGrid, "OngoingRenewalDate", "ongoing.renewalDate"),
                 Global.GetCqlFilter(Order2sRadGrid, "OngoingReviewDate", "ongoing.reviewDate"),
-                Global.GetCqlFilter(Order2sRadGrid, "Template.Name", "template", "templateName", folioServiceContext.FolioServiceClient.OrderTemplates),
                 Global.GetCqlFilter(Order2sRadGrid, "Vendor.Name", "vendor", "name", folioServiceContext.FolioServiceClient.Organizations),
                 Global.GetCqlFilter(Order2sRadGrid, "Status", "workflowStatus"),
-                Global.GetCqlFilter(Order2sRadGrid, "NextPolNumber", "nextPolNumber"),
+                Global.GetCqlFilter(Order2sRadGrid, "NextNumber", "nextPolNumber"),
+                Global.GetCqlFilter(Order2sRadGrid, "FiscalYear.Name", "fiscalYearId", "name", folioServiceContext.FolioServiceClient.FiscalYears),
                 Global.GetCqlFilter(Order2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(Order2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Order2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
@@ -699,7 +709,7 @@ namespace FolioWebApplication.User2s
             if (Session["Order2sPermission"] == null) return;
             var id = (Guid?)User2FormView.DataKey.Value;
             if (id == null) return;
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Approved", "approved" }, { "ApprovedById", "approvedById" }, { "ApprovalDate", "approvalDate" }, { "AssignedToId", "assignedTo" }, { "BillToId", "billTo" }, { "CloseReasonReason", "closeReason.reason" }, { "CloseReasonNote", "closeReason.note" }, { "OrderDate", "dateOrdered" }, { "Manual", "manualPo" }, { "Number", "poNumber" }, { "OrderType", "orderType" }, { "Reencumber", "reEncumber" }, { "OngoingInterval", "ongoing.interval" }, { "OngoingIsSubscription", "ongoing.isSubscription" }, { "OngoingManualRenewal", "ongoing.manualRenewal" }, { "OngoingNotes", "ongoing.notes" }, { "OngoingReviewPeriod", "ongoing.reviewPeriod" }, { "OngoingRenewalDate", "ongoing.renewalDate" }, { "OngoingReviewDate", "ongoing.reviewDate" }, { "ShipToId", "shipTo" }, { "TemplateId", "template" }, { "VendorId", "vendor" }, { "Status", "workflowStatus" }, { "NextPolNumber", "nextPolNumber" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Approved", "approved" }, { "ApprovedById", "approvedById" }, { "ApprovalDate", "approvalDate" }, { "AssignedToId", "assignedTo" }, { "BillToId", "billTo" }, { "CloseReasonReason", "closeReason.reason" }, { "CloseReasonNote", "closeReason.note" }, { "OpenedById", "openedById" }, { "OrderDate", "dateOrdered" }, { "Manual", "manualPo" }, { "Number", "poNumber" }, { "OrderType", "orderType" }, { "Reencumber", "reEncumber" }, { "OngoingInterval", "ongoing.interval" }, { "OngoingIsSubscription", "ongoing.isSubscription" }, { "OngoingManualRenewal", "ongoing.manualRenewal" }, { "OngoingNotes", "ongoing.notes" }, { "OngoingReviewPeriod", "ongoing.reviewPeriod" }, { "OngoingRenewalDate", "ongoing.renewalDate" }, { "OngoingReviewDate", "ongoing.reviewDate" }, { "ShipToId", "shipTo" }, { "VendorId", "vendor" }, { "Status", "workflowStatus" }, { "NextNumber", "nextPolNumber" }, { "FiscalYearId", "fiscalYearId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 $"assignedTo == \"{id}\"",
@@ -709,6 +719,7 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(Order2s1RadGrid, "ApprovalDate", "approvalDate"),
                 Global.GetCqlFilter(Order2s1RadGrid, "CloseReasonReason", "closeReason.reason"),
                 Global.GetCqlFilter(Order2s1RadGrid, "CloseReasonNote", "closeReason.note"),
+                Global.GetCqlFilter(Order2s1RadGrid, "OpenedBy.Username", "openedById", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Order2s1RadGrid, "OrderDate", "dateOrdered"),
                 Global.GetCqlFilter(Order2s1RadGrid, "Manual", "manualPo"),
                 Global.GetCqlFilter(Order2s1RadGrid, "Number", "poNumber"),
@@ -721,10 +732,10 @@ namespace FolioWebApplication.User2s
                 Global.GetCqlFilter(Order2s1RadGrid, "OngoingReviewPeriod", "ongoing.reviewPeriod"),
                 Global.GetCqlFilter(Order2s1RadGrid, "OngoingRenewalDate", "ongoing.renewalDate"),
                 Global.GetCqlFilter(Order2s1RadGrid, "OngoingReviewDate", "ongoing.reviewDate"),
-                Global.GetCqlFilter(Order2s1RadGrid, "Template.Name", "template", "templateName", folioServiceContext.FolioServiceClient.OrderTemplates),
                 Global.GetCqlFilter(Order2s1RadGrid, "Vendor.Name", "vendor", "name", folioServiceContext.FolioServiceClient.Organizations),
                 Global.GetCqlFilter(Order2s1RadGrid, "Status", "workflowStatus"),
-                Global.GetCqlFilter(Order2s1RadGrid, "NextPolNumber", "nextPolNumber"),
+                Global.GetCqlFilter(Order2s1RadGrid, "NextNumber", "nextPolNumber"),
+                Global.GetCqlFilter(Order2s1RadGrid, "FiscalYear.Name", "fiscalYearId", "name", folioServiceContext.FolioServiceClient.FiscalYears),
                 Global.GetCqlFilter(Order2s1RadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(Order2s1RadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(Order2s1RadGrid, "LastWriteTime", "metadata.updatedDate"),
@@ -736,6 +747,53 @@ namespace FolioWebApplication.User2s
             {
                 Order2s1RadGrid.AllowFilteringByColumn = Order2s1RadGrid.VirtualItemCount > 10;
                 Order2s1Panel.Visible = User2FormView.DataKey.Value != null && Session["Order2sPermission"] != null && Order2s1RadGrid.VirtualItemCount > 0;
+            }
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
+        }
+
+        protected void Order2s4RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["Order2sPermission"] == null) return;
+            var id = (Guid?)User2FormView.DataKey.Value;
+            if (id == null) return;
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Approved", "approved" }, { "ApprovedById", "approvedById" }, { "ApprovalDate", "approvalDate" }, { "AssignedToId", "assignedTo" }, { "BillToId", "billTo" }, { "CloseReasonReason", "closeReason.reason" }, { "CloseReasonNote", "closeReason.note" }, { "OpenedById", "openedById" }, { "OrderDate", "dateOrdered" }, { "Manual", "manualPo" }, { "Number", "poNumber" }, { "OrderType", "orderType" }, { "Reencumber", "reEncumber" }, { "OngoingInterval", "ongoing.interval" }, { "OngoingIsSubscription", "ongoing.isSubscription" }, { "OngoingManualRenewal", "ongoing.manualRenewal" }, { "OngoingNotes", "ongoing.notes" }, { "OngoingReviewPeriod", "ongoing.reviewPeriod" }, { "OngoingRenewalDate", "ongoing.renewalDate" }, { "OngoingReviewDate", "ongoing.reviewDate" }, { "ShipToId", "shipTo" }, { "VendorId", "vendor" }, { "Status", "workflowStatus" }, { "NextNumber", "nextPolNumber" }, { "FiscalYearId", "fiscalYearId" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var where = Global.Trim(string.Join(" and ", new string[]
+            {
+                $"openedById == \"{id}\"",
+                Global.GetCqlFilter(Order2s4RadGrid, "Id", "id"),
+                Global.GetCqlFilter(Order2s4RadGrid, "Approved", "approved"),
+                Global.GetCqlFilter(Order2s4RadGrid, "ApprovedBy.Username", "approvedById", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Order2s4RadGrid, "ApprovalDate", "approvalDate"),
+                Global.GetCqlFilter(Order2s4RadGrid, "AssignedTo.Username", "assignedTo", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Order2s4RadGrid, "CloseReasonReason", "closeReason.reason"),
+                Global.GetCqlFilter(Order2s4RadGrid, "CloseReasonNote", "closeReason.note"),
+                Global.GetCqlFilter(Order2s4RadGrid, "OrderDate", "dateOrdered"),
+                Global.GetCqlFilter(Order2s4RadGrid, "Manual", "manualPo"),
+                Global.GetCqlFilter(Order2s4RadGrid, "Number", "poNumber"),
+                Global.GetCqlFilter(Order2s4RadGrid, "OrderType", "orderType"),
+                Global.GetCqlFilter(Order2s4RadGrid, "Reencumber", "reEncumber"),
+                Global.GetCqlFilter(Order2s4RadGrid, "OngoingInterval", "ongoing.interval"),
+                Global.GetCqlFilter(Order2s4RadGrid, "OngoingIsSubscription", "ongoing.isSubscription"),
+                Global.GetCqlFilter(Order2s4RadGrid, "OngoingManualRenewal", "ongoing.manualRenewal"),
+                Global.GetCqlFilter(Order2s4RadGrid, "OngoingNotes", "ongoing.notes"),
+                Global.GetCqlFilter(Order2s4RadGrid, "OngoingReviewPeriod", "ongoing.reviewPeriod"),
+                Global.GetCqlFilter(Order2s4RadGrid, "OngoingRenewalDate", "ongoing.renewalDate"),
+                Global.GetCqlFilter(Order2s4RadGrid, "OngoingReviewDate", "ongoing.reviewDate"),
+                Global.GetCqlFilter(Order2s4RadGrid, "Vendor.Name", "vendor", "name", folioServiceContext.FolioServiceClient.Organizations),
+                Global.GetCqlFilter(Order2s4RadGrid, "Status", "workflowStatus"),
+                Global.GetCqlFilter(Order2s4RadGrid, "NextNumber", "nextPolNumber"),
+                Global.GetCqlFilter(Order2s4RadGrid, "FiscalYear.Name", "fiscalYearId", "name", folioServiceContext.FolioServiceClient.FiscalYears),
+                Global.GetCqlFilter(Order2s4RadGrid, "CreationTime", "metadata.createdDate"),
+                Global.GetCqlFilter(Order2s4RadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
+                Global.GetCqlFilter(Order2s4RadGrid, "LastWriteTime", "metadata.updatedDate"),
+                Global.GetCqlFilter(Order2s4RadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
+            }.Where(s => s != null)));
+            Order2s4RadGrid.DataSource = folioServiceContext.Order2s(where, Order2s4RadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[Order2s4RadGrid.MasterTableView.SortExpressions[0].FieldName]}{(Order2s4RadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, Order2s4RadGrid.PageSize * Order2s4RadGrid.CurrentPageIndex, Order2s4RadGrid.PageSize, true);
+            Order2s4RadGrid.VirtualItemCount = folioServiceContext.CountOrder2s(where);
+            if (Order2s4RadGrid.MasterTableView.FilterExpression == "")
+            {
+                Order2s4RadGrid.AllowFilteringByColumn = Order2s4RadGrid.VirtualItemCount > 10;
+                Order2s4Panel.Visible = User2FormView.DataKey.Value != null && Session["Order2sPermission"] != null && Order2s4RadGrid.VirtualItemCount > 0;
             }
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"where = {where}");
         }

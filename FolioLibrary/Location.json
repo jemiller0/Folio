@@ -157,6 +157,15 @@
             "Move_to_beginning_of_next_open_service_point_hours"
           ]
         },
+        "defaultCheckInActionForUseAtLocation": {
+          "description": "enum for defining the default action when checking in an item that is for use in the library (i.e. in reading room)",
+          "type": "string",
+          "enum": [
+            "Keep_on_hold_shelf",
+            "Close_loan_and_return_item",
+            "Ask_for_action"
+          ]
+        },
         "staffSlips": {
           "description": "List of staff slips for this service point",
           "type": "array",
@@ -259,6 +268,11 @@
       "items": {
         "$ref": "#/properties/primaryServicePointObject"
       }
+    },
+    "isShadow": {
+      "description": "Whether this location is a shadow location. Shadow locations are used to represent virtual locations that no items are assignable to them. They only relate to external libraries and virtual items.",
+      "type": "boolean",
+      "default": false
     },
     "metadata": {
       "title": "Metadata Schema",

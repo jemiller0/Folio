@@ -20,6 +20,10 @@
       "description": "ID of the holdings record the item is a member of.",
       "type": "string"
     },
+    "order": {
+      "description": "Order of the item in the holdings record.",
+      "type": "integer"
+    },
     "formerIds": {
       "description": "Previous identifiers assigned to the item",
       "type": "array",
@@ -49,6 +53,37 @@
       "readonly": true,
       "type": "string"
     },
+    "additionalCallNumbers": {
+      "description": "Additional Call Numbers to track the history of identifiers assigned to an item.",
+      "type": "array",
+      "items": {
+        "description": "A call number",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "typeId": {
+            "description": "The UUID format string",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+          },
+          "prefix": {
+            "description": "Prefix of the call number on the holding level.",
+            "type": "string"
+          },
+          "callNumber": {
+            "description": "Call Number is an identifier assigned to an item, usually printed on a label attached to the item.",
+            "type": "string"
+          },
+          "suffix": {
+            "description": "Suffix of the call number on the holding level.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "callNumber"
+        ]
+      }
+    },
     "itemLevelCallNumber": {
       "description": "Call Number is an identifier assigned to an item, usually printed on a label attached to the item. The call number is used to determine the items physical position in a shelving sequence, e.g. K1 .M44. The Item level call number, is the call number on item level.",
       "type": "string"
@@ -62,11 +97,13 @@
       "type": "string"
     },
     "itemLevelCallNumberTypeId": {
-      "description": "Identifies the source of the call number, e.g., LCC, Dewey, NLM, etc.",
-      "type": "string"
+      "description": "The UUID format string",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     },
     "effectiveCallNumberComponents": {
       "description": "Elements of a full call number generated from the item or holding",
+      "readonly": true,
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -86,9 +123,7 @@
           "type": "string"
         },
         "typeId": {
-          "description": "The UUID format string",
-          "type": "string",
-          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+          "$ref": "#/properties/itemLevelCallNumberTypeId"
         }
       }
     },
@@ -160,6 +195,7 @@
       "description": "Notes about action, copy, binding etc.",
       "type": "array",
       "items": {
+        "description": "An item note",
         "javaType": "org.folio.rest.jaxrs.model.ItemNote",
         "type": "object",
         "additionalProperties": false,
@@ -167,18 +203,6 @@
           "itemNoteTypeId": {
             "description": "ID of the type of note",
             "type": "string"
-          },
-          "itemNoteType": {
-            "description": "Type of item's note",
-            "folio:$ref": "itemnotetype.json",
-            "javaType": "org.folio.rest.jaxrs.model.itemNoteTypeVirtual",
-            "readonly": true,
-            "folio:isVirtual": true,
-            "folio:linkBase": "item-note-types",
-            "folio:linkFromField": "itemNoteTypeId",
-            "folio:linkToField": "id",
-            "folio:includedElement": "itemNoteTypes.0",
-            "type": "object"
           },
           "note": {
             "description": "Text content of the note",
@@ -196,6 +220,7 @@
       "description": "Notes to be displayed in circulation processes",
       "type": "array",
       "items": {
+        "description": "Note to be displayed in circulation processes",
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -349,12 +374,14 @@
       "type": "object"
     },
     "effectiveLocationId": {
-      "$ref": "#/properties/effectiveCallNumberComponents/properties/typeId"
+      "$ref": "#/properties/itemLevelCallNumberTypeId"
     },
     "electronicAccess": {
       "description": "References for accessing the item by URL.",
       "type": "array",
       "items": {
+        "description": "Electronic access item",
+        "javaType": "org.folio.rest.jaxrs.model.ElectronicAccessItem",
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -385,16 +412,13 @@
       }
     },
     "inTransitDestinationServicePointId": {
-      "description": "Service point an item is intended to be transited to (should only be present when in transit)",
-      "type": "string",
-      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      "$ref": "#/properties/itemLevelCallNumberTypeId"
     },
     "statisticalCodeIds": {
       "description": "List of statistical code IDs",
       "type": "array",
       "items": {
-        "type": "string",
-        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
+        "$ref": "#/properties/itemLevelCallNumberTypeId"
       },
       "uniqueItems": true
     },
@@ -478,10 +502,12 @@
           "format": "date-time"
         },
         "servicePointId": {
-          "$ref": "#/properties/effectiveCallNumberComponents/properties/typeId"
+          "description": "The UUID format string",
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
         },
         "staffMemberId": {
-          "$ref": "#/properties/effectiveCallNumberComponents/properties/typeId"
+          "$ref": "#/properties/lastCheckIn/properties/servicePointId"
         }
       }
     }

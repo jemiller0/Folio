@@ -39,12 +39,15 @@ namespace FolioLibrary
         public virtual Guid? AuthorityId { get; set; }
 
         [Display(Order = 6)]
-        public virtual Source2 Source { get; set; }
+        public virtual SubjectSource2 Source { get; set; }
 
         [Column("source_id"), Display(Name = "Source", Order = 7), JsonProperty("sourceId")]
         public virtual Guid? SourceId { get; set; }
 
-        [Column("type_id"), Display(Name = "Type Id", Order = 8), JsonProperty("typeId")]
+        [Display(Order = 8)]
+        public virtual SubjectType2 Type { get; set; }
+
+        [Column("type_id"), Display(Name = "Type", Order = 9), JsonProperty("typeId")]
         public virtual Guid? TypeId { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(InstanceId)} = {InstanceId}, {nameof(Name)} = {Name}, {nameof(AuthorityId)} = {AuthorityId}, {nameof(SourceId)} = {SourceId}, {nameof(TypeId)} = {TypeId} }}";

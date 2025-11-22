@@ -43,40 +43,43 @@ namespace FolioLibrary
         [Column("institution_id"), Display(Name = "Institution", Order = 5), JsonProperty("institutionId"), Required]
         public virtual Guid? InstitutionId { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 6), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("is_shadow"), Display(Name = "Is Shadow", Order = 6), JsonProperty("isShadow")]
+        public virtual bool? IsShadow { get; set; }
+
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 7), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 7), InverseProperty("Campus2s")]
+        [Display(Name = "Creation User", Order = 8), InverseProperty("Campus2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 8), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 9), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 10), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 11), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 11), InverseProperty("Campus2s1")]
+        [Display(Name = "Last Write User", Order = 12), InverseProperty("Campus2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 12), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 13), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Campus), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 14), Editable(false)]
+        [Column("content"), CustomValidation(typeof(Campus), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 15), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Librarys", Order = 15)]
+        [Display(Name = "Librarys", Order = 16)]
         public virtual ICollection<Library2> Library2s { get; set; }
 
-        [Display(Name = "Locations", Order = 16)]
+        [Display(Name = "Locations", Order = 17)]
         public virtual ICollection<Location2> Location2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Code)} = {Code}, {nameof(InstitutionId)} = {InstitutionId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Code)} = {Code}, {nameof(InstitutionId)} = {InstitutionId}, {nameof(IsShadow)} = {IsShadow}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
 
         public static Campus2 FromJObject(JObject jObject) => jObject != null ? new Campus2
         {
@@ -84,6 +87,7 @@ namespace FolioLibrary
             Name = (string)jObject.SelectToken("name"),
             Code = (string)jObject.SelectToken("code"),
             InstitutionId = (Guid?)jObject.SelectToken("institutionId"),
+            IsShadow = (bool?)jObject.SelectToken("isShadow"),
             CreationTime = (DateTime?)jObject.SelectToken("metadata.createdDate"),
             CreationUserId = (Guid?)jObject.SelectToken("metadata.createdByUserId"),
             CreationUserUsername = (string)jObject.SelectToken("metadata.createdByUsername"),
@@ -98,6 +102,7 @@ namespace FolioLibrary
             new JProperty("name", Name),
             new JProperty("code", Code),
             new JProperty("institutionId", InstitutionId),
+            new JProperty("isShadow", IsShadow),
             new JProperty("metadata", new JObject(
                 new JProperty("createdDate", CreationTime?.ToLocalTime()),
                 new JProperty("createdByUserId", CreationUserId),

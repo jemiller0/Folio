@@ -117,22 +117,6 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
-        public void Orders_CountAlertsTest()
-        {
-            var s = Stopwatch.StartNew();
-            var i = folioServiceClient.CountAlerts();
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountAlertsTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void Orders_QueryAlertsTest()
-        {
-            var s = Stopwatch.StartNew();
-            var l = folioServiceClient.Alerts(take: take).Select(jo => (string)jo["id"]).ToArray();
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"AlertsTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
         public void Inventory_CountAlternativeTitleTypesTest()
         {
             var s = Stopwatch.StartNew();
@@ -482,6 +466,22 @@ namespace FolioLibraryTest
             var s = Stopwatch.StartNew();
             var l = folioServiceClient.CustomFields(take: take).Select(jo => (string)jo["id"]).ToArray();
             traceSource.TraceEvent(TraceEventType.Information, 0, $"CustomFieldsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Inventory_CountDateTypesTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountDateTypes();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountDateTypesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Inventory_QueryDateTypesTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.DateTypes(take: take).Select(jo => (string)jo["id"]).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DateTypesTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -1237,22 +1237,6 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
-        public void Orders_CountOrderTemplatesTest()
-        {
-            var s = Stopwatch.StartNew();
-            var i = folioServiceClient.CountOrderTemplates();
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountOrderTemplatesTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void Orders_QueryOrderTemplatesTest()
-        {
-            var s = Stopwatch.StartNew();
-            var l = folioServiceClient.OrderTemplates(take: take).Select(jo => (string)jo["id"]).ToArray();
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderTemplatesTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
         public void Organizations_CountOrganizationsTest()
         {
             var s = Stopwatch.StartNew();
@@ -1429,22 +1413,6 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
-        public void Orders_CountPrefixesTest()
-        {
-            var s = Stopwatch.StartNew();
-            var i = folioServiceClient.CountPrefixes();
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountPrefixesTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void Orders_QueryPrefixesTest()
-        {
-            var s = Stopwatch.StartNew();
-            var l = folioServiceClient.Prefixes(take: take).Select(jo => (string)jo["id"]).ToArray();
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"PrefixesTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
         public void Users_CountProxiesTest()
         {
             var s = Stopwatch.StartNew();
@@ -1522,22 +1490,6 @@ namespace FolioLibraryTest
             var s = Stopwatch.StartNew();
             var l = folioServiceClient.RefundReasons(take: take).Select(jo => (string)jo["id"]).ToArray();
             traceSource.TraceEvent(TraceEventType.Information, 0, $"RefundReasonsTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void Orders_CountReportingCodesTest()
-        {
-            var s = Stopwatch.StartNew();
-            var i = folioServiceClient.CountReportingCodes();
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountReportingCodesTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void Orders_QueryReportingCodesTest()
-        {
-            var s = Stopwatch.StartNew();
-            var l = folioServiceClient.ReportingCodes(take: take).Select(jo => (string)jo["id"]).ToArray();
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"ReportingCodesTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -1765,19 +1717,35 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
-        public void Orders_CountSuffixesTest()
+        public void Inventory_CountSubjectSourcesTest()
         {
             var s = Stopwatch.StartNew();
-            var i = folioServiceClient.CountSuffixes();
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountSuffixesTest()\r\n    ElapsedTime={s.Elapsed}");
+            var i = folioServiceClient.CountSubjectSources();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountSubjectSourcesTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Orders_QuerySuffixesTest()
+        public void Inventory_QuerySubjectSourcesTest()
         {
             var s = Stopwatch.StartNew();
-            var l = folioServiceClient.Suffixes(take: take).Select(jo => (string)jo["id"]).ToArray();
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"SuffixesTest()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceClient.SubjectSources(take: take).Select(jo => (string)jo["id"]).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"SubjectSourcesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Inventory_CountSubjectTypesTest()
+        {
+            var s = Stopwatch.StartNew();
+            var i = folioServiceClient.CountSubjectTypes();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"CountSubjectTypesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Inventory_QuerySubjectTypesTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceClient.SubjectTypes(take: take).Select(jo => (string)jo["id"]).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"SubjectTypesTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -2138,20 +2106,6 @@ namespace FolioLibraryTest
                 Assert.IsNotNull(ap);
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeAgreementPeriodTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void Orders_DeserializeAlert2Test()
-        {
-            var s = Stopwatch.StartNew();
-            var jo = folioServiceClient.Alerts(take: 1).SingleOrDefault();
-            if (jo != null)
-            {
-                var a2 = JsonConvert.DeserializeObject<Alert2>(jo.ToString());
-                traceSource.TraceEvent(TraceEventType.Information, 0, a2.ToString());
-                Assert.IsNotNull(a2);
-            }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeAlert2Test()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -2729,6 +2683,20 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void Inventory_DeserializeDateType2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.DateTypes(take: 1).SingleOrDefault();
+            if (jo != null)
+            {
+                var dt2 = JsonConvert.DeserializeObject<DateType2>(jo.ToString());
+                traceSource.TraceEvent(TraceEventType.Information, 0, dt2.ToString());
+                Assert.IsNotNull(dt2);
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeDateType2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void Users_DeserializeDepartment2Test()
         {
             var s = Stopwatch.StartNew();
@@ -3056,6 +3024,20 @@ namespace FolioLibraryTest
                 Assert.IsNotNull(h2);
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeHolding2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Inventory_DeserializeHoldingAdditionalCallNumberTest()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.Holdings(take: 1).SingleOrDefault();
+            if (jo != null)
+            {
+                var hacn = JsonConvert.DeserializeObject<HoldingAdditionalCallNumber>(jo.ToString());
+                traceSource.TraceEvent(TraceEventType.Information, 0, hacn.ToString());
+                Assert.IsNotNull(hacn);
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeHoldingAdditionalCallNumberTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -3591,6 +3573,20 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void Inventory_DeserializeItemAdditionalCallNumberTest()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.Items(take: 1).SingleOrDefault();
+            if (jo != null)
+            {
+                var iacn = JsonConvert.DeserializeObject<ItemAdditionalCallNumber>(jo.ToString());
+                traceSource.TraceEvent(TraceEventType.Information, 0, iacn.ToString());
+                Assert.IsNotNull(iacn);
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeItemAdditionalCallNumberTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void Inventory_DeserializeItemAdministrativeNoteTest()
         {
             var s = Stopwatch.StartNew();
@@ -3983,20 +3979,6 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
-        public void Orders_DeserializeOrderItemAlertTest()
-        {
-            var s = Stopwatch.StartNew();
-            var jo = folioServiceClient.OrderItems(take: 1).SingleOrDefault();
-            if (jo != null)
-            {
-                var oia = JsonConvert.DeserializeObject<OrderItemAlert>(jo.ToString());
-                traceSource.TraceEvent(TraceEventType.Information, 0, oia.ToString());
-                Assert.IsNotNull(oia);
-            }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeOrderItemAlertTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
         public void Orders_DeserializeOrderItemClaimTest()
         {
             var s = Stopwatch.StartNew();
@@ -4095,20 +4077,6 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
-        public void Orders_DeserializeOrderItemReportingCodeTest()
-        {
-            var s = Stopwatch.StartNew();
-            var jo = folioServiceClient.OrderItems(take: 1).SingleOrDefault();
-            if (jo != null)
-            {
-                var oirc = JsonConvert.DeserializeObject<OrderItemReportingCode>(jo.ToString());
-                traceSource.TraceEvent(TraceEventType.Information, 0, oirc.ToString());
-                Assert.IsNotNull(oirc);
-            }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeOrderItemReportingCodeTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
         public void Orders_DeserializeOrderItemSearchLocationTest()
         {
             var s = Stopwatch.StartNew();
@@ -4176,20 +4144,6 @@ namespace FolioLibraryTest
                 Assert.IsNotNull(ot);
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeOrderTagTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void Orders_DeserializeOrderTemplate2Test()
-        {
-            var s = Stopwatch.StartNew();
-            var jo = folioServiceClient.OrderTemplates(take: 1).SingleOrDefault();
-            if (jo != null)
-            {
-                var ot2 = JsonConvert.DeserializeObject<OrderTemplate2>(jo.ToString());
-                traceSource.TraceEvent(TraceEventType.Information, 0, ot2.ToString());
-                Assert.IsNotNull(ot2);
-            }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeOrderTemplate2Test()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -4781,20 +4735,6 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
-        public void Orders_DeserializePrefix2Test()
-        {
-            var s = Stopwatch.StartNew();
-            var jo = folioServiceClient.Prefixes(take: 1).SingleOrDefault();
-            if (jo != null)
-            {
-                var p2 = JsonConvert.DeserializeObject<Prefix2>(jo.ToString());
-                traceSource.TraceEvent(TraceEventType.Information, 0, p2.ToString());
-                Assert.IsNotNull(p2);
-            }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializePrefix2Test()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
         public void Users_DeserializeProxy2Test()
         {
             var s = Stopwatch.StartNew();
@@ -4932,20 +4872,6 @@ namespace FolioLibraryTest
                 Assert.IsNotNull(rt);
             }
             traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeRelationshipTypeTest()\r\n    ElapsedTime={s.Elapsed}");
-        }
-
-        [TestMethod]
-        public void Orders_DeserializeReportingCode2Test()
-        {
-            var s = Stopwatch.StartNew();
-            var jo = folioServiceClient.ReportingCodes(take: 1).SingleOrDefault();
-            if (jo != null)
-            {
-                var rc2 = JsonConvert.DeserializeObject<ReportingCode2>(jo.ToString());
-                traceSource.TraceEvent(TraceEventType.Information, 0, rc2.ToString());
-                Assert.IsNotNull(rc2);
-            }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeReportingCode2Test()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -5439,17 +5365,31 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
-        public void Orders_DeserializeSuffix2Test()
+        public void Inventory_DeserializeSubjectSource2Test()
         {
             var s = Stopwatch.StartNew();
-            var jo = folioServiceClient.Suffixes(take: 1).SingleOrDefault();
+            var jo = folioServiceClient.SubjectSources(take: 1).SingleOrDefault();
             if (jo != null)
             {
-                var s2 = JsonConvert.DeserializeObject<Suffix2>(jo.ToString());
-                traceSource.TraceEvent(TraceEventType.Information, 0, s2.ToString());
-                Assert.IsNotNull(s2);
+                var ss2 = JsonConvert.DeserializeObject<SubjectSource2>(jo.ToString());
+                traceSource.TraceEvent(TraceEventType.Information, 0, ss2.ToString());
+                Assert.IsNotNull(ss2);
             }
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeSuffix2Test()\r\n    ElapsedTime={s.Elapsed}");
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeSubjectSource2Test()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void Inventory_DeserializeSubjectType2Test()
+        {
+            var s = Stopwatch.StartNew();
+            var jo = folioServiceClient.SubjectTypes(take: 1).SingleOrDefault();
+            if (jo != null)
+            {
+                var st2 = JsonConvert.DeserializeObject<SubjectType2>(jo.ToString());
+                traceSource.TraceEvent(TraceEventType.Information, 0, st2.ToString());
+                Assert.IsNotNull(st2);
+            }
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"DeserializeSubjectType2Test()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]

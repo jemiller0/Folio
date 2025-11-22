@@ -19,6 +19,11 @@
       "description": "ID of the second-level location unit that the third-level unit belongs to",
       "type": "string"
     },
+    "isShadow": {
+      "description": "Whether this is a shadow location. Shadow locations are used to represent virtual locations that no items are assignable to them. They only relate to external libraries and virtual items.",
+      "type": "boolean",
+      "default": false
+    },
     "metadata": {
       "title": "Metadata Schema",
       "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",

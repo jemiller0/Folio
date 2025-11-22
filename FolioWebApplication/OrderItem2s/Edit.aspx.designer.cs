@@ -25,10 +25,6 @@ namespace FolioWebApplication.OrderItem2s
 
         protected RadGrid OrderItem2sRadGrid;
 
-        protected Panel OrderItemAlertsPanel;
-
-        protected RadGrid OrderItemAlertsRadGrid;
-
         protected Panel OrderItemClaimsPanel;
 
         protected RadGrid OrderItemClaimsRadGrid;
@@ -60,10 +56,6 @@ namespace FolioWebApplication.OrderItem2s
         protected Panel OrderItemReferenceNumbersPanel;
 
         protected RadGrid OrderItemReferenceNumbersRadGrid;
-
-        protected Panel OrderItemReportingCodesPanel;
-
-        protected RadGrid OrderItemReportingCodesRadGrid;
 
         protected Panel OrderItemSearchLocationsPanel;
 

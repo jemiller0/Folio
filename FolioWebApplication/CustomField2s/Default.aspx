@@ -44,6 +44,7 @@
                         <telerik:GridBoundColumn HeaderText="Select Field Multi Select" DataField="SelectFieldMultiSelect" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Select Field Options Sorting Order" DataField="SelectFieldOptionsSortingOrder" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Text Field Field Format" DataField="TextFieldFieldFormat" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Display In Accordion" DataField="DisplayInAccordion" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridTemplateColumn HeaderText="Creation User" DataField="CreationUser.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
