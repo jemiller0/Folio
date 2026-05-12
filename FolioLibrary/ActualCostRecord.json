@@ -11,6 +11,9 @@
     },
     "lossType": {
       "description": "Type of the item loss",
+      "x-fqm-visible-by-default": true,
+      "x-fqm-visibility": "all",
+      "x-fqm-essential": true,
       "type": "string",
       "enum": [
         "Aged to lost",
@@ -19,11 +22,17 @@
     },
     "lossDate": {
       "description": "Date and time when the item was lost",
+      "x-fqm-visible-by-default": true,
+      "x-fqm-visibility": "all",
+      "x-fqm-essential": true,
       "type": "string",
       "format": "date-time"
     },
     "expirationDate": {
       "description": "Expiration date and time of actual cost record",
+      "x-fqm-visible-by-default": false,
+      "x-fqm-visibility": "all",
+      "x-fqm-essential": true,
       "type": "string",
       "format": "date-time"
     },
@@ -38,18 +47,30 @@
         },
         "barcode": {
           "description": "User barcode",
+          "x-fqm-visible-by-default": true,
+          "x-fqm-visibility": "all",
+          "x-fqm-essential": true,
           "type": "string"
         },
         "firstName": {
           "description": "User first name",
+          "x-fqm-visible-by-default": true,
+          "x-fqm-visibility": "all",
+          "x-fqm-essential": true,
           "type": "string"
         },
         "lastName": {
           "description": "User last name",
+          "x-fqm-visible-by-default": true,
+          "x-fqm-visibility": "all",
+          "x-fqm-essential": true,
           "type": "string"
         },
         "middleName": {
           "description": "User middle name",
+          "x-fqm-visible-by-default": false,
+          "x-fqm-visibility": "all",
+          "x-fqm-essential": true,
           "type": "string"
         },
         "patronGroupId": {
@@ -57,6 +78,9 @@
         },
         "patronGroup": {
           "description": "Patron group name",
+          "x-fqm-visible-by-default": true,
+          "x-fqm-visibility": "all",
+          "x-fqm-essential": true,
           "type": "string"
         }
       },
@@ -90,6 +114,9 @@
         },
         "barcode": {
           "description": "Item barcode",
+          "x-fqm-visible-by-default": true,
+          "x-fqm-visibility": "all",
+          "x-fqm-essential": true,
           "type": "string"
         },
         "materialTypeId": {
@@ -97,6 +124,9 @@
         },
         "materialType": {
           "description": "Material type name",
+          "x-fqm-visible-by-default": true,
+          "x-fqm-visibility": "all",
+          "x-fqm-essential": true,
           "type": "string"
         },
         "permanentLocationId": {
@@ -104,6 +134,9 @@
         },
         "permanentLocation": {
           "description": "Permanent location name",
+          "x-fqm-visible-by-default": true,
+          "x-fqm-visibility": "all",
+          "x-fqm-essential": true,
           "type": "string"
         },
         "effectiveLocationId": {
@@ -111,6 +144,9 @@
         },
         "effectiveLocation": {
           "description": "Effective location name",
+          "x-fqm-visible-by-default": false,
+          "x-fqm-visibility": "all",
+          "x-fqm-essential": true,
           "type": "string"
         },
         "loanTypeId": {
@@ -118,6 +154,9 @@
         },
         "loanType": {
           "description": "Loan type name",
+          "x-fqm-visible-by-default": true,
+          "x-fqm-visibility": "all",
+          "x-fqm-essential": true,
           "type": "string"
         },
         "holdingsRecordId": {
@@ -130,36 +169,60 @@
           "properties": {
             "callNumber": {
               "description": "Effective Call Number is an identifier assigned to an item or its holding and associated with the item.",
+              "x-fqm-visible-by-default": false,
+              "x-fqm-visibility": "all",
+              "x-fqm-essential": false,
               "type": "string"
             },
             "prefix": {
               "description": "Effective Call Number Prefix is the prefix of the identifier assigned to an item or its holding and associated with the item.",
+              "x-fqm-visible-by-default": false,
+              "x-fqm-visibility": "all",
+              "x-fqm-essential": false,
               "type": "string"
             },
             "suffix": {
               "description": "Effective Call Number Suffix is the suffix of the identifier assigned to an item or its holding and associated with the item.",
+              "x-fqm-visible-by-default": false,
+              "x-fqm-visibility": "all",
+              "x-fqm-essential": false,
               "type": "string"
             }
           }
         },
         "volume": {
           "description": "Volume is intended for monographs when a multipart monograph (e.g. a biography of George Bernard Shaw in three volumes).",
+          "x-fqm-visible-by-default": false,
+          "x-fqm-visibility": "all",
+          "x-fqm-essential": false,
           "type": "string"
         },
         "enumeration": {
           "description": "Enumeration is the descriptive information for the numbering scheme of a serial.",
+          "x-fqm-visible-by-default": false,
+          "x-fqm-visibility": "all",
+          "x-fqm-essential": false,
           "type": "string"
         },
         "chronology": {
           "description": "Chronology is the descriptive information for the dating scheme of a serial.",
+          "x-fqm-visible-by-default": false,
+          "x-fqm-visibility": "all",
+          "x-fqm-essential": false,
           "type": "string"
         },
         "displaySummary": {
           "description": "Display summary about the item",
+          "x-fqm-visible-by-default": false,
+          "x-fqm-visibility": "all",
+          "x-fqm-essential": false,
           "type": "string"
         },
         "copyNumber": {
           "description": "Copy number is the piece identifier. The copy number reflects if the library has a copy of a single-volume monograph; one copy of a multi-volume, (e.g. Copy 1, or C.7.)",
+          "x-fqm-visible-by-default": false,
+          "x-fqm-visibility": "all",
+          "x-fqm-essential": false,
           "type": "string"
         }
       },
@@ -183,10 +246,16 @@
         },
         "title": {
           "description": "Instance title",
+          "x-fqm-visible-by-default": true,
+          "x-fqm-visibility": "all",
+          "x-fqm-essential": true,
           "type": "string"
         },
         "identifiers": {
           "description": "An extensible set of name-value pairs of identifiers associated with the resource",
+          "x-fqm-visible-by-default": false,
+          "x-fqm-visibility": "results-only",
+          "x-fqm-essential": true,
           "type": "array",
           "items": {
             "javaType": "org.folio.rest.jaxrs.model.ActualCostRecordIdentifier",
@@ -195,10 +264,16 @@
             "properties": {
               "value": {
                 "description": "Resource identifier value",
+                "x-fqm-visible-by-default": false,
+                "x-fqm-visibility": "all",
+                "x-fqm-essential": false,
                 "type": "string"
               },
               "identifierType": {
                 "description": "Name of resource identifier type (e.g. ISBN, ISSN, LCCN, CODEN, Locally defined identifiers)",
+                "x-fqm-visible-by-default": false,
+                "x-fqm-visibility": "all",
+                "x-fqm-essential": false,
                 "type": "string"
               },
               "identifierTypeId": {
@@ -215,6 +290,9 @@
         },
         "contributors": {
           "description": "List of contributors",
+          "x-fqm-visible-by-default": false,
+          "x-fqm-visibility": "results-only",
+          "x-fqm-essential": true,
           "type": "array",
           "items": {
             "type": "object",
@@ -222,6 +300,9 @@
             "properties": {
               "name": {
                 "description": "Contributor name",
+                "x-fqm-visible-by-default": false,
+                "x-fqm-visibility": "all",
+                "x-fqm-essential": false,
                 "type": "string"
               }
             },
@@ -248,6 +329,9 @@
         },
         "billedAmount": {
           "description": "Initial amount of a fee/fine created upon billing",
+          "x-fqm-visible-by-default": true,
+          "x-fqm-visibility": "all",
+          "x-fqm-essential": true,
           "type": "number",
           "minimum": 0.0
         },
@@ -256,6 +340,9 @@
         },
         "owner": {
           "description": "Fee/fine owner name",
+          "x-fqm-visible-by-default": true,
+          "x-fqm-visibility": "all",
+          "x-fqm-essential": true,
           "type": "string"
         },
         "typeId": {
@@ -263,6 +350,9 @@
         },
         "type": {
           "description": "Fee/fine type name",
+          "x-fqm-visible-by-default": true,
+          "x-fqm-visibility": "all",
+          "x-fqm-essential": true,
           "type": "string"
         }
       },
@@ -275,6 +365,9 @@
     },
     "status": {
       "description": "Status of the actual cost record",
+      "x-fqm-visible-by-default": true,
+      "x-fqm-visibility": "all",
+      "x-fqm-essential": true,
       "type": "string",
       "default": "Open",
       "enum": [
@@ -286,10 +379,16 @@
     },
     "additionalInfoForStaff": {
       "description": "Additional information for staff",
+      "x-fqm-visible-by-default": true,
+      "x-fqm-visibility": "all",
+      "x-fqm-essential": true,
       "type": "string"
     },
     "additionalInfoForPatron": {
       "description": "Additional information for a patron",
+      "x-fqm-visible-by-default": true,
+      "x-fqm-visibility": "all",
+      "x-fqm-essential": true,
       "type": "string"
     },
     "metadata": {

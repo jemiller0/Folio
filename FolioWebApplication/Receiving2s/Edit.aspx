@@ -121,6 +121,14 @@
                                     <asp:Literal ID="DisplayToPublicLiteral" runat="server" Text='<%#: Eval("DisplayToPublic") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("SequenceNumber") != null %>'>
+                                <td>
+                                    <asp:Label ID="SequenceNumberLabel" runat="server" Text="Sequence Number:" AssociatedControlID="SequenceNumberLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="SequenceNumberLiteral" runat="server" Text='<%#: Eval("SequenceNumber") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("Enumeration") != null %>'>
                                 <td>
                                     <asp:Label ID="EnumerationLabel" runat="server" Text="Enumeration:" AssociatedControlID="EnumerationLiteral" />

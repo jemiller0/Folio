@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "A contributor type",
+  "javaType": "org.folio.rest.jaxrs.model.ContributorType",
   "type": "object",
   "properties": {
     "id": {

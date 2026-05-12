@@ -12,10 +12,13 @@
     },
     "displaySummary": {
       "description": "Display summary information",
+      "x-fqm-essential": true,
+      "x-fqm-visible-by-default": true,
       "type": "string"
     },
     "comment": {
       "description": "Free form commentary",
+      "x-fqm-essential": true,
       "type": "string"
     },
     "format": {
@@ -35,6 +38,7 @@
     },
     "bindItemTenantId": {
       "description": "Bind item tenant for ECS-enabled clusters",
+      "x-fqm-essential": true,
       "type": "string"
     },
     "locationId": {
@@ -51,44 +55,65 @@
     },
     "receivingTenantId": {
       "description": "Receiving tenant for ECS-enabled clusters",
+      "x-fqm-essential": true,
       "type": "string"
     },
     "displayOnHolding": {
       "description": "Whether or not receiving history should be displayed in holding record view",
+      "x-fqm-essential": true,
       "type": "boolean",
       "default": false
     },
     "displayToPublic": {
       "description": "Whether or not the piece data should display to patrons at point of receipt",
+      "x-fqm-essential": true,
+      "x-fqm-visible-by-default": true,
       "type": "boolean",
       "default": false
     },
+    "sequenceNumber": {
+      "description": "The sequence number of this piece to determine the order in which it appears",
+      "x-fqm-essential": true,
+      "x-fqm-visible-by-default": true,
+      "type": "integer",
+      "minimum": 1.0
+    },
     "enumeration": {
       "description": "Enumeration is the descriptive information for the numbering scheme of a serial. Synchronized with inventory item.",
+      "x-fqm-essential": true,
+      "x-fqm-visible-by-default": true,
       "type": "string"
     },
     "chronology": {
       "description": "Chronology is the descriptive information for the dating scheme of a serial. Synchronized with inventory item.",
+      "x-fqm-essential": true,
+      "x-fqm-visible-by-default": true,
       "type": "string"
     },
     "barcode": {
       "description": "Barcode is the descriptive information for the barcode of a serial. Synchronized with inventory item.",
+      "x-fqm-essential": true,
       "type": "string"
     },
     "accessionNumber": {
       "description": "AccessionNumber is the descriptive information for the accession number of a serial. Synchronized with inventory item.",
+      "x-fqm-essential": true,
       "type": "string"
     },
     "callNumber": {
       "description": "CallNumber is the descriptive information for the call number of a serial. Synchronized with inventory item.",
+      "x-fqm-essential": true,
       "type": "string"
     },
     "discoverySuppress": {
       "description": "Records the fact that the record should not be displayed in a discovery system",
+      "x-fqm-essential": true,
       "type": "boolean"
     },
     "copyNumber": {
       "description": "Copy number of the piece",
+      "x-fqm-essential": true,
+      "x-fqm-visible-by-default": true,
       "type": "string"
     },
     "receivingStatus": {
@@ -107,38 +132,48 @@
     },
     "supplement": {
       "description": "Whether or not this is supplementary material",
+      "x-fqm-essential": true,
       "type": "boolean"
     },
     "isBound": {
       "description": "Whether or not piece has already been bound",
+      "x-fqm-essential": true,
       "type": "boolean",
       "default": false
     },
     "receiptDate": {
       "description": "Date that associated item is expected to arrive",
+      "x-fqm-essential": true,
+      "x-fqm-visible-by-default": true,
       "type": "string",
       "format": "date-time"
     },
     "receivedDate": {
       "description": "The date associated item is actually received",
+      "x-fqm-essential": true,
+      "x-fqm-visible-by-default": true,
       "type": "string",
       "format": "date-time"
     },
     "statusUpdatedDate": {
       "description": "Date when the status of this piece was last updated",
+      "x-fqm-essential": true,
       "type": "string",
       "format": "date-time"
     },
     "claimingInterval": {
       "description": "Time interval (in days) for processing claims related to this piece",
+      "x-fqm-essential": true,
       "type": "integer"
     },
     "internalNote": {
       "description": "Internal note for Send Claim action",
+      "x-fqm-essential": true,
       "type": "string"
     },
     "externalNote": {
       "description": "External note for Send Claim action to share with Vendor",
+      "x-fqm-essential": true,
       "type": "string"
     },
     "metadata": {

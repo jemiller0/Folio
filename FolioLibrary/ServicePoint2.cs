@@ -118,16 +118,19 @@ namespace FolioLibrary
         [Display(Name = "Requests", Order = 30)]
         public virtual ICollection<Request2> Request2s { get; set; }
 
-        [Display(Name = "Service Point Owners", Order = 31)]
+        [Display(Name = "Requests 1", Order = 31)]
+        public virtual ICollection<Request2> Request2s1 { get; set; }
+
+        [Display(Name = "Service Point Owners", Order = 32)]
         public virtual ICollection<ServicePointOwner> ServicePointOwners { get; set; }
 
-        [Display(Name = "Service Point Staff Slips", Order = 32), JsonProperty("staffSlips")]
+        [Display(Name = "Service Point Staff Slips", Order = 33), JsonProperty("staffSlips")]
         public virtual ICollection<ServicePointStaffSlip> ServicePointStaffSlips { get; set; }
 
-        [Display(Name = "Service Point User Service Points", Order = 33)]
+        [Display(Name = "Service Point User Service Points", Order = 34)]
         public virtual ICollection<ServicePointUserServicePoint> ServicePointUserServicePoints { get; set; }
 
-        [Display(Name = "User Request Preferences", Order = 34)]
+        [Display(Name = "User Request Preferences", Order = 35)]
         public virtual ICollection<UserRequestPreference2> UserRequestPreference2s { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Code)} = {Code}, {nameof(DiscoveryDisplayName)} = {DiscoveryDisplayName}, {nameof(Description)} = {Description}, {nameof(ShelvingLagTime)} = {ShelvingLagTime}, {nameof(PickupLocation)} = {PickupLocation}, {nameof(HoldShelfExpiryPeriodDuration)} = {HoldShelfExpiryPeriodDuration}, {nameof(HoldShelfExpiryPeriodInterval)} = {HoldShelfExpiryPeriodInterval}, {nameof(HoldShelfClosedLibraryDateManagement)} = {HoldShelfClosedLibraryDateManagement}, {nameof(DefaultCheckInActionForUseAtLocation)} = {DefaultCheckInActionForUseAtLocation}, {nameof(EcsRequestRouting)} = {EcsRequestRouting}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(ServicePointStaffSlips)} = {(ServicePointStaffSlips != null ? $"{{ {string.Join(", ", ServicePointStaffSlips)} }}" : "")} }}";

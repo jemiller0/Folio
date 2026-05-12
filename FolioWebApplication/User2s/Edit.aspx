@@ -179,6 +179,14 @@
                                     <asp:Literal ID="SourceLiteral" runat="server" Text='<%#: Eval("Source") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("SourceId") != null %>'>
+                                <td>
+                                    <asp:Label ID="SourceIdLabel" runat="server" Text="Source Id:" AssociatedControlID="SourceIdLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="SourceIdLiteral" runat="server" Text='<%#: Eval("SourceId") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("CategoryCode") != null %>'>
                                 <td>
                                     <asp:Label ID="CategoryCodeLabel" runat="server" Text="Category Code:" AssociatedControlID="CategoryCodeLiteral" />
@@ -187,12 +195,12 @@
                                     <asp:Literal ID="CategoryCodeLiteral" runat="server" Text='<%#: Eval("CategoryCode") %>' />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("Category") != null %>'>
+                            <tr runat="server" visible='<%# Eval("CategoryId") != null %>'>
                                 <td>
-                                    <asp:Label ID="CategoryLabel" runat="server" Text="Category:" AssociatedControlID="CategoryHyperLink" />
+                                    <asp:Label ID="CategoryIdLabel" runat="server" Text="Category Id:" AssociatedControlID="CategoryIdLiteral" />
                                 </td>
                                 <td>
-                                    <asp:HyperLink ID="CategoryHyperLink" runat="server" Text='<%#: Eval("Category.Name") %>' NavigateUrl='<%# $"~/UserCategories/Edit.aspx?Id={Eval("CategoryId")}" %>' Enabled='<%# Session["UserCategoriesPermission"] != null %>' />
+                                    <asp:Literal ID="CategoryIdLiteral" runat="server" Text='<%#: Eval("CategoryId") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Status") != null %>'>
@@ -539,18 +547,26 @@
                             </tr>
                             <tr>
                                 <td>
+                                    <asp:Label ID="SourceIdLabel" runat="server" Text="Source Id:" AssociatedControlID="SourceIdRadTextBox" />
+                                </td>
+                                <td>
+                                    <telerik:RadTextBox ID="SourceIdRadTextBox" runat="server" Text='<%# Bind("SourceId") %>' MaxLength="1024" Width="500px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     <asp:Label ID="CategoryCodeLabel" runat="server" Text="Category Code:" AssociatedControlID="CategoryCodeRadTextBox" />
                                 </td>
                                 <td>
                                     <telerik:RadTextBox ID="CategoryCodeRadTextBox" runat="server" Text='<%# Bind("CategoryCode") %>' MaxLength="1024" Width="500px" />
                                 </td>
                             </tr>
-                            <tr runat="server" visible='<%# Eval("Category") != null %>'>
+                            <tr>
                                 <td>
-                                    <asp:HyperLink runat="server" Text="Category:" NavigateUrl="~/UserCategories/Default.aspx" Enabled='<%# Session["UserCategoriesPermission"] != null %>' />
+                                    <asp:Label ID="CategoryIdLabel" runat="server" Text="Category Id:" AssociatedControlID="CategoryIdRadTextBox" />
                                 </td>
                                 <td>
-                                    <asp:HyperLink ID="CategoryHyperLink" runat="server" Text='<%# Eval("Category.Name") %>' NavigateUrl='<%# "~/UserCategories/Edit.aspx?Id=" + Eval("CategoryId") %>' Enabled='<%# Session["UserCategoriesPermission"] != null %>' />
+                                    <telerik:RadTextBox ID="CategoryIdRadTextBox" runat="server" Text='<%# Bind("CategoryId") %>' MaxLength="1024" Width="500px" />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Status") != null %>'>
@@ -1078,6 +1094,9 @@
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Status Name" DataField="StatusName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="For Use At Location Status" DataField="ForUseAtLocationStatus" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="For Use At Location Status Date" DataField="ForUseAtLocationStatusDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridBoundColumn HeaderText="For Use At Location Hold Shelf Expiration Date" DataField="ForUseAtLocationHoldShelfExpirationDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
                         <telerik:GridBoundColumn HeaderText="Loan Time" DataField="LoanTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridBoundColumn HeaderText="Due Time" DataField="DueTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridBoundColumn HeaderText="Return Time" DataField="ReturnTime" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -1183,6 +1202,9 @@
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Status Name" DataField="StatusName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="For Use At Location Status" DataField="ForUseAtLocationStatus" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="For Use At Location Status Date" DataField="ForUseAtLocationStatusDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridBoundColumn HeaderText="For Use At Location Hold Shelf Expiration Date" DataField="ForUseAtLocationHoldShelfExpirationDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
                         <telerik:GridBoundColumn HeaderText="Loan Time" DataField="LoanTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridBoundColumn HeaderText="Due Time" DataField="DueTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridBoundColumn HeaderText="Return Time" DataField="ReturnTime" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -1802,6 +1824,16 @@
                         <telerik:GridBoundColumn HeaderText="Position" DataField="Position" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Instance Title" DataField="InstanceTitle" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Item Barcode" DataField="ItemBarcode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridTemplateColumn HeaderText="Item Item Effective Location" DataField="ItemItemEffectiveLocation.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ItemItemEffectiveLocationHyperLink" runat="server" Text='<%#: Eval("ItemItemEffectiveLocation.Name") %>' NavigateUrl='<%# $"~/Location2s/Edit.aspx?Id={Eval("ItemItemEffectiveLocationId")}" %>' Enabled='<%# Session["Location2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Item Retrieval Service Point" DataField="ItemRetrievalServicePoint.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ItemRetrievalServicePointHyperLink" runat="server" Text='<%#: Eval("ItemRetrievalServicePoint.Name") %>' NavigateUrl='<%# $"~/ServicePoint2s/Edit.aspx?Id={Eval("ItemRetrievalServicePointId")}" %>' Enabled='<%# Session["ServicePoint2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Requester First Name" DataField="RequesterFirstName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Requester Last Name" DataField="RequesterLastName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Requester Middle Name" DataField="RequesterMiddleName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -1847,6 +1879,7 @@
                         <telerik:GridBoundColumn HeaderText="Search Index Shelving Order" DataField="SearchIndexShelvingOrder" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Search Index Pickup Service Point Name" DataField="SearchIndexPickupServicePointName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Item Location Code" DataField="ItemLocationCode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Is Dcb Re Request Cancellation" DataField="IsDcbReRequestCancellation" AutoPostBackOnFilter="true" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>
@@ -1913,6 +1946,16 @@
                         <telerik:GridBoundColumn HeaderText="Position" DataField="Position" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Instance Title" DataField="InstanceTitle" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Item Barcode" DataField="ItemBarcode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridTemplateColumn HeaderText="Item Item Effective Location" DataField="ItemItemEffectiveLocation.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ItemItemEffectiveLocationHyperLink" runat="server" Text='<%#: Eval("ItemItemEffectiveLocation.Name") %>' NavigateUrl='<%# $"~/Location2s/Edit.aspx?Id={Eval("ItemItemEffectiveLocationId")}" %>' Enabled='<%# Session["Location2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Item Retrieval Service Point" DataField="ItemRetrievalServicePoint.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ItemRetrievalServicePointHyperLink" runat="server" Text='<%#: Eval("ItemRetrievalServicePoint.Name") %>' NavigateUrl='<%# $"~/ServicePoint2s/Edit.aspx?Id={Eval("ItemRetrievalServicePointId")}" %>' Enabled='<%# Session["ServicePoint2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Requester First Name" DataField="RequesterFirstName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Requester Last Name" DataField="RequesterLastName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Requester Middle Name" DataField="RequesterMiddleName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -1963,6 +2006,7 @@
                         <telerik:GridBoundColumn HeaderText="Search Index Shelving Order" DataField="SearchIndexShelvingOrder" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Search Index Pickup Service Point Name" DataField="SearchIndexPickupServicePointName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Item Location Code" DataField="ItemLocationCode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Is Dcb Re Request Cancellation" DataField="IsDcbReRequestCancellation" AutoPostBackOnFilter="true" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>
@@ -2029,6 +2073,16 @@
                         <telerik:GridBoundColumn HeaderText="Position" DataField="Position" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Instance Title" DataField="InstanceTitle" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Item Barcode" DataField="ItemBarcode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridTemplateColumn HeaderText="Item Item Effective Location" DataField="ItemItemEffectiveLocation.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ItemItemEffectiveLocationHyperLink" runat="server" Text='<%#: Eval("ItemItemEffectiveLocation.Name") %>' NavigateUrl='<%# $"~/Location2s/Edit.aspx?Id={Eval("ItemItemEffectiveLocationId")}" %>' Enabled='<%# Session["Location2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Item Retrieval Service Point" DataField="ItemRetrievalServicePoint.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ItemRetrievalServicePointHyperLink" runat="server" Text='<%#: Eval("ItemRetrievalServicePoint.Name") %>' NavigateUrl='<%# $"~/ServicePoint2s/Edit.aspx?Id={Eval("ItemRetrievalServicePointId")}" %>' Enabled='<%# Session["ServicePoint2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Requester First Name" DataField="RequesterFirstName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Requester Last Name" DataField="RequesterLastName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Requester Middle Name" DataField="RequesterMiddleName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -2079,6 +2133,7 @@
                         <telerik:GridBoundColumn HeaderText="Search Index Shelving Order" DataField="SearchIndexShelvingOrder" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Search Index Pickup Service Point Name" DataField="SearchIndexPickupServicePointName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Item Location Code" DataField="ItemLocationCode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Is Dcb Re Request Cancellation" DataField="IsDcbReRequestCancellation" AutoPostBackOnFilter="true" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>
@@ -2145,6 +2200,16 @@
                         <telerik:GridBoundColumn HeaderText="Position" DataField="Position" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Instance Title" DataField="InstanceTitle" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Item Barcode" DataField="ItemBarcode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridTemplateColumn HeaderText="Item Item Effective Location" DataField="ItemItemEffectiveLocation.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ItemItemEffectiveLocationHyperLink" runat="server" Text='<%#: Eval("ItemItemEffectiveLocation.Name") %>' NavigateUrl='<%# $"~/Location2s/Edit.aspx?Id={Eval("ItemItemEffectiveLocationId")}" %>' Enabled='<%# Session["Location2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                        <telerik:GridTemplateColumn HeaderText="Item Retrieval Service Point" DataField="ItemRetrievalServicePoint.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="ItemRetrievalServicePointHyperLink" runat="server" Text='<%#: Eval("ItemRetrievalServicePoint.Name") %>' NavigateUrl='<%# $"~/ServicePoint2s/Edit.aspx?Id={Eval("ItemRetrievalServicePointId")}" %>' Enabled='<%# Session["ServicePoint2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Requester First Name" DataField="RequesterFirstName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Requester Last Name" DataField="RequesterLastName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Requester Middle Name" DataField="RequesterMiddleName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
@@ -2195,6 +2260,7 @@
                         <telerik:GridBoundColumn HeaderText="Search Index Shelving Order" DataField="SearchIndexShelvingOrder" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Search Index Pickup Service Point Name" DataField="SearchIndexPickupServicePointName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Item Location Code" DataField="ItemLocationCode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="Is Dcb Re Request Cancellation" DataField="IsDcbReRequestCancellation" AutoPostBackOnFilter="true" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>

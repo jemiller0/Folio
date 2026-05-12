@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "A classification type",
+  "javaType": "org.folio.rest.jaxrs.model.ClassificationType",
   "type": "object",
   "properties": {
     "id": {

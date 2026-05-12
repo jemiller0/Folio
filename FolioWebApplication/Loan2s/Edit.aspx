@@ -57,6 +57,30 @@
                                     <asp:Literal ID="StatusNameLiteral" runat="server" Text='<%#: Eval("StatusName") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("ForUseAtLocationStatus") != null %>'>
+                                <td>
+                                    <asp:Label ID="ForUseAtLocationStatusLabel" runat="server" Text="For Use At Location Status:" AssociatedControlID="ForUseAtLocationStatusLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="ForUseAtLocationStatusLiteral" runat="server" Text='<%#: Eval("ForUseAtLocationStatus") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("ForUseAtLocationStatusDate") != null %>'>
+                                <td>
+                                    <asp:Label ID="ForUseAtLocationStatusDateLabel" runat="server" Text="For Use At Location Status Date:" AssociatedControlID="ForUseAtLocationStatusDateLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="ForUseAtLocationStatusDateLiteral" runat="server" Text='<%# Eval("ForUseAtLocationStatusDate", "{0:d}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("ForUseAtLocationHoldShelfExpirationDate") != null %>'>
+                                <td>
+                                    <asp:Label ID="ForUseAtLocationHoldShelfExpirationDateLabel" runat="server" Text="For Use At Location Hold Shelf Expiration Date:" AssociatedControlID="ForUseAtLocationHoldShelfExpirationDateLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="ForUseAtLocationHoldShelfExpirationDateLiteral" runat="server" Text='<%# Eval("ForUseAtLocationHoldShelfExpirationDate", "{0:d}") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("LoanTime") != null %>'>
                                 <td>
                                     <asp:Label ID="LoanTimeLabel" runat="server" Text="Loan Time:" AssociatedControlID="LoanTimeLiteral" />

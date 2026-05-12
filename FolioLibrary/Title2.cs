@@ -49,85 +49,88 @@ namespace FolioLibrary
         [Column("instance_id"), Display(Name = "Instance", Order = 7), JsonProperty("instanceId")]
         public virtual Guid? InstanceId { get; set; }
 
-        [Column("publisher"), Display(Order = 8), JsonProperty("publisher"), StringLength(1024)]
+        [Column("next_sequence_number"), Display(Name = "Next Sequence Number", Order = 8), JsonProperty("nextSequenceNumber")]
+        public virtual int? NextSequenceNumber { get; set; }
+
+        [Column("publisher"), Display(Order = 9), JsonProperty("publisher"), StringLength(1024)]
         public virtual string Publisher { get; set; }
 
-        [Column("edition"), Display(Order = 9), JsonProperty("edition"), StringLength(1024)]
+        [Column("edition"), Display(Order = 10), JsonProperty("edition"), StringLength(1024)]
         public virtual string Edition { get; set; }
 
-        [Column("package_name"), Display(Name = "Package Name", Order = 10), JsonProperty("packageName"), StringLength(1024)]
+        [Column("package_name"), Display(Name = "Package Name", Order = 11), JsonProperty("packageName"), StringLength(1024)]
         public virtual string PackageName { get; set; }
 
-        [Column("po_line_number"), Display(Name = "Order Item Number", Order = 11), JsonProperty("poLineNumber"), StringLength(1024)]
+        [Column("po_line_number"), Display(Name = "Order Item Number", Order = 12), JsonProperty("poLineNumber"), StringLength(1024)]
         public virtual string OrderItemNumber { get; set; }
 
-        [Column("published_date"), Display(Name = "Published Date", Order = 12), JsonProperty("publishedDate"), StringLength(1024)]
+        [Column("published_date"), Display(Name = "Published Date", Order = 13), JsonProperty("publishedDate"), StringLength(1024)]
         public virtual string PublishedDate { get; set; }
 
-        [Column("receiving_note"), Display(Name = "Receiving Note", Order = 13), JsonProperty("receivingNote"), StringLength(1024)]
+        [Column("receiving_note"), Display(Name = "Receiving Note", Order = 14), JsonProperty("receivingNote"), StringLength(1024)]
         public virtual string ReceivingNote { get; set; }
 
-        [Column("subscription_from"), Display(Name = "Subscription From", Order = 14), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("subscriptionFrom")]
+        [Column("subscription_from"), Display(Name = "Subscription From", Order = 15), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("subscriptionFrom")]
         public virtual DateTime? SubscriptionFrom { get; set; }
 
-        [Column("subscription_to"), Display(Name = "Subscription To", Order = 15), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("subscriptionTo")]
+        [Column("subscription_to"), Display(Name = "Subscription To", Order = 16), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("subscriptionTo")]
         public virtual DateTime? SubscriptionTo { get; set; }
 
-        [Column("subscription_interval"), Display(Name = "Subscription Interval", Order = 16), JsonProperty("subscriptionInterval")]
+        [Column("subscription_interval"), Display(Name = "Subscription Interval", Order = 17), JsonProperty("subscriptionInterval")]
         public virtual int? SubscriptionInterval { get; set; }
 
-        [Column("claiming_active"), Display(Name = "Claiming Active", Order = 17), JsonProperty("claimingActive")]
+        [Column("claiming_active"), Display(Name = "Claiming Active", Order = 18), JsonProperty("claimingActive")]
         public virtual bool? ClaimingActive { get; set; }
 
-        [Column("claiming_interval"), Display(Name = "Claiming Interval", Order = 18), JsonProperty("claimingInterval")]
+        [Column("claiming_interval"), Display(Name = "Claiming Interval", Order = 19), JsonProperty("claimingInterval")]
         public virtual int? ClaimingInterval { get; set; }
 
-        [Column("is_acknowledged"), Display(Name = "Is Acknowledged", Order = 19), JsonProperty("isAcknowledged")]
+        [Column("is_acknowledged"), Display(Name = "Is Acknowledged", Order = 20), JsonProperty("isAcknowledged")]
         public virtual bool? IsAcknowledged { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 20), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 21), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 21), InverseProperty("Title2s")]
+        [Display(Name = "Creation User", Order = 22), InverseProperty("Title2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 22), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 23), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 24), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 25), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 25), InverseProperty("Title2s1")]
+        [Display(Name = "Last Write User", Order = 26), InverseProperty("Title2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 26), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 27), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Title), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 28), Editable(false)]
+        [Column("content"), CustomValidation(typeof(Title), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 29), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Receivings", Order = 29)]
+        [Display(Name = "Receivings", Order = 30)]
         public virtual ICollection<Receiving2> Receiving2s { get; set; }
 
-        [Display(Name = "Title Acquisitions Units", Order = 30), JsonConverter(typeof(ArrayJsonConverter<List<TitleAcquisitionsUnit>, TitleAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
+        [Display(Name = "Title Acquisitions Units", Order = 31), JsonConverter(typeof(ArrayJsonConverter<List<TitleAcquisitionsUnit>, TitleAcquisitionsUnit>), "AcquisitionsUnitId"), JsonProperty("acqUnitIds")]
         public virtual ICollection<TitleAcquisitionsUnit> TitleAcquisitionsUnits { get; set; }
 
-        [Display(Name = "Title Bind Item Ids", Order = 31), JsonConverter(typeof(ArrayJsonConverter<List<TitleBindItemId>, TitleBindItemId>), "Content"), JsonProperty("bindItemIds")]
+        [Display(Name = "Title Bind Item Ids", Order = 32), JsonConverter(typeof(ArrayJsonConverter<List<TitleBindItemId>, TitleBindItemId>), "Content"), JsonProperty("bindItemIds")]
         public virtual ICollection<TitleBindItemId> TitleBindItemIds { get; set; }
 
-        [Display(Name = "Title Contributors", Order = 32), JsonProperty("contributors")]
+        [Display(Name = "Title Contributors", Order = 33), JsonProperty("contributors")]
         public virtual ICollection<TitleContributor> TitleContributors { get; set; }
 
-        [Display(Name = "Title Product Ids", Order = 33), JsonProperty("productIds")]
+        [Display(Name = "Title Product Ids", Order = 34), JsonProperty("productIds")]
         public virtual ICollection<TitleProductId> TitleProductIds { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(ExpectedReceiptDate)} = {ExpectedReceiptDate}, {nameof(Title)} = {Title}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(InstanceId)} = {InstanceId}, {nameof(Publisher)} = {Publisher}, {nameof(Edition)} = {Edition}, {nameof(PackageName)} = {PackageName}, {nameof(OrderItemNumber)} = {OrderItemNumber}, {nameof(PublishedDate)} = {PublishedDate}, {nameof(ReceivingNote)} = {ReceivingNote}, {nameof(SubscriptionFrom)} = {SubscriptionFrom}, {nameof(SubscriptionTo)} = {SubscriptionTo}, {nameof(SubscriptionInterval)} = {SubscriptionInterval}, {nameof(ClaimingActive)} = {ClaimingActive}, {nameof(ClaimingInterval)} = {ClaimingInterval}, {nameof(IsAcknowledged)} = {IsAcknowledged}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(TitleAcquisitionsUnits)} = {(TitleAcquisitionsUnits != null ? $"{{ {string.Join(", ", TitleAcquisitionsUnits)} }}" : "")}, {nameof(TitleBindItemIds)} = {(TitleBindItemIds != null ? $"{{ {string.Join(", ", TitleBindItemIds)} }}" : "")}, {nameof(TitleContributors)} = {(TitleContributors != null ? $"{{ {string.Join(", ", TitleContributors)} }}" : "")}, {nameof(TitleProductIds)} = {(TitleProductIds != null ? $"{{ {string.Join(", ", TitleProductIds)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(ExpectedReceiptDate)} = {ExpectedReceiptDate}, {nameof(Title)} = {Title}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(InstanceId)} = {InstanceId}, {nameof(NextSequenceNumber)} = {NextSequenceNumber}, {nameof(Publisher)} = {Publisher}, {nameof(Edition)} = {Edition}, {nameof(PackageName)} = {PackageName}, {nameof(OrderItemNumber)} = {OrderItemNumber}, {nameof(PublishedDate)} = {PublishedDate}, {nameof(ReceivingNote)} = {ReceivingNote}, {nameof(SubscriptionFrom)} = {SubscriptionFrom}, {nameof(SubscriptionTo)} = {SubscriptionTo}, {nameof(SubscriptionInterval)} = {SubscriptionInterval}, {nameof(ClaimingActive)} = {ClaimingActive}, {nameof(ClaimingInterval)} = {ClaimingInterval}, {nameof(IsAcknowledged)} = {IsAcknowledged}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(TitleAcquisitionsUnits)} = {(TitleAcquisitionsUnits != null ? $"{{ {string.Join(", ", TitleAcquisitionsUnits)} }}" : "")}, {nameof(TitleBindItemIds)} = {(TitleBindItemIds != null ? $"{{ {string.Join(", ", TitleBindItemIds)} }}" : "")}, {nameof(TitleContributors)} = {(TitleContributors != null ? $"{{ {string.Join(", ", TitleContributors)} }}" : "")}, {nameof(TitleProductIds)} = {(TitleProductIds != null ? $"{{ {string.Join(", ", TitleProductIds)} }}" : "")} }}";
 
         public static Title2 FromJObject(JObject jObject) => jObject != null ? new Title2
         {
@@ -136,6 +139,7 @@ namespace FolioLibrary
             Title = (string)jObject.SelectToken("title"),
             OrderItemId = (Guid?)jObject.SelectToken("poLineId"),
             InstanceId = (Guid?)jObject.SelectToken("instanceId"),
+            NextSequenceNumber = (int?)jObject.SelectToken("nextSequenceNumber"),
             Publisher = (string)jObject.SelectToken("publisher"),
             Edition = (string)jObject.SelectToken("edition"),
             PackageName = (string)jObject.SelectToken("packageName"),
@@ -167,6 +171,7 @@ namespace FolioLibrary
             new JProperty("title", Title),
             new JProperty("poLineId", OrderItemId),
             new JProperty("instanceId", InstanceId),
+            new JProperty("nextSequenceNumber", NextSequenceNumber),
             new JProperty("publisher", Publisher),
             new JProperty("edition", Edition),
             new JProperty("packageName", PackageName),

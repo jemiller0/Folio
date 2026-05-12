@@ -49,6 +49,14 @@
                                     <asp:HyperLink ID="InstanceHyperLink" runat="server" Text='<%#: Eval("Instance.Title") %>' NavigateUrl='<%# $"~/Instance2s/Edit.aspx?Id={Eval("InstanceId")}" %>' Enabled='<%# Session["Instance2sPermission"] != null %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("NextSequenceNumber") != null %>'>
+                                <td>
+                                    <asp:Label ID="NextSequenceNumberLabel" runat="server" Text="Next Sequence Number:" AssociatedControlID="NextSequenceNumberLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="NextSequenceNumberLiteral" runat="server" Text='<%#: Eval("NextSequenceNumber") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("Publisher") != null %>'>
                                 <td>
                                     <asp:Label ID="PublisherLabel" runat="server" Text="Publisher:" AssociatedControlID="PublisherLiteral" />
@@ -244,6 +252,7 @@
                         <telerik:GridBoundColumn HeaderText="Receiving Tenant Id" DataField="ReceivingTenantId" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo" />
                         <telerik:GridBoundColumn HeaderText="Display On Holding" DataField="DisplayOnHolding" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Display To Public" DataField="DisplayToPublic" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Sequence Number" DataField="SequenceNumber" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Enumeration" DataField="Enumeration" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Chronology" DataField="Chronology" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Barcode" DataField="Barcode" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />

@@ -53,9 +53,9 @@
             "additionalProperties": false,
             "properties": {
               "duration": {
-                "description": "Duration of the period, number of times the interval repeats",
+                "description": "Duration of the period, number of times the interval repeats; 0 should be used with days only and means until the end of the day",
                 "type": "integer",
-                "minimum": 1.0
+                "minimum": 0.0
               },
               "intervalId": {
                 "description": "Interval for the period, e.g. hours, days or weeks",

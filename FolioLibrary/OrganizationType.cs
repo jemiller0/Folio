@@ -1,35 +1,51 @@
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NJsonSchema;
 using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 
 namespace FolioLibrary
 {
-    // uc.organization_organization_types -> uchicago_mod_organizations_storage.organizations
-    // OrganizationType -> Organization
-    [DisplayColumn(nameof(Content)), DisplayName("Organization Types"), Table("organization_organization_types", Schema = "uc")]
+    [Table("organization_types", Schema = "uchicago_mod_organizations_storage")]
     public partial class OrganizationType
     {
-        [Column("id"), ScaffoldColumn(false)]
-        public virtual string Id { get; set; }
+        public static ValidationResult ValidateContent(string value)
+        {
+            using (var sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("FolioLibrary.OrganizationType.json")))
+            {
+                var js = JsonSchema.FromJsonAsync(sr.ReadToEndAsync().Result).Result;
+                var l = js.Validate(value);
+                if (l.Any()) return new ValidationResult($"The Content field is invalid. {string.Join(" ", l.Select(ve => ve.ToString()))}", new[] { "Content" });
+            }
+            return ValidationResult.Success;
+        }
 
-        [Display(Order = 2)]
-        public virtual Organization2 Organization { get; set; }
+        [Column("id"), Display(Order = 1), Editable(false)]
+        public virtual Guid? Id { get; set; }
 
-        [Column("organization_id"), Display(Name = "Organization", Order = 3)]
-        public virtual Guid? OrganizationId { get; set; }
-
-        [Column("content"), Display(Order = 4), StringLength(1024)]
+        [Column("jsonb"), CustomValidation(typeof(OrganizationType), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 2), Required]
         public virtual string Content { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(OrganizationId)} = {OrganizationId}, {nameof(Content)} = {Content} }}";
+        [Column("creation_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 3), DisplayFormat(DataFormatString = "{0:g}"), Editable(false)]
+        public virtual DateTime? CreationTime { get; set; }
 
-        public static OrganizationType FromJObject(JValue jObject) => jObject != null ? new OrganizationType
+        [Column("created_by"), Display(Name = "Creation User Id", Order = 4), Editable(false)]
+        public virtual string CreationUserId { get; set; }
+
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Content)} = {Content}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId} }}";
+
+        public static OrganizationType FromJObject(JObject jObject) => jObject != null ? new OrganizationType
         {
-            Content = (string)jObject
+            Id = (Guid?)jObject.SelectToken("id"),
+            Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
+            CreationTime = ((DateTime?)jObject.SelectToken("metadata.createdDate"))?.ToUniversalTime(),
+            CreationUserId = (string)jObject.SelectToken("metadata.createdByUserId")
         } : null;
 
-        public JValue ToJObject() => new JValue(Content);
+        public JObject ToJObject() => JsonConvert.DeserializeObject<JObject>(Content, FolioDapperContext.LocalTimeJsonSerializationSettings);
     }
 }

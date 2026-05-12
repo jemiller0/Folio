@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "A subject source",
+  "javaType": "org.folio.rest.jaxrs.model.SubjectSource",
   "type": "object",
   "properties": {
     "id": {

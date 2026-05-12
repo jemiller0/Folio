@@ -143,106 +143,103 @@ namespace FolioLibrary
         [Column("completion_time"), DataType(DataType.DateTime), Display(Name = "Completion Time", Order = 36), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true)]
         public virtual DateTime? CompletionTime { get; set; }
 
-        [Column("dates_datetypeid"), Display(Name = "Dates Datetypeid", Order = 37)]
-        public virtual Guid? DatesDatetypeid { get; set; }
-
-        [Display(Name = "Administrative Notes", Order = 38), JsonConverter(typeof(ArrayJsonConverter<List<AdministrativeNote>, AdministrativeNote>), "Content"), JsonProperty("administrativeNotes")]
+        [Display(Name = "Administrative Notes", Order = 37), JsonConverter(typeof(ArrayJsonConverter<List<AdministrativeNote>, AdministrativeNote>), "Content"), JsonProperty("administrativeNotes")]
         public virtual ICollection<AdministrativeNote> AdministrativeNotes { get; set; }
 
-        [Display(Name = "Alternative Titles", Order = 39), JsonProperty("alternativeTitles")]
+        [Display(Name = "Alternative Titles", Order = 38), JsonProperty("alternativeTitles")]
         public virtual ICollection<AlternativeTitle> AlternativeTitles { get; set; }
 
-        [Display(Order = 40), JsonProperty("classifications")]
+        [Display(Order = 39), JsonProperty("classifications")]
         public virtual ICollection<Classification> Classifications { get; set; }
 
-        [Display(Order = 41), JsonProperty("contributors")]
+        [Display(Order = 40), JsonProperty("contributors")]
         public virtual ICollection<Contributor> Contributors { get; set; }
 
-        [Display(Order = 42), JsonConverter(typeof(ArrayJsonConverter<List<Edition>, Edition>), "Content"), JsonProperty("editions")]
+        [Display(Order = 41), JsonConverter(typeof(ArrayJsonConverter<List<Edition>, Edition>), "Content"), JsonProperty("editions")]
         public virtual ICollection<Edition> Editions { get; set; }
 
-        [Display(Name = "Electronic Accesses", Order = 43), JsonProperty("electronicAccess")]
+        [Display(Name = "Electronic Accesses", Order = 42), JsonProperty("electronicAccess")]
         public virtual ICollection<ElectronicAccess> ElectronicAccesses { get; set; }
 
-        [Display(Name = "Fees", Order = 44)]
+        [Display(Name = "Fees", Order = 43)]
         public virtual ICollection<Fee2> Fee2s { get; set; }
 
-        [Display(Name = "Holdings", Order = 45)]
+        [Display(Name = "Holdings", Order = 44)]
         public virtual ICollection<Holding2> Holding2s { get; set; }
 
-        [Display(Order = 46), JsonProperty("identifiers")]
+        [Display(Order = 45), JsonProperty("identifiers")]
         public virtual ICollection<Identifier> Identifiers { get; set; }
 
-        [Display(Name = "Instance Formats", Order = 47), JsonConverter(typeof(ArrayJsonConverter<List<InstanceFormat2>, InstanceFormat2>), "FormatId"), JsonProperty("instanceFormatIds")]
+        [Display(Name = "Instance Formats", Order = 46), JsonConverter(typeof(ArrayJsonConverter<List<InstanceFormat2>, InstanceFormat2>), "FormatId"), JsonProperty("instanceFormatIds")]
         public virtual ICollection<InstanceFormat2> InstanceFormat2s { get; set; }
 
-        [Display(Name = "Instance Nature Of Content Terms", Order = 48), JsonConverter(typeof(ArrayJsonConverter<List<InstanceNatureOfContentTerm>, InstanceNatureOfContentTerm>), "NatureOfContentTermId"), JsonProperty("natureOfContentTermIds")]
+        [Display(Name = "Instance Nature Of Content Terms", Order = 47), JsonConverter(typeof(ArrayJsonConverter<List<InstanceNatureOfContentTerm>, InstanceNatureOfContentTerm>), "NatureOfContentTermId"), JsonProperty("natureOfContentTermIds")]
         public virtual ICollection<InstanceNatureOfContentTerm> InstanceNatureOfContentTerms { get; set; }
 
-        [Display(Name = "Instance Notes", Order = 49), JsonProperty("notes")]
+        [Display(Name = "Instance Notes", Order = 48), JsonProperty("notes")]
         public virtual ICollection<InstanceNote> InstanceNotes { get; set; }
 
-        [Display(Name = "Instance Statistical Codes", Order = 50), JsonConverter(typeof(ArrayJsonConverter<List<InstanceStatisticalCode>, InstanceStatisticalCode>), "StatisticalCodeId"), JsonProperty("statisticalCodeIds")]
+        [Display(Name = "Instance Statistical Codes", Order = 49), JsonConverter(typeof(ArrayJsonConverter<List<InstanceStatisticalCode>, InstanceStatisticalCode>), "StatisticalCodeId"), JsonProperty("statisticalCodeIds")]
         public virtual ICollection<InstanceStatisticalCode> InstanceStatisticalCodes { get; set; }
 
-        [Display(Name = "Instance Tags", Order = 51), JsonConverter(typeof(ArrayJsonConverter<List<InstanceTag>, InstanceTag>), "Content"), JsonProperty("tags.tagList")]
+        [Display(Name = "Instance Tags", Order = 50), JsonConverter(typeof(ArrayJsonConverter<List<InstanceTag>, InstanceTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<InstanceTag> InstanceTags { get; set; }
 
-        [Display(Name = "ISBNs", Order = 52)]
+        [Display(Name = "ISBNs", Order = 51)]
         public virtual ICollection<Isbn> Isbns { get; set; }
 
-        [Display(Name = "ISSNs", Order = 53)]
+        [Display(Name = "ISSNs", Order = 52)]
         public virtual ICollection<Issn> Issns { get; set; }
 
-        [Display(Order = 54), JsonConverter(typeof(ArrayJsonConverter<List<Language>, Language>), "Content"), JsonProperty("languages")]
+        [Display(Order = 53), JsonConverter(typeof(ArrayJsonConverter<List<Language>, Language>), "Content"), JsonProperty("languages")]
         public virtual ICollection<Language> Languages { get; set; }
 
-        [Display(Name = "OCLC Numbers", Order = 55)]
+        [Display(Name = "OCLC Numbers", Order = 54)]
         public virtual ICollection<OclcNumber> OclcNumbers { get; set; }
 
-        [Display(Name = "Order Items", Order = 56)]
+        [Display(Name = "Order Items", Order = 55)]
         public virtual ICollection<OrderItem2> OrderItem2s { get; set; }
 
-        [Display(Name = "Physical Descriptions", Order = 57), JsonConverter(typeof(ArrayJsonConverter<List<PhysicalDescription>, PhysicalDescription>), "Content"), JsonProperty("physicalDescriptions")]
+        [Display(Name = "Physical Descriptions", Order = 56), JsonConverter(typeof(ArrayJsonConverter<List<PhysicalDescription>, PhysicalDescription>), "Content"), JsonProperty("physicalDescriptions")]
         public virtual ICollection<PhysicalDescription> PhysicalDescriptions { get; set; }
 
-        [Display(Name = "Preceding Succeeding Titles", Order = 58)]
+        [Display(Name = "Preceding Succeeding Titles", Order = 57)]
         public virtual ICollection<PrecedingSucceedingTitle2> PrecedingSucceedingTitle2s { get; set; }
 
-        [Display(Name = "Preceding Succeeding Titles 1", Order = 59)]
+        [Display(Name = "Preceding Succeeding Titles 1", Order = 58)]
         public virtual ICollection<PrecedingSucceedingTitle2> PrecedingSucceedingTitle2s1 { get; set; }
 
-        [Display(Name = "Publication Frequencies", Order = 60), JsonConverter(typeof(ArrayJsonConverter<List<PublicationFrequency>, PublicationFrequency>), "Content"), JsonProperty("publicationFrequency")]
+        [Display(Name = "Publication Frequencies", Order = 59), JsonConverter(typeof(ArrayJsonConverter<List<PublicationFrequency>, PublicationFrequency>), "Content"), JsonProperty("publicationFrequency")]
         public virtual ICollection<PublicationFrequency> PublicationFrequencies { get; set; }
 
-        [Display(Name = "Publication Ranges", Order = 61), JsonConverter(typeof(ArrayJsonConverter<List<PublicationRange>, PublicationRange>), "Content"), JsonProperty("publicationRange")]
+        [Display(Name = "Publication Ranges", Order = 60), JsonConverter(typeof(ArrayJsonConverter<List<PublicationRange>, PublicationRange>), "Content"), JsonProperty("publicationRange")]
         public virtual ICollection<PublicationRange> PublicationRanges { get; set; }
 
-        [Display(Order = 62), JsonProperty("publication")]
+        [Display(Order = 61), JsonProperty("publication")]
         public virtual ICollection<Publication> Publications { get; set; }
 
         [ScaffoldColumn(false)]
         public virtual ICollection<Record2> Record2s { get; set; }
 
-        [Display(Order = 64)]
+        [Display(Order = 63)]
         public virtual ICollection<Relationship> Relationships { get; set; }
 
-        [Display(Name = "Relationships 1", Order = 65)]
+        [Display(Name = "Relationships 1", Order = 64)]
         public virtual ICollection<Relationship> Relationships1 { get; set; }
 
-        [Display(Name = "Requests", Order = 66)]
+        [Display(Name = "Requests", Order = 65)]
         public virtual ICollection<Request2> Request2s { get; set; }
 
-        [Display(Order = 67), JsonProperty("series")]
+        [Display(Order = 66), JsonProperty("series")]
         public virtual ICollection<Series> Series { get; set; }
 
-        [Display(Order = 68), JsonProperty("subjects")]
+        [Display(Order = 67), JsonProperty("subjects")]
         public virtual ICollection<Subject> Subjects { get; set; }
 
-        [Display(Name = "Titles", Order = 69)]
+        [Display(Name = "Titles", Order = 68)]
         public virtual ICollection<Title2> Title2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(ShortId)} = {ShortId}, {nameof(MatchKey)} = {MatchKey}, {nameof(SourceUri)} = {SourceUri}, {nameof(Source)} = {Source}, {nameof(Title)} = {Title}, {nameof(Author)} = {Author}, {nameof(IndexTitle)} = {IndexTitle}, {nameof(DateTypeId)} = {DateTypeId}, {nameof(Date1)} = {Date1}, {nameof(Date2)} = {Date2}, {nameof(InstanceTypeId)} = {InstanceTypeId}, {nameof(IssuanceModeId)} = {IssuanceModeId}, {nameof(CatalogedDate)} = {CatalogedDate}, {nameof(PreviouslyHeld)} = {PreviouslyHeld}, {nameof(StaffSuppress)} = {StaffSuppress}, {nameof(DiscoverySuppress)} = {DiscoverySuppress}, {nameof(Deleted)} = {Deleted}, {nameof(SourceRecordFormat)} = {SourceRecordFormat}, {nameof(StatusId)} = {StatusId}, {nameof(StatusLastWriteTime)} = {StatusLastWriteTime}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(CompletionTime)} = {CompletionTime}, {nameof(DatesDatetypeid)} = {DatesDatetypeid}, {nameof(AdministrativeNotes)} = {(AdministrativeNotes != null ? $"{{ {string.Join(", ", AdministrativeNotes)} }}" : "")}, {nameof(AlternativeTitles)} = {(AlternativeTitles != null ? $"{{ {string.Join(", ", AlternativeTitles)} }}" : "")}, {nameof(Classifications)} = {(Classifications != null ? $"{{ {string.Join(", ", Classifications)} }}" : "")}, {nameof(Contributors)} = {(Contributors != null ? $"{{ {string.Join(", ", Contributors)} }}" : "")}, {nameof(Editions)} = {(Editions != null ? $"{{ {string.Join(", ", Editions)} }}" : "")}, {nameof(ElectronicAccesses)} = {(ElectronicAccesses != null ? $"{{ {string.Join(", ", ElectronicAccesses)} }}" : "")}, {nameof(Identifiers)} = {(Identifiers != null ? $"{{ {string.Join(", ", Identifiers)} }}" : "")}, {nameof(InstanceFormat2s)} = {(InstanceFormat2s != null ? $"{{ {string.Join(", ", InstanceFormat2s)} }}" : "")}, {nameof(InstanceNatureOfContentTerms)} = {(InstanceNatureOfContentTerms != null ? $"{{ {string.Join(", ", InstanceNatureOfContentTerms)} }}" : "")}, {nameof(InstanceNotes)} = {(InstanceNotes != null ? $"{{ {string.Join(", ", InstanceNotes)} }}" : "")}, {nameof(InstanceStatisticalCodes)} = {(InstanceStatisticalCodes != null ? $"{{ {string.Join(", ", InstanceStatisticalCodes)} }}" : "")}, {nameof(InstanceTags)} = {(InstanceTags != null ? $"{{ {string.Join(", ", InstanceTags)} }}" : "")}, {nameof(Languages)} = {(Languages != null ? $"{{ {string.Join(", ", Languages)} }}" : "")}, {nameof(PhysicalDescriptions)} = {(PhysicalDescriptions != null ? $"{{ {string.Join(", ", PhysicalDescriptions)} }}" : "")}, {nameof(PublicationFrequencies)} = {(PublicationFrequencies != null ? $"{{ {string.Join(", ", PublicationFrequencies)} }}" : "")}, {nameof(PublicationRanges)} = {(PublicationRanges != null ? $"{{ {string.Join(", ", PublicationRanges)} }}" : "")}, {nameof(Publications)} = {(Publications != null ? $"{{ {string.Join(", ", Publications)} }}" : "")}, {nameof(Series)} = {(Series != null ? $"{{ {string.Join(", ", Series)} }}" : "")}, {nameof(Subjects)} = {(Subjects != null ? $"{{ {string.Join(", ", Subjects)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(ShortId)} = {ShortId}, {nameof(MatchKey)} = {MatchKey}, {nameof(SourceUri)} = {SourceUri}, {nameof(Source)} = {Source}, {nameof(Title)} = {Title}, {nameof(Author)} = {Author}, {nameof(IndexTitle)} = {IndexTitle}, {nameof(DateTypeId)} = {DateTypeId}, {nameof(Date1)} = {Date1}, {nameof(Date2)} = {Date2}, {nameof(InstanceTypeId)} = {InstanceTypeId}, {nameof(IssuanceModeId)} = {IssuanceModeId}, {nameof(CatalogedDate)} = {CatalogedDate}, {nameof(PreviouslyHeld)} = {PreviouslyHeld}, {nameof(StaffSuppress)} = {StaffSuppress}, {nameof(DiscoverySuppress)} = {DiscoverySuppress}, {nameof(Deleted)} = {Deleted}, {nameof(SourceRecordFormat)} = {SourceRecordFormat}, {nameof(StatusId)} = {StatusId}, {nameof(StatusLastWriteTime)} = {StatusLastWriteTime}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(CompletionTime)} = {CompletionTime}, {nameof(AdministrativeNotes)} = {(AdministrativeNotes != null ? $"{{ {string.Join(", ", AdministrativeNotes)} }}" : "")}, {nameof(AlternativeTitles)} = {(AlternativeTitles != null ? $"{{ {string.Join(", ", AlternativeTitles)} }}" : "")}, {nameof(Classifications)} = {(Classifications != null ? $"{{ {string.Join(", ", Classifications)} }}" : "")}, {nameof(Contributors)} = {(Contributors != null ? $"{{ {string.Join(", ", Contributors)} }}" : "")}, {nameof(Editions)} = {(Editions != null ? $"{{ {string.Join(", ", Editions)} }}" : "")}, {nameof(ElectronicAccesses)} = {(ElectronicAccesses != null ? $"{{ {string.Join(", ", ElectronicAccesses)} }}" : "")}, {nameof(Identifiers)} = {(Identifiers != null ? $"{{ {string.Join(", ", Identifiers)} }}" : "")}, {nameof(InstanceFormat2s)} = {(InstanceFormat2s != null ? $"{{ {string.Join(", ", InstanceFormat2s)} }}" : "")}, {nameof(InstanceNatureOfContentTerms)} = {(InstanceNatureOfContentTerms != null ? $"{{ {string.Join(", ", InstanceNatureOfContentTerms)} }}" : "")}, {nameof(InstanceNotes)} = {(InstanceNotes != null ? $"{{ {string.Join(", ", InstanceNotes)} }}" : "")}, {nameof(InstanceStatisticalCodes)} = {(InstanceStatisticalCodes != null ? $"{{ {string.Join(", ", InstanceStatisticalCodes)} }}" : "")}, {nameof(InstanceTags)} = {(InstanceTags != null ? $"{{ {string.Join(", ", InstanceTags)} }}" : "")}, {nameof(Languages)} = {(Languages != null ? $"{{ {string.Join(", ", Languages)} }}" : "")}, {nameof(PhysicalDescriptions)} = {(PhysicalDescriptions != null ? $"{{ {string.Join(", ", PhysicalDescriptions)} }}" : "")}, {nameof(PublicationFrequencies)} = {(PublicationFrequencies != null ? $"{{ {string.Join(", ", PublicationFrequencies)} }}" : "")}, {nameof(PublicationRanges)} = {(PublicationRanges != null ? $"{{ {string.Join(", ", PublicationRanges)} }}" : "")}, {nameof(Publications)} = {(Publications != null ? $"{{ {string.Join(", ", Publications)} }}" : "")}, {nameof(Series)} = {(Series != null ? $"{{ {string.Join(", ", Series)} }}" : "")}, {nameof(Subjects)} = {(Subjects != null ? $"{{ {string.Join(", ", Subjects)} }}" : "")} }}";
 
         public static Instance2 FromJObject(JObject jObject) => jObject != null ? new Instance2
         {

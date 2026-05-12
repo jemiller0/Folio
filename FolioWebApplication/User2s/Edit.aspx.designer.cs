@@ -717,6 +717,14 @@ namespace FolioWebApplication.User2s
 
         protected RadGrid OrganizationPhoneNumbers1RadGrid;
 
+        protected Panel OrganizationType2sPanel;
+
+        protected RadGrid OrganizationType2sRadGrid;
+
+        protected Panel OrganizationType2s1Panel;
+
+        protected RadGrid OrganizationType2s1RadGrid;
+
         protected Panel OrganizationUrlsPanel;
 
         protected RadGrid OrganizationUrlsRadGrid;

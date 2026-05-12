@@ -73,6 +73,10 @@ namespace FolioWebApplication.Location2s
 
         protected RadGrid Receiving2sRadGrid;
 
+        protected Panel Request2sPanel;
+
+        protected RadGrid Request2sRadGrid;
+
         protected Panel RolloverBudgetLocationsPanel;
 
         protected RadGrid RolloverBudgetLocationsRadGrid;

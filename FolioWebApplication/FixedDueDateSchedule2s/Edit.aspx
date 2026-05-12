@@ -140,6 +140,9 @@
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Loans Policy Item Limit" DataField="LoansPolicyItemLimit" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Loans Policy For Use At Location" DataField="LoansPolicyForUseAtLocation" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Loans Policy Hold Shelf Expiry Period For Use At Location Duration" DataField="LoansPolicyHoldShelfExpiryPeriodForUseAtLocationDuration" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Loans Policy Hold Shelf Expiry Period For Use At Location Interval" DataField="LoansPolicyHoldShelfExpiryPeriodForUseAtLocationInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Renewable" DataField="Renewable" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Renewals Policy Unlimited" DataField="RenewalsPolicyUnlimited" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Renewals Policy Number Allowed" DataField="RenewalsPolicyNumberAllowed" AutoPostBackOnFilter="true" />
@@ -224,6 +227,9 @@
                         <telerik:GridBoundColumn HeaderText="Loans Policy Opening Time Offset Duration" DataField="LoansPolicyOpeningTimeOffsetDuration" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Loans Policy Opening Time Offset Interval" DataField="LoansPolicyOpeningTimeOffsetInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Loans Policy Item Limit" DataField="LoansPolicyItemLimit" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Loans Policy For Use At Location" DataField="LoansPolicyForUseAtLocation" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Loans Policy Hold Shelf Expiry Period For Use At Location Duration" DataField="LoansPolicyHoldShelfExpiryPeriodForUseAtLocationDuration" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Loans Policy Hold Shelf Expiry Period For Use At Location Interval" DataField="LoansPolicyHoldShelfExpiryPeriodForUseAtLocationInterval" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Renewable" DataField="Renewable" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Renewals Policy Unlimited" DataField="RenewalsPolicyUnlimited" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Renewals Policy Number Allowed" DataField="RenewalsPolicyNumberAllowed" AutoPostBackOnFilter="true" />

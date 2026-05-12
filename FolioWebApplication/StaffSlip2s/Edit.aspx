@@ -41,6 +41,14 @@
                                     <asp:Literal ID="ActiveLiteral" runat="server" Text='<%#: Eval("Active") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("IsRawHtml") != null %>'>
+                                <td>
+                                    <asp:Label ID="IsRawHtmlLabel" runat="server" Text="Is Raw Html:" AssociatedControlID="IsRawHtmlLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="IsRawHtmlLiteral" runat="server" Text='<%#: Eval("IsRawHtml") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("Template") != null %>'>
                                 <td>
                                     <asp:Label ID="TemplateLabel" runat="server" Text="Template:" AssociatedControlID="TemplateLiteral" />

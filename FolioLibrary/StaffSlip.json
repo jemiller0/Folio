@@ -19,6 +19,10 @@
       "description": "Flag that indicates whether staff slip is active",
       "type": "boolean"
     },
+    "isRawHtml": {
+      "description": "Flag that indicates whether staff slip should be maintained as raw HTML rather than using the WYSIWYG editor. This has no implications for the back-end code, as is merely a note from the UI to itself.",
+      "type": "boolean"
+    },
     "template": {
       "description": "Staff slip template",
       "type": "string"

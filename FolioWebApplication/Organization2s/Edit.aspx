@@ -1245,6 +1245,23 @@
             </telerik:RadGrid>
         </fieldset>
     </asp:Panel>
+    <asp:Panel ID="OrganizationOrganizationTypesPanel" runat="server" Visible='<%# (string)Session["OrganizationOrganizationTypesPermission"] != null && Organization2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="OrganizationOrganizationTypesHyperLink" runat="server" Text="Organization Organization Types" NavigateUrl="~/OrganizationOrganizationTypes/Default.aspx" Enabled="false" /></legend>
+            <telerik:RadGrid ID="OrganizationOrganizationTypesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrganizationOrganizationTypesRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No organization organization types found">
+                    <Columns>
+                        <telerik:GridTemplateColumn HeaderText="Organization Type" DataField="OrganizationType.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="OrganizationTypeHyperLink" runat="server" Text='<%#: Eval("OrganizationTypeId") != null ? Eval("OrganizationType.Name") ?? "&nbsp;" : "" %>' NavigateUrl='<%# $"~/OrganizationType2s/Edit.aspx?Id={Eval("OrganizationTypeId")}" %>' Enabled='<%# Session["OrganizationType2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
     <asp:Panel ID="OrganizationPhoneNumbersPanel" runat="server" Visible='<%# (string)Session["OrganizationPhoneNumbersPermission"] != null && Organization2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
@@ -1298,22 +1315,6 @@
                 <asp:HyperLink ID="OrganizationTagsHyperLink" runat="server" Text="Organization Tags" NavigateUrl="~/OrganizationTags/Default.aspx" Enabled="false" /></legend>
             <telerik:RadGrid ID="OrganizationTagsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrganizationTagsRadGrid_NeedDataSource">
                 <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No organization tags found">
-                    <SortExpressions>
-                        <telerik:GridSortExpression FieldName="Content" />
-                    </SortExpressions>
-                    <Columns>
-                        <telerik:GridBoundColumn HeaderText="Content" DataField="Content" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
-                    </Columns>
-                </MasterTableView>
-            </telerik:RadGrid>
-        </fieldset>
-    </asp:Panel>
-    <asp:Panel ID="OrganizationTypesPanel" runat="server" Visible='<%# (string)Session["OrganizationTypesPermission"] != null && Organization2FormView.DataKey.Value != null %>'>
-        <fieldset>
-            <legend>
-                <asp:HyperLink ID="OrganizationTypesHyperLink" runat="server" Text="Organization Types" NavigateUrl="~/OrganizationTypes/Default.aspx" Enabled="false" /></legend>
-            <telerik:RadGrid ID="OrganizationTypesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrganizationTypesRadGrid_NeedDataSource">
-                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No organization types found">
                     <SortExpressions>
                         <telerik:GridSortExpression FieldName="Content" />
                     </SortExpressions>
@@ -1500,6 +1501,11 @@
                     <telerik:AjaxUpdatedControl ControlID="OrganizationInterfacesPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="OrganizationOrganizationTypesRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="OrganizationOrganizationTypesPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="OrganizationPhoneNumbersRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="OrganizationPhoneNumbersPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
@@ -1513,11 +1519,6 @@
             <telerik:AjaxSetting AjaxControlID="OrganizationTagsRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="OrganizationTagsPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
-                </UpdatedControls>
-            </telerik:AjaxSetting>
-            <telerik:AjaxSetting AjaxControlID="OrganizationTypesRadGrid">
-                <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="OrganizationTypesPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="OrganizationUrlsRadGrid">

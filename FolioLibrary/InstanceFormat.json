@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "The format of an Instance",
+  "javaType": "org.folio.rest.jaxrs.model.InstanceFormat",
   "type": "object",
   "properties": {
     "id": {

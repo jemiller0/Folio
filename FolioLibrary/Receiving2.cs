@@ -84,82 +84,85 @@ namespace FolioLibrary
         [Column("display_to_public"), Display(Name = "Display To Public", Order = 19), JsonProperty("displayToPublic")]
         public virtual bool? DisplayToPublic { get; set; }
 
-        [Column("enumeration"), Display(Order = 20), JsonProperty("enumeration"), StringLength(1024)]
+        [Column("sequence_number"), Display(Name = "Sequence Number", Order = 20), JsonProperty("sequenceNumber")]
+        public virtual int? SequenceNumber { get; set; }
+
+        [Column("enumeration"), Display(Order = 21), JsonProperty("enumeration"), StringLength(1024)]
         public virtual string Enumeration { get; set; }
 
-        [Column("chronology"), Display(Order = 21), JsonProperty("chronology"), StringLength(1024)]
+        [Column("chronology"), Display(Order = 22), JsonProperty("chronology"), StringLength(1024)]
         public virtual string Chronology { get; set; }
 
-        [Column("barcode"), Display(Order = 22), JsonProperty("barcode"), StringLength(1024)]
+        [Column("barcode"), Display(Order = 23), JsonProperty("barcode"), StringLength(1024)]
         public virtual string Barcode { get; set; }
 
-        [Column("accession_number"), Display(Name = "Accession Number", Order = 23), JsonProperty("accessionNumber"), StringLength(1024)]
+        [Column("accession_number"), Display(Name = "Accession Number", Order = 24), JsonProperty("accessionNumber"), StringLength(1024)]
         public virtual string AccessionNumber { get; set; }
 
-        [Column("call_number"), Display(Name = "Call Number", Order = 24), JsonProperty("callNumber"), StringLength(1024)]
+        [Column("call_number"), Display(Name = "Call Number", Order = 25), JsonProperty("callNumber"), StringLength(1024)]
         public virtual string CallNumber { get; set; }
 
-        [Column("discovery_suppress"), Display(Name = "Discovery Suppress", Order = 25), JsonProperty("discoverySuppress")]
+        [Column("discovery_suppress"), Display(Name = "Discovery Suppress", Order = 26), JsonProperty("discoverySuppress")]
         public virtual bool? DiscoverySuppress { get; set; }
 
-        [Column("copy_number"), Display(Name = "Copy Number", Order = 26), JsonProperty("copyNumber"), StringLength(1024)]
+        [Column("copy_number"), Display(Name = "Copy Number", Order = 27), JsonProperty("copyNumber"), StringLength(1024)]
         public virtual string CopyNumber { get; set; }
 
-        [Column("receiving_status"), Display(Name = "Receiving Status", Order = 27), JsonProperty("receivingStatus"), RegularExpression(@"^(Received|Expected|Late|Claim delayed|Claim sent|Unreceivable)$"), Required, StringLength(1024)]
+        [Column("receiving_status"), Display(Name = "Receiving Status", Order = 28), JsonProperty("receivingStatus"), RegularExpression(@"^(Received|Expected|Late|Claim delayed|Claim sent|Unreceivable)$"), Required, StringLength(1024)]
         public virtual string ReceivingStatus { get; set; }
 
-        [Column("supplement"), Display(Order = 28), JsonProperty("supplement")]
+        [Column("supplement"), Display(Order = 29), JsonProperty("supplement")]
         public virtual bool? Supplement { get; set; }
 
-        [Column("is_bound"), Display(Name = "Is Bound", Order = 29), JsonProperty("isBound")]
+        [Column("is_bound"), Display(Name = "Is Bound", Order = 30), JsonProperty("isBound")]
         public virtual bool? IsBound { get; set; }
 
-        [Column("receipt_date"), DataType(DataType.DateTime), Display(Name = "Receipt Time", Order = 30), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("receiptDate")]
+        [Column("receipt_date"), DataType(DataType.DateTime), Display(Name = "Receipt Time", Order = 31), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("receiptDate")]
         public virtual DateTime? ReceiptTime { get; set; }
 
-        [Column("received_date"), DataType(DataType.DateTime), Display(Name = "Receive Time", Order = 31), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("receivedDate")]
+        [Column("received_date"), DataType(DataType.DateTime), Display(Name = "Receive Time", Order = 32), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("receivedDate")]
         public virtual DateTime? ReceiveTime { get; set; }
 
-        [Column("status_updated_date"), DataType(DataType.Date), Display(Name = "Status Updated Date", Order = 32), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("statusUpdatedDate")]
+        [Column("status_updated_date"), DataType(DataType.Date), Display(Name = "Status Updated Date", Order = 33), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("statusUpdatedDate")]
         public virtual DateTime? StatusUpdatedDate { get; set; }
 
-        [Column("claiming_interval"), Display(Name = "Claiming Interval", Order = 33), JsonProperty("claimingInterval")]
+        [Column("claiming_interval"), Display(Name = "Claiming Interval", Order = 34), JsonProperty("claimingInterval")]
         public virtual int? ClaimingInterval { get; set; }
 
-        [Column("internal_note"), Display(Name = "Internal Note", Order = 34), JsonProperty("internalNote"), StringLength(1024)]
+        [Column("internal_note"), Display(Name = "Internal Note", Order = 35), JsonProperty("internalNote"), StringLength(1024)]
         public virtual string InternalNote { get; set; }
 
-        [Column("external_note"), Display(Name = "External Note", Order = 35), JsonProperty("externalNote"), StringLength(1024)]
+        [Column("external_note"), Display(Name = "External Note", Order = 36), JsonProperty("externalNote"), StringLength(1024)]
         public virtual string ExternalNote { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 36), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 37), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 37), InverseProperty("Receiving2s")]
+        [Display(Name = "Creation User", Order = 38), InverseProperty("Receiving2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 38), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 39), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 40), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 41), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 41), InverseProperty("Receiving2s1")]
+        [Display(Name = "Last Write User", Order = 42), InverseProperty("Receiving2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 42), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 43), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Receiving), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 44), Editable(false)]
+        [Column("content"), CustomValidation(typeof(Receiving), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 45), Editable(false)]
         public virtual string Content { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(DisplaySummary)} = {DisplaySummary}, {nameof(Comment)} = {Comment}, {nameof(Format)} = {Format}, {nameof(ItemId)} = {ItemId}, {nameof(BindItemId)} = {BindItemId}, {nameof(BindItemTenantId)} = {BindItemTenantId}, {nameof(LocationId)} = {LocationId}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(TitleId)} = {TitleId}, {nameof(HoldingId)} = {HoldingId}, {nameof(ReceivingTenantId)} = {ReceivingTenantId}, {nameof(DisplayOnHolding)} = {DisplayOnHolding}, {nameof(DisplayToPublic)} = {DisplayToPublic}, {nameof(Enumeration)} = {Enumeration}, {nameof(Chronology)} = {Chronology}, {nameof(Barcode)} = {Barcode}, {nameof(AccessionNumber)} = {AccessionNumber}, {nameof(CallNumber)} = {CallNumber}, {nameof(DiscoverySuppress)} = {DiscoverySuppress}, {nameof(CopyNumber)} = {CopyNumber}, {nameof(ReceivingStatus)} = {ReceivingStatus}, {nameof(Supplement)} = {Supplement}, {nameof(IsBound)} = {IsBound}, {nameof(ReceiptTime)} = {ReceiptTime}, {nameof(ReceiveTime)} = {ReceiveTime}, {nameof(StatusUpdatedDate)} = {StatusUpdatedDate}, {nameof(ClaimingInterval)} = {ClaimingInterval}, {nameof(InternalNote)} = {InternalNote}, {nameof(ExternalNote)} = {ExternalNote}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(DisplaySummary)} = {DisplaySummary}, {nameof(Comment)} = {Comment}, {nameof(Format)} = {Format}, {nameof(ItemId)} = {ItemId}, {nameof(BindItemId)} = {BindItemId}, {nameof(BindItemTenantId)} = {BindItemTenantId}, {nameof(LocationId)} = {LocationId}, {nameof(OrderItemId)} = {OrderItemId}, {nameof(TitleId)} = {TitleId}, {nameof(HoldingId)} = {HoldingId}, {nameof(ReceivingTenantId)} = {ReceivingTenantId}, {nameof(DisplayOnHolding)} = {DisplayOnHolding}, {nameof(DisplayToPublic)} = {DisplayToPublic}, {nameof(SequenceNumber)} = {SequenceNumber}, {nameof(Enumeration)} = {Enumeration}, {nameof(Chronology)} = {Chronology}, {nameof(Barcode)} = {Barcode}, {nameof(AccessionNumber)} = {AccessionNumber}, {nameof(CallNumber)} = {CallNumber}, {nameof(DiscoverySuppress)} = {DiscoverySuppress}, {nameof(CopyNumber)} = {CopyNumber}, {nameof(ReceivingStatus)} = {ReceivingStatus}, {nameof(Supplement)} = {Supplement}, {nameof(IsBound)} = {IsBound}, {nameof(ReceiptTime)} = {ReceiptTime}, {nameof(ReceiveTime)} = {ReceiveTime}, {nameof(StatusUpdatedDate)} = {StatusUpdatedDate}, {nameof(ClaimingInterval)} = {ClaimingInterval}, {nameof(InternalNote)} = {InternalNote}, {nameof(ExternalNote)} = {ExternalNote}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
 
         public static Receiving2 FromJObject(JObject jObject) => jObject != null ? new Receiving2
         {
@@ -177,6 +180,7 @@ namespace FolioLibrary
             ReceivingTenantId = (Guid?)jObject.SelectToken("receivingTenantId"),
             DisplayOnHolding = (bool?)jObject.SelectToken("displayOnHolding"),
             DisplayToPublic = (bool?)jObject.SelectToken("displayToPublic"),
+            SequenceNumber = (int?)jObject.SelectToken("sequenceNumber"),
             Enumeration = (string)jObject.SelectToken("enumeration"),
             Chronology = (string)jObject.SelectToken("chronology"),
             Barcode = (string)jObject.SelectToken("barcode"),
@@ -217,6 +221,7 @@ namespace FolioLibrary
             new JProperty("receivingTenantId", ReceivingTenantId),
             new JProperty("displayOnHolding", DisplayOnHolding),
             new JProperty("displayToPublic", DisplayToPublic),
+            new JProperty("sequenceNumber", SequenceNumber),
             new JProperty("enumeration", Enumeration),
             new JProperty("chronology", Chronology),
             new JProperty("barcode", Barcode),

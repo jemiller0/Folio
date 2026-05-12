@@ -37,7 +37,7 @@ namespace FolioLibrary
         [Column("request_type"), Display(Name = "Request Type", Order = 3), JsonProperty("requestType"), RegularExpression(@"^(Hold|Recall|Page)$"), Required, StringLength(1024)]
         public virtual string RequestType { get; set; }
 
-        [Column("ecs_request_phase"), Display(Name = "Ecs Request Phase", Order = 4), JsonProperty("ecsRequestPhase"), RegularExpression(@"^(Primary|Secondary)$"), StringLength(1024)]
+        [Column("ecs_request_phase"), Display(Name = "Ecs Request Phase", Order = 4), JsonProperty("ecsRequestPhase"), RegularExpression(@"^(Primary|Secondary|Intermediate)$"), StringLength(1024)]
         public virtual string EcsRequestPhase { get; set; }
 
         [Column("request_date"), DataType(DataType.Date), Display(Name = "Request Date", Order = 5), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("requestDate"), Required]
@@ -106,133 +106,154 @@ namespace FolioLibrary
         [Column("item_barcode"), Display(Name = "Item Barcode", Order = 26), JsonProperty("item.barcode"), StringLength(1024)]
         public virtual string ItemBarcode { get; set; }
 
-        [Column("requester_first_name"), Display(Name = "Requester First Name", Order = 27), JsonProperty("requester.firstName"), StringLength(1024)]
+        [Display(Name = "Item Item Effective Location", Order = 27)]
+        public virtual Location2 ItemItemEffectiveLocation { get; set; }
+
+        [Column("item_item_effective_location_id"), Display(Name = "Item Item Effective Location", Order = 28), JsonProperty("item.itemEffectiveLocationId")]
+        public virtual Guid? ItemItemEffectiveLocationId { get; set; }
+
+        [Column("item_item_effective_location_name"), JsonProperty("item.itemEffectiveLocationName"), ScaffoldColumn(false), StringLength(1024)]
+        public virtual string ItemItemEffectiveLocationName { get; set; }
+
+        [Display(Name = "Item Retrieval Service Point", Order = 30), InverseProperty("Request2s")]
+        public virtual ServicePoint2 ItemRetrievalServicePoint { get; set; }
+
+        [Column("item_retrieval_service_point_id"), Display(Name = "Item Retrieval Service Point", Order = 31), JsonProperty("item.retrievalServicePointId")]
+        public virtual Guid? ItemRetrievalServicePointId { get; set; }
+
+        [Column("item_retrieval_service_point_name"), JsonProperty("item.retrievalServicePointName"), ScaffoldColumn(false), StringLength(1024)]
+        public virtual string ItemRetrievalServicePointName { get; set; }
+
+        [Column("requester_first_name"), Display(Name = "Requester First Name", Order = 33), JsonProperty("requester.firstName"), StringLength(1024)]
         public virtual string RequesterFirstName { get; set; }
 
-        [Column("requester_last_name"), Display(Name = "Requester Last Name", Order = 28), JsonProperty("requester.lastName"), StringLength(1024)]
+        [Column("requester_last_name"), Display(Name = "Requester Last Name", Order = 34), JsonProperty("requester.lastName"), StringLength(1024)]
         public virtual string RequesterLastName { get; set; }
 
-        [Column("requester_middle_name"), Display(Name = "Requester Middle Name", Order = 29), JsonProperty("requester.middleName"), StringLength(1024)]
+        [Column("requester_middle_name"), Display(Name = "Requester Middle Name", Order = 35), JsonProperty("requester.middleName"), StringLength(1024)]
         public virtual string RequesterMiddleName { get; set; }
 
-        [Column("requester_barcode"), Display(Name = "Requester Barcode", Order = 30), JsonProperty("requester.barcode"), StringLength(1024)]
+        [Column("requester_barcode"), Display(Name = "Requester Barcode", Order = 36), JsonProperty("requester.barcode"), StringLength(1024)]
         public virtual string RequesterBarcode { get; set; }
 
-        [Column("requester_patron_group"), Display(Name = "Requester Patron Group", Order = 31), JsonProperty("requester.patronGroup"), StringLength(1024)]
+        [Column("requester_patron_group"), Display(Name = "Requester Patron Group", Order = 37), JsonProperty("requester.patronGroup"), StringLength(1024)]
         public virtual string RequesterPatronGroup { get; set; }
 
-        [Column("proxy_first_name"), Display(Name = "Proxy First Name", Order = 32), JsonProperty("proxy.firstName"), StringLength(1024)]
+        [Column("proxy_first_name"), Display(Name = "Proxy First Name", Order = 38), JsonProperty("proxy.firstName"), StringLength(1024)]
         public virtual string ProxyFirstName { get; set; }
 
-        [Column("proxy_last_name"), Display(Name = "Proxy Last Name", Order = 33), JsonProperty("proxy.lastName"), StringLength(1024)]
+        [Column("proxy_last_name"), Display(Name = "Proxy Last Name", Order = 39), JsonProperty("proxy.lastName"), StringLength(1024)]
         public virtual string ProxyLastName { get; set; }
 
-        [Column("proxy_middle_name"), Display(Name = "Proxy Middle Name", Order = 34), JsonProperty("proxy.middleName"), StringLength(1024)]
+        [Column("proxy_middle_name"), Display(Name = "Proxy Middle Name", Order = 40), JsonProperty("proxy.middleName"), StringLength(1024)]
         public virtual string ProxyMiddleName { get; set; }
 
-        [Column("proxy_barcode"), Display(Name = "Proxy Barcode", Order = 35), JsonProperty("proxy.barcode"), StringLength(1024)]
+        [Column("proxy_barcode"), Display(Name = "Proxy Barcode", Order = 41), JsonProperty("proxy.barcode"), StringLength(1024)]
         public virtual string ProxyBarcode { get; set; }
 
-        [Column("proxy_patron_group"), Display(Name = "Proxy Patron Group", Order = 36), JsonProperty("proxy.patronGroup"), StringLength(1024)]
+        [Column("proxy_patron_group"), Display(Name = "Proxy Patron Group", Order = 42), JsonProperty("proxy.patronGroup"), StringLength(1024)]
         public virtual string ProxyPatronGroup { get; set; }
 
-        [Column("fulfillment_preference"), Display(Name = "Fulfillment Preference", Order = 37), JsonProperty("fulfillmentPreference"), RegularExpression(@"^(Hold Shelf|Delivery)$"), StringLength(1024)]
+        [Column("fulfillment_preference"), Display(Name = "Fulfillment Preference", Order = 43), JsonProperty("fulfillmentPreference"), RegularExpression(@"^(Hold Shelf|Delivery)$"), StringLength(1024)]
         public virtual string FulfillmentPreference { get; set; }
 
-        [Display(Name = "Delivery Address Type", Order = 38)]
+        [Display(Name = "Delivery Address Type", Order = 44)]
         public virtual AddressType2 DeliveryAddressType { get; set; }
 
-        [Column("delivery_address_type_id"), Display(Name = "Delivery Address Type", Order = 39), JsonProperty("deliveryAddressTypeId")]
+        [Column("delivery_address_type_id"), Display(Name = "Delivery Address Type", Order = 45), JsonProperty("deliveryAddressTypeId")]
         public virtual Guid? DeliveryAddressTypeId { get; set; }
 
-        [Column("request_expiration_date"), DataType(DataType.Date), Display(Name = "Request Expiration Date", Order = 40), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("requestExpirationDate")]
+        [Column("request_expiration_date"), DataType(DataType.Date), Display(Name = "Request Expiration Date", Order = 46), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("requestExpirationDate")]
         public virtual DateTime? RequestExpirationDate { get; set; }
 
-        [Column("hold_shelf_expiration_date"), DataType(DataType.Date), Display(Name = "Hold Shelf Expiration Date", Order = 41), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("holdShelfExpirationDate")]
+        [Column("hold_shelf_expiration_date"), DataType(DataType.Date), Display(Name = "Hold Shelf Expiration Date", Order = 47), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("holdShelfExpirationDate")]
         public virtual DateTime? HoldShelfExpirationDate { get; set; }
 
-        [Display(Name = "Pickup Service Point", Order = 42)]
+        [Display(Name = "Pickup Service Point", Order = 48), InverseProperty("Request2s1")]
         public virtual ServicePoint2 PickupServicePoint { get; set; }
 
-        [Column("pickup_service_point_id"), Display(Name = "Pickup Service Point", Order = 43), JsonProperty("pickupServicePointId")]
+        [Column("pickup_service_point_id"), Display(Name = "Pickup Service Point", Order = 49), JsonProperty("pickupServicePointId")]
         public virtual Guid? PickupServicePointId { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 44), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 50), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 45), InverseProperty("Request2s2")]
+        [Display(Name = "Creation User", Order = 51), InverseProperty("Request2s2")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 46), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 52), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 48), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 54), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 49), InverseProperty("Request2s5")]
+        [Display(Name = "Last Write User", Order = 55), InverseProperty("Request2s5")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 50), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 56), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("print_details_print_count"), Display(Name = "Print Details Print Count", Order = 52), JsonProperty("printDetails.printCount")]
+        [Column("print_details_print_count"), Display(Name = "Print Details Print Count", Order = 58), JsonProperty("printDetails.printCount")]
         public virtual int? PrintDetailsPrintCount { get; set; }
 
-        [Display(Name = "Print Details Requester", Order = 53), InverseProperty("Request2s")]
+        [Display(Name = "Print Details Requester", Order = 59), InverseProperty("Request2s")]
         public virtual User2 PrintDetailsRequester { get; set; }
 
-        [Column("print_details_requester_id"), Display(Name = "Print Details Requester", Order = 54), JsonProperty("printDetails.requesterId")]
+        [Column("print_details_requester_id"), Display(Name = "Print Details Requester", Order = 60), JsonProperty("printDetails.requesterId")]
         public virtual Guid? PrintDetailsRequesterId { get; set; }
 
-        [Column("print_details_is_printed"), Display(Name = "Print Details Is Printed", Order = 55), JsonProperty("printDetails.isPrinted")]
+        [Column("print_details_is_printed"), Display(Name = "Print Details Is Printed", Order = 61), JsonProperty("printDetails.isPrinted")]
         public virtual bool? PrintDetailsIsPrinted { get; set; }
 
-        [Column("print_details_print_event_date"), DataType(DataType.Date), Display(Name = "Print Details Print Event Date", Order = 56), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("printDetails.printEventDate")]
+        [Column("print_details_print_event_date"), DataType(DataType.Date), Display(Name = "Print Details Print Event Date", Order = 62), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("printDetails.printEventDate")]
         public virtual DateTime? PrintDetailsPrintEventDate { get; set; }
 
-        [Column("awaiting_pickup_request_closed_date"), DataType(DataType.Date), Display(Name = "Awaiting Pickup Request Closed Date", Order = 57), DisplayFormat(DataFormatString = "{0:d}"), Editable(false), JsonProperty("awaitingPickupRequestClosedDate")]
+        [Column("awaiting_pickup_request_closed_date"), DataType(DataType.Date), Display(Name = "Awaiting Pickup Request Closed Date", Order = 63), DisplayFormat(DataFormatString = "{0:d}"), Editable(false), JsonProperty("awaitingPickupRequestClosedDate")]
         public virtual DateTime? AwaitingPickupRequestClosedDate { get; set; }
 
-        [Column("search_index_call_number_components_call_number"), Display(Name = "Search Index Call Number Components Call Number", Order = 58), JsonProperty("searchIndex.callNumberComponents.callNumber"), StringLength(1024)]
+        [Column("search_index_call_number_components_call_number"), Display(Name = "Search Index Call Number Components Call Number", Order = 64), JsonProperty("searchIndex.callNumberComponents.callNumber"), StringLength(1024)]
         public virtual string SearchIndexCallNumberComponentsCallNumber { get; set; }
 
-        [Column("search_index_call_number_components_prefix"), Display(Name = "Search Index Call Number Components Prefix", Order = 59), JsonProperty("searchIndex.callNumberComponents.prefix"), StringLength(1024)]
+        [Column("search_index_call_number_components_prefix"), Display(Name = "Search Index Call Number Components Prefix", Order = 65), JsonProperty("searchIndex.callNumberComponents.prefix"), StringLength(1024)]
         public virtual string SearchIndexCallNumberComponentsPrefix { get; set; }
 
-        [Column("search_index_call_number_components_suffix"), Display(Name = "Search Index Call Number Components Suffix", Order = 60), JsonProperty("searchIndex.callNumberComponents.suffix"), StringLength(1024)]
+        [Column("search_index_call_number_components_suffix"), Display(Name = "Search Index Call Number Components Suffix", Order = 66), JsonProperty("searchIndex.callNumberComponents.suffix"), StringLength(1024)]
         public virtual string SearchIndexCallNumberComponentsSuffix { get; set; }
 
-        [Column("search_index_shelving_order"), Display(Name = "Search Index Shelving Order", Order = 61), JsonProperty("searchIndex.shelvingOrder"), StringLength(1024)]
+        [Column("search_index_shelving_order"), Display(Name = "Search Index Shelving Order", Order = 67), JsonProperty("searchIndex.shelvingOrder"), StringLength(1024)]
         public virtual string SearchIndexShelvingOrder { get; set; }
 
-        [Column("search_index_pickup_service_point_name"), Display(Name = "Search Index Pickup Service Point Name", Order = 62), JsonProperty("searchIndex.pickupServicePointName"), StringLength(1024)]
+        [Column("search_index_pickup_service_point_name"), Display(Name = "Search Index Pickup Service Point Name", Order = 68), JsonProperty("searchIndex.pickupServicePointName"), StringLength(1024)]
         public virtual string SearchIndexPickupServicePointName { get; set; }
 
-        [Column("item_location_code"), Display(Name = "Item Location Code", Order = 63), JsonProperty("itemLocationCode"), StringLength(1024)]
+        [Column("item_location_code"), Display(Name = "Item Location Code", Order = 69), JsonProperty("itemLocationCode"), StringLength(1024)]
         public virtual string ItemLocationCode { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Request), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 64), Editable(false)]
+        [Column("is_dcb_re_request_cancellation"), Display(Name = "Is Dcb Re Request Cancellation", Order = 70), JsonProperty("isDcbReRequestCancellation")]
+        public virtual bool? IsDcbReRequestCancellation { get; set; }
+
+        [Column("content"), CustomValidation(typeof(Request), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 71), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Request Identifiers", Order = 65), JsonProperty("instance.identifiers")]
+        [Display(Name = "Request Identifiers", Order = 72), JsonProperty("instance.identifiers")]
         public virtual ICollection<RequestIdentifier> RequestIdentifiers { get; set; }
 
-        [Display(Name = "Request Notes", Order = 66)]
+        [Display(Name = "Request Notes", Order = 73)]
         public virtual ICollection<RequestNote> RequestNotes { get; set; }
 
-        [Display(Name = "Request Tags", Order = 67), JsonConverter(typeof(ArrayJsonConverter<List<RequestTag>, RequestTag>), "Content"), JsonProperty("tags.tagList")]
+        [Display(Name = "Request Tags", Order = 74), JsonConverter(typeof(ArrayJsonConverter<List<RequestTag>, RequestTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<RequestTag> RequestTags { get; set; }
 
-        [Display(Name = "Scheduled Notices", Order = 68)]
+        [Display(Name = "Scheduled Notices", Order = 75)]
         public virtual ICollection<ScheduledNotice2> ScheduledNotice2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(RequestLevel)} = {RequestLevel}, {nameof(RequestType)} = {RequestType}, {nameof(EcsRequestPhase)} = {EcsRequestPhase}, {nameof(RequestDate)} = {RequestDate}, {nameof(PatronComments)} = {PatronComments}, {nameof(RequesterId)} = {RequesterId}, {nameof(ProxyUserId)} = {ProxyUserId}, {nameof(InstanceId)} = {InstanceId}, {nameof(HoldingId)} = {HoldingId}, {nameof(ItemId)} = {ItemId}, {nameof(Status)} = {Status}, {nameof(CancellationReasonId)} = {CancellationReasonId}, {nameof(CancelledByUserId)} = {CancelledByUserId}, {nameof(CancellationAdditionalInformation)} = {CancellationAdditionalInformation}, {nameof(CancelledDate)} = {CancelledDate}, {nameof(Position)} = {Position}, {nameof(InstanceTitle)} = {InstanceTitle}, {nameof(ItemBarcode)} = {ItemBarcode}, {nameof(RequesterFirstName)} = {RequesterFirstName}, {nameof(RequesterLastName)} = {RequesterLastName}, {nameof(RequesterMiddleName)} = {RequesterMiddleName}, {nameof(RequesterBarcode)} = {RequesterBarcode}, {nameof(RequesterPatronGroup)} = {RequesterPatronGroup}, {nameof(ProxyFirstName)} = {ProxyFirstName}, {nameof(ProxyLastName)} = {ProxyLastName}, {nameof(ProxyMiddleName)} = {ProxyMiddleName}, {nameof(ProxyBarcode)} = {ProxyBarcode}, {nameof(ProxyPatronGroup)} = {ProxyPatronGroup}, {nameof(FulfillmentPreference)} = {FulfillmentPreference}, {nameof(DeliveryAddressTypeId)} = {DeliveryAddressTypeId}, {nameof(RequestExpirationDate)} = {RequestExpirationDate}, {nameof(HoldShelfExpirationDate)} = {HoldShelfExpirationDate}, {nameof(PickupServicePointId)} = {PickupServicePointId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(PrintDetailsPrintCount)} = {PrintDetailsPrintCount}, {nameof(PrintDetailsRequesterId)} = {PrintDetailsRequesterId}, {nameof(PrintDetailsIsPrinted)} = {PrintDetailsIsPrinted}, {nameof(PrintDetailsPrintEventDate)} = {PrintDetailsPrintEventDate}, {nameof(AwaitingPickupRequestClosedDate)} = {AwaitingPickupRequestClosedDate}, {nameof(SearchIndexCallNumberComponentsCallNumber)} = {SearchIndexCallNumberComponentsCallNumber}, {nameof(SearchIndexCallNumberComponentsPrefix)} = {SearchIndexCallNumberComponentsPrefix}, {nameof(SearchIndexCallNumberComponentsSuffix)} = {SearchIndexCallNumberComponentsSuffix}, {nameof(SearchIndexShelvingOrder)} = {SearchIndexShelvingOrder}, {nameof(SearchIndexPickupServicePointName)} = {SearchIndexPickupServicePointName}, {nameof(ItemLocationCode)} = {ItemLocationCode}, {nameof(Content)} = {Content}, {nameof(RequestIdentifiers)} = {(RequestIdentifiers != null ? $"{{ {string.Join(", ", RequestIdentifiers)} }}" : "")}, {nameof(RequestTags)} = {(RequestTags != null ? $"{{ {string.Join(", ", RequestTags)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(RequestLevel)} = {RequestLevel}, {nameof(RequestType)} = {RequestType}, {nameof(EcsRequestPhase)} = {EcsRequestPhase}, {nameof(RequestDate)} = {RequestDate}, {nameof(PatronComments)} = {PatronComments}, {nameof(RequesterId)} = {RequesterId}, {nameof(ProxyUserId)} = {ProxyUserId}, {nameof(InstanceId)} = {InstanceId}, {nameof(HoldingId)} = {HoldingId}, {nameof(ItemId)} = {ItemId}, {nameof(Status)} = {Status}, {nameof(CancellationReasonId)} = {CancellationReasonId}, {nameof(CancelledByUserId)} = {CancelledByUserId}, {nameof(CancellationAdditionalInformation)} = {CancellationAdditionalInformation}, {nameof(CancelledDate)} = {CancelledDate}, {nameof(Position)} = {Position}, {nameof(InstanceTitle)} = {InstanceTitle}, {nameof(ItemBarcode)} = {ItemBarcode}, {nameof(ItemItemEffectiveLocationId)} = {ItemItemEffectiveLocationId}, {nameof(ItemItemEffectiveLocationName)} = {ItemItemEffectiveLocationName}, {nameof(ItemRetrievalServicePointId)} = {ItemRetrievalServicePointId}, {nameof(ItemRetrievalServicePointName)} = {ItemRetrievalServicePointName}, {nameof(RequesterFirstName)} = {RequesterFirstName}, {nameof(RequesterLastName)} = {RequesterLastName}, {nameof(RequesterMiddleName)} = {RequesterMiddleName}, {nameof(RequesterBarcode)} = {RequesterBarcode}, {nameof(RequesterPatronGroup)} = {RequesterPatronGroup}, {nameof(ProxyFirstName)} = {ProxyFirstName}, {nameof(ProxyLastName)} = {ProxyLastName}, {nameof(ProxyMiddleName)} = {ProxyMiddleName}, {nameof(ProxyBarcode)} = {ProxyBarcode}, {nameof(ProxyPatronGroup)} = {ProxyPatronGroup}, {nameof(FulfillmentPreference)} = {FulfillmentPreference}, {nameof(DeliveryAddressTypeId)} = {DeliveryAddressTypeId}, {nameof(RequestExpirationDate)} = {RequestExpirationDate}, {nameof(HoldShelfExpirationDate)} = {HoldShelfExpirationDate}, {nameof(PickupServicePointId)} = {PickupServicePointId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(PrintDetailsPrintCount)} = {PrintDetailsPrintCount}, {nameof(PrintDetailsRequesterId)} = {PrintDetailsRequesterId}, {nameof(PrintDetailsIsPrinted)} = {PrintDetailsIsPrinted}, {nameof(PrintDetailsPrintEventDate)} = {PrintDetailsPrintEventDate}, {nameof(AwaitingPickupRequestClosedDate)} = {AwaitingPickupRequestClosedDate}, {nameof(SearchIndexCallNumberComponentsCallNumber)} = {SearchIndexCallNumberComponentsCallNumber}, {nameof(SearchIndexCallNumberComponentsPrefix)} = {SearchIndexCallNumberComponentsPrefix}, {nameof(SearchIndexCallNumberComponentsSuffix)} = {SearchIndexCallNumberComponentsSuffix}, {nameof(SearchIndexShelvingOrder)} = {SearchIndexShelvingOrder}, {nameof(SearchIndexPickupServicePointName)} = {SearchIndexPickupServicePointName}, {nameof(ItemLocationCode)} = {ItemLocationCode}, {nameof(IsDcbReRequestCancellation)} = {IsDcbReRequestCancellation}, {nameof(Content)} = {Content}, {nameof(RequestIdentifiers)} = {(RequestIdentifiers != null ? $"{{ {string.Join(", ", RequestIdentifiers)} }}" : "")}, {nameof(RequestTags)} = {(RequestTags != null ? $"{{ {string.Join(", ", RequestTags)} }}" : "")} }}";
 
         public static Request2 FromJObject(JObject jObject) => jObject != null ? new Request2
         {
@@ -255,6 +276,10 @@ namespace FolioLibrary
             Position = (int?)jObject.SelectToken("position"),
             InstanceTitle = (string)jObject.SelectToken("instance.title"),
             ItemBarcode = (string)jObject.SelectToken("item.barcode"),
+            ItemItemEffectiveLocationId = (Guid?)jObject.SelectToken("item.itemEffectiveLocationId"),
+            ItemItemEffectiveLocationName = (string)jObject.SelectToken("item.itemEffectiveLocationName"),
+            ItemRetrievalServicePointId = (Guid?)jObject.SelectToken("item.retrievalServicePointId"),
+            ItemRetrievalServicePointName = (string)jObject.SelectToken("item.retrievalServicePointName"),
             RequesterFirstName = (string)jObject.SelectToken("requester.firstName"),
             RequesterLastName = (string)jObject.SelectToken("requester.lastName"),
             RequesterMiddleName = (string)jObject.SelectToken("requester.middleName"),
@@ -287,6 +312,7 @@ namespace FolioLibrary
             SearchIndexShelvingOrder = (string)jObject.SelectToken("searchIndex.shelvingOrder"),
             SearchIndexPickupServicePointName = (string)jObject.SelectToken("searchIndex.pickupServicePointName"),
             ItemLocationCode = (string)jObject.SelectToken("itemLocationCode"),
+            IsDcbReRequestCancellation = (bool?)jObject.SelectToken("isDcbReRequestCancellation"),
             Content = JsonConvert.SerializeObject(jObject, FolioDapperContext.UniversalTimeJsonSerializationSettings),
             RequestIdentifiers = jObject.SelectToken("instance.identifiers")?.Where(jt => jt.HasValues).Select(jt => RequestIdentifier.FromJObject((JObject)jt)).ToArray(),
             RequestTags = jObject.SelectToken("tags.tagList")?.Select(jt => RequestTag.FromJObject((JValue)jt)).ToArray()
@@ -314,7 +340,11 @@ namespace FolioLibrary
                 new JProperty("title", InstanceTitle),
                 new JProperty("identifiers", RequestIdentifiers?.Select(ri => ri.ToJObject())))),
             new JProperty("item", new JObject(
-                new JProperty("barcode", ItemBarcode))),
+                new JProperty("barcode", ItemBarcode),
+                new JProperty("itemEffectiveLocationId", ItemItemEffectiveLocationId),
+                new JProperty("itemEffectiveLocationName", ItemItemEffectiveLocationName),
+                new JProperty("retrievalServicePointId", ItemRetrievalServicePointId),
+                new JProperty("retrievalServicePointName", ItemRetrievalServicePointName))),
             new JProperty("requester", new JObject(
                 new JProperty("firstName", RequesterFirstName),
                 new JProperty("lastName", RequesterLastName),
@@ -353,6 +383,7 @@ namespace FolioLibrary
                 new JProperty("shelvingOrder", SearchIndexShelvingOrder),
                 new JProperty("pickupServicePointName", SearchIndexPickupServicePointName))),
             new JProperty("itemLocationCode", ItemLocationCode),
+            new JProperty("isDcbReRequestCancellation", IsDcbReRequestCancellation),
             new JProperty("tags", new JObject(
                 new JProperty("tagList", RequestTags?.Select(rt => rt.ToJObject()))))).RemoveNullAndEmptyProperties();
     }

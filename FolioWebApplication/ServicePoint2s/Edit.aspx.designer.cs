@@ -45,6 +45,10 @@ namespace FolioWebApplication.ServicePoint2s
 
         protected RadGrid Request2sRadGrid;
 
+        protected Panel Request2s1Panel;
+
+        protected RadGrid Request2s1RadGrid;
+
         protected Panel ServicePointOwnersPanel;
 
         protected RadGrid ServicePointOwnersRadGrid;

@@ -152,7 +152,6 @@
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Completion Time" DataField="CompletionTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
-                        <telerik:GridBoundColumn HeaderText="Dates Datetypeid" DataField="DatesDatetypeid" AutoPostBackOnFilter="true" CurrentFilterFunction="EqualTo" />
                     </Columns>
                 </MasterTableView>
             </telerik:RadGrid>

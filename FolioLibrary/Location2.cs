@@ -151,7 +151,10 @@ namespace FolioLibrary
         [Display(Name = "Receivings", Order = 41)]
         public virtual ICollection<Receiving2> Receiving2s { get; set; }
 
-        [Display(Name = "Rollover Budget Locations", Order = 42)]
+        [Display(Name = "Requests", Order = 42)]
+        public virtual ICollection<Request2> Request2s { get; set; }
+
+        [Display(Name = "Rollover Budget Locations", Order = 43)]
         public virtual ICollection<RolloverBudgetLocation> RolloverBudgetLocations { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Code)} = {Code}, {nameof(Description)} = {Description}, {nameof(DiscoveryDisplayName)} = {DiscoveryDisplayName}, {nameof(IsActive)} = {IsActive}, {nameof(InstitutionId)} = {InstitutionId}, {nameof(CampusId)} = {CampusId}, {nameof(LibraryId)} = {LibraryId}, {nameof(PrimaryServicePointId)} = {PrimaryServicePointId}, {nameof(IsFloatingCollection)} = {IsFloatingCollection}, {nameof(IsShadow)} = {IsShadow}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(LocationServicePoints)} = {(LocationServicePoints != null ? $"{{ {string.Join(", ", LocationServicePoints)} }}" : "")} }}";

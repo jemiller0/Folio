@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "third-level location unit",
+  "javaType": "org.folio.rest.jaxrs.model.LocationLibrary",
   "type": "object",
   "additionalProperties": false,
   "properties": {

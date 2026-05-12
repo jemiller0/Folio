@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "A relationship of a given type between a super-instance and a sub-instance",
+  "javaType": "org.folio.rest.jaxrs.model.InstanceRelationship",
   "type": "object",
   "additionalProperties": false,
   "properties": {

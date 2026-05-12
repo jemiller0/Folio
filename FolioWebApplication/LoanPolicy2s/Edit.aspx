@@ -121,6 +121,30 @@
                                     <asp:Literal ID="LoansPolicyItemLimitLiteral" runat="server" Text='<%#: Eval("LoansPolicyItemLimit") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("LoansPolicyForUseAtLocation") != null %>'>
+                                <td>
+                                    <asp:Label ID="LoansPolicyForUseAtLocationLabel" runat="server" Text="Loans Policy For Use At Location:" AssociatedControlID="LoansPolicyForUseAtLocationLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="LoansPolicyForUseAtLocationLiteral" runat="server" Text='<%#: Eval("LoansPolicyForUseAtLocation") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("LoansPolicyHoldShelfExpiryPeriodForUseAtLocationDuration") != null %>'>
+                                <td>
+                                    <asp:Label ID="LoansPolicyHoldShelfExpiryPeriodForUseAtLocationDurationLabel" runat="server" Text="Loans Policy Hold Shelf Expiry Period For Use At Location Duration:" AssociatedControlID="LoansPolicyHoldShelfExpiryPeriodForUseAtLocationDurationLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="LoansPolicyHoldShelfExpiryPeriodForUseAtLocationDurationLiteral" runat="server" Text='<%#: Eval("LoansPolicyHoldShelfExpiryPeriodForUseAtLocationDuration") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("LoansPolicyHoldShelfExpiryPeriodForUseAtLocationInterval") != null %>'>
+                                <td>
+                                    <asp:Label ID="LoansPolicyHoldShelfExpiryPeriodForUseAtLocationIntervalLabel" runat="server" Text="Loans Policy Hold Shelf Expiry Period For Use At Location Interval:" AssociatedControlID="LoansPolicyHoldShelfExpiryPeriodForUseAtLocationIntervalLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="LoansPolicyHoldShelfExpiryPeriodForUseAtLocationIntervalLiteral" runat="server" Text='<%#: Eval("LoansPolicyHoldShelfExpiryPeriodForUseAtLocationInterval") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("Renewable") != null %>'>
                                 <td>
                                     <asp:Label ID="RenewableLabel" runat="server" Text="Renewable:" AssociatedControlID="RenewableLiteral" />
@@ -429,6 +453,9 @@
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Status Name" DataField="StatusName" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="For Use At Location Status" DataField="ForUseAtLocationStatus" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
+                        <telerik:GridBoundColumn HeaderText="For Use At Location Status Date" DataField="ForUseAtLocationStatusDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridBoundColumn HeaderText="For Use At Location Hold Shelf Expiration Date" DataField="ForUseAtLocationHoldShelfExpirationDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
                         <telerik:GridBoundColumn HeaderText="Loan Time" DataField="LoanTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridBoundColumn HeaderText="Due Time" DataField="DueTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridBoundColumn HeaderText="Return Time" DataField="ReturnTime" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />

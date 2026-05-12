@@ -3705,7 +3705,7 @@ namespace FolioLibrary
             if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
             var url = $"{Url}/custom-fields{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}{(take != 0 ? "&totalRecords=none" : "")}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.3.2");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.4.6");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.GetAsync(url).Result;
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");
@@ -3726,7 +3726,7 @@ namespace FolioLibrary
             if ((skip != null || take != null) && take != 0) orderBy = orderBy ?? "id";
             var url = $"{Url}/custom-fields{(where != null || orderBy != null ? $"?query={WebUtility.UrlEncode(where)}{(orderBy != null ? $"{(where != null ? " " : "cql.allrecords=1 ")}sortby {WebUtility.UrlEncode(orderBy)}" : "")}" : "")}{(skip != null ? $"{(where != null || orderBy != null ? "&" : "?")}offset={skip}" : "")}{(where != null || orderBy != null || skip != null ? "&" : "?")}limit={take ?? int.MaxValue}&totalRecords=none";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.3.2");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.4.6");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).Result;
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");
@@ -3761,7 +3761,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/custom-fields/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.3.2");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.4.6");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.GetAsync(url).Result;
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");
@@ -3783,7 +3783,7 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = JsonConvert.SerializeObject(customField, universalTimeJsonSerializationSettings);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.3.2");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.4.6");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
             var hrm = httpClient.PostAsync(url, sc).Result;
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");
@@ -3804,7 +3804,7 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
             var s2 = JsonConvert.SerializeObject(customField, universalTimeJsonSerializationSettings);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.3.2");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.4.6");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
             var hrm = httpClient.PutAsync(url, sc).Result;
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");
@@ -3821,7 +3821,7 @@ namespace FolioLibrary
             AuthenticateIfNecessary();
             var url = $"{Url}/custom-fields/{id}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.3.2");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-okapi-module-id", "mod-users-19.4.6");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", httpClient.DefaultRequestHeaders);
             var hrm = httpClient.DeleteAsync(url).Result;
             httpClient.DefaultRequestHeaders.Remove("x-okapi-module-id");
@@ -10470,15 +10470,15 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
-        public bool AnyOrganizationType2s(string where = null) => OrganizationType2s(where, take: 1).Any();
+        public bool AnyOrganizationTypes(string where = null) => OrganizationTypes(where, take: 1).Any();
 
-        public int CountOrganizationType2s(string where = null)
+        public int CountOrganizationTypes(string where = null)
         {
-            OrganizationType2s(out var i, where, take: 0);
+            OrganizationTypes(out var i, where, take: 0);
             return i;
         }
 
-        public JObject[] OrganizationType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100)
+        public JObject[] OrganizationTypes(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying organization types");
@@ -10493,11 +10493,11 @@ namespace FolioLibrary
             var jo = hrm.Content.Headers.ContentType?.MediaType == "application/json" ? JsonConvert.DeserializeObject<JObject>(s2, localTimeJsonSerializationSettings) : null;
             if (hrm.StatusCode != HttpStatusCode.OK) throw new HttpRequestException($"Response status code does not indicate success: {hrm.StatusCode} ({hrm.ReasonPhrase}).\r\n{s2}");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
-            count = take == 0 ? (int)jo["totalRecords"] : CountOrganizationType2s(where);
+            count = take == 0 ? (int)jo["totalRecords"] : CountOrganizationTypes(where);
             return jo.Properties().SkipWhile(jp => jp.Name == "totalRecords").First().Value.Cast<JObject>().ToArray();
         }
 
-        public IEnumerable<JObject> OrganizationType2s(string where = null, string orderBy = null, int? skip = null, int? take = null)
+        public IEnumerable<JObject> OrganizationTypes(string where = null, string orderBy = null, int? skip = null, int? take = null)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Querying organization types");
@@ -10530,7 +10530,7 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
-        public JObject GetOrganizationType2(string id)
+        public JObject GetOrganizationType(string id)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "Getting organization type {0}", id);
@@ -10548,14 +10548,15 @@ namespace FolioLibrary
             return jo;
         }
 
-        public JObject InsertOrganizationType2(JObject organizationType2)
+        public JObject InsertOrganizationType(JObject organizationType)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Inserting organization type {0}", organizationType2[""]);
+            if (organizationType["id"] == null) organizationType["id"] = Guid.NewGuid();
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, "Inserting organization type {0}", organizationType["id"]);
             AuthenticateIfNecessary();
             var url = $"{Url}/organizations-storage/organization-types";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = JsonConvert.SerializeObject(organizationType2, universalTimeJsonSerializationSettings);
+            var s2 = JsonConvert.SerializeObject(organizationType, universalTimeJsonSerializationSettings);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
             var hrm = httpClient.PostAsync(url, sc).Result;
@@ -10567,14 +10568,14 @@ namespace FolioLibrary
             return jo;
         }
 
-        public void UpdateOrganizationType2(JObject organizationType2)
+        public void UpdateOrganizationType(JObject organizationType)
         {
             var s = Stopwatch.StartNew();
-            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating organization type {organizationType2[""]}");
+            traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Updating organization type {organizationType["id"]}");
             AuthenticateIfNecessary();
-            var url = $"{Url}/organizations-storage/organization-types/{organizationType2[""]}";
+            var url = $"{Url}/organizations-storage/organization-types/{organizationType["id"]}";
             traceSource.TraceEvent(TraceEventType.Verbose, 0, url);
-            var s2 = JsonConvert.SerializeObject(organizationType2, universalTimeJsonSerializationSettings);
+            var s2 = JsonConvert.SerializeObject(organizationType, universalTimeJsonSerializationSettings);
             var sc = new StringContent(s2, Encoding.UTF8, "application/json");
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}{1}", httpClient.DefaultRequestHeaders, s2);
             var hrm = httpClient.PutAsync(url, sc).Result;
@@ -10584,7 +10585,7 @@ namespace FolioLibrary
             traceSource.TraceEvent(TraceEventType.Verbose, 0, "{0}", s.Elapsed);
         }
 
-        public void DeleteOrganizationType2(string id)
+        public void DeleteOrganizationType(string id)
         {
             var s = Stopwatch.StartNew();
             traceSource.TraceEvent(TraceEventType.Verbose, 0, $"Deleting organization type {id}");

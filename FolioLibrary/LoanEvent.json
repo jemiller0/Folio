@@ -54,6 +54,31 @@
             }
           }
         },
+        "forUseAtLocation": {
+          "description": "Status of loan/item that is to be used in the library, i.e. in a reading room",
+          "type": "object",
+          "properties": {
+            "status": {
+              "description": "Indicates if the item is currently used by or being held for the patron",
+              "type": "string",
+              "enum": [
+                "In use",
+                "Held",
+                "Returned"
+              ]
+            },
+            "statusDate": {
+              "description": "Date and time the status was registered",
+              "type": "string",
+              "format": "date-time"
+            },
+            "holdShelfExpirationDate": {
+              "description": "Date when a held item expires",
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
         "loanDate": {
           "description": "Date time when the loan began (typically represented according to rfc3339 section-5.6. Has not had the date-time format validation applied as was not supported at point of introduction and would now be a breaking change)",
           "type": "string"

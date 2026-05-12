@@ -93,6 +93,7 @@
           },
           "contributorNameTypeId": {
             "description": "UUID of the contributor type",
+            "x-fqm-visibility": "hidden",
             "type": "string",
             "pattern": "^[a-f0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
           }
@@ -376,6 +377,7 @@
       "type": "array",
       "items": {
         "description": "purchase order line location record",
+        "javaType": "org.folio.rest.jaxrs.model.acq.Location",
         "type": "object",
         "additionalProperties": false,
         "properties": {

@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "Cataloging status for Instance records",
+  "javaType": "org.folio.rest.jaxrs.model.InstanceStatus",
   "type": "object",
   "properties": {
     "id": {

@@ -73,121 +73,130 @@ namespace FolioLibrary
         [Column("loans_policy_item_limit"), Display(Name = "Loans Policy Item Limit", Order = 15), JsonProperty("loansPolicy.itemLimit")]
         public virtual int? LoansPolicyItemLimit { get; set; }
 
-        [Column("renewable"), Display(Order = 16), JsonProperty("renewable")]
+        [Column("loans_policy_for_use_at_location"), Display(Name = "Loans Policy For Use At Location", Order = 16), JsonProperty("loansPolicy.forUseAtLocation")]
+        public virtual bool? LoansPolicyForUseAtLocation { get; set; }
+
+        [Column("loans_policy_hold_shelf_expiry_period_for_use_at_location_durat"), Display(Name = "Loans Policy Hold Shelf Expiry Period For Use At Location Duration", Order = 17), JsonProperty("loansPolicy.holdShelfExpiryPeriodForUseAtLocation.duration")]
+        public virtual int? LoansPolicyHoldShelfExpiryPeriodForUseAtLocationDuration { get; set; }
+
+        [Column("loans_policy_hold_shelf_expiry_period_for_use_at_location_inter"), Display(Name = "Loans Policy Hold Shelf Expiry Period For Use At Location Interval", Order = 18), JsonProperty("loansPolicy.holdShelfExpiryPeriodForUseAtLocation.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), StringLength(1024)]
+        public virtual string LoansPolicyHoldShelfExpiryPeriodForUseAtLocationInterval { get; set; }
+
+        [Column("renewable"), Display(Order = 19), JsonProperty("renewable")]
         public virtual bool? Renewable { get; set; }
 
-        [Column("renewals_policy_unlimited"), Display(Name = "Renewals Policy Unlimited", Order = 17), JsonProperty("renewalsPolicy.unlimited")]
+        [Column("renewals_policy_unlimited"), Display(Name = "Renewals Policy Unlimited", Order = 20), JsonProperty("renewalsPolicy.unlimited")]
         public virtual bool? RenewalsPolicyUnlimited { get; set; }
 
-        [Column("renewals_policy_number_allowed"), Display(Name = "Renewals Policy Number Allowed", Order = 18), JsonProperty("renewalsPolicy.numberAllowed")]
+        [Column("renewals_policy_number_allowed"), Display(Name = "Renewals Policy Number Allowed", Order = 21), JsonProperty("renewalsPolicy.numberAllowed")]
         public virtual decimal? RenewalsPolicyNumberAllowed { get; set; }
 
-        [Column("renewals_policy_renew_from_id"), Display(Name = "Renewals Policy Renew From Id", Order = 19), JsonProperty("renewalsPolicy.renewFromId"), StringLength(1024)]
+        [Column("renewals_policy_renew_from_id"), Display(Name = "Renewals Policy Renew From Id", Order = 22), JsonProperty("renewalsPolicy.renewFromId"), StringLength(1024)]
         public virtual string RenewalsPolicyRenewFromId { get; set; }
 
-        [Column("renewals_policy_different_period"), Display(Name = "Renewals Policy Different Period", Order = 20), JsonProperty("renewalsPolicy.differentPeriod")]
+        [Column("renewals_policy_different_period"), Display(Name = "Renewals Policy Different Period", Order = 23), JsonProperty("renewalsPolicy.differentPeriod")]
         public virtual bool? RenewalsPolicyDifferentPeriod { get; set; }
 
-        [Column("renewals_policy_period_duration"), Display(Name = "Renewals Policy Period Duration", Order = 21), JsonProperty("renewalsPolicy.period.duration"), Required]
+        [Column("renewals_policy_period_duration"), Display(Name = "Renewals Policy Period Duration", Order = 24), JsonProperty("renewalsPolicy.period.duration"), Required]
         public virtual int? RenewalsPolicyPeriodDuration { get; set; }
 
-        [Column("renewals_policy_period_interval_id"), Display(Name = "Renewals Policy Period Interval", Order = 22), JsonProperty("renewalsPolicy.period.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("renewals_policy_period_interval_id"), Display(Name = "Renewals Policy Period Interval", Order = 25), JsonProperty("renewalsPolicy.period.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
         public virtual string RenewalsPolicyPeriodInterval { get; set; }
 
-        [Display(Name = "Renewals Policy Alternate Fixed Due Date Schedule", Order = 23), InverseProperty("LoanPolicy2s")]
+        [Display(Name = "Renewals Policy Alternate Fixed Due Date Schedule", Order = 26), InverseProperty("LoanPolicy2s")]
         public virtual FixedDueDateSchedule2 RenewalsPolicyAlternateFixedDueDateSchedule { get; set; }
 
-        [Column("renewals_policy_alternate_fixed_due_date_schedule_id"), Display(Name = "Renewals Policy Alternate Fixed Due Date Schedule", Order = 24), JsonProperty("renewalsPolicy.alternateFixedDueDateScheduleId")]
+        [Column("renewals_policy_alternate_fixed_due_date_schedule_id"), Display(Name = "Renewals Policy Alternate Fixed Due Date Schedule", Order = 27), JsonProperty("renewalsPolicy.alternateFixedDueDateScheduleId")]
         public virtual Guid? RenewalsPolicyAlternateFixedDueDateScheduleId { get; set; }
 
-        [Column("recalls_alternate_grace_period_duration"), Display(Name = "Recalls Alternate Grace Period Duration", Order = 25), JsonProperty("requestManagement.recalls.alternateGracePeriod.duration"), Required]
+        [Column("recalls_alternate_grace_period_duration"), Display(Name = "Recalls Alternate Grace Period Duration", Order = 28), JsonProperty("requestManagement.recalls.alternateGracePeriod.duration"), Required]
         public virtual int? RecallsAlternateGracePeriodDuration { get; set; }
 
-        [Column("recalls_alternate_grace_period_interval_id"), Display(Name = "Recalls Alternate Grace Period Interval", Order = 26), JsonProperty("requestManagement.recalls.alternateGracePeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("recalls_alternate_grace_period_interval_id"), Display(Name = "Recalls Alternate Grace Period Interval", Order = 29), JsonProperty("requestManagement.recalls.alternateGracePeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
         public virtual string RecallsAlternateGracePeriodInterval { get; set; }
 
-        [Column("recalls_minimum_guaranteed_loan_period_duration"), Display(Name = "Recalls Minimum Guaranteed Loan Period Duration", Order = 27), JsonProperty("requestManagement.recalls.minimumGuaranteedLoanPeriod.duration"), Required]
+        [Column("recalls_minimum_guaranteed_loan_period_duration"), Display(Name = "Recalls Minimum Guaranteed Loan Period Duration", Order = 30), JsonProperty("requestManagement.recalls.minimumGuaranteedLoanPeriod.duration"), Required]
         public virtual int? RecallsMinimumGuaranteedLoanPeriodDuration { get; set; }
 
-        [Column("recalls_minimum_guaranteed_loan_period_interval_id"), Display(Name = "Recalls Minimum Guaranteed Loan Period Interval", Order = 28), JsonProperty("requestManagement.recalls.minimumGuaranteedLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("recalls_minimum_guaranteed_loan_period_interval_id"), Display(Name = "Recalls Minimum Guaranteed Loan Period Interval", Order = 31), JsonProperty("requestManagement.recalls.minimumGuaranteedLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
         public virtual string RecallsMinimumGuaranteedLoanPeriodInterval { get; set; }
 
-        [Column("recalls_recall_return_interval_duration"), Display(Name = "Recalls Recall Return Interval Duration", Order = 29), JsonProperty("requestManagement.recalls.recallReturnInterval.duration"), Required]
+        [Column("recalls_recall_return_interval_duration"), Display(Name = "Recalls Recall Return Interval Duration", Order = 32), JsonProperty("requestManagement.recalls.recallReturnInterval.duration"), Required]
         public virtual int? RecallsRecallReturnIntervalDuration { get; set; }
 
-        [Column("recalls_recall_return_interval_interval_id"), Display(Name = "Recalls Recall Return Interval Interval", Order = 30), JsonProperty("requestManagement.recalls.recallReturnInterval.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("recalls_recall_return_interval_interval_id"), Display(Name = "Recalls Recall Return Interval Interval", Order = 33), JsonProperty("requestManagement.recalls.recallReturnInterval.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
         public virtual string RecallsRecallReturnIntervalInterval { get; set; }
 
-        [Column("recalls_allow_recalls_to_extend_overdue_loans"), Display(Name = "Recalls Allow Recalls To Extend Overdue Loans", Order = 31), JsonProperty("requestManagement.recalls.allowRecallsToExtendOverdueLoans")]
+        [Column("recalls_allow_recalls_to_extend_overdue_loans"), Display(Name = "Recalls Allow Recalls To Extend Overdue Loans", Order = 34), JsonProperty("requestManagement.recalls.allowRecallsToExtendOverdueLoans")]
         public virtual bool? RecallsAllowRecallsToExtendOverdueLoans { get; set; }
 
-        [Column("recalls_alternate_recall_return_interval_duration"), Display(Name = "Recalls Alternate Recall Return Interval Duration", Order = 32), JsonProperty("requestManagement.recalls.alternateRecallReturnInterval.duration")]
+        [Column("recalls_alternate_recall_return_interval_duration"), Display(Name = "Recalls Alternate Recall Return Interval Duration", Order = 35), JsonProperty("requestManagement.recalls.alternateRecallReturnInterval.duration")]
         public virtual int? RecallsAlternateRecallReturnIntervalDuration { get; set; }
 
-        [Column("recalls_alternate_recall_return_interval_interval_id"), Display(Name = "Recalls Alternate Recall Return Interval Interval", Order = 33), JsonProperty("requestManagement.recalls.alternateRecallReturnInterval.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), StringLength(1024)]
+        [Column("recalls_alternate_recall_return_interval_interval_id"), Display(Name = "Recalls Alternate Recall Return Interval Interval", Order = 36), JsonProperty("requestManagement.recalls.alternateRecallReturnInterval.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), StringLength(1024)]
         public virtual string RecallsAlternateRecallReturnIntervalInterval { get; set; }
 
-        [Column("holds_alternate_checkout_loan_period_duration"), Display(Name = "Holds Alternate Checkout Loan Period Duration", Order = 34), JsonProperty("requestManagement.holds.alternateCheckoutLoanPeriod.duration"), Required]
+        [Column("holds_alternate_checkout_loan_period_duration"), Display(Name = "Holds Alternate Checkout Loan Period Duration", Order = 37), JsonProperty("requestManagement.holds.alternateCheckoutLoanPeriod.duration"), Required]
         public virtual int? HoldsAlternateCheckoutLoanPeriodDuration { get; set; }
 
-        [Column("holds_alternate_checkout_loan_period_interval_id"), Display(Name = "Holds Alternate Checkout Loan Period Interval", Order = 35), JsonProperty("requestManagement.holds.alternateCheckoutLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("holds_alternate_checkout_loan_period_interval_id"), Display(Name = "Holds Alternate Checkout Loan Period Interval", Order = 38), JsonProperty("requestManagement.holds.alternateCheckoutLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
         public virtual string HoldsAlternateCheckoutLoanPeriodInterval { get; set; }
 
-        [Column("holds_renew_items_with_request"), Display(Name = "Holds Renew Items With Request", Order = 36), JsonProperty("requestManagement.holds.renewItemsWithRequest")]
+        [Column("holds_renew_items_with_request"), Display(Name = "Holds Renew Items With Request", Order = 39), JsonProperty("requestManagement.holds.renewItemsWithRequest")]
         public virtual bool? HoldsRenewItemsWithRequest { get; set; }
 
-        [Column("holds_alternate_renewal_loan_period_duration"), Display(Name = "Holds Alternate Renewal Loan Period Duration", Order = 37), JsonProperty("requestManagement.holds.alternateRenewalLoanPeriod.duration"), Required]
+        [Column("holds_alternate_renewal_loan_period_duration"), Display(Name = "Holds Alternate Renewal Loan Period Duration", Order = 40), JsonProperty("requestManagement.holds.alternateRenewalLoanPeriod.duration"), Required]
         public virtual int? HoldsAlternateRenewalLoanPeriodDuration { get; set; }
 
-        [Column("holds_alternate_renewal_loan_period_interval_id"), Display(Name = "Holds Alternate Renewal Loan Period Interval", Order = 38), JsonProperty("requestManagement.holds.alternateRenewalLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("holds_alternate_renewal_loan_period_interval_id"), Display(Name = "Holds Alternate Renewal Loan Period Interval", Order = 41), JsonProperty("requestManagement.holds.alternateRenewalLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
         public virtual string HoldsAlternateRenewalLoanPeriodInterval { get; set; }
 
-        [Column("pages_alternate_checkout_loan_period_duration"), Display(Name = "Pages Alternate Checkout Loan Period Duration", Order = 39), JsonProperty("requestManagement.pages.alternateCheckoutLoanPeriod.duration"), Required]
+        [Column("pages_alternate_checkout_loan_period_duration"), Display(Name = "Pages Alternate Checkout Loan Period Duration", Order = 42), JsonProperty("requestManagement.pages.alternateCheckoutLoanPeriod.duration"), Required]
         public virtual int? PagesAlternateCheckoutLoanPeriodDuration { get; set; }
 
-        [Column("pages_alternate_checkout_loan_period_interval_id"), Display(Name = "Pages Alternate Checkout Loan Period Interval", Order = 40), JsonProperty("requestManagement.pages.alternateCheckoutLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("pages_alternate_checkout_loan_period_interval_id"), Display(Name = "Pages Alternate Checkout Loan Period Interval", Order = 43), JsonProperty("requestManagement.pages.alternateCheckoutLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
         public virtual string PagesAlternateCheckoutLoanPeriodInterval { get; set; }
 
-        [Column("pages_renew_items_with_request"), Display(Name = "Pages Renew Items With Request", Order = 41), JsonProperty("requestManagement.pages.renewItemsWithRequest")]
+        [Column("pages_renew_items_with_request"), Display(Name = "Pages Renew Items With Request", Order = 44), JsonProperty("requestManagement.pages.renewItemsWithRequest")]
         public virtual bool? PagesRenewItemsWithRequest { get; set; }
 
-        [Column("pages_alternate_renewal_loan_period_duration"), Display(Name = "Pages Alternate Renewal Loan Period Duration", Order = 42), JsonProperty("requestManagement.pages.alternateRenewalLoanPeriod.duration"), Required]
+        [Column("pages_alternate_renewal_loan_period_duration"), Display(Name = "Pages Alternate Renewal Loan Period Duration", Order = 45), JsonProperty("requestManagement.pages.alternateRenewalLoanPeriod.duration"), Required]
         public virtual int? PagesAlternateRenewalLoanPeriodDuration { get; set; }
 
-        [Column("pages_alternate_renewal_loan_period_interval_id"), Display(Name = "Pages Alternate Renewal Loan Period Interval", Order = 43), JsonProperty("requestManagement.pages.alternateRenewalLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
+        [Column("pages_alternate_renewal_loan_period_interval_id"), Display(Name = "Pages Alternate Renewal Loan Period Interval", Order = 46), JsonProperty("requestManagement.pages.alternateRenewalLoanPeriod.intervalId"), RegularExpression(@"^(Minutes|Hours|Days|Weeks|Months)$"), Required, StringLength(1024)]
         public virtual string PagesAlternateRenewalLoanPeriodInterval { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 44), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 47), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 45), InverseProperty("LoanPolicy2s")]
+        [Display(Name = "Creation User", Order = 48), InverseProperty("LoanPolicy2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 46), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 49), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 48), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 51), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 49), InverseProperty("LoanPolicy2s1")]
+        [Display(Name = "Last Write User", Order = 52), InverseProperty("LoanPolicy2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 50), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 53), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(LoanPolicy), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 52), Editable(false)]
+        [Column("content"), CustomValidation(typeof(LoanPolicy), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 55), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Loans", Order = 53)]
+        [Display(Name = "Loans", Order = 56)]
         public virtual ICollection<Loan2> Loan2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Description)} = {Description}, {nameof(Loanable)} = {Loanable}, {nameof(LoansPolicyProfileId)} = {LoansPolicyProfileId}, {nameof(LoansPolicyPeriodDuration)} = {LoansPolicyPeriodDuration}, {nameof(LoansPolicyPeriodInterval)} = {LoansPolicyPeriodInterval}, {nameof(LoansPolicyClosedLibraryDueDateManagementId)} = {LoansPolicyClosedLibraryDueDateManagementId}, {nameof(LoansPolicyGracePeriodDuration)} = {LoansPolicyGracePeriodDuration}, {nameof(LoansPolicyGracePeriodInterval)} = {LoansPolicyGracePeriodInterval}, {nameof(LoansPolicyOpeningTimeOffsetDuration)} = {LoansPolicyOpeningTimeOffsetDuration}, {nameof(LoansPolicyOpeningTimeOffsetInterval)} = {LoansPolicyOpeningTimeOffsetInterval}, {nameof(LoansPolicyFixedDueDateScheduleId)} = {LoansPolicyFixedDueDateScheduleId}, {nameof(LoansPolicyItemLimit)} = {LoansPolicyItemLimit}, {nameof(Renewable)} = {Renewable}, {nameof(RenewalsPolicyUnlimited)} = {RenewalsPolicyUnlimited}, {nameof(RenewalsPolicyNumberAllowed)} = {RenewalsPolicyNumberAllowed}, {nameof(RenewalsPolicyRenewFromId)} = {RenewalsPolicyRenewFromId}, {nameof(RenewalsPolicyDifferentPeriod)} = {RenewalsPolicyDifferentPeriod}, {nameof(RenewalsPolicyPeriodDuration)} = {RenewalsPolicyPeriodDuration}, {nameof(RenewalsPolicyPeriodInterval)} = {RenewalsPolicyPeriodInterval}, {nameof(RenewalsPolicyAlternateFixedDueDateScheduleId)} = {RenewalsPolicyAlternateFixedDueDateScheduleId}, {nameof(RecallsAlternateGracePeriodDuration)} = {RecallsAlternateGracePeriodDuration}, {nameof(RecallsAlternateGracePeriodInterval)} = {RecallsAlternateGracePeriodInterval}, {nameof(RecallsMinimumGuaranteedLoanPeriodDuration)} = {RecallsMinimumGuaranteedLoanPeriodDuration}, {nameof(RecallsMinimumGuaranteedLoanPeriodInterval)} = {RecallsMinimumGuaranteedLoanPeriodInterval}, {nameof(RecallsRecallReturnIntervalDuration)} = {RecallsRecallReturnIntervalDuration}, {nameof(RecallsRecallReturnIntervalInterval)} = {RecallsRecallReturnIntervalInterval}, {nameof(RecallsAllowRecallsToExtendOverdueLoans)} = {RecallsAllowRecallsToExtendOverdueLoans}, {nameof(RecallsAlternateRecallReturnIntervalDuration)} = {RecallsAlternateRecallReturnIntervalDuration}, {nameof(RecallsAlternateRecallReturnIntervalInterval)} = {RecallsAlternateRecallReturnIntervalInterval}, {nameof(HoldsAlternateCheckoutLoanPeriodDuration)} = {HoldsAlternateCheckoutLoanPeriodDuration}, {nameof(HoldsAlternateCheckoutLoanPeriodInterval)} = {HoldsAlternateCheckoutLoanPeriodInterval}, {nameof(HoldsRenewItemsWithRequest)} = {HoldsRenewItemsWithRequest}, {nameof(HoldsAlternateRenewalLoanPeriodDuration)} = {HoldsAlternateRenewalLoanPeriodDuration}, {nameof(HoldsAlternateRenewalLoanPeriodInterval)} = {HoldsAlternateRenewalLoanPeriodInterval}, {nameof(PagesAlternateCheckoutLoanPeriodDuration)} = {PagesAlternateCheckoutLoanPeriodDuration}, {nameof(PagesAlternateCheckoutLoanPeriodInterval)} = {PagesAlternateCheckoutLoanPeriodInterval}, {nameof(PagesRenewItemsWithRequest)} = {PagesRenewItemsWithRequest}, {nameof(PagesAlternateRenewalLoanPeriodDuration)} = {PagesAlternateRenewalLoanPeriodDuration}, {nameof(PagesAlternateRenewalLoanPeriodInterval)} = {PagesAlternateRenewalLoanPeriodInterval}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name}, {nameof(Description)} = {Description}, {nameof(Loanable)} = {Loanable}, {nameof(LoansPolicyProfileId)} = {LoansPolicyProfileId}, {nameof(LoansPolicyPeriodDuration)} = {LoansPolicyPeriodDuration}, {nameof(LoansPolicyPeriodInterval)} = {LoansPolicyPeriodInterval}, {nameof(LoansPolicyClosedLibraryDueDateManagementId)} = {LoansPolicyClosedLibraryDueDateManagementId}, {nameof(LoansPolicyGracePeriodDuration)} = {LoansPolicyGracePeriodDuration}, {nameof(LoansPolicyGracePeriodInterval)} = {LoansPolicyGracePeriodInterval}, {nameof(LoansPolicyOpeningTimeOffsetDuration)} = {LoansPolicyOpeningTimeOffsetDuration}, {nameof(LoansPolicyOpeningTimeOffsetInterval)} = {LoansPolicyOpeningTimeOffsetInterval}, {nameof(LoansPolicyFixedDueDateScheduleId)} = {LoansPolicyFixedDueDateScheduleId}, {nameof(LoansPolicyItemLimit)} = {LoansPolicyItemLimit}, {nameof(LoansPolicyForUseAtLocation)} = {LoansPolicyForUseAtLocation}, {nameof(LoansPolicyHoldShelfExpiryPeriodForUseAtLocationDuration)} = {LoansPolicyHoldShelfExpiryPeriodForUseAtLocationDuration}, {nameof(LoansPolicyHoldShelfExpiryPeriodForUseAtLocationInterval)} = {LoansPolicyHoldShelfExpiryPeriodForUseAtLocationInterval}, {nameof(Renewable)} = {Renewable}, {nameof(RenewalsPolicyUnlimited)} = {RenewalsPolicyUnlimited}, {nameof(RenewalsPolicyNumberAllowed)} = {RenewalsPolicyNumberAllowed}, {nameof(RenewalsPolicyRenewFromId)} = {RenewalsPolicyRenewFromId}, {nameof(RenewalsPolicyDifferentPeriod)} = {RenewalsPolicyDifferentPeriod}, {nameof(RenewalsPolicyPeriodDuration)} = {RenewalsPolicyPeriodDuration}, {nameof(RenewalsPolicyPeriodInterval)} = {RenewalsPolicyPeriodInterval}, {nameof(RenewalsPolicyAlternateFixedDueDateScheduleId)} = {RenewalsPolicyAlternateFixedDueDateScheduleId}, {nameof(RecallsAlternateGracePeriodDuration)} = {RecallsAlternateGracePeriodDuration}, {nameof(RecallsAlternateGracePeriodInterval)} = {RecallsAlternateGracePeriodInterval}, {nameof(RecallsMinimumGuaranteedLoanPeriodDuration)} = {RecallsMinimumGuaranteedLoanPeriodDuration}, {nameof(RecallsMinimumGuaranteedLoanPeriodInterval)} = {RecallsMinimumGuaranteedLoanPeriodInterval}, {nameof(RecallsRecallReturnIntervalDuration)} = {RecallsRecallReturnIntervalDuration}, {nameof(RecallsRecallReturnIntervalInterval)} = {RecallsRecallReturnIntervalInterval}, {nameof(RecallsAllowRecallsToExtendOverdueLoans)} = {RecallsAllowRecallsToExtendOverdueLoans}, {nameof(RecallsAlternateRecallReturnIntervalDuration)} = {RecallsAlternateRecallReturnIntervalDuration}, {nameof(RecallsAlternateRecallReturnIntervalInterval)} = {RecallsAlternateRecallReturnIntervalInterval}, {nameof(HoldsAlternateCheckoutLoanPeriodDuration)} = {HoldsAlternateCheckoutLoanPeriodDuration}, {nameof(HoldsAlternateCheckoutLoanPeriodInterval)} = {HoldsAlternateCheckoutLoanPeriodInterval}, {nameof(HoldsRenewItemsWithRequest)} = {HoldsRenewItemsWithRequest}, {nameof(HoldsAlternateRenewalLoanPeriodDuration)} = {HoldsAlternateRenewalLoanPeriodDuration}, {nameof(HoldsAlternateRenewalLoanPeriodInterval)} = {HoldsAlternateRenewalLoanPeriodInterval}, {nameof(PagesAlternateCheckoutLoanPeriodDuration)} = {PagesAlternateCheckoutLoanPeriodDuration}, {nameof(PagesAlternateCheckoutLoanPeriodInterval)} = {PagesAlternateCheckoutLoanPeriodInterval}, {nameof(PagesRenewItemsWithRequest)} = {PagesRenewItemsWithRequest}, {nameof(PagesAlternateRenewalLoanPeriodDuration)} = {PagesAlternateRenewalLoanPeriodDuration}, {nameof(PagesAlternateRenewalLoanPeriodInterval)} = {PagesAlternateRenewalLoanPeriodInterval}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";
 
         public static LoanPolicy2 FromJObject(JObject jObject) => jObject != null ? new LoanPolicy2
         {
@@ -205,6 +214,9 @@ namespace FolioLibrary
             LoansPolicyOpeningTimeOffsetInterval = (string)jObject.SelectToken("loansPolicy.openingTimeOffset.intervalId"),
             LoansPolicyFixedDueDateScheduleId = (Guid?)jObject.SelectToken("loansPolicy.fixedDueDateScheduleId"),
             LoansPolicyItemLimit = (int?)jObject.SelectToken("loansPolicy.itemLimit"),
+            LoansPolicyForUseAtLocation = (bool?)jObject.SelectToken("loansPolicy.forUseAtLocation"),
+            LoansPolicyHoldShelfExpiryPeriodForUseAtLocationDuration = (int?)jObject.SelectToken("loansPolicy.holdShelfExpiryPeriodForUseAtLocation.duration"),
+            LoansPolicyHoldShelfExpiryPeriodForUseAtLocationInterval = (string)jObject.SelectToken("loansPolicy.holdShelfExpiryPeriodForUseAtLocation.intervalId"),
             Renewable = (bool?)jObject.SelectToken("renewable"),
             RenewalsPolicyUnlimited = (bool?)jObject.SelectToken("renewalsPolicy.unlimited"),
             RenewalsPolicyNumberAllowed = (decimal?)jObject.SelectToken("renewalsPolicy.numberAllowed"),
@@ -259,7 +271,11 @@ namespace FolioLibrary
                     new JProperty("duration", LoansPolicyOpeningTimeOffsetDuration),
                     new JProperty("intervalId", LoansPolicyOpeningTimeOffsetInterval))),
                 new JProperty("fixedDueDateScheduleId", LoansPolicyFixedDueDateScheduleId),
-                new JProperty("itemLimit", LoansPolicyItemLimit))),
+                new JProperty("itemLimit", LoansPolicyItemLimit),
+                new JProperty("forUseAtLocation", LoansPolicyForUseAtLocation),
+                new JProperty("holdShelfExpiryPeriodForUseAtLocation", new JObject(
+                    new JProperty("duration", LoansPolicyHoldShelfExpiryPeriodForUseAtLocationDuration),
+                    new JProperty("intervalId", LoansPolicyHoldShelfExpiryPeriodForUseAtLocationInterval))))),
             new JProperty("renewable", Renewable),
             new JProperty("renewalsPolicy", new JObject(
                 new JProperty("unlimited", RenewalsPolicyUnlimited),

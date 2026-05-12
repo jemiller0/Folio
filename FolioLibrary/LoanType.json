@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "A loan type",
+  "javaType": "org.folio.rest.jaxrs.model.LoanType",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -13,7 +14,8 @@
     },
     "source": {
       "description": "Origin of the loan type record, e.g. 'System', 'User', 'Consortium' etc.",
-      "type": "string"
+      "type": "string",
+      "default": "local"
     },
     "metadata": {
       "title": "Metadata Schema",

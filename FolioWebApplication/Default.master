@@ -170,11 +170,12 @@
                             <telerik:RadMenuItem Text="User Acquisitions Units" NavigateUrl="~/UserAcquisitionsUnit2s/Default.aspx" Visible='<%# Session["UserAcquisitionsUnit2sPermission"] != null %>' />
                         </Items>
                     </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Organizations" Visible='<%# Session["Category2sPermission"] != null || Session["Contact2sPermission"] != null || Session["Interface2sPermission"] != null || Session["Organization2sPermission"] != null %>'>
+                    <telerik:RadMenuItem Text="Organizations" Visible='<%# Session["Category2sPermission"] != null || Session["Contact2sPermission"] != null || Session["Interface2sPermission"] != null || Session["Organization2sPermission"] != null || Session["OrganizationType2sPermission"] != null %>'>
                         <Items>
                             <telerik:RadMenuItem Text="Categories" NavigateUrl="~/Category2s/Default.aspx" Visible='<%# Session["Category2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Contacts" NavigateUrl="~/Contact2s/Default.aspx" Visible='<%# Session["Contact2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Interfaces" NavigateUrl="~/Interface2s/Default.aspx" Visible='<%# Session["Interface2sPermission"] != null %>' />
+                            <telerik:RadMenuItem Text="Organization Types" NavigateUrl="~/OrganizationType2s/Default.aspx" Visible='<%# Session["OrganizationType2sPermission"] != null %>' />
                             <telerik:RadMenuItem Text="Organizations" NavigateUrl="~/Organization2s/Default.aspx" Visible='<%# Session["Organization2sPermission"] != null %>' />
                         </Items>
                     </telerik:RadMenuItem>

@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "A mode of issuance to be assigned to an Instance",
+  "javaType": "org.folio.rest.jaxrs.model.IssuanceMode",
   "type": "object",
   "properties": {
     "id": {

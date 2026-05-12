@@ -58,136 +58,145 @@ namespace FolioLibrary
         [Column("status_name"), Display(Name = "Status Name", Order = 10), JsonProperty("status.name"), StringLength(1024)]
         public virtual string StatusName { get; set; }
 
-        [Column("loan_date"), DataType(DataType.DateTime), Display(Name = "Loan Time", Order = 11), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("loanDate"), Required]
+        [Column("for_use_at_location_status"), Display(Name = "For Use At Location Status", Order = 11), JsonProperty("forUseAtLocation.status"), RegularExpression(@"^(In use|Held|Returned)$"), StringLength(1024)]
+        public virtual string ForUseAtLocationStatus { get; set; }
+
+        [Column("for_use_at_location_status_date"), DataType(DataType.Date), Display(Name = "For Use At Location Status Date", Order = 12), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("forUseAtLocation.statusDate")]
+        public virtual DateTime? ForUseAtLocationStatusDate { get; set; }
+
+        [Column("for_use_at_location_hold_shelf_expiration_date"), DataType(DataType.Date), Display(Name = "For Use At Location Hold Shelf Expiration Date", Order = 13), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("forUseAtLocation.holdShelfExpirationDate")]
+        public virtual DateTime? ForUseAtLocationHoldShelfExpirationDate { get; set; }
+
+        [Column("loan_date"), DataType(DataType.DateTime), Display(Name = "Loan Time", Order = 14), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("loanDate"), Required]
         public virtual DateTime? LoanTime { get; set; }
 
-        [Column("due_date"), DataType(DataType.DateTime), Display(Name = "Due Time", Order = 12), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("dueDate")]
+        [Column("due_date"), DataType(DataType.DateTime), Display(Name = "Due Time", Order = 15), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("dueDate")]
         public virtual DateTime? DueTime { get; set; }
 
-        [Column("return_date"), Display(Name = "Return Time", Order = 13), JsonProperty("returnDate"), StringLength(1024)]
+        [Column("return_date"), Display(Name = "Return Time", Order = 16), JsonProperty("returnDate"), StringLength(1024)]
         public virtual string ReturnTime { get; set; }
 
-        [Column("system_return_date"), DataType(DataType.DateTime), Display(Name = "System Return Time", Order = 14), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("systemReturnDate")]
+        [Column("system_return_date"), DataType(DataType.DateTime), Display(Name = "System Return Time", Order = 17), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("systemReturnDate")]
         public virtual DateTime? SystemReturnTime { get; set; }
 
-        [Column("action"), Display(Order = 15), JsonProperty("action"), Required, StringLength(1024)]
+        [Column("action"), Display(Order = 18), JsonProperty("action"), Required, StringLength(1024)]
         public virtual string Action { get; set; }
 
-        [Column("action_comment"), Display(Name = "Action Comment", Order = 16), JsonProperty("actionComment"), StringLength(1024)]
+        [Column("action_comment"), Display(Name = "Action Comment", Order = 19), JsonProperty("actionComment"), StringLength(1024)]
         public virtual string ActionComment { get; set; }
 
-        [Column("item_status"), Display(Name = "Item Status", Order = 17), JsonProperty("itemStatus"), StringLength(1024)]
+        [Column("item_status"), Display(Name = "Item Status", Order = 20), JsonProperty("itemStatus"), StringLength(1024)]
         public virtual string ItemStatus { get; set; }
 
-        [Column("renewal_count"), Display(Name = "Renewal Count", Order = 18), JsonProperty("renewalCount")]
+        [Column("renewal_count"), Display(Name = "Renewal Count", Order = 21), JsonProperty("renewalCount")]
         public virtual int? RenewalCount { get; set; }
 
-        [Display(Name = "Loan Policy", Order = 19)]
+        [Display(Name = "Loan Policy", Order = 22)]
         public virtual LoanPolicy2 LoanPolicy { get; set; }
 
-        [Column("loan_policy_id"), Display(Name = "Loan Policy", Order = 20), JsonProperty("loanPolicyId")]
+        [Column("loan_policy_id"), Display(Name = "Loan Policy", Order = 23), JsonProperty("loanPolicyId")]
         public virtual Guid? LoanPolicyId { get; set; }
 
-        [Display(Name = "Checkout Service Point", Order = 21), InverseProperty("Loan2s1")]
+        [Display(Name = "Checkout Service Point", Order = 24), InverseProperty("Loan2s1")]
         public virtual ServicePoint2 CheckoutServicePoint { get; set; }
 
-        [Column("checkout_service_point_id"), Display(Name = "Checkout Service Point", Order = 22), JsonProperty("checkoutServicePointId")]
+        [Column("checkout_service_point_id"), Display(Name = "Checkout Service Point", Order = 25), JsonProperty("checkoutServicePointId")]
         public virtual Guid? CheckoutServicePointId { get; set; }
 
-        [Display(Name = "Checkin Service Point", Order = 23), InverseProperty("Loan2s")]
+        [Display(Name = "Checkin Service Point", Order = 26), InverseProperty("Loan2s")]
         public virtual ServicePoint2 CheckinServicePoint { get; set; }
 
-        [Column("checkin_service_point_id"), Display(Name = "Checkin Service Point", Order = 24), JsonProperty("checkinServicePointId")]
+        [Column("checkin_service_point_id"), Display(Name = "Checkin Service Point", Order = 27), JsonProperty("checkinServicePointId")]
         public virtual Guid? CheckinServicePointId { get; set; }
 
-        [Display(Order = 25)]
+        [Display(Order = 28)]
         public virtual Group2 Group { get; set; }
 
-        [Column("group_id"), Display(Name = "Group", Order = 26), JsonProperty("patronGroupIdAtCheckout")]
+        [Column("group_id"), Display(Name = "Group", Order = 29), JsonProperty("patronGroupIdAtCheckout")]
         public virtual Guid? GroupId { get; set; }
 
-        [Column("due_date_changed_by_recall"), Display(Name = "Due Date Changed By Recall", Order = 27), JsonProperty("dueDateChangedByRecall")]
+        [Column("due_date_changed_by_recall"), Display(Name = "Due Date Changed By Recall", Order = 30), JsonProperty("dueDateChangedByRecall")]
         public virtual bool? DueDateChangedByRecall { get; set; }
 
-        [Column("is_dcb"), Display(Name = "Is Dcb", Order = 28), JsonProperty("isDcb")]
+        [Column("is_dcb"), Display(Name = "Is Dcb", Order = 31), JsonProperty("isDcb")]
         public virtual bool? IsDcb { get; set; }
 
-        [Column("declared_lost_date"), DataType(DataType.Date), Display(Name = "Declared Lost Date", Order = 29), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("declaredLostDate")]
+        [Column("declared_lost_date"), DataType(DataType.Date), Display(Name = "Declared Lost Date", Order = 32), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("declaredLostDate")]
         public virtual DateTime? DeclaredLostDate { get; set; }
 
-        [Column("claimed_returned_date"), DataType(DataType.Date), Display(Name = "Claimed Returned Date", Order = 30), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("claimedReturnedDate")]
+        [Column("claimed_returned_date"), DataType(DataType.Date), Display(Name = "Claimed Returned Date", Order = 33), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("claimedReturnedDate")]
         public virtual DateTime? ClaimedReturnedDate { get; set; }
 
-        [Display(Name = "Overdue Fine Policy", Order = 31)]
+        [Display(Name = "Overdue Fine Policy", Order = 34)]
         public virtual OverdueFinePolicy2 OverdueFinePolicy { get; set; }
 
-        [Column("overdue_fine_policy_id"), Display(Name = "Overdue Fine Policy", Order = 32), JsonProperty("overdueFinePolicyId")]
+        [Column("overdue_fine_policy_id"), Display(Name = "Overdue Fine Policy", Order = 35), JsonProperty("overdueFinePolicyId")]
         public virtual Guid? OverdueFinePolicyId { get; set; }
 
-        [Display(Name = "Lost Item Policy", Order = 33)]
+        [Display(Name = "Lost Item Policy", Order = 36)]
         public virtual LostItemFeePolicy2 LostItemPolicy { get; set; }
 
-        [Column("lost_item_policy_id"), Display(Name = "Lost Item Policy", Order = 34), JsonProperty("lostItemPolicyId")]
+        [Column("lost_item_policy_id"), Display(Name = "Lost Item Policy", Order = 37), JsonProperty("lostItemPolicyId")]
         public virtual Guid? LostItemPolicyId { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 35), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 38), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 36), InverseProperty("Loan2s")]
+        [Display(Name = "Creation User", Order = 39), InverseProperty("Loan2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 37), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 40), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 39), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 42), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 40), InverseProperty("Loan2s2")]
+        [Display(Name = "Last Write User", Order = 43), InverseProperty("Loan2s2")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 41), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 44), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("aged_to_lost_delayed_billing_lost_item_has_been_billed"), Display(Name = "Aged To Lost Delayed Billing Lost Item Has Been Billed", Order = 43), JsonProperty("agedToLostDelayedBilling.lostItemHasBeenBilled")]
+        [Column("aged_to_lost_delayed_billing_lost_item_has_been_billed"), Display(Name = "Aged To Lost Delayed Billing Lost Item Has Been Billed", Order = 46), JsonProperty("agedToLostDelayedBilling.lostItemHasBeenBilled")]
         public virtual bool? AgedToLostDelayedBillingLostItemHasBeenBilled { get; set; }
 
-        [Column("aged_to_lost_delayed_billing_date_lost_item_should_be_billed"), Display(Name = "Aged To Lost Delayed Billing Date Lost Item Should Be Billed", Order = 44), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("agedToLostDelayedBilling.dateLostItemShouldBeBilled")]
+        [Column("aged_to_lost_delayed_billing_date_lost_item_should_be_billed"), Display(Name = "Aged To Lost Delayed Billing Date Lost Item Should Be Billed", Order = 47), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("agedToLostDelayedBilling.dateLostItemShouldBeBilled")]
         public virtual DateTime? AgedToLostDelayedBillingDateLostItemShouldBeBilled { get; set; }
 
-        [Column("aged_to_lost_delayed_billing_aged_to_lost_date"), DataType(DataType.Date), Display(Name = "Aged To Lost Delayed Billing Aged To Lost Date", Order = 45), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("agedToLostDelayedBilling.agedToLostDate")]
+        [Column("aged_to_lost_delayed_billing_aged_to_lost_date"), DataType(DataType.Date), Display(Name = "Aged To Lost Delayed Billing Aged To Lost Date", Order = 48), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("agedToLostDelayedBilling.agedToLostDate")]
         public virtual DateTime? AgedToLostDelayedBillingAgedToLostDate { get; set; }
 
-        [Column("reminders_last_fee_billed_number"), Display(Name = "Reminders Last Fee Billed Number", Order = 46), JsonProperty("reminders.lastFeeBilled.number")]
+        [Column("reminders_last_fee_billed_number"), Display(Name = "Reminders Last Fee Billed Number", Order = 49), JsonProperty("reminders.lastFeeBilled.number")]
         public virtual int? RemindersLastFeeBilledNumber { get; set; }
 
-        [Column("reminders_last_fee_billed_date"), DataType(DataType.Date), Display(Name = "Reminders Last Fee Billed Date", Order = 47), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("reminders.lastFeeBilled.date")]
+        [Column("reminders_last_fee_billed_date"), DataType(DataType.Date), Display(Name = "Reminders Last Fee Billed Date", Order = 50), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("reminders.lastFeeBilled.date")]
         public virtual DateTime? RemindersLastFeeBilledDate { get; set; }
 
-        [Column("content"), CustomValidation(typeof(Loan), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 48), Editable(false)]
+        [Column("content"), CustomValidation(typeof(Loan), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 51), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Fees", Order = 49)]
+        [Display(Name = "Fees", Order = 52)]
         public virtual ICollection<Fee2> Fee2s { get; set; }
 
-        [Display(Name = "Patron Action Sessions", Order = 50)]
+        [Display(Name = "Patron Action Sessions", Order = 53)]
         public virtual ICollection<PatronActionSession2> PatronActionSession2s { get; set; }
 
-        [Display(Name = "Scheduled Notices", Order = 51)]
+        [Display(Name = "Scheduled Notices", Order = 54)]
         public virtual ICollection<ScheduledNotice2> ScheduledNotice2s { get; set; }
 
-        [Display(Name = "User Summary Open Fees Fines", Order = 52)]
+        [Display(Name = "User Summary Open Fees Fines", Order = 55)]
         public virtual ICollection<UserSummaryOpenFeesFine> UserSummaryOpenFeesFines { get; set; }
 
-        [Display(Name = "User Summary Open Loans", Order = 53)]
+        [Display(Name = "User Summary Open Loans", Order = 56)]
         public virtual ICollection<UserSummaryOpenLoan> UserSummaryOpenLoans { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(UserId)} = {UserId}, {nameof(ProxyUserId)} = {ProxyUserId}, {nameof(ItemId)} = {ItemId}, {nameof(ItemEffectiveLocationAtCheckOutId)} = {ItemEffectiveLocationAtCheckOutId}, {nameof(StatusName)} = {StatusName}, {nameof(LoanTime)} = {LoanTime}, {nameof(DueTime)} = {DueTime}, {nameof(ReturnTime)} = {ReturnTime}, {nameof(SystemReturnTime)} = {SystemReturnTime}, {nameof(Action)} = {Action}, {nameof(ActionComment)} = {ActionComment}, {nameof(ItemStatus)} = {ItemStatus}, {nameof(RenewalCount)} = {RenewalCount}, {nameof(LoanPolicyId)} = {LoanPolicyId}, {nameof(CheckoutServicePointId)} = {CheckoutServicePointId}, {nameof(CheckinServicePointId)} = {CheckinServicePointId}, {nameof(GroupId)} = {GroupId}, {nameof(DueDateChangedByRecall)} = {DueDateChangedByRecall}, {nameof(IsDcb)} = {IsDcb}, {nameof(DeclaredLostDate)} = {DeclaredLostDate}, {nameof(ClaimedReturnedDate)} = {ClaimedReturnedDate}, {nameof(OverdueFinePolicyId)} = {OverdueFinePolicyId}, {nameof(LostItemPolicyId)} = {LostItemPolicyId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(AgedToLostDelayedBillingLostItemHasBeenBilled)} = {AgedToLostDelayedBillingLostItemHasBeenBilled}, {nameof(AgedToLostDelayedBillingDateLostItemShouldBeBilled)} = {AgedToLostDelayedBillingDateLostItemShouldBeBilled}, {nameof(AgedToLostDelayedBillingAgedToLostDate)} = {AgedToLostDelayedBillingAgedToLostDate}, {nameof(RemindersLastFeeBilledNumber)} = {RemindersLastFeeBilledNumber}, {nameof(RemindersLastFeeBilledDate)} = {RemindersLastFeeBilledDate}, {nameof(Content)} = {Content} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(UserId)} = {UserId}, {nameof(ProxyUserId)} = {ProxyUserId}, {nameof(ItemId)} = {ItemId}, {nameof(ItemEffectiveLocationAtCheckOutId)} = {ItemEffectiveLocationAtCheckOutId}, {nameof(StatusName)} = {StatusName}, {nameof(ForUseAtLocationStatus)} = {ForUseAtLocationStatus}, {nameof(ForUseAtLocationStatusDate)} = {ForUseAtLocationStatusDate}, {nameof(ForUseAtLocationHoldShelfExpirationDate)} = {ForUseAtLocationHoldShelfExpirationDate}, {nameof(LoanTime)} = {LoanTime}, {nameof(DueTime)} = {DueTime}, {nameof(ReturnTime)} = {ReturnTime}, {nameof(SystemReturnTime)} = {SystemReturnTime}, {nameof(Action)} = {Action}, {nameof(ActionComment)} = {ActionComment}, {nameof(ItemStatus)} = {ItemStatus}, {nameof(RenewalCount)} = {RenewalCount}, {nameof(LoanPolicyId)} = {LoanPolicyId}, {nameof(CheckoutServicePointId)} = {CheckoutServicePointId}, {nameof(CheckinServicePointId)} = {CheckinServicePointId}, {nameof(GroupId)} = {GroupId}, {nameof(DueDateChangedByRecall)} = {DueDateChangedByRecall}, {nameof(IsDcb)} = {IsDcb}, {nameof(DeclaredLostDate)} = {DeclaredLostDate}, {nameof(ClaimedReturnedDate)} = {ClaimedReturnedDate}, {nameof(OverdueFinePolicyId)} = {OverdueFinePolicyId}, {nameof(LostItemPolicyId)} = {LostItemPolicyId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(AgedToLostDelayedBillingLostItemHasBeenBilled)} = {AgedToLostDelayedBillingLostItemHasBeenBilled}, {nameof(AgedToLostDelayedBillingDateLostItemShouldBeBilled)} = {AgedToLostDelayedBillingDateLostItemShouldBeBilled}, {nameof(AgedToLostDelayedBillingAgedToLostDate)} = {AgedToLostDelayedBillingAgedToLostDate}, {nameof(RemindersLastFeeBilledNumber)} = {RemindersLastFeeBilledNumber}, {nameof(RemindersLastFeeBilledDate)} = {RemindersLastFeeBilledDate}, {nameof(Content)} = {Content} }}";
 
         public static Loan2 FromJObject(JObject jObject) => jObject != null ? new Loan2
         {
@@ -197,6 +206,9 @@ namespace FolioLibrary
             ItemId = (Guid?)jObject.SelectToken("itemId"),
             ItemEffectiveLocationAtCheckOutId = (Guid?)jObject.SelectToken("itemEffectiveLocationIdAtCheckOut"),
             StatusName = (string)jObject.SelectToken("status.name"),
+            ForUseAtLocationStatus = (string)jObject.SelectToken("forUseAtLocation.status"),
+            ForUseAtLocationStatusDate = ((DateTime?)jObject.SelectToken("forUseAtLocation.statusDate"))?.ToUniversalTime(),
+            ForUseAtLocationHoldShelfExpirationDate = ((DateTime?)jObject.SelectToken("forUseAtLocation.holdShelfExpirationDate"))?.ToUniversalTime(),
             LoanTime = (DateTime?)jObject.SelectToken("loanDate"),
             DueTime = (DateTime?)jObject.SelectToken("dueDate"),
             ReturnTime = (string)jObject.SelectToken("returnDate"),
@@ -237,6 +249,10 @@ namespace FolioLibrary
             new JProperty("itemEffectiveLocationIdAtCheckOut", ItemEffectiveLocationAtCheckOutId),
             new JProperty("status", new JObject(
                 new JProperty("name", StatusName))),
+            new JProperty("forUseAtLocation", new JObject(
+                new JProperty("status", ForUseAtLocationStatus),
+                new JProperty("statusDate", ForUseAtLocationStatusDate?.ToLocalTime()),
+                new JProperty("holdShelfExpirationDate", ForUseAtLocationHoldShelfExpirationDate?.ToLocalTime()))),
             new JProperty("loanDate", LoanTime?.ToLocalTime()),
             new JProperty("dueDate", DueTime?.ToLocalTime()),
             new JProperty("returnDate", ReturnTime),

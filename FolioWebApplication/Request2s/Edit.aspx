@@ -161,6 +161,22 @@
                                     <asp:Literal ID="ItemBarcodeLiteral" runat="server" Text='<%#: Eval("ItemBarcode") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("ItemItemEffectiveLocation") != null %>'>
+                                <td>
+                                    <asp:Label ID="ItemItemEffectiveLocationLabel" runat="server" Text="Item Item Effective Location:" AssociatedControlID="ItemItemEffectiveLocationHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="ItemItemEffectiveLocationHyperLink" runat="server" Text='<%#: Eval("ItemItemEffectiveLocation.Name") %>' NavigateUrl='<%# $"~/Location2s/Edit.aspx?Id={Eval("ItemItemEffectiveLocationId")}" %>' Enabled='<%# Session["Location2sPermission"] != null %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("ItemRetrievalServicePoint") != null %>'>
+                                <td>
+                                    <asp:Label ID="ItemRetrievalServicePointLabel" runat="server" Text="Item Retrieval Service Point:" AssociatedControlID="ItemRetrievalServicePointHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="ItemRetrievalServicePointHyperLink" runat="server" Text='<%#: Eval("ItemRetrievalServicePoint.Name") %>' NavigateUrl='<%# $"~/ServicePoint2s/Edit.aspx?Id={Eval("ItemRetrievalServicePointId")}" %>' Enabled='<%# Session["ServicePoint2sPermission"] != null %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("RequesterFirstName") != null %>'>
                                 <td>
                                     <asp:Label ID="RequesterFirstNameLabel" runat="server" Text="Requester First Name:" AssociatedControlID="RequesterFirstNameLiteral" />
@@ -399,6 +415,14 @@
                                 </td>
                                 <td>
                                     <asp:Literal ID="ItemLocationCodeLiteral" runat="server" Text='<%#: Eval("ItemLocationCode") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("IsDcbReRequestCancellation") != null %>'>
+                                <td>
+                                    <asp:Label ID="IsDcbReRequestCancellationLabel" runat="server" Text="Is Dcb Re Request Cancellation:" AssociatedControlID="IsDcbReRequestCancellationLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="IsDcbReRequestCancellationLiteral" runat="server" Text='<%#: Eval("IsDcbReRequestCancellation") %>' />
                                 </td>
                             </tr>
                             <tr runat="server" visible='<%# Eval("Content") != null %>'>

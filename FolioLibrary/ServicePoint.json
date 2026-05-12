@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "A service point",
+  "javaType": "org.folio.rest.jaxrs.model.ServicePoint",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -34,6 +35,7 @@
     },
     "holdShelfExpiryPeriod": {
       "description": "schema for time-period, which contains time interval 'duration' and the time unit",
+      "javaType": "org.folio.rest.jaxrs.model.TimePeriod",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -85,11 +87,12 @@
       "description": "List of staff slips for this service point",
       "type": "array",
       "items": {
+        "javaType": "org.folio.rest.jaxrs.model.ServicePointStaffSlip",
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "id": {
-            "description": "The ID of the staff slip",
+            "description": "The UUID format string",
             "type": "string",
             "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
           },

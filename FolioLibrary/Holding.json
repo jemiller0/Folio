@@ -84,6 +84,7 @@
       "type": "array",
       "items": {
         "description": "A call number",
+        "javaType": "org.folio.rest.jaxrs.model.CallNumberComponents",
         "type": "object",
         "additionalProperties": false,
         "properties": {

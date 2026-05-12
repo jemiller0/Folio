@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "An instance record",
+  "javaType": "org.folio.rest.jaxrs.model.Instance",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -41,6 +42,7 @@
       "description": "List of alternative titles for the resource (e.g. original language version title of a movie)",
       "type": "array",
       "items": {
+        "javaType": "org.folio.rest.jaxrs.model.AlternativeTitle",
         "type": "object",
         "properties": {
           "alternativeTitleTypeId": {
@@ -69,6 +71,7 @@
       "description": "List of series titles associated with the resource (e.g. Harry Potter)",
       "type": "array",
       "items": {
+        "javaType": "org.folio.rest.jaxrs.model.SeriesItem",
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -90,6 +93,8 @@
       "description": "An extensible set of name-value pairs of identifiers associated with the resource",
       "type": "array",
       "items": {
+        "description": "A call number",
+        "javaType": "org.folio.rest.jaxrs.model.Identifier",
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -98,10 +103,13 @@
             "type": "string"
           },
           "identifierTypeId": {
-            "$ref": "#/properties/id"
+            "description": "The UUID format string",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
           },
           "identifierTypeObject": {
             "description": "Information about identifier type, looked up from identifierTypeId",
+            "javaType": "org.folio.rest.jaxrs.model.IdentifierTypeVirtual",
             "folio:$ref": "illpolicy.json",
             "readonly": true,
             "folio:isVirtual": true,
@@ -123,6 +131,7 @@
       "description": "List of contributors",
       "type": "array",
       "items": {
+        "javaType": "org.folio.rest.jaxrs.model.Contributor",
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -145,7 +154,7 @@
           },
           "contributorNameType": {
             "description": "Dereferenced contributor-name type",
-            "javaType": "org.folio.rest.jaxrs.model.contributorNameTypeVirtual",
+            "javaType": "org.folio.rest.jaxrs.model.ContributorNameTypeVirtual",
             "folio:$ref": "contributornametype.json",
             "readonly": true,
             "folio:isVirtual": true,
@@ -171,6 +180,7 @@
       "description": "List of subject headings",
       "type": "array",
       "items": {
+        "javaType": "org.folio.rest.jaxrs.model.Subject",
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -198,6 +208,7 @@
       "description": "List of classifications",
       "type": "array",
       "items": {
+        "javaType": "org.folio.rest.jaxrs.model.Classification",
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -210,7 +221,7 @@
           },
           "classificationType": {
             "description": "Dereferenced classification schema",
-            "javaType": "org.folio.rest.jaxrs.model.classificationTypeVirtual",
+            "javaType": "org.folio.rest.jaxrs.model.ClassificationTypeVirtual",
             "folio:$ref": "classificationtype.json",
             "readonly": true,
             "folio:isVirtual": true,
@@ -232,6 +243,7 @@
       "description": "List of publication items",
       "type": "array",
       "items": {
+        "javaType": "org.folio.rest.jaxrs.model.Publication",
         "type": "object",
         "properties": {
           "publisher": {
@@ -273,6 +285,8 @@
       "description": "List of electronic access items",
       "type": "array",
       "items": {
+        "description": "Electronic access item",
+        "javaType": "org.folio.rest.jaxrs.model.ElectronicAccessItem",
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -281,11 +295,11 @@
             "type": "string"
           },
           "linkText": {
-            "description": "The value of the MARC tag field 856 2nd indicator, where the values are: no information provided, resource, version of resource, related resource, no display constant generated",
+            "description": "the value of the MARC tag field 856 2nd indicator, where the values are: no information provided, resource, version of resource, related resource, no display constant generated",
             "type": "string"
           },
           "materialsSpecification": {
-            "description": "Materials specified is used to specify to what portion or aspect of the resource the electronic location and access information applies (e.g. a portion or subset of the item is electronic, or a related electronic resource is being linked to the record)",
+            "description": "materials specified is used to specify to what portion or aspect of the resource the electronic location and access information applies (e.g. a portion or subset of the item is electronic, or a related electronic resource is being linked to the record)",
             "type": "string"
           },
           "publicNote": {
@@ -293,7 +307,8 @@
             "type": "string"
           },
           "relationshipId": {
-            "$ref": "#/properties/id"
+            "description": "relationship between the electronic resource at the location identified and the item described in the record as a whole",
+            "type": "string"
           }
         },
         "required": [
@@ -303,6 +318,7 @@
     },
     "dates": {
       "description": "Instance Dates",
+      "javaType": "org.folio.rest.jaxrs.model.InstanceDates",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -342,6 +358,7 @@
       "type": "array",
       "items": {
         "description": "The format of an Instance",
+        "javaType": "org.folio.rest.jaxrs.model.InstanceFormat",
         "type": "object",
         "properties": {
           "id": {
@@ -517,7 +534,43 @@
       }
     },
     "metadata": {
-      "$ref": "#/properties/instanceFormats/items/properties/metadata"
+      "title": "Metadata Schema",
+      "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdDate": {
+          "description": "Date and time when the record was created",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdByUserId": {
+          "description": "ID of the user who created the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "createdByUsername": {
+          "description": "Username of the user who created the record (when available)",
+          "type": "string"
+        },
+        "updatedDate": {
+          "description": "Date and time when the record was last updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedByUserId": {
+          "description": "ID of the user who last updated the record (when available)",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "updatedByUsername": {
+          "description": "Username of the user who last updated the record (when available)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate"
+      ]
     },
     "holdingsRecords2": {
       "description": "List of holdings records",
@@ -613,6 +666,7 @@
             "type": "array",
             "items": {
               "description": "A call number",
+              "javaType": "org.folio.rest.jaxrs.model.CallNumberComponents",
               "type": "object",
               "additionalProperties": false,
               "properties": {

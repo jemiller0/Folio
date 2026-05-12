@@ -34,9 +34,9 @@
           "additionalProperties": false,
           "properties": {
             "duration": {
-              "description": "Duration of the period, number of times the interval repeats",
+              "description": "Duration of the period, number of times the interval repeats; 0 should be used with days only and means until the end of the day",
               "type": "integer",
-              "minimum": 1.0
+              "minimum": 0.0
             },
             "intervalId": {
               "description": "Interval for the period, e.g. hours, days or weeks",
@@ -74,6 +74,38 @@
           "type": "integer",
           "minimum": 1.0,
           "maximum": 9999.0
+        },
+        "forUseAtLocation": {
+          "description": "Indicates that loaned items must be used in the library, i.e. in a reading room",
+          "type": "boolean"
+        },
+        "holdShelfExpiryPeriodForUseAtLocation": {
+          "description": "schema for time-period, which contains time interval 'duration' and the time unit",
+          "javaType": "org.folio.rest.jaxrs.model.TimePeriod",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "duration": {
+              "description": "Duration interval",
+              "type": "integer"
+            },
+            "intervalId": {
+              "description": "Unit of time for the duration",
+              "type": "string",
+              "default": "Days",
+              "enum": [
+                "Minutes",
+                "Hours",
+                "Days",
+                "Weeks",
+                "Months"
+              ]
+            }
+          },
+          "required": [
+            "duration",
+            "intervalId"
+          ]
         }
       }
     },

@@ -6606,6 +6606,14 @@ namespace FolioLibrary
                     if (load && oi.InterfaceId != null) oi.Interface = FindInterface2(oi.InterfaceId, cache: cache);
                 }
             i = 0;
+            if (o2.OrganizationOrganizationTypes != null) foreach (var oot in o2.OrganizationOrganizationTypes)
+                {
+                    oot.Id = (++i).ToString();
+                    oot.OrganizationId = o2.Id;
+                    oot.Organization = o2;
+                    if (load && oot.OrganizationTypeId != null) oot.OrganizationType = FindOrganizationType2(oot.OrganizationTypeId, cache: cache);
+                }
+            i = 0;
             if (o2.OrganizationPhoneNumbers != null) foreach (var opn in o2.OrganizationPhoneNumbers)
                 {
                     opn.Id = (++i).ToString();
@@ -6627,13 +6635,6 @@ namespace FolioLibrary
                     ot.Id = (++i).ToString();
                     ot.OrganizationId = o2.Id;
                     ot.Organization = o2;
-                }
-            i = 0;
-            if (o2.OrganizationTypes != null) foreach (var ot2 in o2.OrganizationTypes)
-                {
-                    ot2.Id = (++i).ToString();
-                    ot2.OrganizationId = o2.Id;
-                    ot2.Organization = o2;
                 }
             i = 0;
             if (o2.OrganizationUrls != null) foreach (var ou in o2.OrganizationUrls)
@@ -6683,6 +6684,81 @@ namespace FolioLibrary
         }
 
         public void DeleteOrganization2(Guid? id) => FolioServiceClient.DeleteOrganization(id?.ToString());
+
+        public bool AnyOrganizationType2s(string where = null) => FolioServiceClient.AnyOrganizationTypes(where);
+
+        public int CountOrganizationType2s(string where = null) => FolioServiceClient.CountOrganizationTypes(where);
+
+        public OrganizationType2[] OrganizationType2s(out int count, string where = null, string orderBy = null, int? skip = null, int? take = 100, bool load = false, bool cache = true)
+        {
+            return FolioServiceClient.OrganizationTypes(out count, where, orderBy, skip, take).Select(jo =>
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var ot2 = cache ? (OrganizationType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = OrganizationType2.FromJObject(jo)) : OrganizationType2.FromJObject(jo);
+                if (load && ot2.CreationUserId != null) ot2.CreationUser = FindUser2(ot2.CreationUserId, cache: cache);
+                if (load && ot2.LastWriteUserId != null) ot2.LastWriteUser = FindUser2(ot2.LastWriteUserId, cache: cache);
+                return ot2;
+            }).ToArray();
+        }
+
+        public IEnumerable<OrganizationType2> OrganizationType2s(string where = null, string orderBy = null, int? skip = null, int? take = null, bool load = false, bool cache = true)
+        {
+            foreach (var jo in FolioServiceClient.OrganizationTypes(where, orderBy, skip, take))
+            {
+                var id = Guid.Parse((string)jo["id"]);
+                var ot2 = cache ? (OrganizationType2)(objects.ContainsKey(id) ? objects[id] : objects[id] = OrganizationType2.FromJObject(jo)) : OrganizationType2.FromJObject(jo);
+                if (load && ot2.CreationUserId != null) ot2.CreationUser = FindUser2(ot2.CreationUserId, cache: cache);
+                if (load && ot2.LastWriteUserId != null) ot2.LastWriteUser = FindUser2(ot2.LastWriteUserId, cache: cache);
+                yield return ot2;
+            }
+        }
+
+        public OrganizationType2 FindOrganizationType2(Guid? id, bool load = false, bool cache = true)
+        {
+            if (id == null) return null;
+            var ot2 = cache ? (OrganizationType2)(objects.ContainsKey(id.Value) ? objects[id.Value] : objects[id.Value] = OrganizationType2.FromJObject(FolioServiceClient.GetOrganizationType(id?.ToString()))) : OrganizationType2.FromJObject(FolioServiceClient.GetOrganizationType(id?.ToString()));
+            if (ot2 == null) return null;
+            if (load && ot2.CreationUserId != null) ot2.CreationUser = FindUser2(ot2.CreationUserId, cache: cache);
+            if (load && ot2.LastWriteUserId != null) ot2.LastWriteUser = FindUser2(ot2.LastWriteUserId, cache: cache);
+            return ot2;
+        }
+
+        public void Insert(OrganizationType2 organizationType2)
+        {
+            if (organizationType2.Id == null) organizationType2.Id = Guid.NewGuid();
+            FolioServiceClient.InsertOrganizationType(organizationType2.ToJObject());
+        }
+
+        public void Update(OrganizationType2 organizationType2) => FolioServiceClient.UpdateOrganizationType(organizationType2.ToJObject());
+
+        public void UpdateOrInsert(OrganizationType2 organizationType2)
+        {
+            if (organizationType2.Id == null)
+                Insert(organizationType2);
+            else
+                try
+                {
+                    Update(organizationType2);
+                }
+                catch (HttpRequestException e)
+                {
+                    if (e.Message.Contains("NotFound")) Insert(organizationType2); else throw;
+                }
+        }
+
+        public void InsertOrUpdate(OrganizationType2 organizationType2)
+        {
+            try
+            {
+                Insert(organizationType2);
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.Message.Contains("duplicate key")) Update(organizationType2); else throw;
+            }
+        }
+
+        public void DeleteOrganizationType2(Guid? id) => FolioServiceClient.DeleteOrganizationType(id?.ToString());
 
         public bool AnyOverdueFinePolicy2s(string where = null) => FolioServiceClient.AnyOverdueFinePolicies(where);
 
@@ -8103,6 +8179,8 @@ namespace FolioLibrary
                 if (load && r2.ItemId != null) r2.Item = FindItem2(r2.ItemId, cache: cache);
                 if (load && r2.CancellationReasonId != null) r2.CancellationReason = FindCancellationReason2(r2.CancellationReasonId, cache: cache);
                 if (load && r2.CancelledByUserId != null) r2.CancelledByUser = FindUser2(r2.CancelledByUserId, cache: cache);
+                if (load && r2.ItemItemEffectiveLocationId != null) r2.ItemItemEffectiveLocation = FindLocation2(r2.ItemItemEffectiveLocationId, cache: cache);
+                if (load && r2.ItemRetrievalServicePointId != null) r2.ItemRetrievalServicePoint = FindServicePoint2(r2.ItemRetrievalServicePointId, cache: cache);
                 if (load && r2.DeliveryAddressTypeId != null) r2.DeliveryAddressType = FindAddressType2(r2.DeliveryAddressTypeId, cache: cache);
                 if (load && r2.PickupServicePointId != null) r2.PickupServicePoint = FindServicePoint2(r2.PickupServicePointId, cache: cache);
                 if (load && r2.CreationUserId != null) r2.CreationUser = FindUser2(r2.CreationUserId, cache: cache);
@@ -8125,6 +8203,8 @@ namespace FolioLibrary
                 if (load && r2.ItemId != null) r2.Item = FindItem2(r2.ItemId, cache: cache);
                 if (load && r2.CancellationReasonId != null) r2.CancellationReason = FindCancellationReason2(r2.CancellationReasonId, cache: cache);
                 if (load && r2.CancelledByUserId != null) r2.CancelledByUser = FindUser2(r2.CancelledByUserId, cache: cache);
+                if (load && r2.ItemItemEffectiveLocationId != null) r2.ItemItemEffectiveLocation = FindLocation2(r2.ItemItemEffectiveLocationId, cache: cache);
+                if (load && r2.ItemRetrievalServicePointId != null) r2.ItemRetrievalServicePoint = FindServicePoint2(r2.ItemRetrievalServicePointId, cache: cache);
                 if (load && r2.DeliveryAddressTypeId != null) r2.DeliveryAddressType = FindAddressType2(r2.DeliveryAddressTypeId, cache: cache);
                 if (load && r2.PickupServicePointId != null) r2.PickupServicePoint = FindServicePoint2(r2.PickupServicePointId, cache: cache);
                 if (load && r2.CreationUserId != null) r2.CreationUser = FindUser2(r2.CreationUserId, cache: cache);
@@ -8146,6 +8226,8 @@ namespace FolioLibrary
             if (load && r2.ItemId != null) r2.Item = FindItem2(r2.ItemId, cache: cache);
             if (load && r2.CancellationReasonId != null) r2.CancellationReason = FindCancellationReason2(r2.CancellationReasonId, cache: cache);
             if (load && r2.CancelledByUserId != null) r2.CancelledByUser = FindUser2(r2.CancelledByUserId, cache: cache);
+            if (load && r2.ItemItemEffectiveLocationId != null) r2.ItemItemEffectiveLocation = FindLocation2(r2.ItemItemEffectiveLocationId, cache: cache);
+            if (load && r2.ItemRetrievalServicePointId != null) r2.ItemRetrievalServicePoint = FindServicePoint2(r2.ItemRetrievalServicePointId, cache: cache);
             if (load && r2.DeliveryAddressTypeId != null) r2.DeliveryAddressType = FindAddressType2(r2.DeliveryAddressTypeId, cache: cache);
             if (load && r2.PickupServicePointId != null) r2.PickupServicePoint = FindServicePoint2(r2.PickupServicePointId, cache: cache);
             if (load && r2.CreationUserId != null) r2.CreationUser = FindUser2(r2.CreationUserId, cache: cache);

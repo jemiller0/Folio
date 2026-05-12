@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "An item record",
+  "javaType": "org.folio.rest.jaxrs.model.Item",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -58,6 +59,7 @@
       "type": "array",
       "items": {
         "description": "A call number",
+        "javaType": "org.folio.rest.jaxrs.model.CallNumberComponents",
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -103,6 +105,7 @@
     },
     "effectiveCallNumberComponents": {
       "description": "Elements of a full call number generated from the item or holding",
+      "javaType": "org.folio.rest.jaxrs.model.EffectiveCallNumberComponents",
       "readonly": true,
       "type": "object",
       "additionalProperties": false,
@@ -221,6 +224,7 @@
       "type": "array",
       "items": {
         "description": "Note to be displayed in circulation processes",
+        "javaType": "org.folio.rest.jaxrs.model.CirculationNote",
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -278,6 +282,7 @@
     },
     "status": {
       "description": "The status of the item",
+      "javaType": "org.folio.rest.jaxrs.model.ItemStatus",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -326,7 +331,7 @@
     "materialType": {
       "description": "Item's material type",
       "folio:$ref": "materialtype.json",
-      "javaType": "org.folio.rest.jaxrs.model.materialTypeVirtual",
+      "javaType": "org.folio.rest.jaxrs.model.MaterialTypeVirtual",
       "readonly": true,
       "folio:isVirtual": true,
       "folio:linkBase": "material-types",
@@ -349,6 +354,7 @@
     },
     "permanentLocation": {
       "description": "The permanent shelving location in which an item resides",
+      "javaType": "org.folio.rest.jaxrs.model.PermanentLocationVirtual",
       "folio:$ref": "location.json",
       "readonly": true,
       "folio:isVirtual": true,
@@ -364,6 +370,7 @@
     },
     "temporaryLocation": {
       "description": "Temporary location, shelving location, or holding which is a physical place where items are stored, or an Online location",
+      "javaType": "org.folio.rest.jaxrs.model.TemporaryLocationVirtual",
       "folio:$ref": "location.json",
       "readonly": true,
       "folio:isVirtual": true,
@@ -483,6 +490,7 @@
     "holdingsRecord2": {
       "description": "Fake property for mod-graphql to determine record relationships.",
       "folio:$ref": "holdingsrecord.json",
+      "javaType": "org.folio.rest.jaxrs.model.HoldingsRecord2Virtual",
       "readonly": true,
       "folio:isVirtual": true,
       "folio:linkBase": "holdings-storage/holdings",
@@ -493,6 +501,7 @@
     },
     "lastCheckIn": {
       "description": "Information about when an item was last scanned in the Inventory app.",
+      "javaType": "org.folio.rest.jaxrs.model.ItemLastCheckIn",
       "type": "object",
       "additionalProperties": false,
       "properties": {

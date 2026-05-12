@@ -9,1607 +9,996 @@ namespace FolioLibraryTest
     [TestClass]
     public class FolioServiceContextTest
     {
-        private readonly static FolioDapperContext folioDapperContext = new FolioDapperContext();
         private readonly static FolioServiceContext folioServiceContext = new FolioServiceContext();
         private readonly static TraceSource traceSource = new TraceSource("FolioLibraryTest", SourceLevels.Information);
-        private readonly static int? take = 100_000;
 
         [TestMethod]
-        public void Orders_DeserializeAcquisitionMethod2Test()
+        public void QueryAcquisitionMethod2sTest()
         {
             var s = Stopwatch.StartNew();
-            var am2 = folioServiceContext.AcquisitionMethod2s(take: 1).SingleOrDefault();
-            if (am2 == null) Assert.Inconclusive();
-            var am3 = folioDapperContext.AcquisitionMethod2s(take: 1).SingleOrDefault();
-            am3.Content = null;
-            Assert.AreEqual(am2.ToString(), am3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Orders_DeserializeAcquisitionMethod2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.AcquisitionMethod2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryAcquisitionMethod2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Orders_DeserializeAcquisitionsUnit2Test()
+        public void QueryAcquisitionsUnit2sTest()
         {
             var s = Stopwatch.StartNew();
-            var au2 = folioServiceContext.AcquisitionsUnit2s(take: 1).SingleOrDefault();
-            if (au2 == null) Assert.Inconclusive();
-            var au3 = folioDapperContext.AcquisitionsUnit2s(take: 1).SingleOrDefault();
-            au3.Content = null;
-            Assert.AreEqual(au2.ToString(), au3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Orders_DeserializeAcquisitionsUnit2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.AcquisitionsUnit2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryAcquisitionsUnit2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Circulation_DeserializeActualCostRecord2Test()
+        public void QueryActualCostRecord2sTest()
         {
             var s = Stopwatch.StartNew();
-            var acr2 = folioServiceContext.ActualCostRecord2s(take: 1).SingleOrDefault();
-            if (acr2 == null) Assert.Inconclusive();
-            acr2.ActualCostRecordContributors = null;
-            acr2.ActualCostRecordIdentifiers = null;
-            var acr3 = folioDapperContext.ActualCostRecord2s(take: 1).SingleOrDefault();
-            acr3.Content = null;
-            Assert.AreEqual(acr2.ToString(), acr3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Circulation_DeserializeActualCostRecord2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.ActualCostRecord2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryActualCostRecord2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Users_DeserializeAddressType2Test()
+        public void QueryAddressType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var at2 = folioServiceContext.AddressType2s(take: 1).SingleOrDefault();
-            if (at2 == null) Assert.Inconclusive();
-            var at3 = folioDapperContext.AddressType2s(take: 1).SingleOrDefault();
-            at3.Content = null;
-            Assert.AreEqual(at2.ToString(), at3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Users_DeserializeAddressType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.AddressType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryAddressType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Agreements_DeserializeAgreement2Test()
+        public void QueryAgreement2sTest()
         {
             var s = Stopwatch.StartNew();
-            var a2 = folioServiceContext.Agreement2s(take: 1).SingleOrDefault();
-            if (a2 == null) Assert.Inconclusive();
-            a2.AgreementOrganizations = null;
-            a2.AgreementPeriods = null;
-            var a3 = folioDapperContext.Agreement2s(take: 1).SingleOrDefault();
-            a3.Content = null;
-            Assert.AreEqual(a2.ToString(), a3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Agreements_DeserializeAgreement2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Agreement2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryAgreement2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Agreements_DeserializeAgreementItem2Test()
+        public void QueryAgreementItem2sTest()
         {
             var s = Stopwatch.StartNew();
-            var ai2 = folioServiceContext.AgreementItem2s(take: 1).SingleOrDefault();
-            if (ai2 == null) Assert.Inconclusive();
-            ai2.AgreementItemOrderItems = null;
-            var ai3 = folioDapperContext.AgreementItem2s(take: 1).SingleOrDefault();
-            ai3.Content = null;
-            Assert.AreEqual(ai2.ToString(), ai3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Agreements_DeserializeAgreementItem2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.AgreementItem2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryAgreementItem2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeAlternativeTitleType2Test()
+        public void QueryAlternativeTitleType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var att2 = folioServiceContext.AlternativeTitleType2s(take: 1).SingleOrDefault();
-            if (att2 == null) Assert.Inconclusive();
-            var att3 = folioDapperContext.AlternativeTitleType2s(take: 1).SingleOrDefault();
-            att3.Content = null;
-            Assert.AreEqual(att2.ToString(), att3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeAlternativeTitleType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.AlternativeTitleType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryAlternativeTitleType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Invoices_DeserializeBatchGroup2Test()
+        public void QueryBatchGroup2sTest()
         {
             var s = Stopwatch.StartNew();
-            var bg2 = folioServiceContext.BatchGroup2s(take: 1).SingleOrDefault();
-            if (bg2 == null) Assert.Inconclusive();
-            var bg3 = folioDapperContext.BatchGroup2s(take: 1).SingleOrDefault();
-            bg3.Content = null;
-            Assert.AreEqual(bg2.ToString(), bg3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Invoices_DeserializeBatchGroup2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.BatchGroup2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryBatchGroup2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Fees_DeserializeBlock2Test()
+        public void QueryBlock2sTest()
         {
             var s = Stopwatch.StartNew();
-            var b2 = folioServiceContext.Block2s(take: 1).SingleOrDefault();
-            if (b2 == null) Assert.Inconclusive();
-            var b3 = folioDapperContext.Block2s(take: 1).SingleOrDefault();
-            b3.Content = null;
-            Assert.AreEqual(b2.ToString(), b3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Fees_DeserializeBlock2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Block2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryBlock2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Users_DeserializeBlockCondition2Test()
+        public void QueryBlockCondition2sTest()
         {
             var s = Stopwatch.StartNew();
-            var bc2 = folioServiceContext.BlockCondition2s(take: 1).SingleOrDefault();
-            if (bc2 == null) Assert.Inconclusive();
-            var bc3 = folioDapperContext.BlockCondition2s(take: 1).SingleOrDefault();
-            bc3.Content = null;
-            Assert.AreEqual(bc2.ToString(), bc3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Users_DeserializeBlockCondition2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.BlockCondition2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryBlockCondition2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Users_DeserializeBlockLimit2Test()
+        public void QueryBlockLimit2sTest()
         {
             var s = Stopwatch.StartNew();
-            var bl2 = folioServiceContext.BlockLimit2s(take: 1).SingleOrDefault();
-            if (bl2 == null) Assert.Inconclusive();
-            var bl3 = folioDapperContext.BlockLimit2s(take: 1).SingleOrDefault();
-            bl3.Content = null;
-            Assert.AreEqual(bl2.ToString(), bl3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Users_DeserializeBlockLimit2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.BlockLimit2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryBlockLimit2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeBoundWithPart2Test()
+        public void QueryBoundWithPart2sTest()
         {
             var s = Stopwatch.StartNew();
-            var bwp2 = folioServiceContext.BoundWithPart2s(take: 1).SingleOrDefault();
-            if (bwp2 == null) Assert.Inconclusive();
-            var bwp3 = folioDapperContext.BoundWithPart2s(take: 1).SingleOrDefault();
-            bwp3.Content = null;
-            Assert.AreEqual(bwp2.ToString(), bwp3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeBoundWithPart2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.BoundWithPart2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryBoundWithPart2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Finance_DeserializeBudget2Test()
+        public void QueryBudget2sTest()
         {
             var s = Stopwatch.StartNew();
-            var b2 = folioServiceContext.Budget2s(take: 1).SingleOrDefault();
-            if (b2 == null) Assert.Inconclusive();
-            b2.BudgetAcquisitionsUnits = null;
-            b2.BudgetTags = null;
-            var b3 = folioDapperContext.Budget2s(take: 1).SingleOrDefault();
-            b3.Content = null;
-            Assert.AreEqual(b2.ToString(), b3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeBudget2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Budget2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryBudget2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Finance_DeserializeBudgetExpenseClass2Test()
+        public void QueryBudgetExpenseClass2sTest()
         {
             var s = Stopwatch.StartNew();
-            var bec2 = folioServiceContext.BudgetExpenseClass2s(take: 1).SingleOrDefault();
-            if (bec2 == null) Assert.Inconclusive();
-            var bec3 = folioDapperContext.BudgetExpenseClass2s(take: 1).SingleOrDefault();
-            bec3.Content = null;
-            Assert.AreEqual(bec2.ToString(), bec3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeBudgetExpenseClass2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.BudgetExpenseClass2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryBudgetExpenseClass2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Finance_DeserializeBudgetGroup2Test()
+        public void QueryBudgetGroup2sTest()
         {
             var s = Stopwatch.StartNew();
-            var bg2 = folioServiceContext.BudgetGroup2s(take: 1).SingleOrDefault();
-            if (bg2 == null) Assert.Inconclusive();
-            var bg3 = folioDapperContext.BudgetGroup2s(take: 1).SingleOrDefault();
-            bg3.Content = null;
-            Assert.AreEqual(bg2.ToString(), bg3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeBudgetGroup2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.BudgetGroup2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryBudgetGroup2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeCallNumberType2Test()
+        public void QueryCallNumberType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var cnt2 = folioServiceContext.CallNumberType2s(take: 1).SingleOrDefault();
-            if (cnt2 == null) Assert.Inconclusive();
-            var cnt3 = folioDapperContext.CallNumberType2s(take: 1).SingleOrDefault();
-            cnt3.Content = null;
-            Assert.AreEqual(cnt2.ToString(), cnt3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeCallNumberType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.CallNumberType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryCallNumberType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeCampus2Test()
+        public void QueryCampus2sTest()
         {
             var s = Stopwatch.StartNew();
-            var c2 = folioServiceContext.Campus2s(take: 1).SingleOrDefault();
-            if (c2 == null) Assert.Inconclusive();
-            var c3 = folioDapperContext.Campus2s(take: 1).SingleOrDefault();
-            c3.Content = null;
-            Assert.AreEqual(c2.ToString(), c3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeCampus2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Campus2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryCampus2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Circulation_DeserializeCancellationReason2Test()
+        public void QueryCancellationReason2sTest()
         {
             var s = Stopwatch.StartNew();
-            var cr2 = folioServiceContext.CancellationReason2s(take: 1).SingleOrDefault();
-            if (cr2 == null) Assert.Inconclusive();
-            var cr3 = folioDapperContext.CancellationReason2s(take: 1).SingleOrDefault();
-            cr3.Content = null;
-            Assert.AreEqual(cr2.ToString(), cr3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Circulation_DeserializeCancellationReason2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.CancellationReason2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryCancellationReason2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Organizations_DeserializeCategory2Test()
+        public void QueryCategory2sTest()
         {
             var s = Stopwatch.StartNew();
-            var c2 = folioServiceContext.Category2s(take: 1).SingleOrDefault();
-            if (c2 == null) Assert.Inconclusive();
-            var c3 = folioDapperContext.Category2s(take: 1).SingleOrDefault();
-            c3.Content = null;
-            Assert.AreEqual(c2.ToString(), c3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Organizations_DeserializeCategory2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Category2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryCategory2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Circulation_DeserializeCheckIn2Test()
+        public void QueryCheckIn2sTest()
         {
             var s = Stopwatch.StartNew();
-            var ci2 = folioServiceContext.CheckIn2s(take: 1).SingleOrDefault();
-            if (ci2 == null) Assert.Inconclusive();
-            var ci3 = folioDapperContext.CheckIn2s(take: 1).SingleOrDefault();
-            ci3.Content = null;
-            Assert.AreEqual(ci2.ToString(), ci3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Circulation_DeserializeCheckIn2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.CheckIn2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryCheckIn2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeClassificationType2Test()
+        public void QueryClassificationType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var ct2 = folioServiceContext.ClassificationType2s(take: 1).SingleOrDefault();
-            if (ct2 == null) Assert.Inconclusive();
-            var ct3 = folioDapperContext.ClassificationType2s(take: 1).SingleOrDefault();
-            ct3.Content = null;
-            Assert.AreEqual(ct2.ToString(), ct3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeClassificationType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.ClassificationType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryClassificationType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Orders_DeserializeCloseReason2Test()
+        public void QueryCloseReason2sTest()
         {
             var s = Stopwatch.StartNew();
-            var cr2 = folioServiceContext.CloseReason2s(take: 1).SingleOrDefault();
-            if (cr2 == null) Assert.Inconclusive();
-            var cr3 = folioDapperContext.CloseReason2s(take: 1).SingleOrDefault();
-            cr3.Content = null;
-            Assert.AreEqual(cr2.ToString(), cr3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Orders_DeserializeCloseReason2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.CloseReason2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryCloseReason2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Fees_DeserializeComment2Test()
+        public void QueryComment2sTest()
         {
             var s = Stopwatch.StartNew();
-            var c2 = folioServiceContext.Comment2s(take: 1).SingleOrDefault();
-            if (c2 == null) Assert.Inconclusive();
-            var c3 = folioDapperContext.Comment2s(take: 1).SingleOrDefault();
-            c3.Content = null;
-            Assert.AreEqual(c2.ToString(), c3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Fees_DeserializeComment2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Comment2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryComment2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Configuration_DeserializeConfiguration2Test()
+        public void QueryConfiguration2sTest()
         {
             var s = Stopwatch.StartNew();
-            var c2 = folioServiceContext.Configuration2s(take: 1).SingleOrDefault();
-            if (c2 == null) Assert.Inconclusive();
-            var c3 = folioDapperContext.Configuration2s(take: 1).SingleOrDefault();
-            c3.Content = null;
-            Assert.AreEqual(c2.ToString(), c3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Configuration_DeserializeConfiguration2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Configuration2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryConfiguration2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Organizations_DeserializeContact2Test()
+        public void QueryContact2sTest()
         {
             var s = Stopwatch.StartNew();
-            var c2 = folioServiceContext.Contact2s(take: 1).SingleOrDefault();
-            if (c2 == null) Assert.Inconclusive();
-            c2.ContactAddresses = null;
-            c2.ContactCategories = null;
-            c2.ContactEmails = null;
-            c2.ContactPhoneNumbers = null;
-            c2.ContactUrls = null;
-            var c3 = folioDapperContext.Contact2s(take: 1).SingleOrDefault();
-            c3.Content = null;
-            Assert.AreEqual(c2.ToString(), c3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Organizations_DeserializeContact2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Contact2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryContact2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeContributorNameType2Test()
+        public void QueryContributorNameType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var cnt2 = folioServiceContext.ContributorNameType2s(take: 1).SingleOrDefault();
-            if (cnt2 == null) Assert.Inconclusive();
-            var cnt3 = folioDapperContext.ContributorNameType2s(take: 1).SingleOrDefault();
-            cnt3.Content = null;
-            Assert.AreEqual(cnt2.ToString(), cnt3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeContributorNameType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.ContributorNameType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryContributorNameType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeContributorType2Test()
+        public void QueryContributorType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var ct2 = folioServiceContext.ContributorType2s(take: 1).SingleOrDefault();
-            if (ct2 == null) Assert.Inconclusive();
-            var ct3 = folioDapperContext.ContributorType2s(take: 1).SingleOrDefault();
-            ct3.Content = null;
-            Assert.AreEqual(ct2.ToString(), ct3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeContributorType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.ContributorType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryContributorType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Users_DeserializeCustomField2Test()
+        public void QueryCustomField2sTest()
         {
             var s = Stopwatch.StartNew();
-            var cf2 = folioServiceContext.CustomField2s(take: 1).SingleOrDefault();
-            if (cf2 == null) Assert.Inconclusive();
-            cf2.CustomFieldValues = null;
-            var cf3 = folioDapperContext.CustomField2s(take: 1).SingleOrDefault();
-            cf3.Content = null;
-            Assert.AreEqual(cf2.ToString(), cf3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Users_DeserializeCustomField2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.CustomField2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryCustomField2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeDateType2Test()
+        public void QueryDateType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var dt2 = folioServiceContext.DateType2s(take: 1).SingleOrDefault();
-            if (dt2 == null) Assert.Inconclusive();
-            var dt3 = folioDapperContext.DateType2s(take: 1).SingleOrDefault();
-            dt3.Content = null;
-            Assert.AreEqual(dt2.ToString(), dt3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeDateType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.DateType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryDateType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Users_DeserializeDepartment2Test()
+        public void QueryDepartment2sTest()
         {
             var s = Stopwatch.StartNew();
-            var d2 = folioServiceContext.Department2s(take: 1).SingleOrDefault();
-            if (d2 == null) Assert.Inconclusive();
-            var d3 = folioDapperContext.Department2s(take: 1).SingleOrDefault();
-            d3.Content = null;
-            Assert.AreEqual(d2.ToString(), d3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Users_DeserializeDepartment2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Department2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryDepartment2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Invoices_DeserializeDocument2Test()
+        public void QueryDocument2sTest()
         {
             var s = Stopwatch.StartNew();
             Assert.Inconclusive();
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Invoices_DeserializeDocument2Test()\r\n    ElapsedTime={s.Elapsed}");
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryDocument2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeElectronicAccessRelationship2Test()
+        public void QueryElectronicAccessRelationship2sTest()
         {
             var s = Stopwatch.StartNew();
-            var ear2 = folioServiceContext.ElectronicAccessRelationship2s(take: 1).SingleOrDefault();
-            if (ear2 == null) Assert.Inconclusive();
-            var ear3 = folioDapperContext.ElectronicAccessRelationship2s(take: 1).SingleOrDefault();
-            ear3.Content = null;
-            Assert.AreEqual(ear2.ToString(), ear3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeElectronicAccessRelationship2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.ElectronicAccessRelationship2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryElectronicAccessRelationship2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Finance_DeserializeExpenseClass2Test()
+        public void QueryExpenseClass2sTest()
         {
             var s = Stopwatch.StartNew();
-            var ec2 = folioServiceContext.ExpenseClass2s(take: 1).SingleOrDefault();
-            if (ec2 == null) Assert.Inconclusive();
-            var ec3 = folioDapperContext.ExpenseClass2s(take: 1).SingleOrDefault();
-            ec3.Content = null;
-            Assert.AreEqual(ec2.ToString(), ec3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeExpenseClass2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.ExpenseClass2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryExpenseClass2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Fees_DeserializeFee2Test()
+        public void QueryFee2sTest()
         {
             var s = Stopwatch.StartNew();
-            var f2 = folioServiceContext.Fee2s(take: 1).SingleOrDefault();
-            if (f2 == null) Assert.Inconclusive();
-            var f3 = folioDapperContext.Fee2s(take: 1).SingleOrDefault();
-            f3.Content = null;
-            Assert.AreEqual(f2.ToString(), f3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Fees_DeserializeFee2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Fee2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryFee2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Fees_DeserializeFeeType2Test()
+        public void QueryFeeType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var ft2 = folioServiceContext.FeeType2s(take: 1).SingleOrDefault();
-            if (ft2 == null) Assert.Inconclusive();
-            var ft3 = folioDapperContext.FeeType2s(take: 1).SingleOrDefault();
-            ft3.Content = null;
-            Assert.AreEqual(ft2.ToString(), ft3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Fees_DeserializeFeeType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.FeeType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryFeeType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Finance_DeserializeFinanceGroup2Test()
+        public void QueryFinanceGroup2sTest()
         {
             var s = Stopwatch.StartNew();
-            var fg2 = folioServiceContext.FinanceGroup2s(take: 1).SingleOrDefault();
-            if (fg2 == null) Assert.Inconclusive();
-            fg2.FinanceGroupAcquisitionsUnits = null;
-            var fg3 = folioDapperContext.FinanceGroup2s(take: 1).SingleOrDefault();
-            fg3.Content = null;
-            Assert.AreEqual(fg2.ToString(), fg3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeFinanceGroup2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.FinanceGroup2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryFinanceGroup2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Finance_DeserializeFiscalYear2Test()
+        public void QueryFiscalYear2sTest()
         {
             var s = Stopwatch.StartNew();
-            var fy2 = folioServiceContext.FiscalYear2s(take: 1).SingleOrDefault();
-            if (fy2 == null) Assert.Inconclusive();
-            fy2.FiscalYearAcquisitionsUnits = null;
-            var fy3 = folioDapperContext.FiscalYear2s(take: 1).SingleOrDefault();
-            fy3.Content = null;
-            Assert.AreEqual(fy2.ToString(), fy3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeFiscalYear2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.FiscalYear2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryFiscalYear2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Circulation_DeserializeFixedDueDateSchedule2Test()
+        public void QueryFixedDueDateSchedule2sTest()
         {
             var s = Stopwatch.StartNew();
-            var fdds2 = folioServiceContext.FixedDueDateSchedule2s(take: 1).SingleOrDefault();
-            if (fdds2 == null) Assert.Inconclusive();
-            fdds2.FixedDueDateScheduleSchedules = null;
-            var fdds3 = folioDapperContext.FixedDueDateSchedule2s(take: 1).SingleOrDefault();
-            fdds3.Content = null;
-            Assert.AreEqual(fdds2.ToString(), fdds3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Circulation_DeserializeFixedDueDateSchedule2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.FixedDueDateSchedule2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryFixedDueDateSchedule2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeFormatTest()
+        public void QueryFormatsTest()
         {
             var s = Stopwatch.StartNew();
-            var f = folioServiceContext.Formats(take: 1).SingleOrDefault();
-            if (f == null) Assert.Inconclusive();
-            var f2 = folioDapperContext.Formats(take: 1).SingleOrDefault();
-            f2.Content = null;
-            Assert.AreEqual(f.ToString(), f2.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeFormatTest()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Formats(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryFormatsTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Finance_DeserializeFund2Test()
+        public void QueryFund2sTest()
         {
             var s = Stopwatch.StartNew();
-            var f2 = folioServiceContext.Fund2s(take: 1).SingleOrDefault();
-            if (f2 == null) Assert.Inconclusive();
-            f2.AllocatedFromFunds = null;
-            f2.AllocatedToFunds = null;
-            f2.FundAcquisitionsUnits = null;
-            f2.FundLocation2s = null;
-            f2.FundOrganization2s = null;
-            f2.FundTags = null;
-            var f3 = folioDapperContext.Fund2s(take: 1).SingleOrDefault();
-            f3.Content = null;
-            Assert.AreEqual(f2.ToString(), f3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeFund2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Fund2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryFund2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Finance_DeserializeFundType2Test()
+        public void QueryFundType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var ft2 = folioServiceContext.FundType2s(take: 1).SingleOrDefault();
-            if (ft2 == null) Assert.Inconclusive();
-            var ft3 = folioDapperContext.FundType2s(take: 1).SingleOrDefault();
-            ft3.Content = null;
-            Assert.AreEqual(ft2.ToString(), ft3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeFundType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.FundType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryFundType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Users_DeserializeGroup2Test()
+        public void QueryGroup2sTest()
         {
             var s = Stopwatch.StartNew();
-            var g2 = folioServiceContext.Group2s(take: 1).SingleOrDefault();
-            if (g2 == null) Assert.Inconclusive();
-            var g3 = folioDapperContext.Group2s(take: 1).SingleOrDefault();
-            g3.Content = null;
-            Assert.AreEqual(g2.ToString(), g3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Users_DeserializeGroup2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Group2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryGroup2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeHolding2Test()
+        public void QueryHolding2sTest()
         {
             var s = Stopwatch.StartNew();
-            var h2 = folioServiceContext.Holding2s(take: 1).SingleOrDefault();
-            if (h2 == null) Assert.Inconclusive();
-            h2.Extents = null;
-            h2.HoldingAdditionalCallNumbers = null;
-            h2.HoldingAdministrativeNotes = null;
-            h2.HoldingElectronicAccesses = null;
-            h2.HoldingEntries = null;
-            h2.HoldingFormerIds = null;
-            h2.HoldingNotes = null;
-            h2.HoldingStatisticalCodes = null;
-            h2.HoldingTags = null;
-            h2.IndexStatements = null;
-            h2.SupplementStatements = null;
-            var h3 = folioDapperContext.Holding2s(take: 1).SingleOrDefault();
-            h3.Content = null;
-            Assert.AreEqual(h2.ToString(), h3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeHolding2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Holding2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryHolding2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeHoldingNoteType2Test()
+        public void QueryHoldingNoteType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var hnt2 = folioServiceContext.HoldingNoteType2s(take: 1).SingleOrDefault();
-            if (hnt2 == null) Assert.Inconclusive();
-            var hnt3 = folioDapperContext.HoldingNoteType2s(take: 1).SingleOrDefault();
-            hnt3.Content = null;
-            Assert.AreEqual(hnt2.ToString(), hnt3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeHoldingNoteType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.HoldingNoteType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryHoldingNoteType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeHoldingType2Test()
+        public void QueryHoldingType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var ht2 = folioServiceContext.HoldingType2s(take: 1).SingleOrDefault();
-            if (ht2 == null) Assert.Inconclusive();
-            var ht3 = folioDapperContext.HoldingType2s(take: 1).SingleOrDefault();
-            ht3.Content = null;
-            Assert.AreEqual(ht2.ToString(), ht3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeHoldingType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.HoldingType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryHoldingType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeIdType2Test()
+        public void QueryIdType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var it2 = folioServiceContext.IdType2s(take: 1).SingleOrDefault();
-            if (it2 == null) Assert.Inconclusive();
-            var it3 = folioDapperContext.IdType2s(take: 1).SingleOrDefault();
-            it3.Content = null;
-            Assert.AreEqual(it2.ToString(), it3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeIdType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.IdType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryIdType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeIllPolicy2Test()
+        public void QueryIllPolicy2sTest()
         {
             var s = Stopwatch.StartNew();
-            var ip2 = folioServiceContext.IllPolicy2s(take: 1).SingleOrDefault();
-            if (ip2 == null) Assert.Inconclusive();
-            var ip3 = folioDapperContext.IllPolicy2s(take: 1).SingleOrDefault();
-            ip3.Content = null;
-            Assert.AreEqual(ip2.ToString(), ip3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeIllPolicy2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.IllPolicy2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryIllPolicy2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeInstance2Test()
+        public void QueryInstance2sTest()
         {
             var s = Stopwatch.StartNew();
-            var i2 = folioServiceContext.Instance2s(take: 1).SingleOrDefault();
-            if (i2 == null) Assert.Inconclusive();
-            i2.AdministrativeNotes = null;
-            i2.AlternativeTitles = null;
-            i2.Classifications = null;
-            i2.Contributors = null;
-            i2.Editions = null;
-            i2.ElectronicAccesses = null;
-            i2.Identifiers = null;
-            i2.InstanceFormat2s = null;
-            i2.InstanceNatureOfContentTerms = null;
-            i2.InstanceNotes = null;
-            i2.InstanceStatisticalCodes = null;
-            i2.InstanceTags = null;
-            i2.Languages = null;
-            i2.PhysicalDescriptions = null;
-            i2.PublicationFrequencies = null;
-            i2.PublicationRanges = null;
-            i2.Publications = null;
-            i2.Series = null;
-            i2.Subjects = null;
-            var i3 = folioDapperContext.Instance2s(take: 1).SingleOrDefault();
-            i3.Content = null;
-            Assert.AreEqual(i2.ToString(), i3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeInstance2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Instance2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryInstance2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeInstanceNoteType2Test()
+        public void QueryInstanceNoteType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var int2 = folioServiceContext.InstanceNoteType2s(take: 1).SingleOrDefault();
-            if (int2 == null) Assert.Inconclusive();
-            var int3 = folioDapperContext.InstanceNoteType2s(take: 1).SingleOrDefault();
-            int3.Content = null;
-            Assert.AreEqual(int2.ToString(), int3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeInstanceNoteType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.InstanceNoteType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryInstanceNoteType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeInstanceType2Test()
+        public void QueryInstanceType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var it2 = folioServiceContext.InstanceType2s(take: 1).SingleOrDefault();
-            if (it2 == null) Assert.Inconclusive();
-            var it3 = folioDapperContext.InstanceType2s(take: 1).SingleOrDefault();
-            it3.Content = null;
-            Assert.AreEqual(it2.ToString(), it3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeInstanceType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.InstanceType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryInstanceType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeInstitution2Test()
+        public void QueryInstitution2sTest()
         {
             var s = Stopwatch.StartNew();
-            var i2 = folioServiceContext.Institution2s(take: 1).SingleOrDefault();
-            if (i2 == null) Assert.Inconclusive();
-            var i3 = folioDapperContext.Institution2s(take: 1).SingleOrDefault();
-            i3.Content = null;
-            Assert.AreEqual(i2.ToString(), i3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeInstitution2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Institution2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryInstitution2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Organizations_DeserializeInterface2Test()
+        public void QueryInterface2sTest()
         {
             var s = Stopwatch.StartNew();
-            var i2 = folioServiceContext.Interface2s(take: 1).SingleOrDefault();
-            if (i2 == null) Assert.Inconclusive();
-            i2.InterfaceTypes = null;
-            var i3 = folioDapperContext.Interface2s(take: 1).SingleOrDefault();
-            i3.Content = null;
-            Assert.AreEqual(i2.ToString(), i3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Organizations_DeserializeInterface2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Interface2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryInterface2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Invoices_DeserializeInvoice2Test()
+        public void QueryInvoice2sTest()
         {
             var s = Stopwatch.StartNew();
-            var i2 = folioServiceContext.Invoice2s(take: 1).SingleOrDefault();
-            if (i2 == null) Assert.Inconclusive();
-            i2.InvoiceAcquisitionsUnits = null;
-            i2.InvoiceAdjustments = null;
-            i2.InvoiceOrderNumbers = null;
-            i2.InvoiceTags = null;
-            var i3 = folioDapperContext.Invoice2s(take: 1).SingleOrDefault();
-            i3.Content = null;
-            Assert.AreEqual(i2.ToString(), i3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Invoices_DeserializeInvoice2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Invoice2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryInvoice2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Invoices_DeserializeInvoiceItem2Test()
+        public void QueryInvoiceItem2sTest()
         {
             var s = Stopwatch.StartNew();
-            var ii2 = folioServiceContext.InvoiceItem2s(take: 1).SingleOrDefault();
-            if (ii2 == null) Assert.Inconclusive();
-            ii2.InvoiceItemAdjustments = null;
-            ii2.InvoiceItemFunds = null;
-            ii2.InvoiceItemReferenceNumbers = null;
-            ii2.InvoiceItemTags = null;
-            var ii3 = folioDapperContext.InvoiceItem2s(take: 1).SingleOrDefault();
-            ii3.Content = null;
-            Assert.AreEqual(ii2.ToString(), ii3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Invoices_DeserializeInvoiceItem2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.InvoiceItem2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryInvoiceItem2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeIssuanceModeTest()
+        public void QueryIssuanceModesTest()
         {
             var s = Stopwatch.StartNew();
-            var im = folioServiceContext.IssuanceModes(take: 1).SingleOrDefault();
-            if (im == null) Assert.Inconclusive();
-            var im2 = folioDapperContext.IssuanceModes(take: 1).SingleOrDefault();
-            im2.Content = null;
-            Assert.AreEqual(im.ToString(), im2.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeIssuanceModeTest()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.IssuanceModes(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryIssuanceModesTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeItem2Test()
+        public void QueryItem2sTest()
         {
             var s = Stopwatch.StartNew();
-            var i2 = folioServiceContext.Item2s(take: 1).SingleOrDefault();
-            if (i2 == null) Assert.Inconclusive();
-            i2.CirculationNotes = null;
-            i2.ItemAdditionalCallNumbers = null;
-            i2.ItemAdministrativeNotes = null;
-            i2.ItemElectronicAccesses = null;
-            i2.ItemFormerIds = null;
-            i2.ItemNotes = null;
-            i2.ItemStatisticalCodes = null;
-            i2.ItemTags = null;
-            i2.ItemYearCaptions = null;
-            var i3 = folioDapperContext.Item2s(take: 1).SingleOrDefault();
-            i3.Content = null;
-            Assert.AreEqual(i2.ToString(), i3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeItem2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Item2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryItem2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeItemDamagedStatus2Test()
+        public void QueryItemDamagedStatus2sTest()
         {
             var s = Stopwatch.StartNew();
-            var ids2 = folioServiceContext.ItemDamagedStatus2s(take: 1).SingleOrDefault();
-            if (ids2 == null) Assert.Inconclusive();
-            var ids3 = folioDapperContext.ItemDamagedStatus2s(take: 1).SingleOrDefault();
-            ids3.Content = null;
-            Assert.AreEqual(ids2.ToString(), ids3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeItemDamagedStatus2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.ItemDamagedStatus2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryItemDamagedStatus2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeItemNoteType2Test()
+        public void QueryItemNoteType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var int2 = folioServiceContext.ItemNoteType2s(take: 1).SingleOrDefault();
-            if (int2 == null) Assert.Inconclusive();
-            var int3 = folioDapperContext.ItemNoteType2s(take: 1).SingleOrDefault();
-            int3.Content = null;
-            Assert.AreEqual(int2.ToString(), int3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeItemNoteType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.ItemNoteType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryItemNoteType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Finance_DeserializeLedger2Test()
+        public void QueryLedger2sTest()
         {
             var s = Stopwatch.StartNew();
-            var l2 = folioServiceContext.Ledger2s(take: 1).SingleOrDefault();
-            if (l2 == null) Assert.Inconclusive();
-            l2.LedgerAcquisitionsUnits = null;
-            var l3 = folioDapperContext.Ledger2s(take: 1).SingleOrDefault();
-            l3.Content = null;
-            Assert.AreEqual(l2.ToString(), l3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeLedger2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Ledger2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryLedger2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeLibrary2Test()
+        public void QueryLibrary2sTest()
         {
             var s = Stopwatch.StartNew();
-            var l2 = folioServiceContext.Library2s(take: 1).SingleOrDefault();
-            if (l2 == null) Assert.Inconclusive();
-            var l3 = folioDapperContext.Library2s(take: 1).SingleOrDefault();
-            l3.Content = null;
-            Assert.AreEqual(l2.ToString(), l3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeLibrary2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Library2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryLibrary2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Circulation_DeserializeLoan2Test()
+        public void QueryLoan2sTest()
         {
             var s = Stopwatch.StartNew();
-            var l2 = folioServiceContext.Loan2s(take: 1).SingleOrDefault();
-            if (l2 == null) Assert.Inconclusive();
-            var l3 = folioDapperContext.Loan2s(take: 1).SingleOrDefault();
-            l3.Content = null;
-            Assert.AreEqual(l2.ToString(), l3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Circulation_DeserializeLoan2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Loan2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryLoan2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Circulation_DeserializeLoanPolicy2Test()
+        public void QueryLoanPolicy2sTest()
         {
             var s = Stopwatch.StartNew();
-            var lp2 = folioServiceContext.LoanPolicy2s(take: 1).SingleOrDefault();
-            if (lp2 == null) Assert.Inconclusive();
-            var lp3 = folioDapperContext.LoanPolicy2s(take: 1).SingleOrDefault();
-            lp3.Content = null;
-            Assert.AreEqual(lp2.ToString(), lp3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Circulation_DeserializeLoanPolicy2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.LoanPolicy2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryLoanPolicy2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeLoanType2Test()
+        public void QueryLoanType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var lt2 = folioServiceContext.LoanType2s(take: 1).SingleOrDefault();
-            if (lt2 == null) Assert.Inconclusive();
-            var lt3 = folioDapperContext.LoanType2s(take: 1).SingleOrDefault();
-            lt3.Content = null;
-            Assert.AreEqual(lt2.ToString(), lt3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeLoanType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.LoanType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryLoanType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeLocation2Test()
+        public void QueryLocation2sTest()
         {
             var s = Stopwatch.StartNew();
-            var l2 = folioServiceContext.Location2s(take: 1).SingleOrDefault();
-            if (l2 == null) Assert.Inconclusive();
-            l2.LocationServicePoints = null;
-            var l3 = folioDapperContext.Location2s(take: 1).SingleOrDefault();
-            l3.Content = null;
-            Assert.AreEqual(l2.ToString(), l3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeLocation2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Location2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryLocation2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Configuration_DeserializeLocationSettingTest()
+        public void QueryLocationSettingsTest()
         {
             var s = Stopwatch.StartNew();
-            var ls = folioServiceContext.LocationSettings(take: 1).SingleOrDefault();
-            if (ls == null) Assert.Inconclusive();
-            var ls2 = folioDapperContext.LocationSettings(take: 1).SingleOrDefault();
-            Assert.AreEqual(ls.ToString(), ls2.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Configuration_DeserializeLocationSettingTest()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.LocationSettings(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryLocationSettingsTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Fees_DeserializeLostItemFeePolicy2Test()
+        public void QueryLostItemFeePolicy2sTest()
         {
             var s = Stopwatch.StartNew();
-            var lifp2 = folioServiceContext.LostItemFeePolicy2s(take: 1).SingleOrDefault();
-            if (lifp2 == null) Assert.Inconclusive();
-            var lifp3 = folioDapperContext.LostItemFeePolicy2s(take: 1).SingleOrDefault();
-            lifp3.Content = null;
-            Assert.AreEqual(lifp2.ToString(), lifp3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Fees_DeserializeLostItemFeePolicy2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.LostItemFeePolicy2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryLostItemFeePolicy2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Fees_DeserializeManualBlockTemplate2Test()
+        public void QueryManualBlockTemplate2sTest()
         {
             var s = Stopwatch.StartNew();
-            var mbt2 = folioServiceContext.ManualBlockTemplate2s(take: 1).SingleOrDefault();
-            if (mbt2 == null) Assert.Inconclusive();
-            var mbt3 = folioDapperContext.ManualBlockTemplate2s(take: 1).SingleOrDefault();
-            mbt3.Content = null;
-            Assert.AreEqual(mbt2.ToString(), mbt3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Fees_DeserializeManualBlockTemplate2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.ManualBlockTemplate2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryManualBlockTemplate2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeMaterialType2Test()
+        public void QueryMaterialType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var mt2 = folioServiceContext.MaterialType2s(take: 1).SingleOrDefault();
-            if (mt2 == null) Assert.Inconclusive();
-            var mt3 = folioDapperContext.MaterialType2s(take: 1).SingleOrDefault();
-            mt3.Content = null;
-            Assert.AreEqual(mt2.ToString(), mt3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeMaterialType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.MaterialType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryMaterialType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeNatureOfContentTerm2Test()
+        public void QueryNatureOfContentTerm2sTest()
         {
             var s = Stopwatch.StartNew();
-            var noct2 = folioServiceContext.NatureOfContentTerm2s(take: 1).SingleOrDefault();
-            if (noct2 == null) Assert.Inconclusive();
-            var noct3 = folioDapperContext.NatureOfContentTerm2s(take: 1).SingleOrDefault();
-            noct3.Content = null;
-            Assert.AreEqual(noct2.ToString(), noct3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeNatureOfContentTerm2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.NatureOfContentTerm2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryNatureOfContentTerm2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Notes_DeserializeNote2Test()
+        public void QueryNote2sTest()
         {
             var s = Stopwatch.StartNew();
-            var n2 = folioServiceContext.Note2s(take: 1).SingleOrDefault();
-            if (n2 == null) Assert.Inconclusive();
-            var n3 = folioDapperContext.Note2s(take: 1).SingleOrDefault();
-            Assert.AreEqual(n2.ToString(), n3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Notes_DeserializeNote2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Note2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryNote2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Notes_DeserializeNoteType2Test()
+        public void QueryNoteType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var nt2 = folioServiceContext.NoteType2s(take: 1).SingleOrDefault();
-            if (nt2 == null) Assert.Inconclusive();
-            var nt3 = folioDapperContext.NoteType2s(take: 1).SingleOrDefault();
-            Assert.AreEqual(nt2.ToString(), nt3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Notes_DeserializeNoteType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.NoteType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryNoteType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Orders_DeserializeOrder2Test()
+        public void QueryOrder2sTest()
         {
             var s = Stopwatch.StartNew();
-            var o2 = folioServiceContext.Order2s(take: 1).SingleOrDefault();
-            if (o2 == null) Assert.Inconclusive();
-            o2.OrderAcquisitionsUnits = null;
-            o2.OrderNotes = null;
-            o2.OrderTags = null;
-            var o3 = folioDapperContext.Order2s(take: 1).SingleOrDefault();
-            o3.Content = null;
-            Assert.AreEqual(o2.ToString(), o3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Orders_DeserializeOrder2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Order2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryOrder2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Orders_DeserializeOrderInvoice2Test()
+        public void QueryOrderInvoice2sTest()
         {
             var s = Stopwatch.StartNew();
-            var oi2 = folioServiceContext.OrderInvoice2s(take: 1).SingleOrDefault();
-            if (oi2 == null) Assert.Inconclusive();
-            var oi3 = folioDapperContext.OrderInvoice2s(take: 1).SingleOrDefault();
-            oi3.Content = null;
-            Assert.AreEqual(oi2.ToString(), oi3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Orders_DeserializeOrderInvoice2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.OrderInvoice2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryOrderInvoice2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Orders_DeserializeOrderItem2Test()
+        public void QueryOrderItem2sTest()
         {
             var s = Stopwatch.StartNew();
-            var oi2 = folioServiceContext.OrderItem2s(take: 1).SingleOrDefault();
-            if (oi2 == null) Assert.Inconclusive();
-            oi2.OrderItemClaims = null;
-            oi2.OrderItemContributors = null;
-            oi2.OrderItemFunds = null;
-            oi2.OrderItemLocation2s = null;
-            oi2.OrderItemOrganizations = null;
-            oi2.OrderItemProductIds = null;
-            oi2.OrderItemReferenceNumbers = null;
-            oi2.OrderItemSearchLocations = null;
-            oi2.OrderItemTags = null;
-            oi2.OrderItemVolumes = null;
-            var oi3 = folioDapperContext.OrderItem2s(take: 1).SingleOrDefault();
-            oi3.Content = null;
-            Assert.AreEqual(oi2.ToString(), oi3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Orders_DeserializeOrderItem2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.OrderItem2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryOrderItem2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Organizations_DeserializeOrganization2Test()
+        public void QueryOrganization2sTest()
         {
             var s = Stopwatch.StartNew();
-            var o2 = folioServiceContext.Organization2s(take: 1).SingleOrDefault();
-            if (o2 == null) Assert.Inconclusive();
-            o2.Currencies = null;
-            o2.OrganizationAccounts = null;
-            o2.OrganizationAcquisitionsUnits = null;
-            o2.OrganizationAddresses = null;
-            o2.OrganizationAgreements = null;
-            o2.OrganizationAliases = null;
-            o2.OrganizationChangelogs = null;
-            o2.OrganizationContacts = null;
-            o2.OrganizationEmails = null;
-            o2.OrganizationInterfaces = null;
-            o2.OrganizationPhoneNumbers = null;
-            o2.OrganizationPrivilegedContacts = null;
-            o2.OrganizationTags = null;
-            o2.OrganizationTypes = null;
-            o2.OrganizationUrls = null;
-            var o3 = folioDapperContext.Organization2s(take: 1).SingleOrDefault();
-            o3.Content = null;
-            Assert.AreEqual(o2.ToString(), o3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Organizations_DeserializeOrganization2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Organization2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryOrganization2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Fees_DeserializeOverdueFinePolicy2Test()
+        public void QueryOrganizationType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var ofp2 = folioServiceContext.OverdueFinePolicy2s(take: 1).SingleOrDefault();
-            if (ofp2 == null) Assert.Inconclusive();
-            var ofp3 = folioDapperContext.OverdueFinePolicy2s(take: 1).SingleOrDefault();
-            ofp3.Content = null;
-            Assert.AreEqual(ofp2.ToString(), ofp3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Fees_DeserializeOverdueFinePolicy2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.OrganizationType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryOrganizationType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Fees_DeserializeOwner2Test()
+        public void QueryOverdueFinePolicy2sTest()
         {
             var s = Stopwatch.StartNew();
-            var o2 = folioServiceContext.Owner2s(take: 1).SingleOrDefault();
-            if (o2 == null) Assert.Inconclusive();
-            o2.ServicePointOwners = null;
-            var o3 = folioDapperContext.Owner2s(take: 1).SingleOrDefault();
-            o3.Content = null;
-            Assert.AreEqual(o2.ToString(), o3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Fees_DeserializeOwner2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.OverdueFinePolicy2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryOverdueFinePolicy2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Circulation_DeserializePatronActionSession2Test()
+        public void QueryOwner2sTest()
         {
             var s = Stopwatch.StartNew();
-            var pas2 = folioServiceContext.PatronActionSession2s(take: 1).SingleOrDefault();
-            if (pas2 == null) Assert.Inconclusive();
-            var pas3 = folioDapperContext.PatronActionSession2s(take: 1).SingleOrDefault();
-            pas3.Content = null;
-            Assert.AreEqual(pas2.ToString(), pas3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Circulation_DeserializePatronActionSession2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Owner2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryOwner2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Circulation_DeserializePatronNoticePolicy2Test()
+        public void QueryPatronActionSession2sTest()
         {
             var s = Stopwatch.StartNew();
-            var pnp2 = folioServiceContext.PatronNoticePolicy2s(take: 1).SingleOrDefault();
-            if (pnp2 == null) Assert.Inconclusive();
-            pnp2.PatronNoticePolicyFeeFineNotices = null;
-            pnp2.PatronNoticePolicyLoanNotices = null;
-            pnp2.PatronNoticePolicyRequestNotices = null;
-            var pnp3 = folioDapperContext.PatronNoticePolicy2s(take: 1).SingleOrDefault();
-            pnp3.Content = null;
-            Assert.AreEqual(pnp2.ToString(), pnp3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Circulation_DeserializePatronNoticePolicy2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.PatronActionSession2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryPatronActionSession2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Fees_DeserializePayment2Test()
+        public void QueryPatronNoticePolicy2sTest()
         {
             var s = Stopwatch.StartNew();
-            var p2 = folioServiceContext.Payment2s(take: 1).SingleOrDefault();
-            if (p2 == null) Assert.Inconclusive();
-            var p3 = folioDapperContext.Payment2s(take: 1).SingleOrDefault();
-            p3.Content = null;
-            Assert.AreEqual(p2.ToString(), p3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Fees_DeserializePayment2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.PatronNoticePolicy2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryPatronNoticePolicy2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Fees_DeserializePaymentMethod2Test()
+        public void QueryPayment2sTest()
         {
             var s = Stopwatch.StartNew();
-            var pm2 = folioServiceContext.PaymentMethod2s(take: 1).SingleOrDefault();
-            if (pm2 == null) Assert.Inconclusive();
-            var pm3 = folioDapperContext.PaymentMethod2s(take: 1).SingleOrDefault();
-            pm3.Content = null;
-            Assert.AreEqual(pm2.ToString(), pm3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Fees_DeserializePaymentMethod2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Payment2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryPayment2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Permissions_DeserializePermission2Test()
+        public void QueryPaymentMethod2sTest()
         {
             var s = Stopwatch.StartNew();
-            var p2 = folioServiceContext.Permission2s(take: 1).SingleOrDefault();
-            if (p2 == null) Assert.Inconclusive();
-            p2.PermissionChildOfs = null;
-            p2.PermissionGrantedTos = null;
-            p2.PermissionSubPermissions = null;
-            p2.PermissionTags = null;
-            var p3 = folioDapperContext.Permission2s(take: 1).SingleOrDefault();
-            p3.Content = null;
-            Assert.AreEqual(p2.ToString(), p3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Permissions_DeserializePermission2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.PaymentMethod2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryPaymentMethod2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Permissions_DeserializePermissionsUser2Test()
+        public void QueryPermission2sTest()
         {
             var s = Stopwatch.StartNew();
-            var pu2 = folioServiceContext.PermissionsUser2s(take: 1).SingleOrDefault();
-            if (pu2 == null) Assert.Inconclusive();
-            pu2.PermissionsUserPermissions = null;
-            var pu3 = folioDapperContext.PermissionsUser2s(take: 1).SingleOrDefault();
-            pu3.Content = null;
-            Assert.AreEqual(pu2.ToString(), pu3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Permissions_DeserializePermissionsUser2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Permission2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryPermission2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializePrecedingSucceedingTitle2Test()
+        public void QueryPermissionsUser2sTest()
         {
             var s = Stopwatch.StartNew();
-            var pst2 = folioServiceContext.PrecedingSucceedingTitle2s(take: 1).SingleOrDefault();
-            if (pst2 == null) Assert.Inconclusive();
-            pst2.PrecedingSucceedingTitleIdentifiers = null;
-            var pst3 = folioDapperContext.PrecedingSucceedingTitle2s(take: 1).SingleOrDefault();
-            pst3.Content = null;
-            Assert.AreEqual(pst2.ToString(), pst3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializePrecedingSucceedingTitle2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.PermissionsUser2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryPermissionsUser2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Configuration_DeserializePrinterTest()
+        public void QueryPrecedingSucceedingTitle2sTest()
         {
             var s = Stopwatch.StartNew();
-            var p = folioServiceContext.Printers(take: 1).SingleOrDefault();
-            if (p == null) Assert.Inconclusive();
-            var p2 = folioDapperContext.Printers(take: 1).SingleOrDefault();
-            Assert.AreEqual(p.ToString(), p2.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Configuration_DeserializePrinterTest()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.PrecedingSucceedingTitle2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryPrecedingSucceedingTitle2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Users_DeserializeProxy2Test()
+        public void QueryPrintersTest()
         {
             var s = Stopwatch.StartNew();
-            var p2 = folioServiceContext.Proxy2s(take: 1).SingleOrDefault();
-            if (p2 == null) Assert.Inconclusive();
-            var p3 = folioDapperContext.Proxy2s(take: 1).SingleOrDefault();
-            p3.Content = null;
-            Assert.AreEqual(p2.ToString(), p3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Users_DeserializeProxy2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Printers(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryPrintersTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Orders_DeserializeReceiving2Test()
+        public void QueryProxy2sTest()
         {
             var s = Stopwatch.StartNew();
-            var r2 = folioServiceContext.Receiving2s(take: 1).SingleOrDefault();
-            if (r2 == null) Assert.Inconclusive();
-            var r3 = folioDapperContext.Receiving2s(take: 1).SingleOrDefault();
-            r3.Content = null;
-            Assert.AreEqual(r2.ToString(), r3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Orders_DeserializeReceiving2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Proxy2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryProxy2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Source_DeserializeRecord2Test()
+        public void QueryReceiving2sTest()
         {
             var s = Stopwatch.StartNew();
-            var r2 = folioServiceContext.Record2s(take: 1).SingleOrDefault();
-            if (r2 == null) Assert.Inconclusive();
-            var r3 = folioDapperContext.Record2s(take: 1).SingleOrDefault();
-            Assert.AreEqual(r2.ToString(), r3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Source_DeserializeRecord2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Receiving2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryReceiving2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Agreements_DeserializeReferenceData2Test()
+        public void QueryRecord2sTest()
         {
             var s = Stopwatch.StartNew();
-            var rd2 = folioServiceContext.ReferenceData2s(take: 1).SingleOrDefault();
-            if (rd2 == null) Assert.Inconclusive();
-            var rd3 = folioDapperContext.ReferenceData2s(take: 1).SingleOrDefault();
-            rd3.Content = null;
-            Assert.AreEqual(rd2.ToString(), rd3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Agreements_DeserializeReferenceData2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Record2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryRecord2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Fees_DeserializeRefundReason2Test()
+        public void QueryReferenceData2sTest()
         {
             var s = Stopwatch.StartNew();
-            var rr2 = folioServiceContext.RefundReason2s(take: 1).SingleOrDefault();
-            if (rr2 == null) Assert.Inconclusive();
-            var rr3 = folioDapperContext.RefundReason2s(take: 1).SingleOrDefault();
-            rr3.Content = null;
-            Assert.AreEqual(rr2.ToString(), rr3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Fees_DeserializeRefundReason2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.ReferenceData2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryReferenceData2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeRelationshipTest()
+        public void QueryRefundReason2sTest()
         {
             var s = Stopwatch.StartNew();
-            var r = folioServiceContext.Relationships(take: 1).SingleOrDefault();
-            if (r == null) Assert.Inconclusive();
-            var r2 = folioDapperContext.Relationships(take: 1).SingleOrDefault();
-            r2.Content = null;
-            Assert.AreEqual(r.ToString(), r2.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeRelationshipTest()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.RefundReason2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryRefundReason2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeRelationshipTypeTest()
+        public void QueryRelationshipsTest()
         {
             var s = Stopwatch.StartNew();
-            var rt = folioServiceContext.RelationshipTypes(take: 1).SingleOrDefault();
-            if (rt == null) Assert.Inconclusive();
-            var rt2 = folioDapperContext.RelationshipTypes(take: 1).SingleOrDefault();
-            rt2.Content = null;
-            Assert.AreEqual(rt.ToString(), rt2.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeRelationshipTypeTest()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Relationships(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryRelationshipsTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Circulation_DeserializeRequest2Test()
+        public void QueryRelationshipTypesTest()
         {
             var s = Stopwatch.StartNew();
-            var r2 = folioServiceContext.Request2s(take: 1).SingleOrDefault();
-            if (r2 == null) Assert.Inconclusive();
-            r2.RequestIdentifiers = null;
-            r2.RequestTags = null;
-            var r3 = folioDapperContext.Request2s(take: 1).SingleOrDefault();
-            r3.Content = null;
-            Assert.AreEqual(r2.ToString(), r3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Circulation_DeserializeRequest2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.RelationshipTypes(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryRelationshipTypesTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Circulation_DeserializeRequestPolicy2Test()
+        public void QueryRequest2sTest()
         {
             var s = Stopwatch.StartNew();
-            var rp2 = folioServiceContext.RequestPolicy2s(take: 1).SingleOrDefault();
-            if (rp2 == null) Assert.Inconclusive();
-            rp2.RequestPolicyRequestTypes = null;
-            var rp3 = folioDapperContext.RequestPolicy2s(take: 1).SingleOrDefault();
-            rp3.Content = null;
-            Assert.AreEqual(rp2.ToString(), rp3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Circulation_DeserializeRequestPolicy2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Request2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryRequest2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Finance_DeserializeRollover2Test()
+        public void QueryRequestPolicy2sTest()
         {
             var s = Stopwatch.StartNew();
-            var r2 = folioServiceContext.Rollover2s(take: 1).SingleOrDefault();
-            if (r2 == null) Assert.Inconclusive();
-            r2.RolloverBudgetsRollovers = null;
-            r2.RolloverEncumbrancesRollovers = null;
-            var r3 = folioDapperContext.Rollover2s(take: 1).SingleOrDefault();
-            r3.Content = null;
-            Assert.AreEqual(r2.ToString(), r3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeRollover2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.RequestPolicy2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryRequestPolicy2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Finance_DeserializeRolloverBudget2Test()
+        public void QueryRollover2sTest()
         {
             var s = Stopwatch.StartNew();
-            var rb2 = folioServiceContext.RolloverBudget2s(take: 1).SingleOrDefault();
-            if (rb2 == null) Assert.Inconclusive();
-            rb2.RolloverBudgetAcquisitionsUnit2s = null;
-            rb2.RolloverBudgetAcquisitionsUnits = null;
-            rb2.RolloverBudgetAllocatedFromNames = null;
-            rb2.RolloverBudgetAllocatedToNames = null;
-            rb2.RolloverBudgetExpenseClassDetails = null;
-            rb2.RolloverBudgetFromFunds = null;
-            rb2.RolloverBudgetLocations = null;
-            rb2.RolloverBudgetOrganizations = null;
-            rb2.RolloverBudgetTags = null;
-            rb2.RolloverBudgetToFunds = null;
-            var rb3 = folioDapperContext.RolloverBudget2s(take: 1).SingleOrDefault();
-            rb3.Content = null;
-            Assert.AreEqual(rb2.ToString(), rb3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeRolloverBudget2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Rollover2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryRollover2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Finance_DeserializeRolloverError2Test()
+        public void QueryRolloverBudget2sTest()
         {
             var s = Stopwatch.StartNew();
-            var re2 = folioServiceContext.RolloverError2s(take: 1).SingleOrDefault();
-            if (re2 == null) Assert.Inconclusive();
-            var re3 = folioDapperContext.RolloverError2s(take: 1).SingleOrDefault();
-            re3.Content = null;
-            Assert.AreEqual(re2.ToString(), re3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeRolloverError2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.RolloverBudget2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryRolloverBudget2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Finance_DeserializeRolloverProgress2Test()
+        public void QueryRolloverError2sTest()
         {
             var s = Stopwatch.StartNew();
-            var rp2 = folioServiceContext.RolloverProgress2s(take: 1).SingleOrDefault();
-            if (rp2 == null) Assert.Inconclusive();
-            var rp3 = folioDapperContext.RolloverProgress2s(take: 1).SingleOrDefault();
-            rp3.Content = null;
-            Assert.AreEqual(rp2.ToString(), rp3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeRolloverProgress2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.RolloverError2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryRolloverError2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Circulation_DeserializeScheduledNotice2Test()
+        public void QueryRolloverProgress2sTest()
         {
             var s = Stopwatch.StartNew();
-            var sn2 = folioServiceContext.ScheduledNotice2s(take: 1).SingleOrDefault();
-            if (sn2 == null) Assert.Inconclusive();
-            var sn3 = folioDapperContext.ScheduledNotice2s(take: 1).SingleOrDefault();
-            sn3.Content = null;
-            Assert.AreEqual(sn2.ToString(), sn3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Circulation_DeserializeScheduledNotice2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.RolloverProgress2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryRolloverProgress2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeServicePoint2Test()
+        public void QueryScheduledNotice2sTest()
         {
             var s = Stopwatch.StartNew();
-            var sp2 = folioServiceContext.ServicePoint2s(take: 1).SingleOrDefault();
-            if (sp2 == null) Assert.Inconclusive();
-            sp2.ServicePointStaffSlips = null;
-            var sp3 = folioDapperContext.ServicePoint2s(take: 1).SingleOrDefault();
-            sp3.Content = null;
-            Assert.AreEqual(sp2.ToString(), sp3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeServicePoint2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.ScheduledNotice2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryScheduledNotice2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeServicePointUser2Test()
+        public void QueryServicePoint2sTest()
         {
             var s = Stopwatch.StartNew();
-            var spu2 = folioServiceContext.ServicePointUser2s(take: 1).SingleOrDefault();
-            if (spu2 == null) Assert.Inconclusive();
-            spu2.ServicePointUserServicePoints = null;
-            var spu3 = folioDapperContext.ServicePointUser2s(take: 1).SingleOrDefault();
-            spu3.Content = null;
-            Assert.AreEqual(spu2.ToString(), spu3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeServicePointUser2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.ServicePoint2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryServicePoint2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Configuration_DeserializeSettingTest()
+        public void QueryServicePointUser2sTest()
         {
             var s = Stopwatch.StartNew();
-            var s2 = folioServiceContext.Settings(take: 1).SingleOrDefault();
-            if (s2 == null) Assert.Inconclusive();
-            var s3 = folioDapperContext.Settings(take: 1).SingleOrDefault();
-            Assert.AreEqual(s2.ToString(), s3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Configuration_DeserializeSettingTest()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.ServicePointUser2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryServicePointUser2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Source_DeserializeSnapshot2Test()
+        public void QuerySettingsTest()
         {
             var s = Stopwatch.StartNew();
-            var s2 = folioServiceContext.Snapshot2s(take: 1).SingleOrDefault();
-            if (s2 == null) Assert.Inconclusive();
-            var s3 = folioDapperContext.Snapshot2s(take: 1).SingleOrDefault();
-            Assert.AreEqual(s2.ToString(), s3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Source_DeserializeSnapshot2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Settings(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QuerySettingsTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeSource2Test()
+        public void QuerySnapshot2sTest()
         {
             var s = Stopwatch.StartNew();
-            var s2 = folioServiceContext.Source2s(take: 1).SingleOrDefault();
-            if (s2 == null) Assert.Inconclusive();
-            var s3 = folioDapperContext.Source2s(take: 1).SingleOrDefault();
-            s3.Content = null;
-            Assert.AreEqual(s2.ToString(), s3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeSource2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Snapshot2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QuerySnapshot2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Circulation_DeserializeStaffSlip2Test()
+        public void QuerySource2sTest()
         {
             var s = Stopwatch.StartNew();
-            var ss2 = folioServiceContext.StaffSlip2s(take: 1).SingleOrDefault();
-            if (ss2 == null) Assert.Inconclusive();
-            var ss3 = folioDapperContext.StaffSlip2s(take: 1).SingleOrDefault();
-            ss3.Content = null;
-            Assert.AreEqual(ss2.ToString(), ss3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Circulation_DeserializeStaffSlip2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Source2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QuerySource2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeStatisticalCode2Test()
+        public void QueryStaffSlip2sTest()
         {
             var s = Stopwatch.StartNew();
-            var sc2 = folioServiceContext.StatisticalCode2s(take: 1).SingleOrDefault();
-            if (sc2 == null) Assert.Inconclusive();
-            var sc3 = folioDapperContext.StatisticalCode2s(take: 1).SingleOrDefault();
-            sc3.Content = null;
-            Assert.AreEqual(sc2.ToString(), sc3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeStatisticalCode2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.StaffSlip2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryStaffSlip2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeStatisticalCodeType2Test()
+        public void QueryStatisticalCode2sTest()
         {
             var s = Stopwatch.StartNew();
-            var sct2 = folioServiceContext.StatisticalCodeType2s(take: 1).SingleOrDefault();
-            if (sct2 == null) Assert.Inconclusive();
-            var sct3 = folioDapperContext.StatisticalCodeType2s(take: 1).SingleOrDefault();
-            sct3.Content = null;
-            Assert.AreEqual(sct2.ToString(), sct3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeStatisticalCodeType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.StatisticalCode2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryStatisticalCode2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeStatusTest()
+        public void QueryStatisticalCodeType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var s2 = folioServiceContext.Statuses(take: 1).SingleOrDefault();
-            if (s2 == null) Assert.Inconclusive();
-            var s3 = folioDapperContext.Statuses(take: 1).SingleOrDefault();
-            s3.Content = null;
-            Assert.AreEqual(s2.ToString(), s3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeStatusTest()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.StatisticalCodeType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryStatisticalCodeType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeSubjectSource2Test()
+        public void QueryStatusesTest()
         {
             var s = Stopwatch.StartNew();
-            var ss2 = folioServiceContext.SubjectSource2s(take: 1).SingleOrDefault();
-            if (ss2 == null) Assert.Inconclusive();
-            var ss3 = folioDapperContext.SubjectSource2s(take: 1).SingleOrDefault();
-            ss3.Content = null;
-            Assert.AreEqual(ss2.ToString(), ss3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeSubjectSource2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Statuses(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryStatusesTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Inventory_DeserializeSubjectType2Test()
+        public void QuerySubjectSource2sTest()
         {
             var s = Stopwatch.StartNew();
-            var st2 = folioServiceContext.SubjectType2s(take: 1).SingleOrDefault();
-            if (st2 == null) Assert.Inconclusive();
-            var st3 = folioDapperContext.SubjectType2s(take: 1).SingleOrDefault();
-            st3.Content = null;
-            Assert.AreEqual(st2.ToString(), st3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Inventory_DeserializeSubjectType2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.SubjectSource2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QuerySubjectSource2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Tags_DeserializeTag2Test()
+        public void QuerySubjectType2sTest()
         {
             var s = Stopwatch.StartNew();
-            var t2 = folioServiceContext.Tag2s(take: 1).SingleOrDefault();
-            if (t2 == null) Assert.Inconclusive();
-            var t3 = folioDapperContext.Tag2s(take: 1).SingleOrDefault();
-            Assert.AreEqual(t2.ToString(), t3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Tags_DeserializeTag2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.SubjectType2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QuerySubjectType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Templates_DeserializeTemplate2Test()
+        public void QueryTag2sTest()
         {
             var s = Stopwatch.StartNew();
-            var t2 = folioServiceContext.Template2s(take: 1).SingleOrDefault();
-            if (t2 == null) Assert.Inconclusive();
-            t2.TemplateOutputFormats = null;
-            var t3 = folioDapperContext.Template2s(take: 1).SingleOrDefault();
-            t3.Content = null;
-            Assert.AreEqual(t2.ToString(), t3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Templates_DeserializeTemplate2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Tag2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryTag2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Orders_DeserializeTitle2Test()
+        public void QueryTemplate2sTest()
         {
             var s = Stopwatch.StartNew();
-            var t2 = folioServiceContext.Title2s(take: 1).SingleOrDefault();
-            if (t2 == null) Assert.Inconclusive();
-            t2.TitleAcquisitionsUnits = null;
-            t2.TitleBindItemIds = null;
-            t2.TitleContributors = null;
-            t2.TitleProductIds = null;
-            var t3 = folioDapperContext.Title2s(take: 1).SingleOrDefault();
-            t3.Content = null;
-            Assert.AreEqual(t2.ToString(), t3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Orders_DeserializeTitle2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Template2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryTemplate2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Finance_DeserializeTransaction2Test()
+        public void QueryTitle2sTest()
         {
             var s = Stopwatch.StartNew();
-            var t2 = folioServiceContext.Transaction2s(take: 1).SingleOrDefault();
-            if (t2 == null) Assert.Inconclusive();
-            t2.TransactionTags = null;
-            var t3 = folioDapperContext.Transaction2s(take: 1).SingleOrDefault();
-            t3.Content = null;
-            Assert.AreEqual(t2.ToString(), t3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Finance_DeserializeTransaction2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Title2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryTitle2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Fees_DeserializeTransferAccount2Test()
+        public void QueryTransaction2sTest()
         {
             var s = Stopwatch.StartNew();
-            var ta2 = folioServiceContext.TransferAccount2s(take: 1).SingleOrDefault();
-            if (ta2 == null) Assert.Inconclusive();
-            var ta3 = folioDapperContext.TransferAccount2s(take: 1).SingleOrDefault();
-            ta3.Content = null;
-            Assert.AreEqual(ta2.ToString(), ta3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Fees_DeserializeTransferAccount2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Transaction2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryTransaction2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Fees_DeserializeTransferCriteria2Test()
+        public void QueryTransferAccount2sTest()
         {
             var s = Stopwatch.StartNew();
-            var tc2 = folioServiceContext.TransferCriteria2s(take: 1).SingleOrDefault();
-            if (tc2 == null) Assert.Inconclusive();
-            var tc3 = folioDapperContext.TransferCriteria2s(take: 1).SingleOrDefault();
-            tc3.Content = null;
-            Assert.AreEqual(tc2.ToString(), tc3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Fees_DeserializeTransferCriteria2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.TransferAccount2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryTransferAccount2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Users_DeserializeUser2Test()
+        public void QueryTransferCriteria2sTest()
         {
             var s = Stopwatch.StartNew();
-            var u2 = folioServiceContext.User2s(take: 1).SingleOrDefault();
-            if (u2 == null) Assert.Inconclusive();
-            u2.PreferredEmailCommunications = null;
-            u2.UserAddresses = null;
-            u2.UserDepartments = null;
-            u2.UserTags = null;
-            var u3 = folioDapperContext.User2s(take: 1).SingleOrDefault();
-            u3.Content = null;
-            Assert.AreEqual(u2.ToString(), u3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Users_DeserializeUser2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.TransferCriteria2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryTransferCriteria2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Orders_DeserializeUserAcquisitionsUnit2Test()
+        public void QueryUser2sTest()
         {
             var s = Stopwatch.StartNew();
-            var uau2 = folioServiceContext.UserAcquisitionsUnit2s(take: 1).SingleOrDefault();
-            if (uau2 == null) Assert.Inconclusive();
-            var uau3 = folioDapperContext.UserAcquisitionsUnit2s(take: 1).SingleOrDefault();
-            uau3.Content = null;
-            Assert.AreEqual(uau2.ToString(), uau3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Orders_DeserializeUserAcquisitionsUnit2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.User2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryUser2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Circulation_DeserializeUserRequestPreference2Test()
+        public void QueryUserAcquisitionsUnit2sTest()
         {
             var s = Stopwatch.StartNew();
-            var urp2 = folioServiceContext.UserRequestPreference2s(take: 1).SingleOrDefault();
-            if (urp2 == null) Assert.Inconclusive();
-            var urp3 = folioDapperContext.UserRequestPreference2s(take: 1).SingleOrDefault();
-            urp3.Content = null;
-            Assert.AreEqual(urp2.ToString(), urp3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Circulation_DeserializeUserRequestPreference2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.UserAcquisitionsUnit2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryUserAcquisitionsUnit2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Invoices_DeserializeVoucher2Test()
+        public void QueryUserRequestPreference2sTest()
         {
             var s = Stopwatch.StartNew();
-            var v2 = folioServiceContext.Voucher2s(take: 1).SingleOrDefault();
-            if (v2 == null) Assert.Inconclusive();
-            v2.VoucherAcquisitionsUnits = null;
-            var v3 = folioDapperContext.Voucher2s(take: 1).SingleOrDefault();
-            v3.Content = null;
-            Assert.AreEqual(v2.ToString(), v3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Invoices_DeserializeVoucher2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.UserRequestPreference2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryUserRequestPreference2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Invoices_DeserializeVoucherItem2Test()
+        public void QueryVoucher2sTest()
         {
             var s = Stopwatch.StartNew();
-            var vi2 = folioServiceContext.VoucherItem2s(take: 1).SingleOrDefault();
-            if (vi2 == null) Assert.Inconclusive();
-            vi2.VoucherItemFunds = null;
-            vi2.VoucherItemInvoiceItems = null;
-            var vi3 = folioDapperContext.VoucherItem2s(take: 1).SingleOrDefault();
-            vi3.Content = null;
-            Assert.AreEqual(vi2.ToString(), vi3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Invoices_DeserializeVoucherItem2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.Voucher2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryVoucher2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void Fees_DeserializeWaiveReason2Test()
+        public void QueryVoucherItem2sTest()
         {
             var s = Stopwatch.StartNew();
-            var wr2 = folioServiceContext.WaiveReason2s(take: 1).SingleOrDefault();
-            if (wr2 == null) Assert.Inconclusive();
-            var wr3 = folioDapperContext.WaiveReason2s(take: 1).SingleOrDefault();
-            wr3.Content = null;
-            Assert.AreEqual(wr2.ToString(), wr3.ToString());
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"Fees_DeserializeWaiveReason2Test()\r\n    ElapsedTime={s.Elapsed}");
+            var l = folioServiceContext.VoucherItem2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryVoucherItem2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryWaiveReason2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            var l = folioServiceContext.WaiveReason2s(take: 1, cache: false).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"QueryWaiveReason2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [ClassCleanup]
         public static void ClassCleanup()
         {
-            folioDapperContext.Dispose();
             folioServiceContext.Dispose();
         }
     }

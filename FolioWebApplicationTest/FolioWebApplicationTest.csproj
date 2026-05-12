@@ -79,16 +79,16 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MSTest.TestAdapter">
-      <Version>4.1.0</Version>
+      <Version>4.2.2</Version>
     </PackageReference>
     <PackageReference Include="MSTest.TestFramework">
-      <Version>4.1.0</Version>
+      <Version>4.2.2</Version>
     </PackageReference>
     <PackageReference Include="Npgsql">
-      <Version>8.0.8</Version>
+      <Version>8.0.9</Version>
     </PackageReference>
     <PackageReference Include="System.Configuration.ConfigurationManager">
-      <Version>10.0.5</Version>
+      <Version>10.0.8</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

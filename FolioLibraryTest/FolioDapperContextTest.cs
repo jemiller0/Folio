@@ -3528,6 +3528,24 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void QueryOrganizationOrganizationTypesTest()
+        {
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+                fdc.OrganizationOrganizationTypes(take: 0).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationOrganizationTypesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void GridQueryOrganizationOrganizationTypesTest()
+        {
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+                fdc.GridOrganizationOrganizationTypes(take: 0).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationOrganizationTypesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryOrganizationPhoneNumbersTest()
         {
             var s = Stopwatch.StartNew();
@@ -3600,21 +3618,21 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
-        public void QueryOrganizationTypesTest()
+        public void QueryOrganizationType2sTest()
         {
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
-                fdc.OrganizationTypes(take: 0).ToArray();
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationTypesTest()\r\n    ElapsedTime={s.Elapsed}");
+                fdc.OrganizationType2s(take: 0).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
-        public void GridQueryOrganizationTypesTest()
+        public void GridQueryOrganizationType2sTest()
         {
             var s = Stopwatch.StartNew();
             using (var fdc = new FolioDapperContext())
-                fdc.GridOrganizationTypes(take: 0).ToArray();
-            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationTypesTest()\r\n    ElapsedTime={s.Elapsed}");
+                fdc.GridOrganizationType2s(take: 0).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrganizationType2sTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
@@ -5343,6 +5361,24 @@ namespace FolioLibraryTest
             using (var fdc = new FolioDapperContext())
                 fdc.GridUserRequestPreference2s(take: 0).ToArray();
             traceSource.TraceEvent(TraceEventType.Information, 0, $"UserRequestPreference2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryUserSourcesTest()
+        {
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+                fdc.UserSources(take: 0).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserSourcesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void GridQueryUserSourcesTest()
+        {
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+                fdc.GridUserSources(take: 0).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserSourcesTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]
