@@ -4,7 +4,8 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion></ProductVersion>
+    <ProductVersion>
+    </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{53C4C098-425D-4136-9C95-54488BC034A6}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
@@ -20,7 +21,8 @@
     <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
-    <NuGetPackageImportStamp></NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -54,8 +56,8 @@
       <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Configuration.ConfigurationManager, Version=10.0.0.8, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Configuration.ConfigurationManager.10.0.8\lib\net462\System.Configuration.ConfigurationManager.dll</HintPath>
+    <Reference Include="System.Configuration.ConfigurationManager, Version=10.0.0.9, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Configuration.ConfigurationManager.10.0.9\lib\net462\System.Configuration.ConfigurationManager.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.OracleClient" />
@@ -70,8 +72,8 @@
     <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.AccessControl.6.0.1\lib\net461\System.Security.AccessControl.dll</HintPath>
     </Reference>
-    <Reference Include="System.Security.Permissions, Version=10.0.0.8, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Permissions.10.0.8\lib\net462\System.Security.Permissions.dll</HintPath>
+    <Reference Include="System.Security.Permissions, Version=10.0.0.9, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Permissions.10.0.9\lib\net462\System.Security.Permissions.dll</HintPath>
     </Reference>
     <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
@@ -97,17 +99,17 @@
     <Reference Include="Telerik.Licensing.Runtime, Version=1.8.2.0, Culture=neutral, PublicKeyToken=98bb5b04e55c09ef, processorArchitecture=MSIL">
       <HintPath>..\packages\Telerik.Licensing.1.8.2\lib\net462\Telerik.Licensing.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.Design, Version=2026.1.421.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.UI.for.AspNet.Ajax.Net462.2026.1.421\lib\net462\Telerik.Web.Design.dll</HintPath>
+    <Reference Include="Telerik.Web.Design, Version=2026.2.519.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.UI.for.AspNet.Ajax.Net462.2026.2.519\lib\net462\Telerik.Web.Design.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.Device.Detection, Version=2026.1.421.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.UI.for.AspNet.Ajax.Net462.2026.1.421\lib\net462\Telerik.Web.Device.Detection.dll</HintPath>
+    <Reference Include="Telerik.Web.Device.Detection, Version=2026.2.519.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.UI.for.AspNet.Ajax.Net462.2026.2.519\lib\net462\Telerik.Web.Device.Detection.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.UI, Version=2026.1.421.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.UI.for.AspNet.Ajax.Net462.2026.1.421\lib\net462\Telerik.Web.UI.dll</HintPath>
+    <Reference Include="Telerik.Web.UI, Version=2026.2.519.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.UI.for.AspNet.Ajax.Net462.2026.2.519\lib\net462\Telerik.Web.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.UI.Skins, Version=2026.1.421.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.UI.for.AspNet.Ajax.Net462.2026.1.421\lib\net462\Telerik.Web.UI.Skins.dll</HintPath>
+    <Reference Include="Telerik.Web.UI.Skins, Version=2026.2.519.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.UI.for.AspNet.Ajax.Net462.2026.2.519\lib\net462\Telerik.Web.UI.Skins.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -207,7 +209,8 @@
           <IISUrl>http://localhost:52768/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl></CustomServerUrl>
+          <CustomServerUrl>
+          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
