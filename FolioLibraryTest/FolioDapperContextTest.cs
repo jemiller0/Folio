@@ -1116,6 +1116,24 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void QueryDonor2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+                fdc.Donor2s(take: 0).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Donor2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void GridQueryDonor2sTest()
+        {
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+                fdc.GridDonor2s(take: 0).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"Donor2sTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryEditionsTest()
         {
             var s = Stopwatch.StartNew();

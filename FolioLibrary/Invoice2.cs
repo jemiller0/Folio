@@ -109,10 +109,10 @@ namespace FolioLibrary
         [Column("source"), Display(Order = 27), JsonProperty("source"), RegularExpression(@"^(User|API|EDI)$"), Required, StringLength(1024)]
         public virtual string Source { get; set; }
 
-        [Column("sub_total"), DataType(DataType.Currency), Display(Name = "Sub Total", Order = 28), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("subTotal")]
+        [Column("sub_total"), DataType(DataType.Currency), Display(Name = "Sub Total", Order = 28), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("subTotal")]
         public virtual decimal? SubTotal { get; set; }
 
-        [Column("total"), DataType(DataType.Currency), Display(Order = 29), DisplayFormat(DataFormatString = "{0:c}"), Editable(false), JsonProperty("total")]
+        [Column("total"), DataType(DataType.Currency), Display(Order = 29), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("total")]
         public virtual decimal? Total { get; set; }
 
         [Column("vendor_invoice_no"), Display(Name = "Vendor Invoice Number", Order = 30), JsonProperty("vendorInvoiceNo"), Required, StringLength(1024)]
@@ -151,7 +151,7 @@ namespace FolioLibrary
         [Column("manual_payment"), Display(Name = "Manual Payment", Order = 41), JsonProperty("manualPayment")]
         public virtual bool? ManualPayment { get; set; }
 
-        [Column("next_invoice_line_number"), Display(Name = "Next Invoice Line Number", Order = 42), Editable(false), JsonProperty("nextInvoiceLineNumber")]
+        [Column("next_invoice_line_number"), Display(Name = "Next Invoice Line Number", Order = 42), JsonProperty("nextInvoiceLineNumber")]
         public virtual int? NextInvoiceLineNumber { get; set; }
 
         [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 43), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]

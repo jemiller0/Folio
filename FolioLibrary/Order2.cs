@@ -134,7 +134,7 @@ namespace FolioLibrary
         [Column("status"), Display(Order = 33), JsonProperty("workflowStatus"), RegularExpression(@"^(Pending|Open|Closed)$"), StringLength(1024)]
         public virtual string Status { get; set; }
 
-        [Column("next_pol_number"), Display(Name = "Next Number", Order = 34), Editable(false), JsonProperty("nextPolNumber")]
+        [Column("next_pol_number"), Display(Name = "Next Number", Order = 34), JsonProperty("nextPolNumber")]
         public virtual int? NextNumber { get; set; }
 
         [Display(Name = "Fiscal Year", Order = 35)]

@@ -273,6 +273,14 @@ namespace FolioWebApplication.User2s
 
         protected RadGrid Department2s1RadGrid;
 
+        protected Panel Donor2sPanel;
+
+        protected RadGrid Donor2sRadGrid;
+
+        protected Panel Donor2s1Panel;
+
+        protected RadGrid Donor2s1RadGrid;
+
         protected Panel ElectronicAccessRelationship2sPanel;
 
         protected RadGrid ElectronicAccessRelationship2sRadGrid;

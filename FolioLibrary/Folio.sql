@@ -3868,6 +3868,19 @@ wr.jsonb#>>'{metadata,updatedByUsername}' AS updated_by_username,
 CAST(wr.jsonb->>'accountId' AS UUID) AS account_id,
 jsonb_pretty(COALESCE(jsonb_set(jsonb, '{metadata,createdDate}', ('"' || (jsonb#>>'{metadata,createdDate}') || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END || '"')::jsonb), jsonb)) AS content
 FROM uchicago_mod_feesfines.waives wr;
+CREATE VIEW uc.donors AS
+SELECT 
+id,
+name,
+code,
+description,
+status,
+created_date,
+created_by_user_id,
+updated_date,
+updated_by_user_id
+FROM uc.organizations o
+WHERE o.is_donor = true;
 CREATE VIEW uc.addresses AS
 SELECT 
 c.id, 

@@ -81,6 +81,10 @@
           "x-fqm-visible-by-default": true,
           "x-fqm-visibility": "all",
           "x-fqm-essential": true,
+          "x-fqm-source": {
+            "entityTypeId": "e7717b38-4ff3-4fb9-ae09-b3d0c8400710",
+            "columnName": "group"
+          },
           "type": "string"
         }
       },

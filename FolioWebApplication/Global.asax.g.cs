@@ -322,6 +322,7 @@ namespace FolioWebApplication
             Session["ContactUrlsPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.contacturls.view") ? "View" : null;
             Session["ContactUrlCategoriesPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.contacturlcategories.view") ? "View" : null;
             Session["CurrenciesPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.currencies.view") ? "View" : null;
+            Session["Donor2sPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.donors.view") ? "View" : null;
             Session["Interface2sPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.interfaces.view") ? "View" : null;
             Session["InterfaceCredential2sPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.interfacecredentials.view") ? "View" : null;
             Session["InterfaceTypesPermission"] = roles.Contains("all") || roles.Contains("organizations.module.all") || roles.Contains("uc.interfacetypes.view") ? "View" : null;
@@ -705,6 +706,7 @@ namespace FolioWebApplication
             Session["ContactUrlsPermission"] = permission;
             Session["ContactUrlCategoriesPermission"] = permission;
             Session["CurrenciesPermission"] = permission;
+            Session["Donor2sPermission"] = permission;
             Session["Interface2sPermission"] = permission;
             Session["InterfaceCredential2sPermission"] = permission;
             Session["InterfaceTypesPermission"] = permission;
