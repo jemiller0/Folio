@@ -99,17 +99,17 @@
     <Reference Include="Telerik.Licensing.Runtime, Version=1.8.2.0, Culture=neutral, PublicKeyToken=98bb5b04e55c09ef, processorArchitecture=MSIL">
       <HintPath>..\packages\Telerik.Licensing.1.8.2\lib\net462\Telerik.Licensing.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.Design, Version=2026.2.519.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.UI.for.AspNet.Ajax.Net462.2026.2.519\lib\net462\Telerik.Web.Design.dll</HintPath>
+    <Reference Include="Telerik.Web.Design, Version=2026.2.708.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.UI.for.AspNet.Ajax.Net462.2026.2.708\lib\net462\Telerik.Web.Design.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.Device.Detection, Version=2026.2.519.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.UI.for.AspNet.Ajax.Net462.2026.2.519\lib\net462\Telerik.Web.Device.Detection.dll</HintPath>
+    <Reference Include="Telerik.Web.Device.Detection, Version=2026.2.708.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.UI.for.AspNet.Ajax.Net462.2026.2.708\lib\net462\Telerik.Web.Device.Detection.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.UI, Version=2026.2.519.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.UI.for.AspNet.Ajax.Net462.2026.2.519\lib\net462\Telerik.Web.UI.dll</HintPath>
+    <Reference Include="Telerik.Web.UI, Version=2026.2.708.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.UI.for.AspNet.Ajax.Net462.2026.2.708\lib\net462\Telerik.Web.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.UI.Skins, Version=2026.2.519.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.UI.for.AspNet.Ajax.Net462.2026.2.519\lib\net462\Telerik.Web.UI.Skins.dll</HintPath>
+    <Reference Include="Telerik.Web.UI.Skins, Version=2026.2.708.462, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.UI.for.AspNet.Ajax.Net462.2026.2.708\lib\net462\Telerik.Web.UI.Skins.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
