@@ -32,7 +32,8 @@
         "MULTI_SELECT_DROPDOWN",
         "TEXTBOX_SHORT",
         "TEXTBOX_LONG",
-        "DATE_PICKER"
+        "DATE_PICKER",
+        "LOOKUP"
       ]
     },
     "entityType": {
@@ -175,6 +176,22 @@
       },
       "required": [
         "fieldFormat"
+      ]
+    },
+    "lookupField": {
+      "title": "Lookup Field Schema",
+      "description": "Lookup Field Schema",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "refEntityType": {
+          "description": "The entity type of the record the lookup value references, e.g. 'organization' or 'user'. Open-ended lowercase string, mirroring customField.entityType",
+          "example": "organization",
+          "type": "string"
+        }
+      },
+      "required": [
+        "refEntityType"
       ]
     },
     "displayInAccordion": {

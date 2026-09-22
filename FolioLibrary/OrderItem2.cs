@@ -185,193 +185,196 @@ namespace FolioLibrary
         [Column("last_edi_export_date"), DataType(DataType.Date), Display(Name = "Last EDI Export Date", Order = 50), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("lastEDIExportDate")]
         public virtual DateTime? LastEdiExportDate { get; set; }
 
-        [Column("order_format"), Display(Name = "Order Format", Order = 51), JsonProperty("orderFormat"), RegularExpression(@"^(Electronic Resource|P/E Mix|Physical Resource|Other)$"), Required, StringLength(1024)]
+        [Column("last_export_transmission_method"), Display(Name = "Last Export Transmission Method", Order = 51), JsonProperty("lastExport.transmissionMethod"), StringLength(1024)]
+        public virtual string LastExportTransmissionMethod { get; set; }
+
+        [Column("order_format"), Display(Name = "Order Format", Order = 52), JsonProperty("orderFormat"), RegularExpression(@"^(Electronic Resource|P/E Mix|Physical Resource|Other)$"), Required, StringLength(1024)]
         public virtual string OrderFormat { get; set; }
 
-        [Display(Name = "Package Order Item", Order = 52)]
+        [Display(Name = "Package Order Item", Order = 53)]
         public virtual OrderItem2 PackageOrderItem { get; set; }
 
-        [Column("package_po_line_id"), Display(Name = "Package Order Item", Order = 53), JsonProperty("packagePoLineId")]
+        [Column("package_po_line_id"), Display(Name = "Package Order Item", Order = 54), JsonProperty("packagePoLineId")]
         public virtual Guid? PackageOrderItemId { get; set; }
 
-        [Column("payment_status"), Display(Name = "Payment Status", Order = 54), JsonProperty("paymentStatus"), RegularExpression(@"^(Awaiting Payment|Cancelled|Fully Paid|Partially Paid|Payment Not Required|Pending|Ongoing)$"), StringLength(1024)]
+        [Column("payment_status"), Display(Name = "Payment Status", Order = 55), JsonProperty("paymentStatus"), RegularExpression(@"^(Awaiting Payment|Cancelled|Fully Paid|Partially Paid|Payment Not Required|Pending|Ongoing)$"), StringLength(1024)]
         public virtual string PaymentStatus { get; set; }
 
-        [Column("physical_create_inventory"), Display(Name = "Physical Create Inventory", Order = 55), JsonProperty("physical.createInventory"), RegularExpression(@"^(Instance, Holding, Item|Instance, Holding|Instance|None)$"), StringLength(1024)]
+        [Column("physical_create_inventory"), Display(Name = "Physical Create Inventory", Order = 56), JsonProperty("physical.createInventory"), RegularExpression(@"^(Instance, Holding, Item|Instance, Holding|Instance|None)$"), StringLength(1024)]
         public virtual string PhysicalCreateInventory { get; set; }
 
-        [Display(Name = "Physical Material Type", Order = 56), InverseProperty("OrderItem2s1")]
+        [Display(Name = "Physical Material Type", Order = 57), InverseProperty("OrderItem2s1")]
         public virtual MaterialType2 PhysicalMaterialType { get; set; }
 
-        [Column("physical_material_type_id"), Display(Name = "Physical Material Type", Order = 57), JsonProperty("physical.materialType")]
+        [Column("physical_material_type_id"), Display(Name = "Physical Material Type", Order = 58), JsonProperty("physical.materialType")]
         public virtual Guid? PhysicalMaterialTypeId { get; set; }
 
-        [Display(Name = "Physical Material Supplier", Order = 58), InverseProperty("OrderItem2s1")]
+        [Display(Name = "Physical Material Supplier", Order = 59), InverseProperty("OrderItem2s1")]
         public virtual Organization2 PhysicalMaterialSupplier { get; set; }
 
-        [Column("physical_material_supplier_id"), Display(Name = "Physical Material Supplier", Order = 59), JsonProperty("physical.materialSupplier")]
+        [Column("physical_material_supplier_id"), Display(Name = "Physical Material Supplier", Order = 60), JsonProperty("physical.materialSupplier")]
         public virtual Guid? PhysicalMaterialSupplierId { get; set; }
 
-        [Column("physical_expected_receipt_date"), DataType(DataType.Date), Display(Name = "Physical Expected Receipt Date", Order = 60), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("physical.expectedReceiptDate")]
+        [Column("physical_expected_receipt_date"), DataType(DataType.Date), Display(Name = "Physical Expected Receipt Date", Order = 61), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("physical.expectedReceiptDate")]
         public virtual DateTime? PhysicalExpectedReceiptDate { get; set; }
 
-        [Column("physical_receipt_due"), Display(Name = "Physical Receipt Due", Order = 61), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("physical.receiptDue")]
+        [Column("physical_receipt_due"), Display(Name = "Physical Receipt Due", Order = 62), DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true), JsonProperty("physical.receiptDue")]
         public virtual DateTime? PhysicalReceiptDue { get; set; }
 
-        [Column("po_line_description"), Display(Order = 62), JsonProperty("poLineDescription"), StringLength(1024)]
+        [Column("po_line_description"), Display(Order = 63), JsonProperty("poLineDescription"), StringLength(1024)]
         public virtual string Description { get; set; }
 
-        [Column("po_line_number"), Display(Order = 63), JsonProperty("poLineNumber"), StringLength(1024)]
+        [Column("po_line_number"), Display(Order = 64), JsonProperty("poLineNumber"), StringLength(1024)]
         public virtual string Number { get; set; }
 
-        [Column("publication_year"), Display(Name = "Publication Year", Order = 64), JsonProperty("publicationDate"), StringLength(1024)]
+        [Column("publication_year"), Display(Name = "Publication Year", Order = 65), JsonProperty("publicationDate"), StringLength(1024)]
         public virtual string PublicationYear { get; set; }
 
-        [Column("publisher"), Display(Order = 65), JsonProperty("publisher"), StringLength(1024)]
+        [Column("publisher"), Display(Order = 66), JsonProperty("publisher"), StringLength(1024)]
         public virtual string Publisher { get; set; }
 
-        [Display(Order = 66)]
+        [Display(Order = 67)]
         public virtual Order2 Order { get; set; }
 
-        [Column("order_id"), Display(Name = "Order", Order = 67), JsonProperty("purchaseOrderId"), Required]
+        [Column("order_id"), Display(Name = "Order", Order = 68), JsonProperty("purchaseOrderId"), Required]
         public virtual Guid? OrderId { get; set; }
 
-        [Column("receipt_date"), DataType(DataType.Date), Display(Name = "Receipt Date", Order = 68), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("receiptDate")]
+        [Column("receipt_date"), DataType(DataType.Date), Display(Name = "Receipt Date", Order = 69), DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true), JsonProperty("receiptDate")]
         public virtual DateTime? ReceiptDate { get; set; }
 
-        [Column("receipt_status"), Display(Name = "Receipt Status", Order = 69), JsonProperty("receiptStatus"), RegularExpression(@"^(Awaiting Receipt|Cancelled|Fully Received|Partially Received|Pending|Receipt Not Required|Ongoing)$"), StringLength(1024)]
+        [Column("receipt_status"), Display(Name = "Receipt Status", Order = 70), JsonProperty("receiptStatus"), RegularExpression(@"^(Awaiting Receipt|Cancelled|Fully Received|Partially Received|Pending|Receipt Not Required|Ongoing)$"), StringLength(1024)]
         public virtual string ReceiptStatus { get; set; }
 
-        [Column("renewal_note"), Display(Name = "Renewal Note", Order = 70), JsonProperty("renewalNote"), StringLength(1024)]
+        [Column("renewal_note"), Display(Name = "Renewal Note", Order = 71), JsonProperty("renewalNote"), StringLength(1024)]
         public virtual string RenewalNote { get; set; }
 
-        [Column("requester"), Display(Order = 71), JsonProperty("requester"), StringLength(1024)]
+        [Column("requester"), Display(Order = 72), JsonProperty("requester"), StringLength(1024)]
         public virtual string Requester { get; set; }
 
-        [Column("rush"), Display(Order = 72), JsonProperty("rush")]
+        [Column("rush"), Display(Order = 73), JsonProperty("rush")]
         public virtual bool? Rush { get; set; }
 
-        [Column("selector"), Display(Order = 73), JsonProperty("selector"), StringLength(1024)]
+        [Column("selector"), Display(Order = 74), JsonProperty("selector"), StringLength(1024)]
         public virtual string Selector { get; set; }
 
-        [Column("source"), Display(Order = 74), JsonProperty("source"), RegularExpression(@"^(User|API|EDI|MARC|EBSCONET)$"), Required, StringLength(1024)]
+        [Column("source"), Display(Order = 75), JsonProperty("source"), RegularExpression(@"^(User|API|EDI|MARC|EBSCONET)$"), Required, StringLength(1024)]
         public virtual string Source { get; set; }
 
-        [Column("title_or_package"), Display(Name = "Title Or Package", Order = 75), JsonProperty("titleOrPackage"), Required, StringLength(1024)]
+        [Column("title_or_package"), Display(Name = "Title Or Package", Order = 76), JsonProperty("titleOrPackage"), Required, StringLength(1024)]
         public virtual string TitleOrPackage { get; set; }
 
-        [Column("vendor_detail_instructions"), Display(Name = "Vendor Instructions", Order = 76), JsonProperty("vendorDetail.instructions"), Required, StringLength(1024)]
+        [Column("vendor_detail_instructions"), Display(Name = "Vendor Instructions", Order = 77), JsonProperty("vendorDetail.instructions"), Required, StringLength(1024)]
         public virtual string VendorInstructions { get; set; }
 
-        [Column("vendor_detail_note_from_vendor"), Display(Name = "Vendor Note", Order = 77), JsonProperty("vendorDetail.noteFromVendor"), StringLength(1024)]
+        [Column("vendor_detail_note_from_vendor"), Display(Name = "Vendor Note", Order = 78), JsonProperty("vendorDetail.noteFromVendor"), StringLength(1024)]
         public virtual string VendorNote { get; set; }
 
-        [Column("vendor_detail_vendor_account"), Display(Name = "Vendor Customer Id", Order = 78), JsonProperty("vendorDetail.vendorAccount"), StringLength(1024)]
+        [Column("vendor_detail_vendor_account"), Display(Name = "Vendor Customer Id", Order = 79), JsonProperty("vendorDetail.vendorAccount"), StringLength(1024)]
         public virtual string VendorCustomerId { get; set; }
 
-        [Column("suppress_instance_from_discovery"), Display(Name = "Suppress Instance From Discovery", Order = 79), JsonProperty("suppressInstanceFromDiscovery")]
+        [Column("suppress_instance_from_discovery"), Display(Name = "Suppress Instance From Discovery", Order = 80), JsonProperty("suppressInstanceFromDiscovery")]
         public virtual bool? SuppressInstanceFromDiscovery { get; set; }
 
-        [Column("multi_year_payment"), Display(Name = "Multi Year Payment", Order = 80), JsonProperty("multiYearPayment")]
+        [Column("multi_year_payment"), Display(Name = "Multi Year Payment", Order = 81), JsonProperty("multiYearPayment")]
         public virtual bool? MultiYearPayment { get; set; }
 
-        [Column("payment_terms_total_price"), DataType(DataType.Currency), Display(Name = "Payment Terms Total Price", Order = 81), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("paymentTerms.totalPrice")]
+        [Column("payment_terms_total_price"), DataType(DataType.Currency), Display(Name = "Payment Terms Total Price", Order = 82), DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true), JsonProperty("paymentTerms.totalPrice")]
         public virtual decimal? PaymentTermsTotalPrice { get; set; }
 
-        [Column("payment_terms_prepayment_term"), Display(Name = "Payment Terms Prepayment Term", Order = 82), JsonProperty("paymentTerms.prepaymentTerm")]
+        [Column("payment_terms_prepayment_term"), Display(Name = "Payment Terms Prepayment Term", Order = 83), JsonProperty("paymentTerms.prepaymentTerm")]
         public virtual int? PaymentTermsPrepaymentTerm { get; set; }
 
-        [Display(Name = "Payment Terms Starting Fiscal Year", Order = 83)]
+        [Display(Name = "Payment Terms Starting Fiscal Year", Order = 84)]
         public virtual FiscalYear2 PaymentTermsStartingFiscalYear { get; set; }
 
-        [Column("payment_terms_starting_fiscal_year_id"), Display(Name = "Payment Terms Starting Fiscal Year", Order = 84), JsonProperty("paymentTerms.startingFiscalYearId")]
+        [Column("payment_terms_starting_fiscal_year_id"), Display(Name = "Payment Terms Starting Fiscal Year", Order = 85), JsonProperty("paymentTerms.startingFiscalYearId")]
         public virtual Guid? PaymentTermsStartingFiscalYearId { get; set; }
 
-        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 85), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
+        [Column("created_date"), DataType(DataType.DateTime), Display(Name = "Creation Time", Order = 86), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.createdDate")]
         public virtual DateTime? CreationTime { get; set; }
 
-        [Display(Name = "Creation User", Order = 86), InverseProperty("OrderItem2s")]
+        [Display(Name = "Creation User", Order = 87), InverseProperty("OrderItem2s")]
         public virtual User2 CreationUser { get; set; }
 
-        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 87), Editable(false), JsonProperty("metadata.createdByUserId")]
+        [Column("created_by_user_id"), Display(Name = "Creation User", Order = 88), Editable(false), JsonProperty("metadata.createdByUserId")]
         public virtual Guid? CreationUserId { get; set; }
 
         [Column("created_by_username"), JsonProperty("metadata.createdByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string CreationUserUsername { get; set; }
 
-        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 89), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
+        [Column("updated_date"), DataType(DataType.DateTime), Display(Name = "Last Write Time", Order = 90), DisplayFormat(DataFormatString = "{0:g}"), Editable(false), JsonProperty("metadata.updatedDate")]
         public virtual DateTime? LastWriteTime { get; set; }
 
-        [Display(Name = "Last Write User", Order = 90), InverseProperty("OrderItem2s1")]
+        [Display(Name = "Last Write User", Order = 91), InverseProperty("OrderItem2s1")]
         public virtual User2 LastWriteUser { get; set; }
 
-        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 91), Editable(false), JsonProperty("metadata.updatedByUserId")]
+        [Column("updated_by_user_id"), Display(Name = "Last Write User", Order = 92), Editable(false), JsonProperty("metadata.updatedByUserId")]
         public virtual Guid? LastWriteUserId { get; set; }
 
         [Column("updated_by_username"), JsonProperty("metadata.updatedByUsername"), ScaffoldColumn(false), StringLength(1024)]
         public virtual string LastWriteUserUsername { get; set; }
 
-        [Column("content"), CustomValidation(typeof(OrderItem), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 93), Editable(false)]
+        [Column("content"), CustomValidation(typeof(OrderItem), nameof(ValidateContent)), DataType(DataType.MultilineText), Display(Order = 94), Editable(false)]
         public virtual string Content { get; set; }
 
-        [Display(Name = "Agreement Item Order Items", Order = 94)]
+        [Display(Name = "Agreement Item Order Items", Order = 95)]
         public virtual ICollection<AgreementItemOrderItem> AgreementItemOrderItems { get; set; }
 
-        [Display(Name = "Invoice Items", Order = 95)]
+        [Display(Name = "Invoice Items", Order = 96)]
         public virtual ICollection<InvoiceItem2> InvoiceItem2s { get; set; }
 
-        [Display(Name = "Items", Order = 96)]
+        [Display(Name = "Items", Order = 97)]
         public virtual ICollection<Item2> Item2s { get; set; }
 
-        [Display(Name = "Order Items", Order = 97)]
+        [Display(Name = "Order Items", Order = 98)]
         public virtual ICollection<OrderItem2> OrderItem2s { get; set; }
 
-        [Display(Name = "Order Item Claims", Order = 98), JsonProperty("claims")]
+        [Display(Name = "Order Item Claims", Order = 99), JsonProperty("claims")]
         public virtual ICollection<OrderItemClaim> OrderItemClaims { get; set; }
 
-        [Display(Name = "Order Item Contributors", Order = 99), JsonProperty("contributors")]
+        [Display(Name = "Order Item Contributors", Order = 100), JsonProperty("contributors")]
         public virtual ICollection<OrderItemContributor> OrderItemContributors { get; set; }
 
-        [Display(Name = "Order Item Fiscal Year Distributions", Order = 100), JsonProperty("paymentTerms.fiscalYearDistributions")]
+        [Display(Name = "Order Item Fiscal Year Distributions", Order = 101), JsonProperty("paymentTerms.fiscalYearDistributions")]
         public virtual ICollection<OrderItemFiscalYearDistribution> OrderItemFiscalYearDistributions { get; set; }
 
-        [Display(Name = "Order Item Funds", Order = 101), JsonProperty("fundDistribution")]
+        [Display(Name = "Order Item Funds", Order = 102), JsonProperty("fundDistribution")]
         public virtual ICollection<OrderItemFund> OrderItemFunds { get; set; }
 
-        [Display(Name = "Order Item Locations", Order = 102), JsonProperty("locations")]
+        [Display(Name = "Order Item Locations", Order = 103), JsonProperty("locations")]
         public virtual ICollection<OrderItemLocation2> OrderItemLocation2s { get; set; }
 
-        [Display(Name = "Order Item Notes", Order = 103)]
+        [Display(Name = "Order Item Notes", Order = 104)]
         public virtual ICollection<OrderItemNote> OrderItemNotes { get; set; }
 
-        [Display(Name = "Order Item Organizations", Order = 104), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemOrganization>, OrderItemOrganization>), "OrganizationId"), JsonProperty("donorOrganizationIds")]
+        [Display(Name = "Order Item Organizations", Order = 105), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemOrganization>, OrderItemOrganization>), "OrganizationId"), JsonProperty("donorOrganizationIds")]
         public virtual ICollection<OrderItemOrganization> OrderItemOrganizations { get; set; }
 
-        [Display(Name = "Order Item Product Ids", Order = 105), JsonProperty("details.productIds")]
+        [Display(Name = "Order Item Product Ids", Order = 106), JsonProperty("details.productIds")]
         public virtual ICollection<OrderItemProductId> OrderItemProductIds { get; set; }
 
-        [Display(Name = "Order Item Reference Numbers", Order = 106), JsonProperty("vendorDetail.referenceNumbers")]
+        [Display(Name = "Order Item Reference Numbers", Order = 107), JsonProperty("vendorDetail.referenceNumbers")]
         public virtual ICollection<OrderItemReferenceNumber> OrderItemReferenceNumbers { get; set; }
 
-        [Display(Name = "Order Item Search Locations", Order = 107), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemSearchLocation>, OrderItemSearchLocation>), "LocationId"), JsonProperty("searchLocationIds")]
+        [Display(Name = "Order Item Search Locations", Order = 108), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemSearchLocation>, OrderItemSearchLocation>), "LocationId"), JsonProperty("searchLocationIds")]
         public virtual ICollection<OrderItemSearchLocation> OrderItemSearchLocations { get; set; }
 
-        [Display(Name = "Order Item Tags", Order = 108), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemTag>, OrderItemTag>), "Content"), JsonProperty("tags.tagList")]
+        [Display(Name = "Order Item Tags", Order = 109), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemTag>, OrderItemTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<OrderItemTag> OrderItemTags { get; set; }
 
-        [Display(Name = "Order Item Volumes", Order = 109), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemVolume>, OrderItemVolume>), "Content"), JsonProperty("physical.volumes")]
+        [Display(Name = "Order Item Volumes", Order = 110), JsonConverter(typeof(ArrayJsonConverter<List<OrderItemVolume>, OrderItemVolume>), "Content"), JsonProperty("physical.volumes")]
         public virtual ICollection<OrderItemVolume> OrderItemVolumes { get; set; }
 
-        [Display(Name = "Receivings", Order = 110)]
+        [Display(Name = "Receivings", Order = 111)]
         public virtual ICollection<Receiving2> Receiving2s { get; set; }
 
-        [Display(Name = "Titles", Order = 111)]
+        [Display(Name = "Titles", Order = 112)]
         public virtual ICollection<Title2> Title2s { get; set; }
 
-        [Display(Name = "Transactions", Order = 112)]
+        [Display(Name = "Transactions", Order = 113)]
         public virtual ICollection<Transaction2> Transaction2s { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Edition)} = {Edition}, {nameof(CheckinItems)} = {CheckinItems}, {nameof(AgreementId)} = {AgreementId}, {nameof(AcquisitionMethodId)} = {AcquisitionMethodId}, {nameof(AutomaticExport)} = {AutomaticExport}, {nameof(CancellationRestriction)} = {CancellationRestriction}, {nameof(CancellationRestrictionNote)} = {CancellationRestrictionNote}, {nameof(ClaimingActive)} = {ClaimingActive}, {nameof(ClaimingInterval)} = {ClaimingInterval}, {nameof(Collection)} = {Collection}, {nameof(PhysicalUnitListPrice)} = {PhysicalUnitListPrice}, {nameof(ElectronicUnitListPrice)} = {ElectronicUnitListPrice}, {nameof(Currency)} = {Currency}, {nameof(AdditionalCost)} = {AdditionalCost}, {nameof(Discount)} = {Discount}, {nameof(DiscountType)} = {DiscountType}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(PhysicalQuantity)} = {PhysicalQuantity}, {nameof(ElectronicQuantity)} = {ElectronicQuantity}, {nameof(EstimatedPrice)} = {EstimatedPrice}, {nameof(FiscalYearRolloverAdjustmentAmount)} = {FiscalYearRolloverAdjustmentAmount}, {nameof(InternalNote)} = {InternalNote}, {nameof(ReceivingNote)} = {ReceivingNote}, {nameof(DetailsIsAcknowledged)} = {DetailsIsAcknowledged}, {nameof(DetailsIsBinderyActive)} = {DetailsIsBinderyActive}, {nameof(SubscriptionFrom)} = {SubscriptionFrom}, {nameof(SubscriptionInterval)} = {SubscriptionInterval}, {nameof(SubscriptionTo)} = {SubscriptionTo}, {nameof(Donor)} = {Donor}, {nameof(EresourceActivated)} = {EresourceActivated}, {nameof(EresourceActivationDue)} = {EresourceActivationDue}, {nameof(EresourceCreateInventory)} = {EresourceCreateInventory}, {nameof(EresourceTrial)} = {EresourceTrial}, {nameof(EresourceExpectedActivationDate)} = {EresourceExpectedActivationDate}, {nameof(EresourceUserLimit)} = {EresourceUserLimit}, {nameof(EresourceAccessProviderId)} = {EresourceAccessProviderId}, {nameof(EresourceLicenseCode)} = {EresourceLicenseCode}, {nameof(EresourceLicenseDescription)} = {EresourceLicenseDescription}, {nameof(EresourceLicenseReference)} = {EresourceLicenseReference}, {nameof(EresourceMaterialTypeId)} = {EresourceMaterialTypeId}, {nameof(EresourceResourceUrl)} = {EresourceResourceUrl}, {nameof(InstanceId)} = {InstanceId}, {nameof(IsPackage)} = {IsPackage}, {nameof(LastEdiExportDate)} = {LastEdiExportDate}, {nameof(OrderFormat)} = {OrderFormat}, {nameof(PackageOrderItemId)} = {PackageOrderItemId}, {nameof(PaymentStatus)} = {PaymentStatus}, {nameof(PhysicalCreateInventory)} = {PhysicalCreateInventory}, {nameof(PhysicalMaterialTypeId)} = {PhysicalMaterialTypeId}, {nameof(PhysicalMaterialSupplierId)} = {PhysicalMaterialSupplierId}, {nameof(PhysicalExpectedReceiptDate)} = {PhysicalExpectedReceiptDate}, {nameof(PhysicalReceiptDue)} = {PhysicalReceiptDue}, {nameof(Description)} = {Description}, {nameof(Number)} = {Number}, {nameof(PublicationYear)} = {PublicationYear}, {nameof(Publisher)} = {Publisher}, {nameof(OrderId)} = {OrderId}, {nameof(ReceiptDate)} = {ReceiptDate}, {nameof(ReceiptStatus)} = {ReceiptStatus}, {nameof(RenewalNote)} = {RenewalNote}, {nameof(Requester)} = {Requester}, {nameof(Rush)} = {Rush}, {nameof(Selector)} = {Selector}, {nameof(Source)} = {Source}, {nameof(TitleOrPackage)} = {TitleOrPackage}, {nameof(VendorInstructions)} = {VendorInstructions}, {nameof(VendorNote)} = {VendorNote}, {nameof(VendorCustomerId)} = {VendorCustomerId}, {nameof(SuppressInstanceFromDiscovery)} = {SuppressInstanceFromDiscovery}, {nameof(MultiYearPayment)} = {MultiYearPayment}, {nameof(PaymentTermsTotalPrice)} = {PaymentTermsTotalPrice}, {nameof(PaymentTermsPrepaymentTerm)} = {PaymentTermsPrepaymentTerm}, {nameof(PaymentTermsStartingFiscalYearId)} = {PaymentTermsStartingFiscalYearId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(OrderItemClaims)} = {(OrderItemClaims != null ? $"{{ {string.Join(", ", OrderItemClaims)} }}" : "")}, {nameof(OrderItemContributors)} = {(OrderItemContributors != null ? $"{{ {string.Join(", ", OrderItemContributors)} }}" : "")}, {nameof(OrderItemFiscalYearDistributions)} = {(OrderItemFiscalYearDistributions != null ? $"{{ {string.Join(", ", OrderItemFiscalYearDistributions)} }}" : "")}, {nameof(OrderItemFunds)} = {(OrderItemFunds != null ? $"{{ {string.Join(", ", OrderItemFunds)} }}" : "")}, {nameof(OrderItemLocation2s)} = {(OrderItemLocation2s != null ? $"{{ {string.Join(", ", OrderItemLocation2s)} }}" : "")}, {nameof(OrderItemOrganizations)} = {(OrderItemOrganizations != null ? $"{{ {string.Join(", ", OrderItemOrganizations)} }}" : "")}, {nameof(OrderItemProductIds)} = {(OrderItemProductIds != null ? $"{{ {string.Join(", ", OrderItemProductIds)} }}" : "")}, {nameof(OrderItemReferenceNumbers)} = {(OrderItemReferenceNumbers != null ? $"{{ {string.Join(", ", OrderItemReferenceNumbers)} }}" : "")}, {nameof(OrderItemSearchLocations)} = {(OrderItemSearchLocations != null ? $"{{ {string.Join(", ", OrderItemSearchLocations)} }}" : "")}, {nameof(OrderItemTags)} = {(OrderItemTags != null ? $"{{ {string.Join(", ", OrderItemTags)} }}" : "")}, {nameof(OrderItemVolumes)} = {(OrderItemVolumes != null ? $"{{ {string.Join(", ", OrderItemVolumes)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Edition)} = {Edition}, {nameof(CheckinItems)} = {CheckinItems}, {nameof(AgreementId)} = {AgreementId}, {nameof(AcquisitionMethodId)} = {AcquisitionMethodId}, {nameof(AutomaticExport)} = {AutomaticExport}, {nameof(CancellationRestriction)} = {CancellationRestriction}, {nameof(CancellationRestrictionNote)} = {CancellationRestrictionNote}, {nameof(ClaimingActive)} = {ClaimingActive}, {nameof(ClaimingInterval)} = {ClaimingInterval}, {nameof(Collection)} = {Collection}, {nameof(PhysicalUnitListPrice)} = {PhysicalUnitListPrice}, {nameof(ElectronicUnitListPrice)} = {ElectronicUnitListPrice}, {nameof(Currency)} = {Currency}, {nameof(AdditionalCost)} = {AdditionalCost}, {nameof(Discount)} = {Discount}, {nameof(DiscountType)} = {DiscountType}, {nameof(ExchangeRate)} = {ExchangeRate}, {nameof(PhysicalQuantity)} = {PhysicalQuantity}, {nameof(ElectronicQuantity)} = {ElectronicQuantity}, {nameof(EstimatedPrice)} = {EstimatedPrice}, {nameof(FiscalYearRolloverAdjustmentAmount)} = {FiscalYearRolloverAdjustmentAmount}, {nameof(InternalNote)} = {InternalNote}, {nameof(ReceivingNote)} = {ReceivingNote}, {nameof(DetailsIsAcknowledged)} = {DetailsIsAcknowledged}, {nameof(DetailsIsBinderyActive)} = {DetailsIsBinderyActive}, {nameof(SubscriptionFrom)} = {SubscriptionFrom}, {nameof(SubscriptionInterval)} = {SubscriptionInterval}, {nameof(SubscriptionTo)} = {SubscriptionTo}, {nameof(Donor)} = {Donor}, {nameof(EresourceActivated)} = {EresourceActivated}, {nameof(EresourceActivationDue)} = {EresourceActivationDue}, {nameof(EresourceCreateInventory)} = {EresourceCreateInventory}, {nameof(EresourceTrial)} = {EresourceTrial}, {nameof(EresourceExpectedActivationDate)} = {EresourceExpectedActivationDate}, {nameof(EresourceUserLimit)} = {EresourceUserLimit}, {nameof(EresourceAccessProviderId)} = {EresourceAccessProviderId}, {nameof(EresourceLicenseCode)} = {EresourceLicenseCode}, {nameof(EresourceLicenseDescription)} = {EresourceLicenseDescription}, {nameof(EresourceLicenseReference)} = {EresourceLicenseReference}, {nameof(EresourceMaterialTypeId)} = {EresourceMaterialTypeId}, {nameof(EresourceResourceUrl)} = {EresourceResourceUrl}, {nameof(InstanceId)} = {InstanceId}, {nameof(IsPackage)} = {IsPackage}, {nameof(LastEdiExportDate)} = {LastEdiExportDate}, {nameof(LastExportTransmissionMethod)} = {LastExportTransmissionMethod}, {nameof(OrderFormat)} = {OrderFormat}, {nameof(PackageOrderItemId)} = {PackageOrderItemId}, {nameof(PaymentStatus)} = {PaymentStatus}, {nameof(PhysicalCreateInventory)} = {PhysicalCreateInventory}, {nameof(PhysicalMaterialTypeId)} = {PhysicalMaterialTypeId}, {nameof(PhysicalMaterialSupplierId)} = {PhysicalMaterialSupplierId}, {nameof(PhysicalExpectedReceiptDate)} = {PhysicalExpectedReceiptDate}, {nameof(PhysicalReceiptDue)} = {PhysicalReceiptDue}, {nameof(Description)} = {Description}, {nameof(Number)} = {Number}, {nameof(PublicationYear)} = {PublicationYear}, {nameof(Publisher)} = {Publisher}, {nameof(OrderId)} = {OrderId}, {nameof(ReceiptDate)} = {ReceiptDate}, {nameof(ReceiptStatus)} = {ReceiptStatus}, {nameof(RenewalNote)} = {RenewalNote}, {nameof(Requester)} = {Requester}, {nameof(Rush)} = {Rush}, {nameof(Selector)} = {Selector}, {nameof(Source)} = {Source}, {nameof(TitleOrPackage)} = {TitleOrPackage}, {nameof(VendorInstructions)} = {VendorInstructions}, {nameof(VendorNote)} = {VendorNote}, {nameof(VendorCustomerId)} = {VendorCustomerId}, {nameof(SuppressInstanceFromDiscovery)} = {SuppressInstanceFromDiscovery}, {nameof(MultiYearPayment)} = {MultiYearPayment}, {nameof(PaymentTermsTotalPrice)} = {PaymentTermsTotalPrice}, {nameof(PaymentTermsPrepaymentTerm)} = {PaymentTermsPrepaymentTerm}, {nameof(PaymentTermsStartingFiscalYearId)} = {PaymentTermsStartingFiscalYearId}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(OrderItemClaims)} = {(OrderItemClaims != null ? $"{{ {string.Join(", ", OrderItemClaims)} }}" : "")}, {nameof(OrderItemContributors)} = {(OrderItemContributors != null ? $"{{ {string.Join(", ", OrderItemContributors)} }}" : "")}, {nameof(OrderItemFiscalYearDistributions)} = {(OrderItemFiscalYearDistributions != null ? $"{{ {string.Join(", ", OrderItemFiscalYearDistributions)} }}" : "")}, {nameof(OrderItemFunds)} = {(OrderItemFunds != null ? $"{{ {string.Join(", ", OrderItemFunds)} }}" : "")}, {nameof(OrderItemLocation2s)} = {(OrderItemLocation2s != null ? $"{{ {string.Join(", ", OrderItemLocation2s)} }}" : "")}, {nameof(OrderItemOrganizations)} = {(OrderItemOrganizations != null ? $"{{ {string.Join(", ", OrderItemOrganizations)} }}" : "")}, {nameof(OrderItemProductIds)} = {(OrderItemProductIds != null ? $"{{ {string.Join(", ", OrderItemProductIds)} }}" : "")}, {nameof(OrderItemReferenceNumbers)} = {(OrderItemReferenceNumbers != null ? $"{{ {string.Join(", ", OrderItemReferenceNumbers)} }}" : "")}, {nameof(OrderItemSearchLocations)} = {(OrderItemSearchLocations != null ? $"{{ {string.Join(", ", OrderItemSearchLocations)} }}" : "")}, {nameof(OrderItemTags)} = {(OrderItemTags != null ? $"{{ {string.Join(", ", OrderItemTags)} }}" : "")}, {nameof(OrderItemVolumes)} = {(OrderItemVolumes != null ? $"{{ {string.Join(", ", OrderItemVolumes)} }}" : "")} }}";
 
         public static OrderItem2 FromJObject(JObject jObject) => jObject != null ? new OrderItem2
         {
@@ -420,6 +423,7 @@ namespace FolioLibrary
             InstanceId = (Guid?)jObject.SelectToken("instanceId"),
             IsPackage = (bool?)jObject.SelectToken("isPackage"),
             LastEdiExportDate = ((DateTime?)jObject.SelectToken("lastEDIExportDate"))?.ToUniversalTime(),
+            LastExportTransmissionMethod = (string)jObject.SelectToken("lastExport.transmissionMethod"),
             OrderFormat = (string)jObject.SelectToken("orderFormat"),
             PackageOrderItemId = (Guid?)jObject.SelectToken("packagePoLineId"),
             PaymentStatus = (string)jObject.SelectToken("paymentStatus"),
@@ -520,6 +524,8 @@ namespace FolioLibrary
             new JProperty("instanceId", InstanceId),
             new JProperty("isPackage", IsPackage),
             new JProperty("lastEDIExportDate", LastEdiExportDate?.ToLocalTime()),
+            new JProperty("lastExport", new JObject(
+                new JProperty("transmissionMethod", LastExportTransmissionMethod))),
             new JProperty("orderFormat", OrderFormat),
             new JProperty("packagePoLineId", PackageOrderItemId),
             new JProperty("paymentStatus", PaymentStatus),

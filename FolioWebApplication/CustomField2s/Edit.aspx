@@ -121,6 +121,14 @@
                                     <asp:Literal ID="TextFieldFieldFormatLiteral" runat="server" Text='<%#: Eval("TextFieldFieldFormat") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("LookupFieldRefEntityType") != null %>'>
+                                <td>
+                                    <asp:Label ID="LookupFieldRefEntityTypeLabel" runat="server" Text="Lookup Field Ref Entity Type:" AssociatedControlID="LookupFieldRefEntityTypeLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="LookupFieldRefEntityTypeLiteral" runat="server" Text='<%#: Eval("LookupFieldRefEntityType") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("DisplayInAccordion") != null %>'>
                                 <td>
                                     <asp:Label ID="DisplayInAccordionLabel" runat="server" Text="Display In Accordion:" AssociatedControlID="DisplayInAccordionLiteral" />

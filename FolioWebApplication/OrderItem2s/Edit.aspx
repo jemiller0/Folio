@@ -369,6 +369,14 @@
                                     <asp:Literal ID="LastEdiExportDateLiteral" runat="server" Text='<%# Eval("LastEdiExportDate", "{0:d}") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("LastExportTransmissionMethod") != null %>'>
+                                <td>
+                                    <asp:Label ID="LastExportTransmissionMethodLabel" runat="server" Text="Last Export Transmission Method:" AssociatedControlID="LastExportTransmissionMethodLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="LastExportTransmissionMethodLiteral" runat="server" Text='<%#: Eval("LastExportTransmissionMethod") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("OrderFormat") != null %>'>
                                 <td>
                                     <asp:Label ID="OrderFormatLabel" runat="server" Text="Order Format:" AssociatedControlID="OrderFormatLiteral" />
@@ -941,6 +949,7 @@
                         </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Is Package" DataField="IsPackage" AutoPostBackOnFilter="true" />
                         <telerik:GridBoundColumn HeaderText="Last EDI Export Date" DataField="LastEdiExportDate" AutoPostBackOnFilter="true" DataFormatString="{0:d}" />
+                        <telerik:GridBoundColumn HeaderText="Last Export Transmission Method" DataField="LastExportTransmissionMethod" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Order Format" DataField="OrderFormat" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Payment Status" DataField="PaymentStatus" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Physical Create Inventory" DataField="PhysicalCreateInventory" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />

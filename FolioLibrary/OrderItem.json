@@ -421,6 +421,22 @@
       "type": "string",
       "format": "date-time"
     },
+    "lastExport": {
+      "description": "Details about the last export",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "transmissionMethod": {
+          "description": "Method by which the last export was successfully transmitted",
+          "type": "string",
+          "enum": [
+            "FTP",
+            "File download",
+            "Email"
+          ]
+        }
+      }
+    },
     "orderFormat": {
       "description": "The purchase order line format",
       "type": "string",
