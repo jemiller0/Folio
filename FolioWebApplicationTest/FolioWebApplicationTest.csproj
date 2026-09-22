@@ -94,16 +94,16 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MSTest.TestAdapter">
-      <Version>4.3.3</Version>
+      <Version>4.4.1</Version>
     </PackageReference>
     <PackageReference Include="MSTest.TestFramework">
-      <Version>4.3.3</Version>
+      <Version>4.4.1</Version>
     </PackageReference>
     <PackageReference Include="Npgsql">
       <Version>8.0.9</Version>
     </PackageReference>
     <PackageReference Include="System.Configuration.ConfigurationManager">
-      <Version>10.0.10</Version>
+      <Version>10.0.12</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
