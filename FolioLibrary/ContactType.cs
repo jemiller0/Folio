@@ -18,6 +18,9 @@ namespace FolioLibrary
         [Display(Name = "Preferred Users", Order = 3)]
         public virtual ICollection<User2> PreferredUser2s { get; set; }
 
+        [Display(Name = "User Preferred Contact Types", Order = 4)]
+        public virtual ICollection<UserPreferredContactType> UserPreferredContactTypes { get; set; }
+
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Name)} = {Name} }}";
     }
 }

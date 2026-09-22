@@ -285,6 +285,8 @@ namespace FolioWebApplication
             Session["OrderItem2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitems.view") ? "View" : null;
             Session["OrderItemClaimsPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemclaims.view") ? "View" : null;
             Session["OrderItemContributorsPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemcontributors.view") ? "View" : null;
+            Session["OrderItemFiscalYearDistributionsPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemfiscalyeardistributions.view") ? "View" : null;
+            Session["OrderItemFiscalYearDistributionFundDistributionsPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemfiscalyeardistributionfunddistributions.view") ? "View" : null;
             Session["OrderItemFundsPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemfunds.view") ? "View" : null;
             Session["OrderItemLocation2sPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemlocations.view") ? "View" : null;
             Session["OrderItemNotesPermission"] = roles.Contains("all") || roles.Contains("orders.all") || roles.Contains("uc.orderitemnotes.view") ? "View" : null;
@@ -396,6 +398,7 @@ namespace FolioWebApplication
             Session["UserCategoriesPermission"] = roles.Contains("all") || roles.Contains("uc.usercategories.view") || roles.Contains("users.all") ? "View" : null;
             Session["UserDepartmentsPermission"] = roles.Contains("all") || roles.Contains("uc.userdepartments.view") || roles.Contains("users.all") ? "View" : null;
             Session["UserNotesPermission"] = roles.Contains("all") || roles.Contains("uc.usernotes.view") || roles.Contains("users.all") ? "View" : null;
+            Session["UserPreferredContactTypesPermission"] = roles.Contains("all") || roles.Contains("uc.userpreferredcontacttypes.view") || roles.Contains("users.all") ? "View" : null;
             Session["UserSourcesPermission"] = roles.Contains("all") || roles.Contains("uc.usersources.view") || roles.Contains("users.all") ? "View" : null;
             Session["UserSummary2sPermission"] = roles.Contains("all") || roles.Contains("uc.usersummaries.view") || roles.Contains("users.all") ? "View" : null;
             Session["UserSummaryOpenFeesFinesPermission"] = roles.Contains("all") || roles.Contains("uc.usersummaryopenfeesfines.view") || roles.Contains("users.all") ? "View" : null;
@@ -669,6 +672,8 @@ namespace FolioWebApplication
             Session["OrderItem2sPermission"] = permission;
             Session["OrderItemClaimsPermission"] = permission;
             Session["OrderItemContributorsPermission"] = permission;
+            Session["OrderItemFiscalYearDistributionsPermission"] = permission;
+            Session["OrderItemFiscalYearDistributionFundDistributionsPermission"] = permission;
             Session["OrderItemFundsPermission"] = permission;
             Session["OrderItemLocation2sPermission"] = permission;
             Session["OrderItemNotesPermission"] = permission;
@@ -780,6 +785,7 @@ namespace FolioWebApplication
             Session["UserCategoriesPermission"] = permission;
             Session["UserDepartmentsPermission"] = permission;
             Session["UserNotesPermission"] = permission;
+            Session["UserPreferredContactTypesPermission"] = permission;
             Session["UserSourcesPermission"] = permission;
             Session["UserSummary2sPermission"] = permission;
             Session["UserSummaryOpenFeesFinesPermission"] = permission;

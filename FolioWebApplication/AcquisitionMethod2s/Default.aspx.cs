@@ -24,11 +24,12 @@ namespace FolioWebApplication.AcquisitionMethod2s
 
         protected void AcquisitionMethod2sRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "value" }, { "Source", "source" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "value" }, { "Source", "source" }, { "Deprecated", "deprecated" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 Global.GetCqlFilter(AcquisitionMethod2sRadGrid, "Name", "value"),
                 Global.GetCqlFilter(AcquisitionMethod2sRadGrid, "Source", "source"),
+                Global.GetCqlFilter(AcquisitionMethod2sRadGrid, "Deprecated", "deprecated"),
                 Global.GetCqlFilter(AcquisitionMethod2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(AcquisitionMethod2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(AcquisitionMethod2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
@@ -47,19 +48,20 @@ namespace FolioWebApplication.AcquisitionMethod2s
             Response.Charset = "utf-8";
             Response.AppendHeader("Content-Disposition", "attachment; filename=\"AcquisitionMethod2s.txt\"");
             Response.BufferOutput = false;
-            Response.Write("Id\tName\tSource\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
-            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "value" }, { "Source", "source" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
+            Response.Write("Id\tName\tSource\tDeprecated\tCreationTime\tCreationUser\tCreationUserId\tLastWriteTime\tLastWriteUser\tLastWriteUserId\r\n");
+            var d = new Dictionary<string, string>() { { "Id", "id" }, { "Name", "value" }, { "Source", "source" }, { "Deprecated", "deprecated" }, { "CreationTime", "metadata.createdDate" }, { "CreationUserId", "metadata.createdByUserId" }, { "LastWriteTime", "metadata.updatedDate" }, { "LastWriteUserId", "metadata.updatedByUserId" } };
             var where = Global.Trim(string.Join(" and ", new string[]
             {
                 Global.GetCqlFilter(AcquisitionMethod2sRadGrid, "Name", "value"),
                 Global.GetCqlFilter(AcquisitionMethod2sRadGrid, "Source", "source"),
+                Global.GetCqlFilter(AcquisitionMethod2sRadGrid, "Deprecated", "deprecated"),
                 Global.GetCqlFilter(AcquisitionMethod2sRadGrid, "CreationTime", "metadata.createdDate"),
                 Global.GetCqlFilter(AcquisitionMethod2sRadGrid, "CreationUser.Username", "metadata.createdByUserId", "username", folioServiceContext.FolioServiceClient.Users),
                 Global.GetCqlFilter(AcquisitionMethod2sRadGrid, "LastWriteTime", "metadata.updatedDate"),
                 Global.GetCqlFilter(AcquisitionMethod2sRadGrid, "LastWriteUser.Username", "metadata.updatedByUserId", "username", folioServiceContext.FolioServiceClient.Users)
             }.Where(s => s != null)));
             foreach (var am2 in folioServiceContext.AcquisitionMethod2s(where, AcquisitionMethod2sRadGrid.MasterTableView.SortExpressions.Count > 0 ? $"{d[AcquisitionMethod2sRadGrid.MasterTableView.SortExpressions[0].FieldName]}{(AcquisitionMethod2sRadGrid.MasterTableView.SortExpressions[0].SortOrder == GridSortOrder.Descending ? "/sort.descending" : "")}" : null, load: true))
-                Response.Write($"{am2.Id}\t{Global.TextEncode(am2.Name)}\t{Global.TextEncode(am2.Source)}\t{am2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(am2.CreationUser?.Username)}\t{am2.CreationUserId}\t{am2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(am2.LastWriteUser?.Username)}\t{am2.LastWriteUserId}\r\n");
+                Response.Write($"{am2.Id}\t{Global.TextEncode(am2.Name)}\t{Global.TextEncode(am2.Source)}\t{am2.Deprecated}\t{am2.CreationTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(am2.CreationUser?.Username)}\t{am2.CreationUserId}\t{am2.LastWriteTime:M/d/yyyy HH:mm:ss}\t{Global.TextEncode(am2.LastWriteUser?.Username)}\t{am2.LastWriteUserId}\r\n");
             Response.End();
         }
 

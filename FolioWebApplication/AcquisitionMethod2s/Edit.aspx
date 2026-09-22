@@ -25,6 +25,14 @@
                                     <asp:Literal ID="SourceLiteral" runat="server" Text='<%#: Eval("Source") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("Deprecated") != null %>'>
+                                <td>
+                                    <asp:Label ID="DeprecatedLabel" runat="server" Text="Deprecated:" AssociatedControlID="DeprecatedLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="DeprecatedLiteral" runat="server" Text='<%#: Eval("Deprecated") %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>
                                 <td>
                                     <asp:Label ID="CreationTimeLabel" runat="server" Text="Creation Time:" AssociatedControlID="CreationTimeLiteral" />
@@ -200,6 +208,14 @@
                         <telerik:GridBoundColumn HeaderText="Vendor Note" DataField="VendorNote" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Vendor Customer Id" DataField="VendorCustomerId" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Suppress Instance From Discovery" DataField="SuppressInstanceFromDiscovery" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Multi Year Payment" DataField="MultiYearPayment" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Payment Terms Total Price" DataField="PaymentTermsTotalPrice" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Payment Terms Prepayment Term" DataField="PaymentTermsPrepaymentTerm" AutoPostBackOnFilter="true" />
+                        <telerik:GridTemplateColumn HeaderText="Payment Terms Starting Fiscal Year" DataField="PaymentTermsStartingFiscalYear.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="PaymentTermsStartingFiscalYearHyperLink" runat="server" Text='<%#: Eval("PaymentTermsStartingFiscalYear.Name") %>' NavigateUrl='<%# $"~/FiscalYear2s/Edit.aspx?Id={Eval("PaymentTermsStartingFiscalYearId")}" %>' Enabled='<%# Session["FiscalYear2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridTemplateColumn HeaderText="Creation User" DataField="CreationUser.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>

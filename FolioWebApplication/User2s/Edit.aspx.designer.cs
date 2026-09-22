@@ -1125,6 +1125,10 @@ namespace FolioWebApplication.User2s
 
         protected RadGrid UserNotesRadGrid;
 
+        protected Panel UserPreferredContactTypesPanel;
+
+        protected RadGrid UserPreferredContactTypesRadGrid;
+
         protected Panel UserRequestPreference2sPanel;
 
         protected RadGrid UserRequestPreference2sRadGrid;

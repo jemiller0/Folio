@@ -147,8 +147,15 @@
           "minItems": 0
         },
         "preferredContactTypeId": {
-          "description": "Id of user's preferred contact type like Email, Mail or Text Message, see /addresstypes API",
+          "description": "(Deprecated) ID of user's preferred contact type like Email, Mail, or Text Message  (see ui-users contactTypes.js)",
           "type": "string"
+        },
+        "preferredContactTypeIds": {
+          "description": "IDs of user's preferred contact types like Email, Mail, or Text Message (see ui-users contactTypes.js)",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "profilePictureLink": {
           "description": "Link to the profile picture, or only the id of the /users/profile-picture entry",

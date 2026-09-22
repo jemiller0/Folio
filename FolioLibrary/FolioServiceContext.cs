@@ -6331,6 +6331,7 @@ namespace FolioLibrary
                 if (load && oi2.PhysicalMaterialTypeId != null) oi2.PhysicalMaterialType = FindMaterialType2(oi2.PhysicalMaterialTypeId, cache: cache);
                 if (load && oi2.PhysicalMaterialSupplierId != null) oi2.PhysicalMaterialSupplier = FindOrganization2(oi2.PhysicalMaterialSupplierId, cache: cache);
                 if (load && oi2.OrderId != null) oi2.Order = FindOrder2(oi2.OrderId, cache: cache);
+                if (load && oi2.PaymentTermsStartingFiscalYearId != null) oi2.PaymentTermsStartingFiscalYear = FindFiscalYear2(oi2.PaymentTermsStartingFiscalYearId, cache: cache);
                 if (load && oi2.CreationUserId != null) oi2.CreationUser = FindUser2(oi2.CreationUserId, cache: cache);
                 if (load && oi2.LastWriteUserId != null) oi2.LastWriteUser = FindUser2(oi2.LastWriteUserId, cache: cache);
                 return oi2;
@@ -6352,6 +6353,7 @@ namespace FolioLibrary
                 if (load && oi2.PhysicalMaterialTypeId != null) oi2.PhysicalMaterialType = FindMaterialType2(oi2.PhysicalMaterialTypeId, cache: cache);
                 if (load && oi2.PhysicalMaterialSupplierId != null) oi2.PhysicalMaterialSupplier = FindOrganization2(oi2.PhysicalMaterialSupplierId, cache: cache);
                 if (load && oi2.OrderId != null) oi2.Order = FindOrder2(oi2.OrderId, cache: cache);
+                if (load && oi2.PaymentTermsStartingFiscalYearId != null) oi2.PaymentTermsStartingFiscalYear = FindFiscalYear2(oi2.PaymentTermsStartingFiscalYearId, cache: cache);
                 if (load && oi2.CreationUserId != null) oi2.CreationUser = FindUser2(oi2.CreationUserId, cache: cache);
                 if (load && oi2.LastWriteUserId != null) oi2.LastWriteUser = FindUser2(oi2.LastWriteUserId, cache: cache);
                 yield return oi2;
@@ -6372,6 +6374,7 @@ namespace FolioLibrary
             if (load && oi2.PhysicalMaterialTypeId != null) oi2.PhysicalMaterialType = FindMaterialType2(oi2.PhysicalMaterialTypeId, cache: cache);
             if (load && oi2.PhysicalMaterialSupplierId != null) oi2.PhysicalMaterialSupplier = FindOrganization2(oi2.PhysicalMaterialSupplierId, cache: cache);
             if (load && oi2.OrderId != null) oi2.Order = FindOrder2(oi2.OrderId, cache: cache);
+            if (load && oi2.PaymentTermsStartingFiscalYearId != null) oi2.PaymentTermsStartingFiscalYear = FindFiscalYear2(oi2.PaymentTermsStartingFiscalYearId, cache: cache);
             if (load && oi2.CreationUserId != null) oi2.CreationUser = FindUser2(oi2.CreationUserId, cache: cache);
             if (load && oi2.LastWriteUserId != null) oi2.LastWriteUser = FindUser2(oi2.LastWriteUserId, cache: cache);
             var i = 0;
@@ -6388,6 +6391,14 @@ namespace FolioLibrary
                     oic2.OrderItemId = oi2.Id;
                     oic2.OrderItem = oi2;
                     if (load && oic2.ContributorNameTypeId != null) oic2.ContributorNameType = FindContributorNameType2(oic2.ContributorNameTypeId, cache: cache);
+                }
+            i = 0;
+            if (oi2.OrderItemFiscalYearDistributions != null) foreach (var oifyd in oi2.OrderItemFiscalYearDistributions)
+                {
+                    oifyd.Id = (++i).ToString();
+                    oifyd.OrderItemId = oi2.Id;
+                    oifyd.OrderItem = oi2;
+                    if (load && oifyd.FiscalYearId != null) oifyd.FiscalYear = FindFiscalYear2(oifyd.FiscalYearId, cache: cache);
                 }
             i = 0;
             if (oi2.OrderItemFunds != null) foreach (var oif in oi2.OrderItemFunds)
@@ -10316,6 +10327,13 @@ namespace FolioLibrary
                     ud.UserId = u2.Id;
                     ud.User = u2;
                     if (load && ud.DepartmentId != null) ud.Department = FindDepartment2(ud.DepartmentId, cache: cache);
+                }
+            i = 0;
+            if (u2.UserPreferredContactTypes != null) foreach (var upct in u2.UserPreferredContactTypes)
+                {
+                    upct.Id = (++i).ToString();
+                    upct.UserId = u2.Id;
+                    upct.User = u2;
                 }
             i = 0;
             if (u2.UserTags != null) foreach (var ut in u2.UserTags)

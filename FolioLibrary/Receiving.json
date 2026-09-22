@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "Piece details",
-  "javaName": "Piece",
   "type": "object",
   "additionalProperties": false,
   "properties": {

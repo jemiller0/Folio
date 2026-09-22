@@ -3024,6 +3024,42 @@ namespace FolioLibraryTest
         }
 
         [TestMethod]
+        public void QueryOrderItemFiscalYearDistributionsTest()
+        {
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+                fdc.OrderItemFiscalYearDistributions(take: 0).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemFiscalYearDistributionsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void GridQueryOrderItemFiscalYearDistributionsTest()
+        {
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+                fdc.GridOrderItemFiscalYearDistributions(take: 0).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemFiscalYearDistributionsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryOrderItemFiscalYearDistributionFundDistributionsTest()
+        {
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+                fdc.OrderItemFiscalYearDistributionFundDistributions(take: 0).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemFiscalYearDistributionFundDistributionsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void GridQueryOrderItemFiscalYearDistributionFundDistributionsTest()
+        {
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+                fdc.GridOrderItemFiscalYearDistributionFundDistributions(take: 0).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"OrderItemFiscalYearDistributionFundDistributionsTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
         public void QueryOrderItemFundsTest()
         {
             var s = Stopwatch.StartNew();
@@ -5361,6 +5397,24 @@ namespace FolioLibraryTest
             using (var fdc = new FolioDapperContext())
                 fdc.GridUserNotes(take: 0).ToArray();
             traceSource.TraceEvent(TraceEventType.Information, 0, $"UserNotesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void QueryUserPreferredContactTypesTest()
+        {
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+                fdc.UserPreferredContactTypes(take: 0).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserPreferredContactTypesTest()\r\n    ElapsedTime={s.Elapsed}");
+        }
+
+        [TestMethod]
+        public void GridQueryUserPreferredContactTypesTest()
+        {
+            var s = Stopwatch.StartNew();
+            using (var fdc = new FolioDapperContext())
+                fdc.GridUserPreferredContactTypes(take: 0).ToArray();
+            traceSource.TraceEvent(TraceEventType.Information, 0, $"UserPreferredContactTypesTest()\r\n    ElapsedTime={s.Elapsed}");
         }
 
         [TestMethod]

@@ -22,6 +22,11 @@
         "System"
       ]
     },
+    "deprecated": {
+      "description": "Mark the acquisition method as deprecated to block new usage, but still allow it to be found in searches.",
+      "type": "boolean",
+      "default": false
+    },
     "metadata": {
       "title": "Metadata Schema",
       "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",

@@ -1042,46 +1042,49 @@ namespace FolioLibrary
         [Display(Name = "User Notes", Order = 335)]
         public virtual ICollection<UserNote> UserNotes { get; set; }
 
-        [Display(Name = "User Request Preferences", Order = 336)]
+        [Display(Name = "User Preferred Contact Types", Order = 336), JsonConverter(typeof(ArrayJsonConverter<List<UserPreferredContactType>, UserPreferredContactType>), "ContactTypeId"), JsonProperty("personal.preferredContactTypeIds")]
+        public virtual ICollection<UserPreferredContactType> UserPreferredContactTypes { get; set; }
+
+        [Display(Name = "User Request Preferences", Order = 337)]
         public virtual ICollection<UserRequestPreference2> UserRequestPreference2s { get; set; }
 
-        [Display(Name = "User Request Preferences 1", Order = 337)]
+        [Display(Name = "User Request Preferences 1", Order = 338)]
         public virtual ICollection<UserRequestPreference2> UserRequestPreference2s1 { get; set; }
 
-        [Display(Name = "User Request Preferences 2", Order = 338)]
+        [Display(Name = "User Request Preferences 2", Order = 339)]
         public virtual ICollection<UserRequestPreference2> UserRequestPreference2s2 { get; set; }
 
-        [Display(Name = "User Summarys", Order = 339)]
+        [Display(Name = "User Summarys", Order = 340)]
         public virtual ICollection<UserSummary2> UserSummary2s { get; set; }
 
-        [Display(Name = "User Summarys 1", Order = 340)]
+        [Display(Name = "User Summarys 1", Order = 341)]
         public virtual ICollection<UserSummary2> UserSummary2s1 { get; set; }
 
-        [Display(Name = "User Summarys 2", Order = 341)]
+        [Display(Name = "User Summarys 2", Order = 342)]
         public virtual ICollection<UserSummary2> UserSummary2s2 { get; set; }
 
-        [Display(Name = "User Tags", Order = 342), JsonConverter(typeof(ArrayJsonConverter<List<UserTag>, UserTag>), "Content"), JsonProperty("tags.tagList")]
+        [Display(Name = "User Tags", Order = 343), JsonConverter(typeof(ArrayJsonConverter<List<UserTag>, UserTag>), "Content"), JsonProperty("tags.tagList")]
         public virtual ICollection<UserTag> UserTags { get; set; }
 
-        [Display(Name = "Vouchers", Order = 343)]
+        [Display(Name = "Vouchers", Order = 344)]
         public virtual ICollection<Voucher2> Voucher2s { get; set; }
 
-        [Display(Name = "Vouchers 1", Order = 344)]
+        [Display(Name = "Vouchers 1", Order = 345)]
         public virtual ICollection<Voucher2> Voucher2s1 { get; set; }
 
-        [Display(Name = "Voucher Items", Order = 345)]
+        [Display(Name = "Voucher Items", Order = 346)]
         public virtual ICollection<VoucherItem2> VoucherItem2s { get; set; }
 
-        [Display(Name = "Voucher Items 1", Order = 346)]
+        [Display(Name = "Voucher Items 1", Order = 347)]
         public virtual ICollection<VoucherItem2> VoucherItem2s1 { get; set; }
 
-        [Display(Name = "Waive Reasons", Order = 347)]
+        [Display(Name = "Waive Reasons", Order = 348)]
         public virtual ICollection<WaiveReason2> WaiveReason2s { get; set; }
 
-        [Display(Name = "Waive Reasons 1", Order = 348)]
+        [Display(Name = "Waive Reasons 1", Order = 349)]
         public virtual ICollection<WaiveReason2> WaiveReason2s1 { get; set; }
 
-        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Username)} = {Username}, {nameof(ExternalSystemId)} = {ExternalSystemId}, {nameof(Barcode)} = {Barcode}, {nameof(Active)} = {Active}, {nameof(Type)} = {Type}, {nameof(GroupId)} = {GroupId}, {nameof(Pronouns)} = {Pronouns}, {nameof(Name)} = {Name}, {nameof(LastName)} = {LastName}, {nameof(FirstName)} = {FirstName}, {nameof(MiddleName)} = {MiddleName}, {nameof(PreferredFirstName)} = {PreferredFirstName}, {nameof(EmailAddress)} = {EmailAddress}, {nameof(PhoneNumber)} = {PhoneNumber}, {nameof(MobilePhoneNumber)} = {MobilePhoneNumber}, {nameof(BirthDate)} = {BirthDate}, {nameof(PreferredContactTypeId)} = {PreferredContactTypeId}, {nameof(ProfilePictureLink)} = {ProfilePictureLink}, {nameof(StartDate)} = {StartDate}, {nameof(EndDate)} = {EndDate}, {nameof(Source)} = {Source}, {nameof(SourceId)} = {SourceId}, {nameof(CategoryCode)} = {CategoryCode}, {nameof(CategoryId)} = {CategoryId}, {nameof(Status)} = {Status}, {nameof(Statuses)} = {Statuses}, {nameof(StaffStatus)} = {StaffStatus}, {nameof(StaffPrivileges)} = {StaffPrivileges}, {nameof(StaffDivision)} = {StaffDivision}, {nameof(StaffDepartment)} = {StaffDepartment}, {nameof(StudentId)} = {StudentId}, {nameof(StudentStatus)} = {StudentStatus}, {nameof(StudentRestriction)} = {StudentRestriction}, {nameof(StudentDivision)} = {StudentDivision}, {nameof(StudentDepartment)} = {StudentDepartment}, {nameof(Deceased)} = {Deceased}, {nameof(Collections)} = {Collections}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(PreferredEmailCommunications)} = {(PreferredEmailCommunications != null ? $"{{ {string.Join(", ", PreferredEmailCommunications)} }}" : "")}, {nameof(UserAddresses)} = {(UserAddresses != null ? $"{{ {string.Join(", ", UserAddresses)} }}" : "")}, {nameof(UserDepartments)} = {(UserDepartments != null ? $"{{ {string.Join(", ", UserDepartments)} }}" : "")}, {nameof(UserTags)} = {(UserTags != null ? $"{{ {string.Join(", ", UserTags)} }}" : "")} }}";
+        public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Username)} = {Username}, {nameof(ExternalSystemId)} = {ExternalSystemId}, {nameof(Barcode)} = {Barcode}, {nameof(Active)} = {Active}, {nameof(Type)} = {Type}, {nameof(GroupId)} = {GroupId}, {nameof(Pronouns)} = {Pronouns}, {nameof(Name)} = {Name}, {nameof(LastName)} = {LastName}, {nameof(FirstName)} = {FirstName}, {nameof(MiddleName)} = {MiddleName}, {nameof(PreferredFirstName)} = {PreferredFirstName}, {nameof(EmailAddress)} = {EmailAddress}, {nameof(PhoneNumber)} = {PhoneNumber}, {nameof(MobilePhoneNumber)} = {MobilePhoneNumber}, {nameof(BirthDate)} = {BirthDate}, {nameof(PreferredContactTypeId)} = {PreferredContactTypeId}, {nameof(ProfilePictureLink)} = {ProfilePictureLink}, {nameof(StartDate)} = {StartDate}, {nameof(EndDate)} = {EndDate}, {nameof(Source)} = {Source}, {nameof(SourceId)} = {SourceId}, {nameof(CategoryCode)} = {CategoryCode}, {nameof(CategoryId)} = {CategoryId}, {nameof(Status)} = {Status}, {nameof(Statuses)} = {Statuses}, {nameof(StaffStatus)} = {StaffStatus}, {nameof(StaffPrivileges)} = {StaffPrivileges}, {nameof(StaffDivision)} = {StaffDivision}, {nameof(StaffDepartment)} = {StaffDepartment}, {nameof(StudentId)} = {StudentId}, {nameof(StudentStatus)} = {StudentStatus}, {nameof(StudentRestriction)} = {StudentRestriction}, {nameof(StudentDivision)} = {StudentDivision}, {nameof(StudentDepartment)} = {StudentDepartment}, {nameof(Deceased)} = {Deceased}, {nameof(Collections)} = {Collections}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(PreferredEmailCommunications)} = {(PreferredEmailCommunications != null ? $"{{ {string.Join(", ", PreferredEmailCommunications)} }}" : "")}, {nameof(UserAddresses)} = {(UserAddresses != null ? $"{{ {string.Join(", ", UserAddresses)} }}" : "")}, {nameof(UserDepartments)} = {(UserDepartments != null ? $"{{ {string.Join(", ", UserDepartments)} }}" : "")}, {nameof(UserPreferredContactTypes)} = {(UserPreferredContactTypes != null ? $"{{ {string.Join(", ", UserPreferredContactTypes)} }}" : "")}, {nameof(UserTags)} = {(UserTags != null ? $"{{ {string.Join(", ", UserTags)} }}" : "")} }}";
 
         public static User2 FromJObject(JObject jObject) => jObject != null ? new User2
         {
@@ -1133,6 +1136,7 @@ namespace FolioLibrary
             PreferredEmailCommunications = jObject.SelectToken("preferredEmailCommunication")?.Select(jt => PreferredEmailCommunication.FromJObject((JValue)jt)).ToArray(),
             UserAddresses = jObject.SelectToken("personal.addresses")?.Where(jt => jt.HasValues).Select(jt => UserAddress.FromJObject((JObject)jt)).ToArray(),
             UserDepartments = jObject.SelectToken("departments")?.Select(jt => UserDepartment.FromJObject((JValue)jt)).ToArray(),
+            UserPreferredContactTypes = jObject.SelectToken("personal.preferredContactTypeIds")?.Select(jt => UserPreferredContactType.FromJObject((JValue)jt)).ToArray(),
             UserTags = jObject.SelectToken("tags.tagList")?.Select(jt => UserTag.FromJObject((JValue)jt)).ToArray()
         } : null;
 
@@ -1156,7 +1160,8 @@ namespace FolioLibrary
                 new JProperty("dateOfBirth", BirthDate?.ToLocalTime()),
                 new JProperty("preferredContactTypeId", PreferredContactTypeId),
                 new JProperty("profilePictureLink", ProfilePictureLink),
-                new JProperty("addresses", UserAddresses?.Select(ua => ua.ToJObject())))),
+                new JProperty("addresses", UserAddresses?.Select(ua => ua.ToJObject())),
+                new JProperty("preferredContactTypeIds", UserPreferredContactTypes?.Select(upct => upct.ToJObject())))),
             new JProperty("enrollmentDate", StartDate?.ToLocalTime()),
             new JProperty("expirationDate", EndDate?.ToLocalTime()),
             new JProperty("customFields", new JObject(

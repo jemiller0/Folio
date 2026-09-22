@@ -2459,6 +2459,19 @@
             </telerik:RadGrid>
         </fieldset>
     </asp:Panel>
+    <asp:Panel ID="UserPreferredContactTypesPanel" runat="server" Visible='<%# (string)Session["UserPreferredContactTypesPermission"] != null && User2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="UserPreferredContactTypesHyperLink" runat="server" Text="User Preferred Contact Types" NavigateUrl="~/UserPreferredContactTypes/Default.aspx" Enabled="false" /></legend>
+            <telerik:RadGrid ID="UserPreferredContactTypesRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="UserPreferredContactTypesRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No user preferred contact types found">
+                    <Columns>
+                        <telerik:GridBoundColumn HeaderText="Contact Type" DataField="ContactType" AutoPostBackOnFilter="true" AllowSorting="false" />
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
     <asp:Panel ID="UserRequestPreference2s2Panel" runat="server" Visible='<%# (string)Session["UserRequestPreference2sPermission"] != null && User2FormView.DataKey.Value != null %>'>
         <fieldset>
             <legend>
@@ -2650,6 +2663,11 @@
             <telerik:AjaxSetting AjaxControlID="UserDepartmentsRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="UserDepartmentsPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="UserPreferredContactTypesRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="UserPreferredContactTypesPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="UserRequestPreference2s2RadGrid">

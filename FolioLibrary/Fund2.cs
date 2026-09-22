@@ -130,25 +130,28 @@ namespace FolioLibrary
         [Display(Name = "Invoice Item Funds", Order = 34)]
         public virtual ICollection<InvoiceItemFund> InvoiceItemFunds { get; set; }
 
-        [Display(Name = "Order Item Funds", Order = 35)]
+        [Display(Name = "Order Item Fiscal Year Distribution Fund Distributions", Order = 35)]
+        public virtual ICollection<OrderItemFiscalYearDistributionFundDistribution> OrderItemFiscalYearDistributionFundDistributions { get; set; }
+
+        [Display(Name = "Order Item Funds", Order = 36)]
         public virtual ICollection<OrderItemFund> OrderItemFunds { get; set; }
 
-        [Display(Name = "Rollover Budgets", Order = 36)]
+        [Display(Name = "Rollover Budgets", Order = 37)]
         public virtual ICollection<RolloverBudget2> RolloverBudget2s { get; set; }
 
-        [Display(Name = "Rollover Budget From Funds", Order = 37)]
+        [Display(Name = "Rollover Budget From Funds", Order = 38)]
         public virtual ICollection<RolloverBudgetFromFund> RolloverBudgetFromFunds { get; set; }
 
-        [Display(Name = "Rollover Budget To Funds", Order = 38)]
+        [Display(Name = "Rollover Budget To Funds", Order = 39)]
         public virtual ICollection<RolloverBudgetToFund> RolloverBudgetToFunds { get; set; }
 
-        [Display(Name = "Transactions", Order = 39)]
+        [Display(Name = "Transactions", Order = 40)]
         public virtual ICollection<Transaction2> Transaction2s { get; set; }
 
-        [Display(Name = "Transactions 1", Order = 40)]
+        [Display(Name = "Transactions 1", Order = 41)]
         public virtual ICollection<Transaction2> Transaction2s1 { get; set; }
 
-        [Display(Name = "Voucher Item Funds", Order = 41)]
+        [Display(Name = "Voucher Item Funds", Order = 42)]
         public virtual ICollection<VoucherItemFund> VoucherItemFunds { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(Code)} = {Code}, {nameof(Description)} = {Description}, {nameof(AccountNumber)} = {AccountNumber}, {nameof(FundStatus)} = {FundStatus}, {nameof(FundTypeId)} = {FundTypeId}, {nameof(LedgerId)} = {LedgerId}, {nameof(Name)} = {Name}, {nameof(RestrictByLocations)} = {RestrictByLocations}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content}, {nameof(AllocatedFromFunds)} = {(AllocatedFromFunds != null ? $"{{ {string.Join(", ", AllocatedFromFunds)} }}" : "")}, {nameof(AllocatedToFunds)} = {(AllocatedToFunds != null ? $"{{ {string.Join(", ", AllocatedToFunds)} }}" : "")}, {nameof(FundAcquisitionsUnits)} = {(FundAcquisitionsUnits != null ? $"{{ {string.Join(", ", FundAcquisitionsUnits)} }}" : "")}, {nameof(FundLocation2s)} = {(FundLocation2s != null ? $"{{ {string.Join(", ", FundLocation2s)} }}" : "")}, {nameof(FundOrganization2s)} = {(FundOrganization2s != null ? $"{{ {string.Join(", ", FundOrganization2s)} }}" : "")}, {nameof(FundTags)} = {(FundTags != null ? $"{{ {string.Join(", ", FundTags)} }}" : "")} }}";

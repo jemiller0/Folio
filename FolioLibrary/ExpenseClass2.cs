@@ -82,13 +82,16 @@ namespace FolioLibrary
         [Display(Name = "Invoice Item Funds", Order = 18)]
         public virtual ICollection<InvoiceItemFund> InvoiceItemFunds { get; set; }
 
-        [Display(Name = "Order Item Funds", Order = 19)]
+        [Display(Name = "Order Item Fiscal Year Distribution Fund Distributions", Order = 19)]
+        public virtual ICollection<OrderItemFiscalYearDistributionFundDistribution> OrderItemFiscalYearDistributionFundDistributions { get; set; }
+
+        [Display(Name = "Order Item Funds", Order = 20)]
         public virtual ICollection<OrderItemFund> OrderItemFunds { get; set; }
 
-        [Display(Name = "Transactions", Order = 20)]
+        [Display(Name = "Transactions", Order = 21)]
         public virtual ICollection<Transaction2> Transaction2s { get; set; }
 
-        [Display(Name = "Voucher Item Funds", Order = 21)]
+        [Display(Name = "Voucher Item Funds", Order = 22)]
         public virtual ICollection<VoucherItemFund> VoucherItemFunds { get; set; }
 
         public override string ToString() => $"{{ {nameof(Id)} = {Id}, {nameof(Version)} = {Version}, {nameof(Code)} = {Code}, {nameof(AccountNumberExtension)} = {AccountNumberExtension}, {nameof(Name)} = {Name}, {nameof(CreationTime)} = {CreationTime}, {nameof(CreationUserId)} = {CreationUserId}, {nameof(CreationUserUsername)} = {CreationUserUsername}, {nameof(LastWriteTime)} = {LastWriteTime}, {nameof(LastWriteUserId)} = {LastWriteUserId}, {nameof(LastWriteUserUsername)} = {LastWriteUserUsername}, {nameof(Content)} = {Content} }}";

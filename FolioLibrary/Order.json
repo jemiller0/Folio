@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "purchase order",
-  "javaName": "PurchaseOrder",
   "type": "object",
   "additionalProperties": false,
   "properties": {

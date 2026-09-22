@@ -25,6 +25,7 @@ SELECT
 am.id AS id,
 am.jsonb->>'value' AS value,
 am.jsonb->>'source' AS source,
+CAST(am.jsonb->>'deprecated' AS BOOLEAN) AS deprecated,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}' || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END) AS created_date,
 CAST(am.jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
 am.jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
@@ -2329,6 +2330,23 @@ oirn.jsonb->>'refNumber' AS ref_number,
 oirn.jsonb->>'refNumberType' AS ref_number_type,
 oirn.jsonb->>'vendorDetailsSource' AS vendor_details_source
 FROM uchicago_mod_orders_storage.po_line oi, jsonb_array_elements(oi.jsonb#>'{vendorDetail,referenceNumbers}') WITH ORDINALITY oirn (jsonb);
+CREATE VIEW uc.order_item_fiscal_year_distribution_fund_distributions AS
+SELECT
+uuid_generate_v5(oi.id, oifyd.ordinality::text || '-' || oifydfd.ordinality::text)::text AS id,
+uuid_generate_v5(oi.id, oifyd.ordinality::text)::text AS order_item_fiscal_year_distribution_id,
+oifydfd.jsonb->>'code' AS code,
+CAST(oifydfd.jsonb->>'encumbrance' AS UUID) AS encumbrance_id,
+CAST(oifydfd.jsonb->>'fundId' AS UUID) AS fund_id,
+CAST(oifydfd.jsonb->>'expenseClassId' AS UUID) AS expense_class_id,
+oifydfd.jsonb->>'distributionType' AS distribution_type,
+CAST(oifydfd.jsonb->>'value' AS DECIMAL(19,2)) AS value
+FROM uchicago_mod_orders_storage.po_line oi, jsonb_array_elements(oi.jsonb#>'{paymentTerms,fiscalYearDistributions}') WITH ORDINALITY oifyd (jsonb), jsonb_array_elements(oifyd.jsonb->'fundDistributions') WITH ORDINALITY oifydfd (jsonb);
+CREATE VIEW uc.order_item_fiscal_year_distributions AS
+SELECT
+uuid_generate_v5(oi.id, oifyd.ordinality::text)::text AS id,
+oi.id AS order_item_id,
+CAST(oifyd.jsonb->>'fiscalYearId' AS UUID) AS fiscal_year_id
+FROM uchicago_mod_orders_storage.po_line oi, jsonb_array_elements(oi.jsonb#>'{paymentTerms,fiscalYearDistributions}') WITH ORDINALITY oifyd (jsonb);
 CREATE VIEW uc.order_items AS
 SELECT
 oi.id AS id,
@@ -2401,6 +2419,10 @@ oi.jsonb#>>'{vendorDetail,instructions}' AS vendor_detail_instructions,
 oi.jsonb#>>'{vendorDetail,noteFromVendor}' AS vendor_detail_note_from_vendor,
 oi.jsonb#>>'{vendorDetail,vendorAccount}' AS vendor_detail_vendor_account,
 CAST(oi.jsonb->>'suppressInstanceFromDiscovery' AS BOOLEAN) AS suppress_instance_from_discovery,
+CAST(oi.jsonb->>'multiYearPayment' AS BOOLEAN) AS multi_year_payment,
+CAST(oi.jsonb#>>'{paymentTerms,totalPrice}' AS DECIMAL(19,2)) AS payment_terms_total_price,
+CAST(oi.jsonb#>>'{paymentTerms,prepaymentTerm}' AS INTEGER) AS payment_terms_prepayment_term,
+CAST(oi.jsonb#>>'{paymentTerms,startingFiscalYearId}' AS UUID) AS payment_terms_starting_fiscal_year_id,
 uc.TIMESTAMP_CAST(jsonb#>>'{metadata,createdDate}' || CASE WHEN jsonb#>>'{metadata,createdDate}' !~ '([-+]\d\d:\d\d)|Z$' THEN '+00:00' ELSE '' END) AS created_date,
 CAST(oi.jsonb#>>'{metadata,createdByUserId}' AS UUID) AS created_by_user_id,
 oi.jsonb#>>'{metadata,createdByUsername}' AS created_by_username,
@@ -3656,6 +3678,12 @@ ua.jsonb->>'postalCode' AS postal_code,
 CAST(ua.jsonb->>'addressTypeId' AS UUID) AS address_type_id,
 CAST(ua.jsonb->>'primaryAddress' AS BOOLEAN) AS primary_address
 FROM uchicago_mod_users.users u, jsonb_array_elements(u.jsonb#>'{personal,addresses}') WITH ORDINALITY ua (jsonb);
+CREATE VIEW uc.user_preferred_contact_types AS
+SELECT
+uuid_generate_v5(u.id, upct.ordinality::text)::text AS id,
+u.id AS user_id,
+CAST(upct.jsonb AS VARCHAR(3)) AS contact_type_id
+FROM uchicago_mod_users.users u, jsonb_array_elements_text(u.jsonb#>'{personal,preferredContactTypeIds}') WITH ORDINALITY upct (jsonb);
 CREATE VIEW uc.user_tags AS
 SELECT
 uuid_generate_v5(u.id, ut.ordinality::text)::text AS id,

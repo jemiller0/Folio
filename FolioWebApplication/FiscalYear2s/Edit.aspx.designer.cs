@@ -33,6 +33,14 @@ namespace FolioWebApplication.FiscalYear2s
 
         protected RadGrid Order2sRadGrid;
 
+        protected Panel OrderItem2sPanel;
+
+        protected RadGrid OrderItem2sRadGrid;
+
+        protected Panel OrderItemFiscalYearDistributionsPanel;
+
+        protected RadGrid OrderItemFiscalYearDistributionsRadGrid;
+
         protected Panel Rollover2sPanel;
 
         protected RadGrid Rollover2sRadGrid;

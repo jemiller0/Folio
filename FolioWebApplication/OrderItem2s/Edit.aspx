@@ -569,6 +569,38 @@
                                     <asp:Literal ID="SuppressInstanceFromDiscoveryLiteral" runat="server" Text='<%#: Eval("SuppressInstanceFromDiscovery") %>' />
                                 </td>
                             </tr>
+                            <tr runat="server" visible='<%# Eval("MultiYearPayment") != null %>'>
+                                <td>
+                                    <asp:Label ID="MultiYearPaymentLabel" runat="server" Text="Multi Year Payment:" AssociatedControlID="MultiYearPaymentLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="MultiYearPaymentLiteral" runat="server" Text='<%#: Eval("MultiYearPayment") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("PaymentTermsTotalPrice") != null %>'>
+                                <td>
+                                    <asp:Label ID="PaymentTermsTotalPriceLabel" runat="server" Text="Payment Terms Total Price:" AssociatedControlID="PaymentTermsTotalPriceLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="PaymentTermsTotalPriceLiteral" runat="server" Text='<%# Eval("PaymentTermsTotalPrice", "{0:c}") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("PaymentTermsPrepaymentTerm") != null %>'>
+                                <td>
+                                    <asp:Label ID="PaymentTermsPrepaymentTermLabel" runat="server" Text="Payment Terms Prepayment Term:" AssociatedControlID="PaymentTermsPrepaymentTermLiteral" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="PaymentTermsPrepaymentTermLiteral" runat="server" Text='<%#: Eval("PaymentTermsPrepaymentTerm") %>' />
+                                </td>
+                            </tr>
+                            <tr runat="server" visible='<%# Eval("PaymentTermsStartingFiscalYear") != null %>'>
+                                <td>
+                                    <asp:Label ID="PaymentTermsStartingFiscalYearLabel" runat="server" Text="Payment Terms Starting Fiscal Year:" AssociatedControlID="PaymentTermsStartingFiscalYearHyperLink" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="PaymentTermsStartingFiscalYearHyperLink" runat="server" Text='<%#: Eval("PaymentTermsStartingFiscalYear.Name") %>' NavigateUrl='<%# $"~/FiscalYear2s/Edit.aspx?Id={Eval("PaymentTermsStartingFiscalYearId")}" %>' Enabled='<%# Session["FiscalYear2sPermission"] != null %>' />
+                                </td>
+                            </tr>
                             <tr runat="server" visible='<%# Eval("CreationTime") != null %>'>
                                 <td>
                                     <asp:Label ID="CreationTimeLabel" runat="server" Text="Creation Time:" AssociatedControlID="CreationTimeLiteral" />
@@ -949,6 +981,14 @@
                         <telerik:GridBoundColumn HeaderText="Vendor Note" DataField="VendorNote" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Vendor Customer Id" DataField="VendorCustomerId" AutoPostBackOnFilter="true" HtmlEncode="true" CurrentFilterFunction="StartsWith" />
                         <telerik:GridBoundColumn HeaderText="Suppress Instance From Discovery" DataField="SuppressInstanceFromDiscovery" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Multi Year Payment" DataField="MultiYearPayment" AutoPostBackOnFilter="true" />
+                        <telerik:GridBoundColumn HeaderText="Payment Terms Total Price" DataField="PaymentTermsTotalPrice" AutoPostBackOnFilter="true" DataFormatString="{0:c}" />
+                        <telerik:GridBoundColumn HeaderText="Payment Terms Prepayment Term" DataField="PaymentTermsPrepaymentTerm" AutoPostBackOnFilter="true" />
+                        <telerik:GridTemplateColumn HeaderText="Payment Terms Starting Fiscal Year" DataField="PaymentTermsStartingFiscalYear.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="PaymentTermsStartingFiscalYearHyperLink" runat="server" Text='<%#: Eval("PaymentTermsStartingFiscalYear.Name") %>' NavigateUrl='<%# $"~/FiscalYear2s/Edit.aspx?Id={Eval("PaymentTermsStartingFiscalYearId")}" %>' Enabled='<%# Session["FiscalYear2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
                         <telerik:GridBoundColumn HeaderText="Creation Time" DataField="CreationTime" AutoPostBackOnFilter="true" DataFormatString="{0:g}" />
                         <telerik:GridTemplateColumn HeaderText="Creation User" DataField="CreationUser.Username" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
@@ -992,6 +1032,23 @@
                         <telerik:GridTemplateColumn HeaderText="Contributor Name Type" DataField="ContributorNameType.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
                             <ItemTemplate>
                                 <asp:HyperLink ID="ContributorNameTypeHyperLink" runat="server" Text='<%#: Eval("ContributorNameType.Name") %>' NavigateUrl='<%# $"~/ContributorNameType2s/Edit.aspx?Id={Eval("ContributorNameTypeId")}" %>' Enabled='<%# Session["ContributorNameType2sPermission"] != null %>' />
+                            </ItemTemplate>
+                        </telerik:GridTemplateColumn>
+                    </Columns>
+                </MasterTableView>
+            </telerik:RadGrid>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="OrderItemFiscalYearDistributionsPanel" runat="server" Visible='<%# (string)Session["OrderItemFiscalYearDistributionsPermission"] != null && OrderItem2FormView.DataKey.Value != null %>'>
+        <fieldset>
+            <legend>
+                <asp:HyperLink ID="OrderItemFiscalYearDistributionsHyperLink" runat="server" Text="Order Item Fiscal Year Distributions" NavigateUrl="~/OrderItemFiscalYearDistributions/Default.aspx" Enabled="false" /></legend>
+            <telerik:RadGrid ID="OrderItemFiscalYearDistributionsRadGrid" runat="server" AutoGenerateColumns="false" AllowSorting="true" AllowFilteringByColumn="false" GroupingSettings-CaseSensitive="false" AllowPaging="true" PageSize="10" EnableLinqExpressions="false" OnNeedDataSource="OrderItemFiscalYearDistributionsRadGrid_NeedDataSource">
+                <MasterTableView DataKeyNames="Id" PagerStyle-Mode="NextPrevNumericAndAdvanced" NoMasterRecordsText="No order item fiscal year distributions found">
+                    <Columns>
+                        <telerik:GridTemplateColumn HeaderText="Fiscal Year" DataField="FiscalYear.Name" AllowSorting="false" AutoPostBackOnFilter="true" CurrentFilterFunction="StartsWith">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="FiscalYearHyperLink" runat="server" Text='<%#: Eval("FiscalYear.Name") %>' NavigateUrl='<%# $"~/FiscalYear2s/Edit.aspx?Id={Eval("FiscalYearId")}" %>' Enabled='<%# Session["FiscalYear2sPermission"] != null %>' />
                             </ItemTemplate>
                         </telerik:GridTemplateColumn>
                     </Columns>
@@ -1435,6 +1492,11 @@
             <telerik:AjaxSetting AjaxControlID="OrderItemContributorsRadGrid">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="OrderItemContributorsPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="OrderItemFiscalYearDistributionsRadGrid">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="OrderItemFiscalYearDistributionsPanel" LoadingPanelID="RadAjaxLoadingPanel1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="OrderItemFundsRadGrid">

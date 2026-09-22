@@ -33,6 +33,10 @@ namespace FolioWebApplication.OrderItem2s
 
         protected RadGrid OrderItemContributorsRadGrid;
 
+        protected Panel OrderItemFiscalYearDistributionsPanel;
+
+        protected RadGrid OrderItemFiscalYearDistributionsRadGrid;
+
         protected Panel OrderItemFundsPanel;
 
         protected RadGrid OrderItemFundsRadGrid;

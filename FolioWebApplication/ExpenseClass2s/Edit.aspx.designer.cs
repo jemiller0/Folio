@@ -25,6 +25,10 @@ namespace FolioWebApplication.ExpenseClass2s
 
         protected RadGrid InvoiceItemFundsRadGrid;
 
+        protected Panel OrderItemFiscalYearDistributionFundDistributionsPanel;
+
+        protected RadGrid OrderItemFiscalYearDistributionFundDistributionsRadGrid;
+
         protected Panel OrderItemFundsPanel;
 
         protected RadGrid OrderItemFundsRadGrid;

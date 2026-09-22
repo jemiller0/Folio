@@ -1361,6 +1361,17 @@ namespace FolioWebApplication.User2s
             UserDepartmentsPanel.Visible = User2FormView.DataKey.Value != null && ((string)Session["UserDepartmentsPermission"] == "Edit" || Session["UserDepartmentsPermission"] != null && l.Any());
         }
 
+        protected void UserPreferredContactTypesRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (Session["UserPreferredContactTypesPermission"] == null) return;
+            var id = (Guid?)User2FormView.DataKey.Value;
+            if (id == null) return;
+            var l = folioServiceContext.FindUser2(id, true).UserPreferredContactTypes ?? new UserPreferredContactType[] { };
+            UserPreferredContactTypesRadGrid.DataSource = l;
+            UserPreferredContactTypesRadGrid.AllowFilteringByColumn = l.Count() > 10;
+            UserPreferredContactTypesPanel.Visible = User2FormView.DataKey.Value != null && ((string)Session["UserPreferredContactTypesPermission"] == "Edit" || Session["UserPreferredContactTypesPermission"] != null && l.Any());
+        }
+
         protected void UserRequestPreference2s2RadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             if (Session["UserRequestPreference2sPermission"] == null) return;
